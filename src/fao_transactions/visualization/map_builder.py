@@ -651,27 +651,36 @@ def build_interactive_map(
 
       L.control.zoom({{ position: 'bottomright' }}).addTo(m);
 
-      const darkTiles = L.tileLayer('https://{{s}}.basemaps.cartocdn.com/dark_all/{{z}}/{{x}}/{{y}}{{r}}.png', {{
-        attribution: '&copy; CartoDB &copy; OpenStreetMap',
-        subdomains: 'abcd',
-        maxZoom: 20
-      }}).addTo(m);
+      const darkTiles = L.layerGroup([
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {{
+          attribution: '&copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+          maxZoom: 16
+        }}),
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {{
+          maxZoom: 16
+        }})
+      ]).addTo(m);
+
+      const swissGrey = L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{{z}}/{{x}}/{{y}}.jpeg', {{
+        attribution: '&copy; swisstopo',
+        maxZoom: 19
+      }});
 
       const swissImage = L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{{z}}/{{x}}/{{y}}.jpeg', {{
         attribution: '&copy; swisstopo',
         maxZoom: 19
       }});
 
-      const osmLight = L.tileLayer('https://{{s}}.basemaps.cartocdn.com/rastertiles/voyager/{{z}}/{{x}}/{{y}}{{r}}.png', {{
-        attribution: '&copy; CartoDB &copy; OpenStreetMap',
-        subdomains: 'abcd',
-        maxZoom: 20
+      const osmStandard = L.tileLayer('https://tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
       }});
 
       L.control.layers({{
-        "Carte Sombre (Moderne)": darkTiles,
+        "Carte Sombre": darkTiles,
+        "Plan Officiel Swisstopo": swissGrey,
         "Photo Aérienne Swisstopo": swissImage,
-        "Carte Claire Voyager": osmLight
+        "OpenStreetMap": osmStandard
       }}, null, {{ position: 'bottomleft' }}).addTo(m);
 
       return m;
