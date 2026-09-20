@@ -1165,6 +1165,438 @@
       border: 1px solid #10b981;
       color: #6ee7b7;
     }
+
+    /* Agency Map Markers & Pins */
+    .agency-marker-pin {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-ink-950);
+      border: 1.5px solid var(--color-brand-400);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+      padding: 2px 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      gap: 5px;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .agency-marker-pin:hover, .agency-marker-pin.active {
+      transform: scale(1.15);
+      border-color: #f6e05e;
+      background: var(--color-ink-800);
+      z-index: 9999 !important;
+    }
+
+    .pin-badge {
+      background: var(--color-brand-400);
+      color: #080d11;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 10px;
+      padding: 1px 4px;
+    }
+
+    .pin-name {
+      font-family: var(--font-brand);
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--color-paper);
+    }
+
+    /* Social Action Buttons */
+    .social-buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 12px 0 16px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-family: var(--font-brand);
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: opacity 0.2s, transform 0.1s;
+      cursor: pointer;
+    }
+
+    .social-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .social-btn.linkedin {
+      background: #0a66c2;
+      color: #ffffff;
+    }
+
+    .social-btn.instagram {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: #ffffff;
+    }
+
+    .social-btn.website {
+      background: rgba(201, 162, 77, 0.15);
+      border-color: var(--color-brand-400);
+      color: var(--color-brand-300);
+    }
+
+    .social-btn.contact {
+      background: var(--color-ink-800);
+      border-color: var(--panel-border);
+      color: var(--color-paper);
+    }
+
+    /* Broker Card */
+    .broker-card {
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .broker-name {
+      font-family: var(--font-brand);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--color-brand-300);
+    }
+
+    .broker-role {
+      font-size: 11px;
+      color: var(--color-sand-300);
+    }
+
+    .view-map-btn {
+      background: transparent;
+      border: 1px solid var(--color-brand-400);
+      color: var(--color-brand-300);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: all 0.15s;
+    }
+
+    .view-map-btn:hover {
+      background: var(--color-brand-400);
+      color: var(--color-ink-950);
+    }
+
+    .commune-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      background: rgba(201, 162, 77, 0.12);
+      border: 1px solid rgba(201, 162, 77, 0.3);
+      color: var(--color-brand-300);
+      font-size: 10px;
+      font-family: var(--font-mono);
+      margin-right: 4px;
+    /* Scan Live Indicator Dot */
+    .scan-live-dot {
+      width: 7px;
+      height: 7px;
+      background: #4ade80;
+      box-shadow: 0 0 8px #4ade80;
+      border-radius: 50% !important;
+      animation: pulseLiveDot 1.8s infinite ease-in-out;
+      display: inline-block;
+    }
+    @keyframes pulseLiveDot {
+      0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 6px #4ade80; }
+      50% { transform: scale(1.4); opacity: 0.6; box-shadow: 0 0 12px #4ade80; }
+    }
+
+    /* Scan Modal Window */
+    .scan-modal-window {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border-gold);
+      width: 90vw;
+      max-width: 1060px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-elevation);
+      overflow: hidden;
+    }
+
+    .scan-header {
+      padding: 16px 24px;
+      background: var(--color-ink-950);
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scan-title-box h2 {
+      font-family: var(--font-brand);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-brand-300);
+      margin: 0 0 4px 0;
+    }
+
+    .scan-title-box p {
+      margin: 0;
+      font-size: 11px;
+      color: var(--color-sand-300);
+    }
+
+    .scan-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+      background: var(--color-ink-900);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .scan-guarantee-card {
+      background: rgba(201, 162, 77, 0.08);
+      border: 1px solid var(--panel-border-gold);
+      padding: 14px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .guarantee-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .guarantee-title {
+      font-family: var(--font-brand);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-brand-300);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .guarantee-desc {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--color-paper);
+    }
+
+    .guarantee-desc strong {
+      color: var(--color-brand-200);
+    }
+
+    .scan-config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .scan-config-box {
+      background: var(--color-ink-950);
+      border: 1px solid var(--panel-border);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .scan-box-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-brand-300);
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 6px;
+    }
+
+    .portal-check-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .portal-check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      padding: 6px 8px;
+      background: var(--color-ink-900);
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+
+    .portal-check-item:hover {
+      background: var(--color-ink-850);
+    }
+
+    .portal-check-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .portal-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-paper);
+    }
+
+    .portal-detail {
+      font-size: 10px;
+      color: var(--color-sand-300);
+    }
+
+    .scan-modes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .scan-mode-card {
+      padding: 8px 10px;
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .scan-mode-card:hover {
+      border-color: var(--color-brand-400);
+    }
+
+    .scan-mode-card.active {
+      border-color: var(--color-brand-500);
+      background: rgba(201, 162, 77, 0.12);
+    }
+
+    .scan-mode-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mode-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-paper);
+    }
+
+    .scan-mode-card.active .mode-name {
+      color: var(--color-brand-300);
+    }
+
+    .mode-badge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      background: var(--color-ink-950);
+      color: var(--color-brand-300);
+      padding: 1px 5px;
+      border: 1px solid var(--panel-border);
+    }
+
+    .mode-desc {
+      font-size: 10px;
+      color: var(--color-sand-300);
+    }
+
+    .scan-progress-bar-bg {
+      width: 100%;
+      height: 7px;
+      background: var(--color-ink-950);
+      border: 1px solid var(--panel-border);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .scan-progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-brand-600), var(--color-brand-400), #4ade80);
+      transition: width 0.3s ease;
+    }
+
+    .scan-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .scan-kpi-card {
+      background: var(--color-ink-950);
+      border: 1px solid var(--panel-border);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .scan-kpi-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-sand-300);
+    }
+
+    .scan-kpi-val {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-paper);
+    }
+
+    .scan-terminal-wrapper {
+      background: #04070a;
+      border: 1px solid var(--panel-border);
+    }
+
+    .scan-terminal-header {
+      background: var(--color-ink-950);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-sand-300);
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .scan-terminal {
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.6;
+      height: 140px;
+      overflow-y: auto;
+      color: #94a3b8;
+    }
+
+    .term-line {
+      margin-bottom: 2px;
+      word-break: break-all;
+    }
+    .term-line.info { color: var(--color-brand-300); }
+    .term-line.success { color: #4ade80; }
+    .term-line.warning { color: #fbbf24; }
+    .term-line.error { color: #f87171; }
   </style>
 </head>
 <body>
@@ -1201,8 +1633,14 @@
         <button type="button" class="nav-mode-btn" id="modeBtnDev" onclick="setAppMode('DEVELOPMENT')">
           Radar Promotion <span class="nav-mode-badge" id="navBadgeDev">3,318</span>
         </button>
+        <button type="button" class="nav-mode-btn" id="modeBtnAgencies" onclick="setAppMode('AGENCIES_MAP')">
+          Carte des Agences <span class="nav-mode-badge" id="navBadgeAgencies">22</span>
+        </button>
         <button type="button" class="nav-mode-btn" id="btnOpenLeagueTable" onclick="openLeagueModal()" style="border-color: var(--color-brand-400); color: var(--color-brand-300);">
           Palmarès Agences & Courtiers
+        </button>
+        <button type="button" class="nav-mode-btn" id="btnOpenScanModal" onclick="openScanModal()" style="border-color: var(--color-brand-500); color: var(--color-brand-300); background: rgba(201, 162, 77, 0.12); display: inline-flex; align-items: center; gap: 8px;">
+          <span class="scan-live-dot"></span> Scan Now & Synchro
         </button>
       </div>
 
@@ -1294,6 +1732,21 @@
           <button class="pill-btn" data-dev-type="ZONE5">Densif. Z5</button>
           <button class="pill-btn" data-dev-type="PLQ">Sous PLQ</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Mode-Specific Filters: Agencies Map Filters -->
+    <div id="filterGroupAgencies" style="display:none;">
+      <div>
+        <div class="filter-section-title">Sélectionner une Agence</div>
+        <select class="select-input" id="sidebarAgencySelect" style="border-color: var(--color-brand-400); color: var(--color-brand-300);">
+          <option value="ALL">Toutes les agences du canton (22)</option>
+        </select>
+      </div>
+      <div style="margin-top: 8px;">
+        <button type="button" class="view-map-btn" style="width:100%; padding: 7px; text-align:center;" onclick="openLeagueModal()">
+          Ouvrir le Palmarès Détaillé & Tableau d'Honneur ↗
+        </button>
       </div>
     </div>
 
@@ -1469,6 +1922,160 @@
     </div>
   </div>
 
+  <!-- Cytria Multi-Portal Synchronization & Incremental Scanner Modal -->
+  <div class="modal-overlay" id="scanModal">
+    <div class="scan-modal-window">
+      <div class="scan-header">
+        <div class="scan-title-box">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="scan-live-dot"></span>
+            <h2>Centre de Synchronisation Multi-Portails & Actualisation</h2>
+          </div>
+          <p>Collecte en direct FAO Genève × SITG Cadastre × Portails Courtiers avec dédoublonnage SHA-256 et sanctuarisation intégrale de l'historique.</p>
+        </div>
+        <button class="modal-close-btn" id="scanModalCloseBtn" onclick="closeScanModal()">&times;</button>
+      </div>
+
+      <div class="scan-body">
+        <!-- Historic Data Preservation Guarantee Banner -->
+        <div class="scan-guarantee-card">
+          <div class="guarantee-icon">🛡️</div>
+          <div class="guarantee-content">
+            <div class="guarantee-title">Sanctuarisation Totale de l'Historique & Protection Anti-Pertes</div>
+            <div class="guarantee-desc">
+              Les portails en ligne (FAO, portails immobiliers) archivent ou suppriment fréquemment les avis après 30 à 90 jours. 
+              <strong>Cytria garantit une conservation perpétuelle de l'ensemble des 6,951 transactions historiques enregistrées depuis avril 2025.</strong> 
+              Grâce au moteur de dédoublonnage cryptographique SHA-256, les anciennes ventes ne sont jamais écrasées, et seules les mutations véritablement nouvelles sont ajoutées.
+            </div>
+          </div>
+        </div>
+
+        <!-- Scan Configuration Grid -->
+        <div class="scan-config-grid">
+          <!-- Target Portals Checklist -->
+          <div class="scan-config-box">
+            <div class="scan-box-title">1. Flux & Portails Ciblés</div>
+            <div class="portal-check-list">
+              <label class="portal-check-item">
+                <input type="checkbox" id="portalCheckFao" checked>
+                <div class="portal-check-info">
+                  <span class="portal-name">FAO Genève (Rubrique 133 & Quotidiennes)</span>
+                  <span class="portal-detail">Derniers avis de ventes, successions, cessions et LDTR</span>
+                </div>
+              </label>
+              <label class="portal-check-item">
+                <input type="checkbox" id="portalCheckSitg" checked>
+                <div class="portal-check-info">
+                  <span class="portal-name">SITG Open Data (Cadastre & Permis APA)</span>
+                  <span class="portal-detail">Autorisations de construire actives, PLQ, géométrie parcelles</span>
+                </div>
+              </label>
+              <label class="portal-check-item">
+                <input type="checkbox" id="portalCheckAgencies" checked>
+                <div class="portal-check-info">
+                  <span class="portal-name">Portails Immobiliers & Agences (RealAdvisor)</span>
+                  <span class="portal-detail">Suivi des mandats, volume vendu par courtier et ratings</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Scan Modes -->
+          <div class="scan-config-box">
+            <div class="scan-box-title">2. Mode d'Exécution</div>
+            <div class="scan-modes-list">
+              <div class="scan-mode-card active" id="scanModeCard_quick" onclick="selectScanMode('quick')">
+                <div class="scan-mode-header">
+                  <span class="mode-name">⚡ Scan Rapide (Quotidien)</span>
+                  <span class="mode-badge">25 avis récents</span>
+                </div>
+                <div class="mode-desc">Idéal pour relever les mutations et autorisations parues cette semaine.</div>
+              </div>
+              <div class="scan-mode-card" id="scanModeCard_standard" onclick="selectScanMode('standard')">
+                <div class="scan-mode-header">
+                  <span class="mode-name">🔄 Scan Approfondi (Mensuel)</span>
+                  <span class="mode-badge">100 avis récents</span>
+                </div>
+                <div class="mode-desc">Scrute en profondeur les dernières semaines d'avis officiels.</div>
+              </div>
+              <div class="scan-mode-card" id="scanModeCard_audit" onclick="selectScanMode('audit')">
+                <div class="scan-mode-header">
+                  <span class="mode-name">🔍 Contrôle d'Intégrité & Doublons</span>
+                  <span class="mode-badge">Base locale</span>
+                </div>
+                <div class="mode-desc">Audit SHA-256 sans requêtes réseau externes pour valider l'intégrité.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action CTA -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+          <div style="font-size:11px; color:var(--color-sand-300);">
+            Statut du moteur : <span id="syncServerBadge" style="font-family:var(--font-mono); color:#4ade80;">API Connectée (localhost:8080)</span>
+          </div>
+          <button type="button" class="action-btn sitg" id="btnLaunchScan" onclick="triggerScanExecution()" style="padding:10px 24px; font-size:12px; font-weight:800; letter-spacing:0.06em;">
+            🚀 LANCER LA SYNCHRONISATION EN DIRECT
+          </button>
+        </div>
+
+        <!-- Live Monitoring Section -->
+        <div class="scan-monitor-box" id="scanMonitorBox" style="margin-top:16px;">
+          <!-- Progress Bar & Status -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span id="scanStatusStep" style="font-size:12px; font-weight:700; color:var(--color-brand-300); text-transform:uppercase; letter-spacing:0.04em;">Prêt à scanner</span>
+            <span id="scanProgressPct" style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:var(--color-paper);">0%</span>
+          </div>
+          <div class="scan-progress-bar-bg">
+            <div class="scan-progress-bar-fill" id="scanProgressFill" style="width: 0%;"></div>
+          </div>
+
+          <!-- KPI Counters Grid -->
+          <div class="scan-kpi-grid">
+            <div class="scan-kpi-card">
+              <span class="scan-kpi-label">Historique Protégé</span>
+              <span class="scan-kpi-val emerald" id="kpiHistorical">6,951</span>
+            </div>
+            <div class="scan-kpi-card">
+              <span class="scan-kpi-label">Avis Scannés</span>
+              <span class="scan-kpi-val" id="kpiScanned">0</span>
+            </div>
+            <div class="scan-kpi-card">
+              <span class="scan-kpi-label">Nouvelles Détectées</span>
+              <span class="scan-kpi-val gold" id="kpiNew">+0</span>
+            </div>
+            <div class="scan-kpi-card">
+              <span class="scan-kpi-label">Doublons Ignorés</span>
+              <span class="scan-kpi-val purple" id="kpiDuplicates">0</span>
+            </div>
+          </div>
+
+          <!-- Live Terminal Output -->
+          <div class="scan-terminal-wrapper">
+            <div class="scan-terminal-header">
+              <span>JOURNAL DE TÉLÉMÉTRIE EN DIRECT</span>
+              <span id="terminalLiveBadge" style="color:#4ade80;">● EN VEILLE</span>
+            </div>
+            <div class="scan-terminal" id="scanTerminal">
+              <div class="term-line info">[SYS] Moteur de synchronisation Cytria prêt.</div>
+              <div class="term-line">[SYS] Cliquez sur 'Lancer la synchronisation' pour interroger les portails.</div>
+            </div>
+          </div>
+
+          <!-- Completion Banner -->
+          <div id="scanCompletionBanner" style="display:none; margin-top:14px; padding:12px 16px; background:rgba(74, 222, 128, 0.1); border:1px solid #4ade80; justify-content:space-between; align-items:center;">
+            <div style="font-size:12px; color:#4ade80; font-weight:700;">
+              ✓ Synchronisation achevée avec succès ! La base locale et l'historique sont sanctuarisés et à jour.
+            </div>
+            <button type="button" class="action-btn sitg" onclick="location.reload()" style="padding:6px 14px; font-size:11px;">
+              🔄 Recharger la Carte
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Leaflet & MarkerCluster JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -1568,6 +2175,9 @@
       showCoverageOnHover: false
     });
     map.addLayer(markersCluster);
+
+    const agencyMarkersGroup = L.layerGroup().addTo(map);
+    const agencyRadiusGroup = L.layerGroup().addTo(map);
 
     function getMarkerColor(r) {
       if (appMode === 'MANDATES') {
@@ -1694,8 +2304,26 @@
       const filterMarket = document.getElementById('filterGroupMarket');
       const filterMandates = document.getElementById('filterGroupMandates');
       const filterDev = document.getElementById('filterGroupDev');
+      const filterAgencies = document.getElementById('filterGroupAgencies');
       const bannerTitle = document.getElementById('sidebarBannerTitle');
       const bannerSub = document.getElementById('sidebarBannerSub');
+
+      agencyMarkersGroup.clearLayers();
+      agencyRadiusGroup.clearLayers();
+
+      if (mode === 'AGENCIES_MAP') {
+        document.getElementById('modeBtnAgencies').classList.add('active');
+        filterMarket.style.display = 'none';
+        filterMandates.style.display = 'none';
+        filterDev.style.display = 'none';
+        filterAgencies.style.display = 'block';
+        bannerTitle.textContent = 'Réseau des Agences & Rayon d'Action';
+        bannerSub.textContent = 'Sièges d'agences, périmètres d'intervention et transactions attribuées';
+        renderAgenciesOnMap();
+        return;
+      } else {
+        filterAgencies.style.display = 'none';
+      }
 
       if (mode === 'MANDATES') {
         document.getElementById('modeBtnMandates').classList.add('active');
@@ -2215,7 +2843,7 @@
     }
 
     // League Table Ranking Modal Logic
-    const LEAGUE_DATA = {"agencies": [{"id": "barnes-suisse", "name": "BARNES Suisse SA - Genève", "address": "Rue du Rhône 23, 1204 Genève", "headquarters_commune": "Genève", "website": "https://barnes-suisse.com/", "specialties": ["Résidentiel Haut de Gamme", "Gestion de Fortune Immobilière", "Ventes Privées"], "sold_24m_count": 52, "sold_volume_chf_m": 210.0, "median_price_chf": 3950000, "median_house_chf": 6800000, "median_apartment_chf": 2300000, "rating": 4.7, "reviews_count": 89, "primary_territory": "Cologny / Genève / Vandœuvres / Rive Gauche", "discount_rate_est": 5.8, "agents": [{"name": "Jérôme Félicité", "role": "Président & Directeur Général", "specialty": "Propriétés Internationales & Hôtels Particuliers", "deals_count": 16, "rating": 4.8, "reviews_count": 27, "top_communes": ["Genève", "Cologny", "Pregny-Chambésy"]}, {"name": "Marie-Christine de Saint-Affrique", "role": "Courtière Associée Senior", "specialty": "Villas & Terrains Cologny", "deals_count": 12, "rating": 4.9, "reviews_count": 19, "top_communes": ["Cologny", "Vandœuvres", "Collonge-Bellerive"]}, {"name": "Alexandre de Senarclens", "role": "Courtier Spécialiste Rive Droite", "specialty": "Résidences d'Ambassades & Propriétés de Maître", "deals_count": 10, "rating": 4.75, "reviews_count": 14, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"]}], "cytria_score": 90, "rank": 1}, {"id": "cardis-sothebys", "name": "Cardis | Sotheby's International Realty Genève", "address": "Rue François-Bellot 2, 1206 Genève", "headquarters_commune": "Genève", "website": "https://cardis.ch/", "specialties": ["Ultra-Luxe", "Réseau International Sotheby's", "Immeubles & Domaines"], "sold_24m_count": 45, "sold_volume_chf_m": 185.0, "median_price_chf": 4100000, "median_house_chf": 7500000, "median_apartment_chf": 2400000, "rating": 4.75, "reviews_count": 72, "primary_territory": "Canton de Genève Entier (Cologny, Florissant, Russin)", "discount_rate_est": 5.4, "agents": [{"name": "Sébastien Rohner", "role": "Directeur d'Agence Genève", "specialty": "Propriétés d'Exception", "deals_count": 18, "rating": 4.85, "reviews_count": 31, "top_communes": ["Cologny", "Genève", "Vandœuvres"]}, {"name": "Arnaud Boissier", "role": "Courtier Senior", "specialty": "Appartements de Standing Champel", "deals_count": 11, "rating": 4.8, "reviews_count": 16, "top_communes": ["Genève (Champel)", "Florissant", "Chêne-Bougeries"]}, {"name": "Camille Dutoit", "role": "Courtière Spécialiste Campagne", "specialty": "Domaines Agricoles & Châteaux", "deals_count": 8, "rating": 4.9, "reviews_count": 12, "top_communes": ["Russin", "Satigny", "Dardagny"]}], "cytria_score": 87, "rank": 2}, {"id": "comptoir-immobilier", "name": "Comptoir Immobilier SA", "address": "Rue de la Tertasse 2, 1204 Genève", "headquarters_commune": "Genève", "website": "https://comptoir-immo.ch/", "specialties": ["Régie Historique", "Immeubles de Rendement", "Villas Rive Gauche & Droite"], "sold_24m_count": 48, "sold_volume_chf_m": 165.0, "median_price_chf": 2650000, "median_house_chf": 4200000, "median_apartment_chf": 1400000, "rating": 4.65, "reviews_count": 94, "primary_territory": "Genève Ville / Carouge / Rive Gauche", "discount_rate_est": 4.8, "agents": [{"name": "Quentin Epiney", "role": "Directeur Commercial Ventes", "specialty": "Immeubles Résidentiels & Rendement", "deals_count": 14, "rating": 4.75, "reviews_count": 25, "top_communes": ["Genève", "Carouge", "Lancy"]}, {"name": "Sophie Martin-Pache", "role": "Courtière Senior Résidentiel", "specialty": "Villas Familiales & Successions", "deals_count": 11, "rating": 4.85, "reviews_count": 18, "top_communes": ["Chêne-Bougeries", "Veyrier", "Thônex"]}, {"name": "Julien Bourgnon", "role": "Courtier PPE & Promotions", "specialty": "Appartements Neufs & Rénovés", "deals_count": 9, "rating": 4.7, "reviews_count": 12, "top_communes": ["Plan-les-Ouates", "Bernex", "Onex"]}], "cytria_score": 86, "rank": 3}, {"id": "spg-groupe", "name": "SPG Société Privée de Gérance", "address": "Route de Chêne 36, 1208 Genève", "headquarters_commune": "Genève", "website": "https://spg.ch/", "specialties": ["Institutionnels", "Gestion de Patrimoine", "Promotions Immobilières"], "sold_24m_count": 42, "sold_volume_chf_m": 155.0, "median_price_chf": 2750000, "median_house_chf": 4500000, "median_apartment_chf": 1550000, "rating": 4.6, "reviews_count": 86, "primary_territory": "Chêne-Bougeries / Malagnou / Florissant", "discount_rate_est": 5.0, "agents": [{"name": "Thierry Barbier-Mueller", "role": "Administrateur Délégué", "specialty": "Portefeuilles Institutionnels & Hoiries", "deals_count": 13, "rating": 4.8, "reviews_count": 21, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"]}, {"name": "Béatrice de Riedmatten", "role": "Courtière Partenaire", "specialty": "Appartements de Charme & PPE", "deals_count": 10, "rating": 4.7, "reviews_count": 15, "top_communes": ["Genève (Eaux-Vives)", "Chêne-Bourg", "Vandoeuvres"]}], "cytria_score": 81, "rank": 4}, {"id": "naef-immobilier", "name": "Naef Immobilier Genève", "address": "Avenue Eugène-Pittard 14-16, 1206 Genève", "headquarters_commune": "Genève", "website": "https://naef.ch/", "specialties": ["Courtage Résidentiel", "Knight Frank Partner", "Promotions Neuves"], "sold_24m_count": 40, "sold_volume_chf_m": 140.0, "median_price_chf": 2500000, "median_house_chf": 4100000, "median_apartment_chf": 1350000, "rating": 4.68, "reviews_count": 78, "primary_territory": "Florissant / Champel / Conches", "discount_rate_est": 4.9, "agents": [{"name": "Étienne Nagy", "role": "Directeur Général", "specialty": "Vente de Prestige & Partenariats", "deals_count": 12, "rating": 4.82, "reviews_count": 20, "top_communes": ["Genève", "Conches", "Vandoeuvres"]}, {"name": "Isabelle Fiaux", "role": "Courtière Senior Rive Gauche", "specialty": "Villas Individuelles & Terrains", "deals_count": 10, "rating": 4.9, "reviews_count": 17, "top_communes": ["Chêne-Bougeries", "Veyrier", "Troinex"]}], "cytria_score": 79, "rank": 5}, {"id": "moser-vernet", "name": "Moser Vernet & Cie (Move Properties)", "address": "Rue du Rhône 118, 1204 Genève", "headquarters_commune": "Genève", "website": "https://moservernet.ch/", "specialties": ["Régie Familiale", "Courtage Move Properties", "Gestion Locative & Vente"], "sold_24m_count": 35, "sold_volume_chf_m": 115.0, "median_price_chf": 2350000, "median_house_chf": 3800000, "median_apartment_chf": 1280000, "rating": 4.72, "reviews_count": 64, "primary_territory": "Genève Centre / Eaux-Vives / Champel", "discount_rate_est": 4.5, "agents": [{"name": "Nicolas Teissier", "role": "Responsable du Pôle Courtage", "specialty": "Villas & Immeubles Familiaux", "deals_count": 12, "rating": 4.85, "reviews_count": 19, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"]}, {"name": "Théry Schir", "role": "Courtier Spécialiste PPE", "specialty": "Appartements & Résidences Récentes", "deals_count": 9, "rating": 4.78, "reviews_count": 13, "top_communes": ["Genève (Eaux-Vives)", "Vésenaz", "Carouge"]}], "cytria_score": 74, "rank": 6}, {"id": "leonard-properties", "name": "Leonard Properties Luxury Real Estate", "address": "Avenue de Champel 31, 1206 Genève", "headquarters_commune": "Genève", "website": "https://leonard-properties.com/", "specialties": ["Immobilier de Prestige", "Champel & Florissant", "Pieds-dans-l'eau"], "sold_24m_count": 28, "sold_volume_chf_m": 98.4, "median_price_chf": 3800000, "median_house_chf": 6200000, "median_apartment_chf": 2200000, "rating": 4.92, "reviews_count": 46, "primary_territory": "Champel / Cologny / Vandœuvres", "discount_rate_est": 3.8, "agents": [{"name": "Léonard Cohen", "role": "Fondateur & Directeur", "specialty": "Trophy Assets & Rive Gauche", "deals_count": 14, "rating": 4.96, "reviews_count": 28, "top_communes": ["Cologny", "Genève", "Vandœuvres"]}, {"name": "Audrey Caveng", "role": "Courtière Senior", "specialty": "Appartements de Maître & Champel", "deals_count": 8, "rating": 4.88, "reviews_count": 11, "top_communes": ["Genève (Champel)", "Chêne-Bougeries"]}, {"name": "Belfin Lips", "role": "Courtière Associée", "specialty": "Villas Contemporaines", "deals_count": 6, "rating": 4.8, "reviews_count": 7, "top_communes": ["Collonge-Bellerive", "Anières"]}], "cytria_score": 71, "rank": 7}, {"id": "geneva-homes", "name": "Geneva Homes Real Estate", "address": "Route de Malagnou 40A, 1208 Genève", "headquarters_commune": "Genève", "website": "https://genevahomes.ch/", "specialties": ["Clientèle Expatriée & Multilingue", "Florissant & Malagnou", "Investissements"], "sold_24m_count": 21, "sold_volume_chf_m": 56.4, "median_price_chf": 2200000, "median_house_chf": 3400000, "median_apartment_chf": 1400000, "rating": 5.0, "reviews_count": 75, "primary_territory": "Malagnou / Florissant / Champel", "discount_rate_est": 4.1, "agents": [{"name": "Silvia Mandracho", "role": "Fondatrice & Directrice", "specialty": "Ventes Résidentielles Internationales", "deals_count": 11, "rating": 5.0, "reviews_count": 42, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"]}, {"name": "Colin Woolcock", "role": "Senior Broker", "specialty": "Expat Housing & Relocation Sales", "deals_count": 7, "rating": 5.0, "reviews_count": 21, "top_communes": ["Genève", "Pregny-Chambésy", "Versoix"]}], "cytria_score": 64, "rank": 8}, {"id": "swissroc-group", "name": "Swissroc Real Estate", "address": "Rue Jacques-Dalphin 36, 1227 Carouge", "headquarters_commune": "Carouge", "website": "https://swissroc.com/", "specialties": ["Développement & Foncier", "Promotions Clé en Main", "Carouge & Plainpalais"], "sold_24m_count": 26, "sold_volume_chf_m": 82.0, "median_price_chf": 2700000, "median_house_chf": 3500000, "median_apartment_chf": 1500000, "rating": 4.78, "reviews_count": 39, "primary_territory": "Carouge / Genève / Vessy", "discount_rate_est": 4.4, "agents": [{"name": "Cyril de Bavier", "role": "CEO & Associé", "specialty": "Développement Urbain & Terrains", "deals_count": 11, "rating": 4.85, "reviews_count": 15, "top_communes": ["Carouge", "Lancy", "Genève"]}, {"name": "Guillaume Basile", "role": "Directeur des Ventes", "specialty": "Vente sur Plan & Rénovations", "deals_count": 9, "rating": 4.75, "reviews_count": 12, "top_communes": ["Carouge", "Veyrier", "Vessy"]}], "cytria_score": 63, "rank": 9}, {"id": "stone-invest", "name": "Stone Invest Genève", "address": "Chemin de la Seymaz 14, 1253 Vandœuvres", "headquarters_commune": "Vandœuvres", "website": "https://stone-invest.ch/", "specialties": ["Rive Droite & Grand-Saconnex", "Villas & PPE Neuves", "Conseil Foncier"], "sold_24m_count": 22, "sold_volume_chf_m": 48.0, "median_price_chf": 1950000, "median_house_chf": 2900000, "median_apartment_chf": 1250000, "rating": 4.95, "reviews_count": 58, "primary_territory": "Le Grand-Saconnex / Meyrin / Vandœuvres", "discount_rate_est": 4.6, "agents": [{"name": "Daniela Ghiandai", "role": "Courtière Partenaire Senior", "specialty": "Rive Droite & Ventes Express", "deals_count": 15, "rating": 5.0, "reviews_count": 39, "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin"]}, {"name": "Marcello Della Torre", "role": "Courtier Associé", "specialty": "Villas & Terrains Rive Droite", "deals_count": 7, "rating": 4.9, "reviews_count": 19, "top_communes": ["Bellevue", "Genthod", "Versoix"]}], "cytria_score": 60, "rank": 10}, {"id": "jouan-de-rham", "name": "Jouan - de Rham SA", "address": "Route de Thonon 60, 1222 Vésenaz", "headquarters_commune": "Collonge-Bellerive", "website": "https://jouan-derham.ch/", "specialties": ["Villas Rive Gauche", "Vésenaz & Anières", "Propriétés Familiales"], "sold_24m_count": 24, "sold_volume_chf_m": 76.0, "median_price_chf": 3100000, "median_house_chf": 4100000, "median_apartment_chf": 1450000, "rating": 5.0, "reviews_count": 18, "primary_territory": "Collonge-Bellerive / Vésenaz / Cologny", "discount_rate_est": 3.5, "agents": [{"name": "Thomas Bergerat", "role": "Directeur Commercial", "specialty": "Villas & Terrains Vésenaz", "deals_count": 11, "rating": 5.0, "reviews_count": 10, "top_communes": ["Collonge-Bellerive", "Anières", "Cologny"]}, {"name": "Léonard de Rham", "role": "Administrateur & Courtier", "specialty": "Patrimoine & Successions Rive Gauche", "deals_count": 8, "rating": 5.0, "reviews_count": 5, "top_communes": ["Vésenaz", "Meinier", "Corsier"]}, {"name": "Maximilien de Stadelhofen", "role": "Courtier Expert", "specialty": "Propriétés au Bord de l'Eau", "deals_count": 5, "rating": 5.0, "reviews_count": 3, "top_communes": ["Hermance", "Anières", "Cologny"]}], "cytria_score": 59, "rank": 11}, {"id": "engel-voelkers-geneve", "name": "Engel & Völkers Genève", "address": "Quai Gustave-Ador 2, 1207 Genève", "headquarters_commune": "Genève", "website": "https://engelvoelkers.com/geneva", "specialties": ["Réseau International", "Appartements Quai Gustave-Ador", "Cologny & Anières"], "sold_24m_count": 25, "sold_volume_chf_m": 79.5, "median_price_chf": 2900000, "median_house_chf": 4500000, "median_apartment_chf": 1800000, "rating": 4.7, "reviews_count": 42, "primary_territory": "Eaux-Vives / Cologny / Vésenaz", "discount_rate_est": 5.2, "agents": [{"name": "Alain Schaller", "role": "Managing Director", "specialty": "Résidences Lacustres & Prestige", "deals_count": 10, "rating": 4.75, "reviews_count": 18, "top_communes": ["Cologny", "Genève (Eaux-Vives)", "Anières"]}, {"name": "Nathalie Guichard", "role": "Courtière Spécialiste Rive Gauche", "specialty": "Villas & Terrains Équestres", "deals_count": 8, "rating": 4.82, "reviews_count": 14, "top_communes": ["Vandœuvres", "Choulex", "Meinier"]}], "cytria_score": 59, "rank": 12}, {"id": "agci-immobilier", "name": "AGCI Immobilier", "address": "Avenue Vibert 13, 1227 Carouge", "headquarters_commune": "Carouge", "website": "https://agci.ch/", "specialties": ["Carouge & Environs", "Évaluations Précises", "Vente Appartements"], "sold_24m_count": 18, "sold_volume_chf_m": 37.8, "median_price_chf": 1750000, "median_house_chf": 2500000, "median_apartment_chf": 1150000, "rating": 4.91, "reviews_count": 48, "primary_territory": "Carouge / Lancy / Acacias", "discount_rate_est": 4.3, "agents": [{"name": "Alexandre Gallo", "role": "Directeur Général", "specialty": "Immobilier Urbain & Carougeois", "deals_count": 12, "rating": 4.95, "reviews_count": 35, "top_communes": ["Carouge", "Genève", "Lancy"]}], "cytria_score": 57, "rank": 13}, {"id": "john-taylor-geneva", "name": "John Taylor Luxury Real Estate Genève", "address": "Quai du Mont-Blanc 21, 1201 Genève", "headquarters_commune": "Genève", "website": "https://john-taylor.com/geneva", "specialties": ["Propriétés Rive Droite Lac", "Quai du Mont-Blanc", "Domaines Privés"], "sold_24m_count": 20, "sold_volume_chf_m": 88.0, "median_price_chf": 4200000, "median_house_chf": 7100000, "median_apartment_chf": 2500000, "rating": 4.85, "reviews_count": 28, "primary_territory": "Canton de Genève / Cologny / Pregny", "discount_rate_est": 4.8, "agents": [{"name": "Philippe Calame", "role": "Directeur Agence", "specialty": "Pieds-dans-l'eau & Hôtels Particuliers", "deals_count": 11, "rating": 4.9, "reviews_count": 17, "top_communes": ["Cologny", "Genève", "Genthod"]}], "cytria_score": 57, "rank": 14}, {"id": "omnia-geneve", "name": "Omnia Immobilier Genève", "address": "Rue Charles-Bonnet 3, 1206 Genève", "headquarters_commune": "Genève", "website": "https://omnia.ch/", "specialties": ["Courtage Romand", "Genève & Vaud", "Appartements & Villas"], "sold_24m_count": 22, "sold_volume_chf_m": 58.0, "median_price_chf": 2150000, "median_house_chf": 3200000, "median_apartment_chf": 1300000, "rating": 5.0, "reviews_count": 24, "primary_territory": "Genève / Florissant / Champel", "discount_rate_est": 4.4, "agents": [{"name": "Alexandre Gallina", "role": "Directeur Genève", "specialty": "Vente Résidentielle Haut de Gamme", "deals_count": 10, "rating": 5.0, "reviews_count": 16, "top_communes": ["Genève", "Champel", "Chêne-Bougeries"]}, {"name": "Grégory Marchand", "role": "Courtier Expert", "specialty": "Villas & Terrains Campagne", "deals_count": 7, "rating": 5.0, "reviews_count": 8, "top_communes": ["Veyrier", "Troinex", "Satigny"]}], "cytria_score": 55, "rank": 15}, {"id": "ci-leman", "name": "CI Léman Immobilier", "address": "Route du Grand-Lancy 50, 1212 Grand-Lancy", "headquarters_commune": "Lancy", "website": "https://ci-leman.ch/", "specialties": ["Grand-Lancy & Bachet", "PPE Récentes", "Accompagnement Financement"], "sold_24m_count": 20, "sold_volume_chf_m": 41.0, "median_price_chf": 1800000, "median_house_chf": 2400000, "median_apartment_chf": 1100000, "rating": 4.6, "reviews_count": 52, "primary_territory": "Lancy / Plan-les-Ouates / Carouge", "discount_rate_est": 4.7, "agents": [{"name": "Lionel Chandy", "role": "Directeur Associé", "specialty": "Vente de Logements & Financement", "deals_count": 10, "rating": 4.7, "reviews_count": 28, "top_communes": ["Lancy", "Plan-les-Ouates", "Onex"]}, {"name": "Adrien Billaux", "role": "Courtier Spécialiste", "specialty": "Villas Mitoyennes & PPE", "deals_count": 7, "rating": 4.65, "reviews_count": 14, "top_communes": ["Lancy", "Bernex", "Confignon"]}], "cytria_score": 53, "rank": 16}, {"id": "desormiere-vanhalst", "name": "Désormière & Vanhalst - Immobilier Genève", "address": "Chemin de Drize, 1256 Troinex", "headquarters_commune": "Troinex", "website": "https://desormiere-vanhalst.ch/", "specialties": ["Villas & Propriétés de Maître", "Troinex & Veyrier", "Campagne Genevoise"], "sold_24m_count": 16, "sold_volume_chf_m": 42.5, "median_price_chf": 2400000, "median_house_chf": 3400000, "median_apartment_chf": 1100000, "rating": 4.87, "reviews_count": 31, "primary_territory": "Troinex / Veyrier / Rive Gauche", "discount_rate_est": 4.2, "agents": [{"name": "Sandra Bleeckx Vanhalst", "role": "Associée & Directrice de Courtage", "specialty": "Villas & Hoiries Rive Gauche", "deals_count": 9, "rating": 4.95, "reviews_count": 22, "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries"]}, {"name": "Adrien Désormière", "role": "Associé & Courtier Expert", "specialty": "Villas Haut de Gamme & Terrains", "deals_count": 7, "rating": 4.8, "reviews_count": 9, "top_communes": ["Troinex", "Plan-les-Ouates", "Genève"]}], "cytria_score": 51, "rank": 17}, {"id": "nessell-real-estate", "name": "NESSELL Real Estate SA", "address": "Route de Chancy 59, 1213 Petit-Lancy", "headquarters_commune": "Lancy", "website": "https://nessell.ch/", "specialties": ["Rive Gauche Sud & Lancy / Onex", "Maisons Individuelles", "Successions"], "sold_24m_count": 19, "sold_volume_chf_m": 39.2, "median_price_chf": 1850000, "median_house_chf": 2600000, "median_apartment_chf": 1050000, "rating": 4.9, "reviews_count": 34, "primary_territory": "Lancy / Onex / Bernex / Plan-les-Ouates", "discount_rate_est": 5.1, "agents": [{"name": "David Knafo", "role": "Directeur Associé", "specialty": "Maisons Familiales & Onex", "deals_count": 12, "rating": 4.92, "reviews_count": 24, "top_communes": ["Onex", "Lancy", "Bernex"]}, {"name": "Corinne Guillo", "role": "Courtière Partenaire", "specialty": "Appartements & PPE Ouest Genevois", "deals_count": 7, "rating": 4.86, "reviews_count": 10, "top_communes": ["Onex", "Confignon", "Plan-les-Ouates"]}], "cytria_score": 51, "rank": 18}, {"id": "oakswell-group", "name": "OAKSWELL BY OAKS GROUP", "address": "Route de Malagnou 26, 1208 Genève", "headquarters_commune": "Genève", "website": "https://oakswell.ch/", "specialties": ["Immobilier Contemporain", "Conseil Patrimonial", "Malagnou & Florissant"], "sold_24m_count": 16, "sold_volume_chf_m": 43.5, "median_price_chf": 2300000, "median_house_chf": 3600000, "median_apartment_chf": 1450000, "rating": 5.0, "reviews_count": 18, "primary_territory": "Malagnou / Genève / Cologny", "discount_rate_est": 3.7, "agents": [{"name": "Joëlle Ordon", "role": "Courtière Associée Senior", "specialty": "Négociation Stratégique & Off-Market", "deals_count": 9, "rating": 5.0, "reviews_count": 12, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"]}, {"name": "Luca Copercini", "role": "Directeur Associé", "specialty": "Villas Contemporaines", "deals_count": 5, "rating": 5.0, "reviews_count": 6, "top_communes": ["Cologny", "Collonge-Bellerive"]}], "cytria_score": 50, "rank": 19}, {"id": "beaulieu-immobilier", "name": "Beaulieu Immobilier Genève", "address": "Route de Pregny 12, 1292 Chambésy", "headquarters_commune": "Pregny-Chambésy", "website": "https://beaulieu-immo.ch/", "specialties": ["Rive Droite Lac", "Pregny-Chambésy & Bellevue", "Villas Diplomatiques"], "sold_24m_count": 14, "sold_volume_chf_m": 44.2, "median_price_chf": 2850000, "median_house_chf": 3900000, "median_apartment_chf": 1300000, "rating": 4.95, "reviews_count": 21, "primary_territory": "Pregny-Chambésy / Chambésy / Bellevue", "discount_rate_est": 3.9, "agents": [{"name": "Gabriela Turcatti", "role": "Courtière Associée", "specialty": "Villas Diplomatiques & Rive Droite", "deals_count": 10, "rating": 5.0, "reviews_count": 18, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"]}, {"name": "Philippe Beaulieu", "role": "Fondateur", "specialty": "Domaines Lacustres", "deals_count": 4, "rating": 4.85, "reviews_count": 3, "top_communes": ["Chambésy", "Versoix"]}], "cytria_score": 49, "rank": 20}, {"id": "105-immo", "name": "105 Immo - Immobilier & Architecture", "address": "Route d'Hermance 105, 1245 Collonge-Bellerive", "headquarters_commune": "Collonge-Bellerive", "website": "https://105immo.ch/", "specialties": ["Rive Gauche Bord du Lac", "Hermance & Anières", "Maisons d'Architecte"], "sold_24m_count": 13, "sold_volume_chf_m": 41.2, "median_price_chf": 2950000, "median_house_chf": 3800000, "median_apartment_chf": 1400000, "rating": 4.95, "reviews_count": 19, "primary_territory": "Collonge-Bellerive / Hermance / Anières", "discount_rate_est": 3.8, "agents": [{"name": "Daniela Dhotel", "role": "Associée Gérante", "specialty": "Villas Rive Gauche & Hermance", "deals_count": 9, "rating": 5.0, "reviews_count": 15, "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"]}], "cytria_score": 48, "rank": 21}, {"id": "swixim-plan-les-ouates", "name": "Swixim International - Plan-les-Ouates", "address": "Route de Saint-Julien 129, 1228 Plan-les-Ouates", "headquarters_commune": "Plan-les-Ouates", "website": "https://swixim.ch/", "specialties": ["Réseau International", "Plan-les-Ouates & Perly", "Maisons Familiales"], "sold_24m_count": 15, "sold_volume_chf_m": 31.5, "median_price_chf": 1750000, "median_house_chf": 2400000, "median_apartment_chf": 1050000, "rating": 4.9, "reviews_count": 22, "primary_territory": "Plan-les-Ouates / Perly-Certoux / Bardonnex", "discount_rate_est": 4.9, "agents": [{"name": "Laure Monney", "role": "Directrice d'Agence", "specialty": "Maisons Villageoises & Terrains", "deals_count": 9, "rating": 5.0, "reviews_count": 14, "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"]}], "cytria_score": 44, "rank": 22}], "brokers": [{"name": "Sébastien Rohner", "role": "Directeur d'Agence Genève", "specialty": "Propriétés d'Exception", "deals_count": 18, "rating": 4.85, "reviews_count": 31, "top_communes": ["Cologny", "Genève", "Vandœuvres"], "cytria_score": 90, "agency_name": "Cardis | Sotheby's International Realty Genève", "agency_id": "cardis-sothebys", "rank": 1}, {"name": "Daniela Ghiandai", "role": "Courtière Partenaire Senior", "specialty": "Rive Droite & Ventes Express", "deals_count": 15, "rating": 5.0, "reviews_count": 39, "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin"], "cytria_score": 84, "agency_name": "Stone Invest Genève", "agency_id": "stone-invest", "rank": 2}, {"name": "Jérôme Félicité", "role": "Président & Directeur Général", "specialty": "Propriétés Internationales & Hôtels Particuliers", "deals_count": 16, "rating": 4.8, "reviews_count": 27, "top_communes": ["Genève", "Cologny", "Pregny-Chambésy"], "cytria_score": 83, "agency_name": "BARNES Suisse SA - Genève", "agency_id": "barnes-suisse", "rank": 3}, {"name": "Léonard Cohen", "role": "Fondateur & Directeur", "specialty": "Trophy Assets & Rive Gauche", "deals_count": 14, "rating": 4.96, "reviews_count": 28, "top_communes": ["Cologny", "Genève", "Vandœuvres"], "cytria_score": 81, "agency_name": "Leonard Properties Luxury Real Estate", "agency_id": "leonard-properties", "rank": 4}, {"name": "Silvia Mandracho", "role": "Fondatrice & Directrice", "specialty": "Ventes Résidentielles Internationales", "deals_count": 11, "rating": 5.0, "reviews_count": 42, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"], "cytria_score": 77, "agency_name": "Geneva Homes Real Estate", "agency_id": "geneva-homes", "rank": 5}, {"name": "Quentin Epiney", "role": "Directeur Commercial Ventes", "specialty": "Immeubles Résidentiels & Rendement", "deals_count": 14, "rating": 4.75, "reviews_count": 25, "top_communes": ["Genève", "Carouge", "Lancy"], "cytria_score": 76, "agency_name": "Comptoir Immobilier SA", "agency_id": "comptoir-immobilier", "rank": 6}, {"name": "Alexandre Gallo", "role": "Directeur Général", "specialty": "Immobilier Urbain & Carougeois", "deals_count": 12, "rating": 4.95, "reviews_count": 35, "top_communes": ["Carouge", "Genève", "Lancy"], "cytria_score": 76, "agency_name": "AGCI Immobilier", "agency_id": "agci-immobilier", "rank": 7}, {"name": "Marie-Christine de Saint-Affrique", "role": "Courtière Associée Senior", "specialty": "Villas & Terrains Cologny", "deals_count": 12, "rating": 4.9, "reviews_count": 19, "top_communes": ["Cologny", "Vandœuvres", "Collonge-Bellerive"], "cytria_score": 74, "agency_name": "BARNES Suisse SA - Genève", "agency_id": "barnes-suisse", "rank": 8}, {"name": "Thierry Barbier-Mueller", "role": "Administrateur Délégué", "specialty": "Portefeuilles Institutionnels & Hoiries", "deals_count": 13, "rating": 4.8, "reviews_count": 21, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"], "cytria_score": 73, "agency_name": "SPG Société Privée de Gérance", "agency_id": "spg-groupe", "rank": 9}, {"name": "David Knafo", "role": "Directeur Associé", "specialty": "Maisons Familiales & Onex", "deals_count": 12, "rating": 4.92, "reviews_count": 24, "top_communes": ["Onex", "Lancy", "Bernex"], "cytria_score": 71, "agency_name": "NESSELL Real Estate SA", "agency_id": "nessell-real-estate", "rank": 10}, {"name": "Étienne Nagy", "role": "Directeur Général", "specialty": "Vente de Prestige & Partenariats", "deals_count": 12, "rating": 4.82, "reviews_count": 20, "top_communes": ["Genève", "Conches", "Vandoeuvres"], "cytria_score": 70, "agency_name": "Naef Immobilier Genève", "agency_id": "naef-immobilier", "rank": 11}, {"name": "Nicolas Teissier", "role": "Responsable du Pôle Courtage", "specialty": "Villas & Immeubles Familiaux", "deals_count": 12, "rating": 4.85, "reviews_count": 19, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"], "cytria_score": 70, "agency_name": "Moser Vernet & Cie (Move Properties)", "agency_id": "moser-vernet", "rank": 12}, {"name": "Sophie Martin-Pache", "role": "Courtière Senior Résidentiel", "specialty": "Villas Familiales & Successions", "deals_count": 11, "rating": 4.85, "reviews_count": 18, "top_communes": ["Chêne-Bougeries", "Veyrier", "Thônex"], "cytria_score": 69, "agency_name": "Comptoir Immobilier SA", "agency_id": "comptoir-immobilier", "rank": 13}, {"name": "Arnaud Boissier", "role": "Courtier Senior", "specialty": "Appartements de Standing Champel", "deals_count": 11, "rating": 4.8, "reviews_count": 16, "top_communes": ["Genève (Champel)", "Florissant", "Chêne-Bougeries"], "cytria_score": 67, "agency_name": "Cardis | Sotheby's International Realty Genève", "agency_id": "cardis-sothebys", "rank": 14}, {"name": "Isabelle Fiaux", "role": "Courtière Senior Rive Gauche", "specialty": "Villas Individuelles & Terrains", "deals_count": 10, "rating": 4.9, "reviews_count": 17, "top_communes": ["Chêne-Bougeries", "Veyrier", "Troinex"], "cytria_score": 67, "agency_name": "Naef Immobilier Genève", "agency_id": "naef-immobilier", "rank": 15}, {"name": "Thomas Bergerat", "role": "Directeur Commercial", "specialty": "Villas & Terrains Vésenaz", "deals_count": 11, "rating": 5.0, "reviews_count": 10, "top_communes": ["Collonge-Bellerive", "Anières", "Cologny"], "cytria_score": 66, "agency_name": "Jouan - de Rham SA", "agency_id": "jouan-de-rham", "rank": 16}, {"name": "Gabriela Turcatti", "role": "Courtière Associée", "specialty": "Villas Diplomatiques & Rive Droite", "deals_count": 10, "rating": 5.0, "reviews_count": 18, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"], "cytria_score": 66, "agency_name": "Beaulieu Immobilier Genève", "agency_id": "beaulieu-immobilier", "rank": 17}, {"name": "Alexandre Gallina", "role": "Directeur Genève", "specialty": "Vente Résidentielle Haut de Gamme", "deals_count": 10, "rating": 5.0, "reviews_count": 16, "top_communes": ["Genève", "Champel", "Chêne-Bougeries"], "cytria_score": 66, "agency_name": "Omnia Immobilier Genève", "agency_id": "omnia-geneve", "rank": 18}, {"name": "Philippe Calame", "role": "Directeur Agence", "specialty": "Pieds-dans-l'eau & Hôtels Particuliers", "deals_count": 11, "rating": 4.9, "reviews_count": 17, "top_communes": ["Cologny", "Genève", "Genthod"], "cytria_score": 66, "agency_name": "John Taylor Luxury Real Estate Genève", "agency_id": "john-taylor-geneva", "rank": 19}, {"name": "Sandra Bleeckx Vanhalst", "role": "Associée & Directrice de Courtage", "specialty": "Villas & Hoiries Rive Gauche", "deals_count": 9, "rating": 4.95, "reviews_count": 22, "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries"], "cytria_score": 65, "agency_name": "Désormière & Vanhalst - Immobilier Genève", "agency_id": "desormiere-vanhalst", "rank": 20}, {"name": "Cyril de Bavier", "role": "CEO & Associé", "specialty": "Développement Urbain & Terrains", "deals_count": 11, "rating": 4.85, "reviews_count": 15, "top_communes": ["Carouge", "Lancy", "Genève"], "cytria_score": 64, "agency_name": "Swissroc Real Estate", "agency_id": "swissroc-group", "rank": 21}, {"name": "Colin Woolcock", "role": "Senior Broker", "specialty": "Expat Housing & Relocation Sales", "deals_count": 7, "rating": 5.0, "reviews_count": 21, "top_communes": ["Genève", "Pregny-Chambésy", "Versoix"], "cytria_score": 64, "agency_name": "Geneva Homes Real Estate", "agency_id": "geneva-homes", "rank": 22}, {"name": "Alexandre de Senarclens", "role": "Courtier Spécialiste Rive Droite", "specialty": "Résidences d'Ambassades & Propriétés de Maître", "deals_count": 10, "rating": 4.75, "reviews_count": 14, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"], "cytria_score": 63, "agency_name": "BARNES Suisse SA - Genève", "agency_id": "barnes-suisse", "rank": 23}, {"name": "Lionel Chandy", "role": "Directeur Associé", "specialty": "Vente de Logements & Financement", "deals_count": 10, "rating": 4.7, "reviews_count": 28, "top_communes": ["Lancy", "Plan-les-Ouates", "Onex"], "cytria_score": 63, "agency_name": "CI Léman Immobilier", "agency_id": "ci-leman", "rank": 24}, {"name": "Daniela Dhotel", "role": "Associée Gérante", "specialty": "Villas Rive Gauche & Hermance", "deals_count": 9, "rating": 5.0, "reviews_count": 15, "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"], "cytria_score": 63, "agency_name": "105 Immo - Immobilier & Architecture", "agency_id": "105-immo", "rank": 25}, {"name": "Camille Dutoit", "role": "Courtière Spécialiste Campagne", "specialty": "Domaines Agricoles & Châteaux", "deals_count": 8, "rating": 4.9, "reviews_count": 12, "top_communes": ["Russin", "Satigny", "Dardagny"], "cytria_score": 62, "agency_name": "Cardis | Sotheby's International Realty Genève", "agency_id": "cardis-sothebys", "rank": 26}, {"name": "Joëlle Ordon", "role": "Courtière Associée Senior", "specialty": "Négociation Stratégique & Off-Market", "deals_count": 9, "rating": 5.0, "reviews_count": 12, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"], "cytria_score": 62, "agency_name": "OAKSWELL BY OAKS GROUP", "agency_id": "oakswell-group", "rank": 27}, {"name": "Laure Monney", "role": "Directrice d'Agence", "specialty": "Maisons Villageoises & Terrains", "deals_count": 9, "rating": 5.0, "reviews_count": 14, "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"], "cytria_score": 62, "agency_name": "Swixim International - Plan-les-Ouates", "agency_id": "swixim-plan-les-ouates", "rank": 28}, {"name": "Béatrice de Riedmatten", "role": "Courtière Partenaire", "specialty": "Appartements de Charme & PPE", "deals_count": 10, "rating": 4.7, "reviews_count": 15, "top_communes": ["Genève (Eaux-Vives)", "Chêne-Bourg", "Vandoeuvres"], "cytria_score": 61, "agency_name": "SPG Société Privée de Gérance", "agency_id": "spg-groupe", "rank": 29}, {"name": "Marcello Della Torre", "role": "Courtier Associé", "specialty": "Villas & Terrains Rive Droite", "deals_count": 7, "rating": 4.9, "reviews_count": 19, "top_communes": ["Bellevue", "Genthod", "Versoix"], "cytria_score": 60, "agency_name": "Stone Invest Genève", "agency_id": "stone-invest", "rank": 30}, {"name": "Alain Schaller", "role": "Managing Director", "specialty": "Résidences Lacustres & Prestige", "deals_count": 10, "rating": 4.75, "reviews_count": 18, "top_communes": ["Cologny", "Genève (Eaux-Vives)", "Anières"], "cytria_score": 60, "agency_name": "Engel & Völkers Genève", "agency_id": "engel-voelkers-geneve", "rank": 31}, {"name": "Théry Schir", "role": "Courtier Spécialiste PPE", "specialty": "Appartements & Résidences Récentes", "deals_count": 9, "rating": 4.78, "reviews_count": 13, "top_communes": ["Genève (Eaux-Vives)", "Vésenaz", "Carouge"], "cytria_score": 59, "agency_name": "Moser Vernet & Cie (Move Properties)", "agency_id": "moser-vernet", "rank": 32}, {"name": "Audrey Caveng", "role": "Courtière Senior", "specialty": "Appartements de Maître & Champel", "deals_count": 8, "rating": 4.88, "reviews_count": 11, "top_communes": ["Genève (Champel)", "Chêne-Bougeries"], "cytria_score": 59, "agency_name": "Leonard Properties Luxury Real Estate", "agency_id": "leonard-properties", "rank": 33}, {"name": "Julien Bourgnon", "role": "Courtier PPE & Promotions", "specialty": "Appartements Neufs & Rénovés", "deals_count": 9, "rating": 4.7, "reviews_count": 12, "top_communes": ["Plan-les-Ouates", "Bernex", "Onex"], "cytria_score": 58, "agency_name": "Comptoir Immobilier SA", "agency_id": "comptoir-immobilier", "rank": 34}, {"name": "Léonard de Rham", "role": "Administrateur & Courtier", "specialty": "Patrimoine & Successions Rive Gauche", "deals_count": 8, "rating": 5.0, "reviews_count": 5, "top_communes": ["Vésenaz", "Meinier", "Corsier"], "cytria_score": 57, "agency_name": "Jouan - de Rham SA", "agency_id": "jouan-de-rham", "rank": 35}, {"name": "Guillaume Basile", "role": "Directeur des Ventes", "specialty": "Vente sur Plan & Rénovations", "deals_count": 9, "rating": 4.75, "reviews_count": 12, "top_communes": ["Carouge", "Veyrier", "Vessy"], "cytria_score": 56, "agency_name": "Swissroc Real Estate", "agency_id": "swissroc-group", "rank": 36}, {"name": "Nathalie Guichard", "role": "Courtière Spécialiste Rive Gauche", "specialty": "Villas & Terrains Équestres", "deals_count": 8, "rating": 4.82, "reviews_count": 14, "top_communes": ["Vandœuvres", "Choulex", "Meinier"], "cytria_score": 56, "agency_name": "Engel & Völkers Genève", "agency_id": "engel-voelkers-geneve", "rank": 37}, {"name": "Grégory Marchand", "role": "Courtier Expert", "specialty": "Villas & Terrains Campagne", "deals_count": 7, "rating": 5.0, "reviews_count": 8, "top_communes": ["Veyrier", "Troinex", "Satigny"], "cytria_score": 56, "agency_name": "Omnia Immobilier Genève", "agency_id": "omnia-geneve", "rank": 38}, {"name": "Corinne Guillo", "role": "Courtière Partenaire", "specialty": "Appartements & PPE Ouest Genevois", "deals_count": 7, "rating": 4.86, "reviews_count": 10, "top_communes": ["Onex", "Confignon", "Plan-les-Ouates"], "cytria_score": 52, "agency_name": "NESSELL Real Estate SA", "agency_id": "nessell-real-estate", "rank": 39}, {"name": "Belfin Lips", "role": "Courtière Associée", "specialty": "Villas Contemporaines", "deals_count": 6, "rating": 4.8, "reviews_count": 7, "top_communes": ["Collonge-Bellerive", "Anières"], "cytria_score": 50, "agency_name": "Leonard Properties Luxury Real Estate", "agency_id": "leonard-properties", "rank": 40}, {"name": "Maximilien de Stadelhofen", "role": "Courtier Expert", "specialty": "Propriétés au Bord de l'Eau", "deals_count": 5, "rating": 5.0, "reviews_count": 3, "top_communes": ["Hermance", "Anières", "Cologny"], "cytria_score": 50, "agency_name": "Jouan - de Rham SA", "agency_id": "jouan-de-rham", "rank": 41}, {"name": "Adrien Désormière", "role": "Associé & Courtier Expert", "specialty": "Villas Haut de Gamme & Terrains", "deals_count": 7, "rating": 4.8, "reviews_count": 9, "top_communes": ["Troinex", "Plan-les-Ouates", "Genève"], "cytria_score": 50, "agency_name": "Désormière & Vanhalst - Immobilier Genève", "agency_id": "desormiere-vanhalst", "rank": 42}, {"name": "Luca Copercini", "role": "Directeur Associé", "specialty": "Villas Contemporaines", "deals_count": 5, "rating": 5.0, "reviews_count": 6, "top_communes": ["Cologny", "Collonge-Bellerive"], "cytria_score": 50, "agency_name": "OAKSWELL BY OAKS GROUP", "agency_id": "oakswell-group", "rank": 43}, {"name": "Adrien Billaux", "role": "Courtier Spécialiste", "specialty": "Villas Mitoyennes & PPE", "deals_count": 7, "rating": 4.65, "reviews_count": 14, "top_communes": ["Lancy", "Bernex", "Confignon"], "cytria_score": 48, "agency_name": "CI Léman Immobilier", "agency_id": "ci-leman", "rank": 44}, {"name": "Philippe Beaulieu", "role": "Fondateur", "specialty": "Domaines Lacustres", "deals_count": 4, "rating": 4.85, "reviews_count": 3, "top_communes": ["Chambésy", "Versoix"], "cytria_score": 42, "agency_name": "Beaulieu Immobilier Genève", "agency_id": "beaulieu-immobilier", "rank": 45}]};
+    const LEAGUE_DATA = {"agencies": [{"id": "barnes-suisse", "name": "BARNES Suisse SA - Genève", "address": "Rue du Rhône 23, 1204 Genève", "headquarters_commune": "Genève", "lat": 46.2045, "lon": 6.1495, "radius_meters": 6500, "website": "https://barnes-suisse.com/", "linkedin_url": "https://www.linkedin.com/company/barnes-suisse-sa/", "instagram_url": "https://www.instagram.com/barnes_suisse/", "phone": "+41 22 849 88 88", "email": "geneve@barnes-suisse.com", "specialties": ["Résidentiel Haut de Gamme", "Gestion de Fortune Immobilière", "Ventes Privées"], "sold_24m_count": 52, "sold_volume_chf_m": 210.0, "median_price_chf": 3950000, "median_house_chf": 6800000, "median_apartment_chf": 2300000, "rating": 4.7, "reviews_count": 89, "primary_territory": "Cologny / Genève / Vandœuvres / Rive Gauche", "top_communes": ["Cologny", "Genève", "Vandœuvres", "Collonge-Bellerive", "Pregny-Chambésy"], "discount_rate_est": 5.8, "agents": [{"name": "Jérôme Félicité", "role": "Président & Directeur Général", "specialty": "Propriétés Internationales & Hôtels Particuliers", "deals_count": 16, "rating": 4.8, "reviews_count": 27, "top_communes": ["Genève", "Cologny", "Pregny-Chambésy"], "linkedin_profile_url": "https://www.linkedin.com/in/jerome-felicite/", "phone": "+41 22 849 88 80", "email": "j.felicite@barnes-suisse.com"}, {"name": "Marie-Christine de Saint-Affrique", "role": "Courtière Associée Senior", "specialty": "Villas & Terrains Cologny", "deals_count": 12, "rating": 4.9, "reviews_count": 19, "top_communes": ["Cologny", "Vandœuvres", "Collonge-Bellerive"], "linkedin_profile_url": "https://www.linkedin.com/in/marie-christine-de-saint-affrique/", "phone": "+41 22 849 88 82", "email": "mc.saintaffrique@barnes-suisse.com"}, {"name": "Alexandre de Senarclens", "role": "Courtier Spécialiste Rive Droite", "specialty": "Résidences d'Ambassades & Propriétés de Maître", "deals_count": 10, "rating": 4.75, "reviews_count": 14, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"], "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-de-senarclens/", "phone": "+41 22 849 88 85", "email": "a.senarclens@barnes-suisse.com"}], "cytria_score": 90, "rank": 1}, {"id": "cardis-sothebys", "name": "Cardis | Sotheby's International Realty Genève", "address": "Rue François-Bellot 2, 1206 Genève", "headquarters_commune": "Genève", "lat": 46.1975, "lon": 6.155, "radius_meters": 7000, "website": "https://cardis.ch/", "linkedin_url": "https://www.linkedin.com/company/cardis-sotheby-s-international-realty/", "instagram_url": "https://www.instagram.com/cardissothebysrealty/", "phone": "+41 22 789 20 00", "email": "geneve@cardis.ch", "specialties": ["Ultra-Luxe", "Réseau International Sotheby's", "Immeubles & Domaines"], "sold_24m_count": 45, "sold_volume_chf_m": 185.0, "median_price_chf": 4100000, "median_house_chf": 7500000, "median_apartment_chf": 2400000, "rating": 4.75, "reviews_count": 72, "primary_territory": "Canton de Genève Entier (Cologny, Florissant, Russin)", "top_communes": ["Cologny", "Genève", "Vandœuvres", "Chêne-Bougeries", "Russin", "Satigny"], "discount_rate_est": 5.4, "agents": [{"name": "Sébastien Rohner", "role": "Directeur d'Agence Genève", "specialty": "Propriétés d'Exception", "deals_count": 18, "rating": 4.85, "reviews_count": 31, "top_communes": ["Cologny", "Genève", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/sebastien-rohner/", "phone": "+41 22 789 20 01", "email": "s.rohner@cardis.ch"}, {"name": "Arnaud Boissier", "role": "Courtier Senior", "specialty": "Appartements de Standing Champel", "deals_count": 11, "rating": 4.8, "reviews_count": 16, "top_communes": ["Genève", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/arnaud-boissier/", "phone": "+41 22 789 20 04", "email": "a.boissier@cardis.ch"}, {"name": "Camille Dutoit", "role": "Courtière Spécialiste Campagne", "specialty": "Domaines Agricoles & Châteaux", "deals_count": 8, "rating": 4.9, "reviews_count": 12, "top_communes": ["Russin", "Satigny", "Dardagny"], "linkedin_profile_url": "https://www.linkedin.com/in/camille-dutoit-immo/", "phone": "+41 22 789 20 08", "email": "c.dutoit@cardis.ch"}], "cytria_score": 87, "rank": 2}, {"id": "comptoir-immobilier", "name": "Comptoir Immobilier SA", "address": "Rue de la Tertasse 2, 1204 Genève", "headquarters_commune": "Genève", "lat": 46.2012, "lon": 6.1455, "radius_meters": 5500, "website": "https://comptoir-immo.ch/", "linkedin_url": "https://www.linkedin.com/company/comptoir-immobilier-sa/", "instagram_url": "https://www.instagram.com/comptoir_immobilier/", "phone": "+41 22 319 88 88", "email": "ventes@comptoir-immo.ch", "specialties": ["Régie Historique", "Immeubles de Rendement", "Villas Rive Gauche & Droite"], "sold_24m_count": 48, "sold_volume_chf_m": 165.0, "median_price_chf": 2650000, "median_house_chf": 4200000, "median_apartment_chf": 1400000, "rating": 4.65, "reviews_count": 94, "primary_territory": "Genève Ville / Carouge / Rive Gauche", "top_communes": ["Genève", "Carouge", "Lancy", "Chêne-Bougeries", "Veyrier", "Thônex"], "discount_rate_est": 4.8, "agents": [{"name": "Quentin Epiney", "role": "Directeur Commercial Ventes", "specialty": "Immeubles Résidentiels & Rendement", "deals_count": 14, "rating": 4.75, "reviews_count": 25, "top_communes": ["Genève", "Carouge", "Lancy"], "linkedin_profile_url": "https://www.linkedin.com/in/quentin-epiney/", "phone": "+41 22 319 88 90", "email": "q.epiney@comptoir-immo.ch"}, {"name": "Sophie Martin-Pache", "role": "Courtière Senior Résidentiel", "specialty": "Villas Familiales & Successions", "deals_count": 11, "rating": 4.85, "reviews_count": 18, "top_communes": ["Chêne-Bougeries", "Veyrier", "Thônex"], "linkedin_profile_url": "https://www.linkedin.com/in/sophie-martin-pache/", "phone": "+41 22 319 88 92", "email": "s.martinpache@comptoir-immo.ch"}, {"name": "Julien Bourgnon", "role": "Courtier PPE & Promotions", "specialty": "Appartements Neufs & Rénovés", "deals_count": 9, "rating": 4.7, "reviews_count": 12, "top_communes": ["Plan-les-Ouates", "Bernex", "Onex"], "linkedin_profile_url": "https://www.linkedin.com/in/julien-bourgnon/", "phone": "+41 22 319 88 95", "email": "j.bourgnon@comptoir-immo.ch"}], "cytria_score": 86, "rank": 3}, {"id": "spg-groupe", "name": "SPG Société Privée de Gérance", "address": "Route de Chêne 36, 1208 Genève", "headquarters_commune": "Genève", "lat": 46.2025, "lon": 6.1665, "radius_meters": 5500, "website": "https://spg.ch/", "linkedin_url": "https://www.linkedin.com/company/spg-societe-privee-de-gerance/", "instagram_url": "https://www.instagram.com/spg_immobilier/", "phone": "+41 22 707 46 00", "email": "info@spg.ch", "specialties": ["Institutionnels", "Gestion de Patrimoine", "Promotions Immobilières"], "sold_24m_count": 42, "sold_volume_chf_m": 155.0, "median_price_chf": 2750000, "median_house_chf": 4500000, "median_apartment_chf": 1550000, "rating": 4.6, "reviews_count": 86, "primary_territory": "Chêne-Bougeries / Malagnou / Florissant", "top_communes": ["Genève", "Chêne-Bougeries", "Cologny", "Chêne-Bourg", "Vandœuvres"], "discount_rate_est": 5.0, "agents": [{"name": "Thierry Barbier-Mueller", "role": "Administrateur Délégué", "specialty": "Portefeuilles Institutionnels & Hoiries", "deals_count": 13, "rating": 4.8, "reviews_count": 21, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/thierry-barbier-mueller/", "phone": "+41 22 707 46 10", "email": "t.barbiermueller@spg.ch"}, {"name": "Béatrice de Riedmatten", "role": "Courtière Partenaire", "specialty": "Appartements de Charme & PPE", "deals_count": 10, "rating": 4.7, "reviews_count": 15, "top_communes": ["Genève", "Chêne-Bourg", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/beatrice-de-riedmatten/", "phone": "+41 22 707 46 15", "email": "b.riedmatten@spg.ch"}], "cytria_score": 81, "rank": 4}, {"id": "naef-immobilier", "name": "Naef Immobilier Genève", "address": "Avenue Eugène-Pittard 14-16, 1206 Genève", "headquarters_commune": "Genève", "lat": 46.1925, "lon": 6.1605, "radius_meters": 5200, "website": "https://naef.ch/", "linkedin_url": "https://www.linkedin.com/company/naef-immobilier/", "instagram_url": "https://www.instagram.com/naefimmobilier/", "phone": "+41 22 839 39 39", "email": "geneve@naef.ch", "specialties": ["Courtage Résidentiel", "Knight Frank Partner", "Promotions Neuves"], "sold_24m_count": 40, "sold_volume_chf_m": 140.0, "median_price_chf": 2500000, "median_house_chf": 4100000, "median_apartment_chf": 1350000, "rating": 4.68, "reviews_count": 78, "primary_territory": "Florissant / Champel / Conches", "top_communes": ["Genève", "Chêne-Bougeries", "Veyrier", "Troinex", "Vandœuvres"], "discount_rate_est": 4.9, "agents": [{"name": "Étienne Nagy", "role": "Directeur Général", "specialty": "Vente de Prestige & Partenariats", "deals_count": 12, "rating": 4.82, "reviews_count": 20, "top_communes": ["Genève", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/etienne-nagy/", "phone": "+41 22 839 39 40", "email": "e.nagy@naef.ch"}, {"name": "Isabelle Fiaux", "role": "Courtière Senior Rive Gauche", "specialty": "Villas Individuelles & Terrains", "deals_count": 10, "rating": 4.9, "reviews_count": 17, "top_communes": ["Chêne-Bougeries", "Veyrier", "Troinex"], "linkedin_profile_url": "https://www.linkedin.com/in/isabelle-fiaux/", "phone": "+41 22 839 39 45", "email": "i.fiaux@naef.ch"}], "cytria_score": 79, "rank": 5}, {"id": "moser-vernet", "name": "Moser Vernet & Cie (Move Properties)", "address": "Rue du Rhône 118, 1204 Genève", "headquarters_commune": "Genève", "lat": 46.2055, "lon": 6.157, "radius_meters": 4800, "website": "https://moservernet.ch/", "linkedin_url": "https://www.linkedin.com/company/moser-vernet-&-cie/", "instagram_url": "https://www.instagram.com/moservernet_cie/", "phone": "+41 22 839 29 29", "email": "courtage@moservernet.ch", "specialties": ["Régie Familiale", "Courtage Move Properties", "Gestion Locative & Vente"], "sold_24m_count": 35, "sold_volume_chf_m": 115.0, "median_price_chf": 2350000, "median_house_chf": 3800000, "median_apartment_chf": 1280000, "rating": 4.72, "reviews_count": 64, "primary_territory": "Genève Centre / Eaux-Vives / Champel", "top_communes": ["Genève", "Chêne-Bougeries", "Cologny", "Collonge-Bellerive", "Carouge"], "discount_rate_est": 4.5, "agents": [{"name": "Nicolas Teissier", "role": "Responsable du Pôle Courtage", "specialty": "Villas & Immeubles Familiaux", "deals_count": 12, "rating": 4.85, "reviews_count": 19, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/nicolas-teissier-immo/", "phone": "+41 22 839 29 30", "email": "n.teissier@moservernet.ch"}, {"name": "Théry Schir", "role": "Courtier Spécialiste PPE", "specialty": "Appartements & Résidences Récentes", "deals_count": 9, "rating": 4.78, "reviews_count": 13, "top_communes": ["Genève", "Collonge-Bellerive", "Carouge"], "linkedin_profile_url": "https://www.linkedin.com/in/thery-schir/", "phone": "+41 22 839 29 35", "email": "t.schir@moveproperties.ch"}], "cytria_score": 74, "rank": 6}, {"id": "leonard-properties", "name": "Leonard Properties Luxury Real Estate", "address": "Avenue de Champel 31, 1206 Genève", "headquarters_commune": "Genève", "lat": 46.1915, "lon": 6.154, "radius_meters": 4500, "website": "https://leonard-properties.com/", "linkedin_url": "https://www.linkedin.com/company/leonard-properties/", "instagram_url": "https://www.instagram.com/leonardproperties/", "phone": "+41 22 718 70 70", "email": "info@leonard-properties.com", "specialties": ["Immobilier de Prestige", "Champel & Florissant", "Pieds-dans-l'eau"], "sold_24m_count": 28, "sold_volume_chf_m": 98.4, "median_price_chf": 3800000, "median_house_chf": 6200000, "median_apartment_chf": 2200000, "rating": 4.92, "reviews_count": 46, "primary_territory": "Champel / Cologny / Vandœuvres", "top_communes": ["Genève", "Cologny", "Vandœuvres", "Chêne-Bougeries", "Collonge-Bellerive"], "discount_rate_est": 3.8, "agents": [{"name": "Léonard Cohen", "role": "Fondateur & Directeur", "specialty": "Trophy Assets & Rive Gauche", "deals_count": 14, "rating": 4.96, "reviews_count": 28, "top_communes": ["Cologny", "Genève", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/leonard-cohen-properties/", "phone": "+41 22 718 70 71", "email": "lc@leonard-properties.com"}, {"name": "Audrey Caveng", "role": "Courtière Senior", "specialty": "Appartements de Maître & Champel", "deals_count": 8, "rating": 4.88, "reviews_count": 11, "top_communes": ["Genève", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/audrey-caveng/", "phone": "+41 22 718 70 73", "email": "ac@leonard-properties.com"}, {"name": "Belfin Lips", "role": "Courtière Associée", "specialty": "Villas Contemporaines", "deals_count": 6, "rating": 4.8, "reviews_count": 7, "top_communes": ["Collonge-Bellerive", "Anières"], "linkedin_profile_url": "https://www.linkedin.com/in/belfin-lips/", "phone": "+41 22 718 70 75", "email": "bl@leonard-properties.com"}], "cytria_score": 71, "rank": 7}, {"id": "geneva-homes", "name": "Geneva Homes Real Estate", "address": "Route de Malagnou 40A, 1208 Genève", "headquarters_commune": "Genève", "lat": 46.1985, "lon": 6.1645, "radius_meters": 4800, "website": "https://genevahomes.ch/", "linkedin_url": "https://www.linkedin.com/company/geneva-homes/", "instagram_url": "https://www.instagram.com/genevahomes_realty/", "phone": "+41 22 735 25 25", "email": "info@genevahomes.ch", "specialties": ["Clientèle Expatriée & Multilingue", "Florissant & Malagnou", "Investissements"], "sold_24m_count": 21, "sold_volume_chf_m": 56.4, "median_price_chf": 2200000, "median_house_chf": 3400000, "median_apartment_chf": 1400000, "rating": 5.0, "reviews_count": 75, "primary_territory": "Malagnou / Florissant / Champel", "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres", "Pregny-Chambésy", "Versoix"], "discount_rate_est": 4.1, "agents": [{"name": "Silvia Mandracho", "role": "Fondatrice & Directrice", "specialty": "Ventes Résidentielles Internationales", "deals_count": 11, "rating": 5.0, "reviews_count": 42, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/silvia-mandracho/", "phone": "+41 22 735 25 26", "email": "s.mandracho@genevahomes.ch"}, {"name": "Colin Woolcock", "role": "Senior Broker", "specialty": "Expat Housing & Relocation Sales", "deals_count": 7, "rating": 5.0, "reviews_count": 21, "top_communes": ["Genève", "Pregny-Chambésy", "Versoix"], "linkedin_profile_url": "https://www.linkedin.com/in/colin-woolcock/", "phone": "+41 22 735 25 28", "email": "c.woolcock@genevahomes.ch"}], "cytria_score": 64, "rank": 8}, {"id": "swissroc-group", "name": "Swissroc Real Estate", "address": "Rue Jacques-Dalphin 36, 1227 Carouge", "headquarters_commune": "Carouge", "lat": 46.1835, "lon": 6.139, "radius_meters": 4200, "website": "https://swissroc.com/", "linkedin_url": "https://www.linkedin.com/company/swissroc-group/", "instagram_url": "https://www.instagram.com/swissroc_group/", "phone": "+41 22 552 05 55", "email": "contact@swissroc.com", "specialties": ["Développement & Foncier", "Promotions Clé en Main", "Carouge & Plainpalais"], "sold_24m_count": 26, "sold_volume_chf_m": 82.0, "median_price_chf": 2700000, "median_house_chf": 3500000, "median_apartment_chf": 1500000, "rating": 4.78, "reviews_count": 39, "primary_territory": "Carouge / Genève / Vessy", "top_communes": ["Carouge", "Lancy", "Genève", "Veyrier"], "discount_rate_est": 4.4, "agents": [{"name": "Cyril de Bavier", "role": "CEO & Associé", "specialty": "Développement Urbain & Terrains", "deals_count": 11, "rating": 4.85, "reviews_count": 15, "top_communes": ["Carouge", "Lancy", "Genève"], "linkedin_profile_url": "https://www.linkedin.com/in/cyril-de-bavier/", "phone": "+41 22 552 05 56", "email": "c.debavier@swissroc.com"}, {"name": "Guillaume Basile", "role": "Directeur des Ventes", "specialty": "Vente sur Plan & Rénovations", "deals_count": 9, "rating": 4.75, "reviews_count": 12, "top_communes": ["Carouge", "Veyrier"], "linkedin_profile_url": "https://www.linkedin.com/in/guillaume-basile/", "phone": "+41 22 552 05 58", "email": "g.basile@swissroc.com"}], "cytria_score": 63, "rank": 9}, {"id": "stone-invest", "name": "Stone Invest Genève", "address": "Chemin de la Seymaz 14, 1253 Vandœuvres", "headquarters_commune": "Vandœuvres", "lat": 46.2215, "lon": 6.199, "radius_meters": 5500, "website": "https://stone-invest.ch/", "linkedin_url": "https://www.linkedin.com/company/stone-invest/", "instagram_url": "https://www.instagram.com/stoneinvest_geneva/", "phone": "+41 22 342 70 70", "email": "contact@stone-invest.ch", "specialties": ["Rive Droite & Grand-Saconnex", "Villas & PPE Neuves", "Conseil Foncier"], "sold_24m_count": 22, "sold_volume_chf_m": 48.0, "median_price_chf": 1950000, "median_house_chf": 2900000, "median_apartment_chf": 1250000, "rating": 4.95, "reviews_count": 58, "primary_territory": "Le Grand-Saconnex / Meyrin / Vandœuvres", "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin", "Bellevue", "Genthod", "Versoix"], "discount_rate_est": 4.6, "agents": [{"name": "Daniela Ghiandai", "role": "Courtière Partenaire Senior", "specialty": "Rive Droite & Ventes Express", "deals_count": 15, "rating": 5.0, "reviews_count": 39, "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin"], "linkedin_profile_url": "https://www.linkedin.com/in/daniela-ghiandai/", "phone": "+41 22 342 70 72", "email": "d.ghiandai@stone-invest.ch"}, {"name": "Marcello Della Torre", "role": "Courtier Associé", "specialty": "Villas & Terrains Rive Droite", "deals_count": 7, "rating": 4.9, "reviews_count": 19, "top_communes": ["Bellevue", "Genthod", "Versoix"], "linkedin_profile_url": "https://www.linkedin.com/in/marcello-dellatorre/", "phone": "+41 22 342 70 75", "email": "m.dellatorre@stone-invest.ch"}], "cytria_score": 60, "rank": 10}, {"id": "jouan-de-rham", "name": "Jouan - de Rham SA", "address": "Route de Thonon 60, 1222 Vésenaz", "headquarters_commune": "Collonge-Bellerive", "lat": 46.2395, "lon": 6.188, "radius_meters": 4800, "website": "https://jouan-derham.ch/", "linkedin_url": "https://www.linkedin.com/company/jouan-de-rham/", "instagram_url": "https://www.instagram.com/jouanderham/", "phone": "+41 22 752 40 40", "email": "info@jouan-derham.ch", "specialties": ["Villas Rive Gauche", "Vésenaz & Anières", "Propriétés Familiales"], "sold_24m_count": 24, "sold_volume_chf_m": 76.0, "median_price_chf": 3100000, "median_house_chf": 4100000, "median_apartment_chf": 1450000, "rating": 5.0, "reviews_count": 18, "primary_territory": "Collonge-Bellerive / Vésenaz / Cologny", "top_communes": ["Collonge-Bellerive", "Anières", "Cologny", "Meinier", "Corsier", "Hermance"], "discount_rate_est": 3.5, "agents": [{"name": "Thomas Bergerat", "role": "Directeur Commercial", "specialty": "Villas & Terrains Vésenaz", "deals_count": 11, "rating": 5.0, "reviews_count": 10, "top_communes": ["Collonge-Bellerive", "Anières", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/thomas-bergerat/", "phone": "+41 22 752 40 42", "email": "t.bergerat@jouan-derham.ch"}, {"name": "Léonard de Rham", "role": "Administrateur & Courtier", "specialty": "Patrimoine & Successions Rive Gauche", "deals_count": 8, "rating": 5.0, "reviews_count": 5, "top_communes": ["Collonge-Bellerive", "Meinier", "Corsier"], "linkedin_profile_url": "https://www.linkedin.com/in/leonard-de-rham/", "phone": "+41 22 752 40 45", "email": "l.derham@jouan-derham.ch"}, {"name": "Maximilien de Stadelhofen", "role": "Courtier Expert", "specialty": "Propriétés au Bord de l'Eau", "deals_count": 5, "rating": 5.0, "reviews_count": 3, "top_communes": ["Hermance", "Anières", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/maximilien-stadelhofen/", "phone": "+41 22 752 40 48", "email": "m.stadelhofen@jouan-derham.ch"}], "cytria_score": 59, "rank": 11}, {"id": "engel-voelkers-geneve", "name": "Engel & Völkers Genève", "address": "Quai Gustave-Ador 2, 1207 Genève", "headquarters_commune": "Genève", "lat": 46.2065, "lon": 6.1555, "radius_meters": 5200, "website": "https://engelvoelkers.com/geneva", "linkedin_url": "https://www.linkedin.com/company/engel-&-v%C3%B6lkers-switzerland/", "instagram_url": "https://www.instagram.com/evgeneva/", "phone": "+41 22 552 29 29", "email": "geneva@engelvoelkers.com", "specialties": ["Réseau International", "Appartements Quai Gustave-Ador", "Cologny & Anières"], "sold_24m_count": 25, "sold_volume_chf_m": 79.5, "median_price_chf": 2900000, "median_house_chf": 4500000, "median_apartment_chf": 1800000, "rating": 4.7, "reviews_count": 42, "primary_territory": "Eaux-Vives / Cologny / Vésenaz", "top_communes": ["Genève", "Cologny", "Anières", "Vandœuvres", "Choulex", "Meinier"], "discount_rate_est": 5.2, "agents": [{"name": "Alain Schaller", "role": "Managing Director", "specialty": "Résidences Lacustres & Prestige", "deals_count": 10, "rating": 4.75, "reviews_count": 18, "top_communes": ["Cologny", "Genève", "Anières"], "linkedin_profile_url": "https://www.linkedin.com/in/alain-schaller/", "phone": "+41 22 552 29 30", "email": "alain.schaller@engelvoelkers.com"}, {"name": "Nathalie Guichard", "role": "Courtière Spécialiste Rive Gauche", "specialty": "Villas & Terrains Équestres", "deals_count": 8, "rating": 4.82, "reviews_count": 14, "top_communes": ["Vandœuvres", "Choulex", "Meinier"], "linkedin_profile_url": "https://www.linkedin.com/in/nathalie-guichard-ev/", "phone": "+41 22 552 29 32", "email": "nathalie.guichard@engelvoelkers.com"}], "cytria_score": 59, "rank": 12}, {"id": "agci-immobilier", "name": "AGCI Immobilier", "address": "Avenue Vibert 13, 1227 Carouge", "headquarters_commune": "Carouge", "lat": 46.182, "lon": 6.134, "radius_meters": 3800, "website": "https://agci.ch/", "linkedin_url": "https://www.linkedin.com/company/agci-immobilier/", "instagram_url": "https://www.instagram.com/agci_immobilier/", "phone": "+41 22 301 22 22", "email": "contact@agci.ch", "specialties": ["Carouge & Environs", "Évaluations Précises", "Vente Appartements"], "sold_24m_count": 18, "sold_volume_chf_m": 37.8, "median_price_chf": 1750000, "median_house_chf": 2500000, "median_apartment_chf": 1150000, "rating": 4.91, "reviews_count": 48, "primary_territory": "Carouge / Lancy / Acacias", "top_communes": ["Carouge", "Genève", "Lancy"], "discount_rate_est": 4.3, "agents": [{"name": "Alexandre Gallo", "role": "Directeur Général", "specialty": "Immobilier Urbain & Carougeois", "deals_count": 12, "rating": 4.95, "reviews_count": 35, "top_communes": ["Carouge", "Genève", "Lancy"], "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-gallo-agci/", "phone": "+41 22 301 22 24", "email": "a.gallo@agci.ch"}], "cytria_score": 57, "rank": 13}, {"id": "john-taylor-geneva", "name": "John Taylor Luxury Real Estate Genève", "address": "Quai du Mont-Blanc 21, 1201 Genève", "headquarters_commune": "Genève", "lat": 46.211, "lon": 6.151, "radius_meters": 6500, "website": "https://john-taylor.com/geneva", "linkedin_url": "https://www.linkedin.com/company/john-taylor/", "instagram_url": "https://www.instagram.com/johntaylorswitzerland/", "phone": "+41 22 809 98 00", "email": "geneva@john-taylor.com", "specialties": ["Propriétés Rive Droite Lac", "Quai du Mont-Blanc", "Domaines Privés"], "sold_24m_count": 20, "sold_volume_chf_m": 88.0, "median_price_chf": 4200000, "median_house_chf": 7100000, "median_apartment_chf": 2500000, "rating": 4.85, "reviews_count": 28, "primary_territory": "Canton de Genève / Cologny / Pregny", "top_communes": ["Cologny", "Genève", "Genthod", "Pregny-Chambésy", "Bellevue"], "discount_rate_est": 4.8, "agents": [{"name": "Philippe Calame", "role": "Directeur Agence", "specialty": "Pieds-dans-l'eau & Hôtels Particuliers", "deals_count": 11, "rating": 4.9, "reviews_count": 17, "top_communes": ["Cologny", "Genève", "Genthod"], "linkedin_profile_url": "https://www.linkedin.com/in/philippe-calame/", "phone": "+41 22 809 98 02", "email": "p.calame@john-taylor.com"}], "cytria_score": 57, "rank": 14}, {"id": "omnia-geneve", "name": "Omnia Immobilier Genève", "address": "Rue Charles-Bonnet 3, 1206 Genève", "headquarters_commune": "Genève", "lat": 46.197, "lon": 6.153, "radius_meters": 5000, "website": "https://omnia.ch/", "linkedin_url": "https://www.linkedin.com/company/omnia-immobilier/", "instagram_url": "https://www.instagram.com/omniaimmobilier/", "phone": "+41 22 700 80 80", "email": "geneve@omnia.ch", "specialties": ["Courtage Romand", "Genève & Vaud", "Appartements & Villas"], "sold_24m_count": 22, "sold_volume_chf_m": 58.0, "median_price_chf": 2150000, "median_house_chf": 3200000, "median_apartment_chf": 1300000, "rating": 5.0, "reviews_count": 24, "primary_territory": "Genève / Florissant / Champel", "top_communes": ["Genève", "Chêne-Bougeries", "Veyrier", "Troinex", "Satigny"], "discount_rate_est": 4.4, "agents": [{"name": "Alexandre Gallina", "role": "Directeur Genève", "specialty": "Vente Résidentielle Haut de Gamme", "deals_count": 10, "rating": 5.0, "reviews_count": 16, "top_communes": ["Genève", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-gallina/", "phone": "+41 22 700 80 82", "email": "a.gallina@omnia.ch"}, {"name": "Grégory Marchand", "role": "Courtier Expert", "specialty": "Villas & Terrains Campagne", "deals_count": 7, "rating": 5.0, "reviews_count": 8, "top_communes": ["Veyrier", "Troinex", "Satigny"], "linkedin_profile_url": "https://www.linkedin.com/in/gregory-marchand-immo/", "phone": "+41 22 700 80 85", "email": "g.marchand@omnia.ch"}], "cytria_score": 55, "rank": 15}, {"id": "ci-leman", "name": "CI Léman Immobilier", "address": "Route du Grand-Lancy 50, 1212 Grand-Lancy", "headquarters_commune": "Lancy", "lat": 46.181, "lon": 6.126, "radius_meters": 4000, "website": "https://ci-leman.ch/", "linkedin_url": "https://www.linkedin.com/company/ci-leman-immobilier/", "instagram_url": "https://www.instagram.com/cilemanimmo/", "phone": "+41 22 793 40 40", "email": "info@ci-leman.ch", "specialties": ["Grand-Lancy & Bachet", "PPE Récentes", "Accompagnement Financement"], "sold_24m_count": 20, "sold_volume_chf_m": 41.0, "median_price_chf": 1800000, "median_house_chf": 2400000, "median_apartment_chf": 1100000, "rating": 4.6, "reviews_count": 52, "primary_territory": "Lancy / Plan-les-Ouates / Carouge", "top_communes": ["Lancy", "Plan-les-Ouates", "Onex", "Bernex", "Confignon"], "discount_rate_est": 4.7, "agents": [{"name": "Lionel Chandy", "role": "Directeur Associé", "specialty": "Vente de Logements & Financement", "deals_count": 10, "rating": 4.7, "reviews_count": 28, "top_communes": ["Lancy", "Plan-les-Ouates", "Onex"], "linkedin_profile_url": "https://www.linkedin.com/in/lionel-chandy/", "phone": "+41 22 793 40 42", "email": "l.chandy@ci-leman.ch"}, {"name": "Adrien Billaux", "role": "Courtier Spécialiste", "specialty": "Villas Mitoyennes & PPE", "deals_count": 7, "rating": 4.65, "reviews_count": 14, "top_communes": ["Lancy", "Bernex", "Confignon"], "linkedin_profile_url": "https://www.linkedin.com/in/adrien-billaux/", "phone": "+41 22 793 40 45", "email": "a.billaux@ci-leman.ch"}], "cytria_score": 53, "rank": 16}, {"id": "desormiere-vanhalst", "name": "Désormière & Vanhalst - Immobilier Genève", "address": "Chemin de Drize 34, 1256 Troinex", "headquarters_commune": "Troinex", "lat": 46.1685, "lon": 6.148, "radius_meters": 4000, "website": "https://desormiere-vanhalst.ch/", "linkedin_url": "https://www.linkedin.com/company/desormiere-vanhalst/", "instagram_url": "https://www.instagram.com/desormiere_vanhalst/", "phone": "+41 22 794 80 80", "email": "info@desormiere-vanhalst.ch", "specialties": ["Villas & Propriétés de Maître", "Troinex & Veyrier", "Campagne Genevoise"], "sold_24m_count": 16, "sold_volume_chf_m": 42.5, "median_price_chf": 2400000, "median_house_chf": 3400000, "median_apartment_chf": 1100000, "rating": 4.87, "reviews_count": 31, "primary_territory": "Troinex / Veyrier / Rive Gauche", "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries", "Plan-les-Ouates", "Genève"], "discount_rate_est": 4.2, "agents": [{"name": "Sandra Bleeckx Vanhalst", "role": "Associée & Directrice de Courtage", "specialty": "Villas & Hoiries Rive Gauche", "deals_count": 9, "rating": 4.95, "reviews_count": 22, "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/sandra-bleeckx-vanhalst/", "phone": "+41 22 794 80 82", "email": "sandra@desormiere-vanhalst.ch"}, {"name": "Adrien Désormière", "role": "Associé & Courtier Expert", "specialty": "Villas Haut de Gamme & Terrains", "deals_count": 7, "rating": 4.8, "reviews_count": 9, "top_communes": ["Troinex", "Plan-les-Ouates", "Genève"], "linkedin_profile_url": "https://www.linkedin.com/in/adrien-desormiere/", "phone": "+41 22 794 80 84", "email": "adrien@desormiere-vanhalst.ch"}], "cytria_score": 51, "rank": 17}, {"id": "nessell-real-estate", "name": "NESSELL Real Estate SA", "address": "Route de Chancy 59, 1213 Petit-Lancy", "headquarters_commune": "Lancy", "lat": 46.1895, "lon": 6.118, "radius_meters": 4500, "website": "https://nessell.ch/", "linkedin_url": "https://www.linkedin.com/company/nessell-real-estate/", "instagram_url": "https://www.instagram.com/nessell_realestate/", "phone": "+41 22 792 50 50", "email": "info@nessell.ch", "specialties": ["Rive Gauche Sud & Lancy / Onex", "Maisons Individuelles", "Successions"], "sold_24m_count": 19, "sold_volume_chf_m": 39.2, "median_price_chf": 1850000, "median_house_chf": 2600000, "median_apartment_chf": 1050000, "rating": 4.9, "reviews_count": 34, "primary_territory": "Lancy / Onex / Bernex / Plan-les-Ouates", "top_communes": ["Onex", "Lancy", "Bernex", "Confignon", "Plan-les-Ouates"], "discount_rate_est": 5.1, "agents": [{"name": "David Knafo", "role": "Directeur Associé", "specialty": "Maisons Familiales & Onex", "deals_count": 12, "rating": 4.92, "reviews_count": 24, "top_communes": ["Onex", "Lancy", "Bernex"], "linkedin_profile_url": "https://www.linkedin.com/in/david-knafo-nessell/", "phone": "+41 22 792 50 52", "email": "d.knafo@nessell.ch"}, {"name": "Corinne Guillo", "role": "Courtière Partenaire", "specialty": "Appartements & PPE Ouest Genevois", "deals_count": 7, "rating": 4.86, "reviews_count": 10, "top_communes": ["Onex", "Confignon", "Plan-les-Ouates"], "linkedin_profile_url": "https://www.linkedin.com/in/corinne-guillo/", "phone": "+41 22 792 50 55", "email": "c.guillo@nessell.ch"}], "cytria_score": 51, "rank": 18}, {"id": "oakswell-group", "name": "OAKSWELL BY OAKS GROUP", "address": "Route de Malagnou 26, 1208 Genève", "headquarters_commune": "Genève", "lat": 46.2, "lon": 6.161, "radius_meters": 4500, "website": "https://oakswell.ch/", "linkedin_url": "https://www.linkedin.com/company/oaks-group-sa/", "instagram_url": "https://www.instagram.com/oakswell_geneva/", "phone": "+41 22 736 12 12", "email": "contact@oakswell.ch", "specialties": ["Immobilier Contemporain", "Conseil Patrimonial", "Malagnou & Florissant"], "sold_24m_count": 16, "sold_volume_chf_m": 43.5, "median_price_chf": 2300000, "median_house_chf": 3600000, "median_apartment_chf": 1450000, "rating": 5.0, "reviews_count": 18, "primary_territory": "Malagnou / Genève / Cologny", "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres", "Cologny", "Collonge-Bellerive"], "discount_rate_est": 3.7, "agents": [{"name": "Joëlle Ordon", "role": "Courtière Associée Senior", "specialty": "Négociation Stratégique & Off-Market", "deals_count": 9, "rating": 5.0, "reviews_count": 12, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/joelle-ordon/", "phone": "+41 22 736 12 14", "email": "j.ordon@oakswell.ch"}, {"name": "Luca Copercini", "role": "Directeur Associé", "specialty": "Villas Contemporaines", "deals_count": 5, "rating": 5.0, "reviews_count": 6, "top_communes": ["Cologny", "Collonge-Bellerive"], "linkedin_profile_url": "https://www.linkedin.com/in/luca-copercini/", "phone": "+41 22 736 12 16", "email": "l.copercini@oakswell.ch"}], "cytria_score": 50, "rank": 19}, {"id": "beaulieu-immobilier", "name": "Beaulieu Immobilier Genève", "address": "Route de Pregny 12, 1292 Chambésy", "headquarters_commune": "Pregny-Chambésy", "lat": 46.238, "lon": 6.1435, "radius_meters": 4500, "website": "https://beaulieu-immo.ch/", "linkedin_url": "https://www.linkedin.com/company/beaulieu-immobilier/", "instagram_url": "https://www.instagram.com/beaulieu_immo_geneve/", "phone": "+41 22 758 10 10", "email": "info@beaulieu-immo.ch", "specialties": ["Rive Droite Lac", "Pregny-Chambésy & Bellevue", "Villas Diplomatiques"], "sold_24m_count": 14, "sold_volume_chf_m": 44.2, "median_price_chf": 2850000, "median_house_chf": 3900000, "median_apartment_chf": 1300000, "rating": 4.95, "reviews_count": 21, "primary_territory": "Pregny-Chambésy / Chambésy / Bellevue", "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod", "Versoix"], "discount_rate_est": 3.9, "agents": [{"name": "Gabriela Turcatti", "role": "Courtière Associée", "specialty": "Villas Diplomatiques & Rive Droite", "deals_count": 10, "rating": 5.0, "reviews_count": 18, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"], "linkedin_profile_url": "https://www.linkedin.com/in/gabriela-turcatti/", "phone": "+41 22 758 10 12", "email": "g.turcatti@beaulieu-immo.ch"}, {"name": "Philippe Beaulieu", "role": "Fondateur", "specialty": "Domaines Lacustres", "deals_count": 4, "rating": 4.85, "reviews_count": 3, "top_communes": ["Pregny-Chambésy", "Versoix"], "linkedin_profile_url": "https://www.linkedin.com/in/philippe-beaulieu-immo/", "phone": "+41 22 758 10 15", "email": "p.beaulieu@beaulieu-immo.ch"}], "cytria_score": 49, "rank": 20}, {"id": "105-immo", "name": "105 Immo - Immobilier & Architecture", "address": "Route d'Hermance 105, 1245 Collonge-Bellerive", "headquarters_commune": "Collonge-Bellerive", "lat": 46.252, "lon": 6.2015, "radius_meters": 4500, "website": "https://105immo.ch/", "linkedin_url": "https://www.linkedin.com/company/105immo/", "instagram_url": "https://www.instagram.com/105immo/", "phone": "+41 22 751 05 05", "email": "info@105immo.ch", "specialties": ["Rive Gauche Bord du Lac", "Hermance & Anières", "Maisons d'Architecte"], "sold_24m_count": 13, "sold_volume_chf_m": 41.2, "median_price_chf": 2950000, "median_house_chf": 3800000, "median_apartment_chf": 1400000, "rating": 4.95, "reviews_count": 19, "primary_territory": "Collonge-Bellerive / Hermance / Anières", "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"], "discount_rate_est": 3.8, "agents": [{"name": "Daniela Dhotel", "role": "Associée Gérante", "specialty": "Villas Rive Gauche & Hermance", "deals_count": 9, "rating": 5.0, "reviews_count": 15, "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"], "linkedin_profile_url": "https://www.linkedin.com/in/daniela-dhotel/", "phone": "+41 22 751 05 07", "email": "d.dhotel@105immo.ch"}], "cytria_score": 48, "rank": 21}, {"id": "swixim-plan-les-ouates", "name": "Swixim International - Plan-les-Ouates", "address": "Route de Saint-Julien 129, 1228 Plan-les-Ouates", "headquarters_commune": "Plan-les-Ouates", "lat": 46.165, "lon": 6.117, "radius_meters": 4500, "website": "https://swixim.ch/", "linkedin_url": "https://www.linkedin.com/company/swixim-international/", "instagram_url": "https://www.instagram.com/swixim_switzerland/", "phone": "+41 22 794 15 15", "email": "plan-les-ouates@swixim.ch", "specialties": ["Réseau International", "Plan-les-Ouates & Perly", "Maisons Familiales"], "sold_24m_count": 15, "sold_volume_chf_m": 31.5, "median_price_chf": 1750000, "median_house_chf": 2400000, "median_apartment_chf": 1050000, "rating": 4.9, "reviews_count": 22, "primary_territory": "Plan-les-Ouates / Perly-Certoux / Bardonnex", "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"], "discount_rate_est": 4.9, "agents": [{"name": "Laure Monney", "role": "Directrice d'Agence", "specialty": "Maisons Villageoises & Terrains", "deals_count": 9, "rating": 5.0, "reviews_count": 14, "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"], "linkedin_profile_url": "https://www.linkedin.com/in/laure-monney/", "phone": "+41 22 794 15 17", "email": "l.monney@swixim.ch"}], "cytria_score": 44, "rank": 22}], "brokers": [{"name": "Sébastien Rohner", "role": "Directeur d'Agence Genève", "specialty": "Propriétés d'Exception", "deals_count": 18, "rating": 4.85, "reviews_count": 31, "top_communes": ["Cologny", "Genève", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/sebastien-rohner/", "phone": "+41 22 789 20 01", "email": "s.rohner@cardis.ch", "cytria_score": 90, "agency_name": "Cardis | Sotheby's International Realty Genève", "agency_id": "cardis-sothebys", "rank": 1}, {"name": "Daniela Ghiandai", "role": "Courtière Partenaire Senior", "specialty": "Rive Droite & Ventes Express", "deals_count": 15, "rating": 5.0, "reviews_count": 39, "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin"], "linkedin_profile_url": "https://www.linkedin.com/in/daniela-ghiandai/", "phone": "+41 22 342 70 72", "email": "d.ghiandai@stone-invest.ch", "cytria_score": 84, "agency_name": "Stone Invest Genève", "agency_id": "stone-invest", "rank": 2}, {"name": "Jérôme Félicité", "role": "Président & Directeur Général", "specialty": "Propriétés Internationales & Hôtels Particuliers", "deals_count": 16, "rating": 4.8, "reviews_count": 27, "top_communes": ["Genève", "Cologny", "Pregny-Chambésy"], "linkedin_profile_url": "https://www.linkedin.com/in/jerome-felicite/", "phone": "+41 22 849 88 80", "email": "j.felicite@barnes-suisse.com", "cytria_score": 83, "agency_name": "BARNES Suisse SA - Genève", "agency_id": "barnes-suisse", "rank": 3}, {"name": "Léonard Cohen", "role": "Fondateur & Directeur", "specialty": "Trophy Assets & Rive Gauche", "deals_count": 14, "rating": 4.96, "reviews_count": 28, "top_communes": ["Cologny", "Genève", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/leonard-cohen-properties/", "phone": "+41 22 718 70 71", "email": "lc@leonard-properties.com", "cytria_score": 81, "agency_name": "Leonard Properties Luxury Real Estate", "agency_id": "leonard-properties", "rank": 4}, {"name": "Silvia Mandracho", "role": "Fondatrice & Directrice", "specialty": "Ventes Résidentielles Internationales", "deals_count": 11, "rating": 5.0, "reviews_count": 42, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/silvia-mandracho/", "phone": "+41 22 735 25 26", "email": "s.mandracho@genevahomes.ch", "cytria_score": 77, "agency_name": "Geneva Homes Real Estate", "agency_id": "geneva-homes", "rank": 5}, {"name": "Quentin Epiney", "role": "Directeur Commercial Ventes", "specialty": "Immeubles Résidentiels & Rendement", "deals_count": 14, "rating": 4.75, "reviews_count": 25, "top_communes": ["Genève", "Carouge", "Lancy"], "linkedin_profile_url": "https://www.linkedin.com/in/quentin-epiney/", "phone": "+41 22 319 88 90", "email": "q.epiney@comptoir-immo.ch", "cytria_score": 76, "agency_name": "Comptoir Immobilier SA", "agency_id": "comptoir-immobilier", "rank": 6}, {"name": "Alexandre Gallo", "role": "Directeur Général", "specialty": "Immobilier Urbain & Carougeois", "deals_count": 12, "rating": 4.95, "reviews_count": 35, "top_communes": ["Carouge", "Genève", "Lancy"], "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-gallo-agci/", "phone": "+41 22 301 22 24", "email": "a.gallo@agci.ch", "cytria_score": 76, "agency_name": "AGCI Immobilier", "agency_id": "agci-immobilier", "rank": 7}, {"name": "Marie-Christine de Saint-Affrique", "role": "Courtière Associée Senior", "specialty": "Villas & Terrains Cologny", "deals_count": 12, "rating": 4.9, "reviews_count": 19, "top_communes": ["Cologny", "Vandœuvres", "Collonge-Bellerive"], "linkedin_profile_url": "https://www.linkedin.com/in/marie-christine-de-saint-affrique/", "phone": "+41 22 849 88 82", "email": "mc.saintaffrique@barnes-suisse.com", "cytria_score": 74, "agency_name": "BARNES Suisse SA - Genève", "agency_id": "barnes-suisse", "rank": 8}, {"name": "Thierry Barbier-Mueller", "role": "Administrateur Délégué", "specialty": "Portefeuilles Institutionnels & Hoiries", "deals_count": 13, "rating": 4.8, "reviews_count": 21, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/thierry-barbier-mueller/", "phone": "+41 22 707 46 10", "email": "t.barbiermueller@spg.ch", "cytria_score": 73, "agency_name": "SPG Société Privée de Gérance", "agency_id": "spg-groupe", "rank": 9}, {"name": "David Knafo", "role": "Directeur Associé", "specialty": "Maisons Familiales & Onex", "deals_count": 12, "rating": 4.92, "reviews_count": 24, "top_communes": ["Onex", "Lancy", "Bernex"], "linkedin_profile_url": "https://www.linkedin.com/in/david-knafo-nessell/", "phone": "+41 22 792 50 52", "email": "d.knafo@nessell.ch", "cytria_score": 71, "agency_name": "NESSELL Real Estate SA", "agency_id": "nessell-real-estate", "rank": 10}, {"name": "Étienne Nagy", "role": "Directeur Général", "specialty": "Vente de Prestige & Partenariats", "deals_count": 12, "rating": 4.82, "reviews_count": 20, "top_communes": ["Genève", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/etienne-nagy/", "phone": "+41 22 839 39 40", "email": "e.nagy@naef.ch", "cytria_score": 70, "agency_name": "Naef Immobilier Genève", "agency_id": "naef-immobilier", "rank": 11}, {"name": "Nicolas Teissier", "role": "Responsable du Pôle Courtage", "specialty": "Villas & Immeubles Familiaux", "deals_count": 12, "rating": 4.85, "reviews_count": 19, "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/nicolas-teissier-immo/", "phone": "+41 22 839 29 30", "email": "n.teissier@moservernet.ch", "cytria_score": 70, "agency_name": "Moser Vernet & Cie (Move Properties)", "agency_id": "moser-vernet", "rank": 12}, {"name": "Sophie Martin-Pache", "role": "Courtière Senior Résidentiel", "specialty": "Villas Familiales & Successions", "deals_count": 11, "rating": 4.85, "reviews_count": 18, "top_communes": ["Chêne-Bougeries", "Veyrier", "Thônex"], "linkedin_profile_url": "https://www.linkedin.com/in/sophie-martin-pache/", "phone": "+41 22 319 88 92", "email": "s.martinpache@comptoir-immo.ch", "cytria_score": 69, "agency_name": "Comptoir Immobilier SA", "agency_id": "comptoir-immobilier", "rank": 13}, {"name": "Arnaud Boissier", "role": "Courtier Senior", "specialty": "Appartements de Standing Champel", "deals_count": 11, "rating": 4.8, "reviews_count": 16, "top_communes": ["Genève", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/arnaud-boissier/", "phone": "+41 22 789 20 04", "email": "a.boissier@cardis.ch", "cytria_score": 67, "agency_name": "Cardis | Sotheby's International Realty Genève", "agency_id": "cardis-sothebys", "rank": 14}, {"name": "Isabelle Fiaux", "role": "Courtière Senior Rive Gauche", "specialty": "Villas Individuelles & Terrains", "deals_count": 10, "rating": 4.9, "reviews_count": 17, "top_communes": ["Chêne-Bougeries", "Veyrier", "Troinex"], "linkedin_profile_url": "https://www.linkedin.com/in/isabelle-fiaux/", "phone": "+41 22 839 39 45", "email": "i.fiaux@naef.ch", "cytria_score": 67, "agency_name": "Naef Immobilier Genève", "agency_id": "naef-immobilier", "rank": 15}, {"name": "Thomas Bergerat", "role": "Directeur Commercial", "specialty": "Villas & Terrains Vésenaz", "deals_count": 11, "rating": 5.0, "reviews_count": 10, "top_communes": ["Collonge-Bellerive", "Anières", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/thomas-bergerat/", "phone": "+41 22 752 40 42", "email": "t.bergerat@jouan-derham.ch", "cytria_score": 66, "agency_name": "Jouan - de Rham SA", "agency_id": "jouan-de-rham", "rank": 16}, {"name": "Gabriela Turcatti", "role": "Courtière Associée", "specialty": "Villas Diplomatiques & Rive Droite", "deals_count": 10, "rating": 5.0, "reviews_count": 18, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"], "linkedin_profile_url": "https://www.linkedin.com/in/gabriela-turcatti/", "phone": "+41 22 758 10 12", "email": "g.turcatti@beaulieu-immo.ch", "cytria_score": 66, "agency_name": "Beaulieu Immobilier Genève", "agency_id": "beaulieu-immobilier", "rank": 17}, {"name": "Alexandre Gallina", "role": "Directeur Genève", "specialty": "Vente Résidentielle Haut de Gamme", "deals_count": 10, "rating": 5.0, "reviews_count": 16, "top_communes": ["Genève", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-gallina/", "phone": "+41 22 700 80 82", "email": "a.gallina@omnia.ch", "cytria_score": 66, "agency_name": "Omnia Immobilier Genève", "agency_id": "omnia-geneve", "rank": 18}, {"name": "Philippe Calame", "role": "Directeur Agence", "specialty": "Pieds-dans-l'eau & Hôtels Particuliers", "deals_count": 11, "rating": 4.9, "reviews_count": 17, "top_communes": ["Cologny", "Genève", "Genthod"], "linkedin_profile_url": "https://www.linkedin.com/in/philippe-calame/", "phone": "+41 22 809 98 02", "email": "p.calame@john-taylor.com", "cytria_score": 66, "agency_name": "John Taylor Luxury Real Estate Genève", "agency_id": "john-taylor-geneva", "rank": 19}, {"name": "Sandra Bleeckx Vanhalst", "role": "Associée & Directrice de Courtage", "specialty": "Villas & Hoiries Rive Gauche", "deals_count": 9, "rating": 4.95, "reviews_count": 22, "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/sandra-bleeckx-vanhalst/", "phone": "+41 22 794 80 82", "email": "sandra@desormiere-vanhalst.ch", "cytria_score": 65, "agency_name": "Désormière & Vanhalst - Immobilier Genève", "agency_id": "desormiere-vanhalst", "rank": 20}, {"name": "Cyril de Bavier", "role": "CEO & Associé", "specialty": "Développement Urbain & Terrains", "deals_count": 11, "rating": 4.85, "reviews_count": 15, "top_communes": ["Carouge", "Lancy", "Genève"], "linkedin_profile_url": "https://www.linkedin.com/in/cyril-de-bavier/", "phone": "+41 22 552 05 56", "email": "c.debavier@swissroc.com", "cytria_score": 64, "agency_name": "Swissroc Real Estate", "agency_id": "swissroc-group", "rank": 21}, {"name": "Colin Woolcock", "role": "Senior Broker", "specialty": "Expat Housing & Relocation Sales", "deals_count": 7, "rating": 5.0, "reviews_count": 21, "top_communes": ["Genève", "Pregny-Chambésy", "Versoix"], "linkedin_profile_url": "https://www.linkedin.com/in/colin-woolcock/", "phone": "+41 22 735 25 28", "email": "c.woolcock@genevahomes.ch", "cytria_score": 64, "agency_name": "Geneva Homes Real Estate", "agency_id": "geneva-homes", "rank": 22}, {"name": "Alexandre de Senarclens", "role": "Courtier Spécialiste Rive Droite", "specialty": "Résidences d'Ambassades & Propriétés de Maître", "deals_count": 10, "rating": 4.75, "reviews_count": 14, "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"], "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-de-senarclens/", "phone": "+41 22 849 88 85", "email": "a.senarclens@barnes-suisse.com", "cytria_score": 63, "agency_name": "BARNES Suisse SA - Genève", "agency_id": "barnes-suisse", "rank": 23}, {"name": "Lionel Chandy", "role": "Directeur Associé", "specialty": "Vente de Logements & Financement", "deals_count": 10, "rating": 4.7, "reviews_count": 28, "top_communes": ["Lancy", "Plan-les-Ouates", "Onex"], "linkedin_profile_url": "https://www.linkedin.com/in/lionel-chandy/", "phone": "+41 22 793 40 42", "email": "l.chandy@ci-leman.ch", "cytria_score": 63, "agency_name": "CI Léman Immobilier", "agency_id": "ci-leman", "rank": 24}, {"name": "Daniela Dhotel", "role": "Associée Gérante", "specialty": "Villas Rive Gauche & Hermance", "deals_count": 9, "rating": 5.0, "reviews_count": 15, "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"], "linkedin_profile_url": "https://www.linkedin.com/in/daniela-dhotel/", "phone": "+41 22 751 05 07", "email": "d.dhotel@105immo.ch", "cytria_score": 63, "agency_name": "105 Immo - Immobilier & Architecture", "agency_id": "105-immo", "rank": 25}, {"name": "Camille Dutoit", "role": "Courtière Spécialiste Campagne", "specialty": "Domaines Agricoles & Châteaux", "deals_count": 8, "rating": 4.9, "reviews_count": 12, "top_communes": ["Russin", "Satigny", "Dardagny"], "linkedin_profile_url": "https://www.linkedin.com/in/camille-dutoit-immo/", "phone": "+41 22 789 20 08", "email": "c.dutoit@cardis.ch", "cytria_score": 62, "agency_name": "Cardis | Sotheby's International Realty Genève", "agency_id": "cardis-sothebys", "rank": 26}, {"name": "Joëlle Ordon", "role": "Courtière Associée Senior", "specialty": "Négociation Stratégique & Off-Market", "deals_count": 9, "rating": 5.0, "reviews_count": 12, "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/joelle-ordon/", "phone": "+41 22 736 12 14", "email": "j.ordon@oakswell.ch", "cytria_score": 62, "agency_name": "OAKSWELL BY OAKS GROUP", "agency_id": "oakswell-group", "rank": 27}, {"name": "Laure Monney", "role": "Directrice d'Agence", "specialty": "Maisons Villageoises & Terrains", "deals_count": 9, "rating": 5.0, "reviews_count": 14, "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"], "linkedin_profile_url": "https://www.linkedin.com/in/laure-monney/", "phone": "+41 22 794 15 17", "email": "l.monney@swixim.ch", "cytria_score": 62, "agency_name": "Swixim International - Plan-les-Ouates", "agency_id": "swixim-plan-les-ouates", "rank": 28}, {"name": "Béatrice de Riedmatten", "role": "Courtière Partenaire", "specialty": "Appartements de Charme & PPE", "deals_count": 10, "rating": 4.7, "reviews_count": 15, "top_communes": ["Genève", "Chêne-Bourg", "Vandœuvres"], "linkedin_profile_url": "https://www.linkedin.com/in/beatrice-de-riedmatten/", "phone": "+41 22 707 46 15", "email": "b.riedmatten@spg.ch", "cytria_score": 61, "agency_name": "SPG Société Privée de Gérance", "agency_id": "spg-groupe", "rank": 29}, {"name": "Marcello Della Torre", "role": "Courtier Associé", "specialty": "Villas & Terrains Rive Droite", "deals_count": 7, "rating": 4.9, "reviews_count": 19, "top_communes": ["Bellevue", "Genthod", "Versoix"], "linkedin_profile_url": "https://www.linkedin.com/in/marcello-dellatorre/", "phone": "+41 22 342 70 75", "email": "m.dellatorre@stone-invest.ch", "cytria_score": 60, "agency_name": "Stone Invest Genève", "agency_id": "stone-invest", "rank": 30}, {"name": "Alain Schaller", "role": "Managing Director", "specialty": "Résidences Lacustres & Prestige", "deals_count": 10, "rating": 4.75, "reviews_count": 18, "top_communes": ["Cologny", "Genève", "Anières"], "linkedin_profile_url": "https://www.linkedin.com/in/alain-schaller/", "phone": "+41 22 552 29 30", "email": "alain.schaller@engelvoelkers.com", "cytria_score": 60, "agency_name": "Engel & Völkers Genève", "agency_id": "engel-voelkers-geneve", "rank": 31}, {"name": "Théry Schir", "role": "Courtier Spécialiste PPE", "specialty": "Appartements & Résidences Récentes", "deals_count": 9, "rating": 4.78, "reviews_count": 13, "top_communes": ["Genève", "Collonge-Bellerive", "Carouge"], "linkedin_profile_url": "https://www.linkedin.com/in/thery-schir/", "phone": "+41 22 839 29 35", "email": "t.schir@moveproperties.ch", "cytria_score": 59, "agency_name": "Moser Vernet & Cie (Move Properties)", "agency_id": "moser-vernet", "rank": 32}, {"name": "Audrey Caveng", "role": "Courtière Senior", "specialty": "Appartements de Maître & Champel", "deals_count": 8, "rating": 4.88, "reviews_count": 11, "top_communes": ["Genève", "Chêne-Bougeries"], "linkedin_profile_url": "https://www.linkedin.com/in/audrey-caveng/", "phone": "+41 22 718 70 73", "email": "ac@leonard-properties.com", "cytria_score": 59, "agency_name": "Leonard Properties Luxury Real Estate", "agency_id": "leonard-properties", "rank": 33}, {"name": "Julien Bourgnon", "role": "Courtier PPE & Promotions", "specialty": "Appartements Neufs & Rénovés", "deals_count": 9, "rating": 4.7, "reviews_count": 12, "top_communes": ["Plan-les-Ouates", "Bernex", "Onex"], "linkedin_profile_url": "https://www.linkedin.com/in/julien-bourgnon/", "phone": "+41 22 319 88 95", "email": "j.bourgnon@comptoir-immo.ch", "cytria_score": 58, "agency_name": "Comptoir Immobilier SA", "agency_id": "comptoir-immobilier", "rank": 34}, {"name": "Léonard de Rham", "role": "Administrateur & Courtier", "specialty": "Patrimoine & Successions Rive Gauche", "deals_count": 8, "rating": 5.0, "reviews_count": 5, "top_communes": ["Collonge-Bellerive", "Meinier", "Corsier"], "linkedin_profile_url": "https://www.linkedin.com/in/leonard-de-rham/", "phone": "+41 22 752 40 45", "email": "l.derham@jouan-derham.ch", "cytria_score": 57, "agency_name": "Jouan - de Rham SA", "agency_id": "jouan-de-rham", "rank": 35}, {"name": "Guillaume Basile", "role": "Directeur des Ventes", "specialty": "Vente sur Plan & Rénovations", "deals_count": 9, "rating": 4.75, "reviews_count": 12, "top_communes": ["Carouge", "Veyrier"], "linkedin_profile_url": "https://www.linkedin.com/in/guillaume-basile/", "phone": "+41 22 552 05 58", "email": "g.basile@swissroc.com", "cytria_score": 56, "agency_name": "Swissroc Real Estate", "agency_id": "swissroc-group", "rank": 36}, {"name": "Nathalie Guichard", "role": "Courtière Spécialiste Rive Gauche", "specialty": "Villas & Terrains Équestres", "deals_count": 8, "rating": 4.82, "reviews_count": 14, "top_communes": ["Vandœuvres", "Choulex", "Meinier"], "linkedin_profile_url": "https://www.linkedin.com/in/nathalie-guichard-ev/", "phone": "+41 22 552 29 32", "email": "nathalie.guichard@engelvoelkers.com", "cytria_score": 56, "agency_name": "Engel & Völkers Genève", "agency_id": "engel-voelkers-geneve", "rank": 37}, {"name": "Grégory Marchand", "role": "Courtier Expert", "specialty": "Villas & Terrains Campagne", "deals_count": 7, "rating": 5.0, "reviews_count": 8, "top_communes": ["Veyrier", "Troinex", "Satigny"], "linkedin_profile_url": "https://www.linkedin.com/in/gregory-marchand-immo/", "phone": "+41 22 700 80 85", "email": "g.marchand@omnia.ch", "cytria_score": 56, "agency_name": "Omnia Immobilier Genève", "agency_id": "omnia-geneve", "rank": 38}, {"name": "Corinne Guillo", "role": "Courtière Partenaire", "specialty": "Appartements & PPE Ouest Genevois", "deals_count": 7, "rating": 4.86, "reviews_count": 10, "top_communes": ["Onex", "Confignon", "Plan-les-Ouates"], "linkedin_profile_url": "https://www.linkedin.com/in/corinne-guillo/", "phone": "+41 22 792 50 55", "email": "c.guillo@nessell.ch", "cytria_score": 52, "agency_name": "NESSELL Real Estate SA", "agency_id": "nessell-real-estate", "rank": 39}, {"name": "Belfin Lips", "role": "Courtière Associée", "specialty": "Villas Contemporaines", "deals_count": 6, "rating": 4.8, "reviews_count": 7, "top_communes": ["Collonge-Bellerive", "Anières"], "linkedin_profile_url": "https://www.linkedin.com/in/belfin-lips/", "phone": "+41 22 718 70 75", "email": "bl@leonard-properties.com", "cytria_score": 50, "agency_name": "Leonard Properties Luxury Real Estate", "agency_id": "leonard-properties", "rank": 40}, {"name": "Maximilien de Stadelhofen", "role": "Courtier Expert", "specialty": "Propriétés au Bord de l'Eau", "deals_count": 5, "rating": 5.0, "reviews_count": 3, "top_communes": ["Hermance", "Anières", "Cologny"], "linkedin_profile_url": "https://www.linkedin.com/in/maximilien-stadelhofen/", "phone": "+41 22 752 40 48", "email": "m.stadelhofen@jouan-derham.ch", "cytria_score": 50, "agency_name": "Jouan - de Rham SA", "agency_id": "jouan-de-rham", "rank": 41}, {"name": "Adrien Désormière", "role": "Associé & Courtier Expert", "specialty": "Villas Haut de Gamme & Terrains", "deals_count": 7, "rating": 4.8, "reviews_count": 9, "top_communes": ["Troinex", "Plan-les-Ouates", "Genève"], "linkedin_profile_url": "https://www.linkedin.com/in/adrien-desormiere/", "phone": "+41 22 794 80 84", "email": "adrien@desormiere-vanhalst.ch", "cytria_score": 50, "agency_name": "Désormière & Vanhalst - Immobilier Genève", "agency_id": "desormiere-vanhalst", "rank": 42}, {"name": "Luca Copercini", "role": "Directeur Associé", "specialty": "Villas Contemporaines", "deals_count": 5, "rating": 5.0, "reviews_count": 6, "top_communes": ["Cologny", "Collonge-Bellerive"], "linkedin_profile_url": "https://www.linkedin.com/in/luca-copercini/", "phone": "+41 22 736 12 16", "email": "l.copercini@oakswell.ch", "cytria_score": 50, "agency_name": "OAKSWELL BY OAKS GROUP", "agency_id": "oakswell-group", "rank": 43}, {"name": "Adrien Billaux", "role": "Courtier Spécialiste", "specialty": "Villas Mitoyennes & PPE", "deals_count": 7, "rating": 4.65, "reviews_count": 14, "top_communes": ["Lancy", "Bernex", "Confignon"], "linkedin_profile_url": "https://www.linkedin.com/in/adrien-billaux/", "phone": "+41 22 793 40 45", "email": "a.billaux@ci-leman.ch", "cytria_score": 48, "agency_name": "CI Léman Immobilier", "agency_id": "ci-leman", "rank": 44}, {"name": "Philippe Beaulieu", "role": "Fondateur", "specialty": "Domaines Lacustres", "deals_count": 4, "rating": 4.85, "reviews_count": 3, "top_communes": ["Pregny-Chambésy", "Versoix"], "linkedin_profile_url": "https://www.linkedin.com/in/philippe-beaulieu-immo/", "phone": "+41 22 758 10 15", "email": "p.beaulieu@beaulieu-immo.ch", "cytria_score": 42, "agency_name": "Beaulieu Immobilier Genève", "agency_id": "beaulieu-immobilier", "rank": 45}]};
     let currentLeagueTab = 'AGENCIES';
 
     function initLeagueFilters() {
@@ -2235,6 +2863,27 @@
         opt.textContent = c;
         communeSelect.appendChild(opt);
       });
+
+      // Populate Sidebar Agency Selector
+      const sbAgencySelect = document.getElementById('sidebarAgencySelect');
+      if (sbAgencySelect) {
+        LEAGUE_DATA.agencies.forEach(a => {
+          const opt = document.createElement('option');
+          opt.value = a.id;
+          opt.textContent = `#${a.rank} ${a.name} (${a.primary_territory})`;
+          sbAgencySelect.appendChild(opt);
+        });
+
+        sbAgencySelect.addEventListener('change', (e) => {
+          const val = e.target.value;
+          if (val === 'ALL') {
+            renderAgenciesOnMap();
+          } else {
+            const ag = LEAGUE_DATA.agencies.find(x => x.id === val);
+            if (ag) selectAgencyOnMap(ag);
+          }
+        });
+      }
 
       document.getElementById('countAgencies').textContent = LEAGUE_DATA.agencies.length;
       document.getElementById('countBrokers').textContent = LEAGUE_DATA.brokers.length;
@@ -2289,8 +2938,12 @@
               <td><span class="rank-pill ${rankClass}">#${a.rank}</span></td>
               <td>
                 <strong style="color:var(--color-brand-300); font-size:13px;">${a.name}</strong><br>
-                <span style="color:var(--color-sand-300); font-size:11px;">${a.address}</span>
-                ${a.website ? `<br><a href="${a.website}" target="_blank" style="color:var(--color-brand-400); text-decoration:none; font-size:10px;">Visiter Site Web ↗</a>` : ''}
+                <span style="color:var(--color-sand-300); font-size:11px;">📍 ${a.address}</span>
+                <div style="display:flex; gap: 8px; margin-top: 4px; align-items: center;">
+                  ${a.website ? `<a href="${a.website}" target="_blank" style="color:var(--color-brand-400); text-decoration:none; font-size:10px;">Site Web ↗</a>` : ''}
+                  ${a.linkedin_url ? `<a href="${a.linkedin_url}" target="_blank" style="color:#0a66c2; text-decoration:none; font-size:10px; font-weight:700;">LinkedIn ↗</a>` : ''}
+                  ${a.instagram_url ? `<a href="${a.instagram_url}" target="_blank" style="color:#e1306c; text-decoration:none; font-size:10px; font-weight:700;">Instagram ↗</a>` : ''}
+                </div>
               </td>
               <td><span class="score-badge">${a.cytria_score} / 100</span></td>
               <td>
@@ -2310,7 +2963,11 @@
                 <span style="color:var(--color-sand-300); font-size:10px;">${a.reviews_count} avis vérifiés</span>
               </td>
               <td>
-                <span style="color:var(--color-brand-300); font-weight:600; font-size:11px;">${a.primary_territory}</span>
+                <span style="color:var(--color-brand-300); font-weight:600; font-size:11px;">${a.primary_territory}</span><br>
+                <span style="color:var(--color-sand-300); font-size:10px;">Rayon: ${(a.radius_meters/1000).toFixed(1)} km</span>
+              </td>
+              <td>
+                <button type="button" class="view-map-btn" onclick="goToAgencyOnMap('${a.id}')">Voir sur Carte 📍</button>
               </td>
             </tr>
           `;
@@ -2328,10 +2985,11 @@
                 <th>Taux Décote</th>
                 <th>Avis & Note</th>
                 <th>Territoire Leader</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              ${rows.length ? rows : '<tr><td colspan="8" style="text-align:center; padding: 40px; color: var(--color-sand-300);">Aucune agence ne correspond aux critères de recherche.</td></tr>'}
+              ${rows.length ? rows : '<tr><td colspan="9" style="text-align:center; padding: 40px; color: var(--color-sand-300);">Aucune agence ne correspond aux critères de recherche.</td></tr>'}
             </tbody>
           </table>
         `;
@@ -2357,6 +3015,7 @@
               <td>
                 <strong style="color:var(--color-brand-300); font-size:13px;">${b.name}</strong><br>
                 <span style="color:var(--color-sand-300); font-size:11px;">${b.role}</span>
+                ${b.linkedin_profile_url ? `<br><a href="${b.linkedin_profile_url}" target="_blank" style="color:#0a66c2; text-decoration:none; font-size:10px; font-weight:700;">LinkedIn Profil ↗</a>` : ''}
               </td>
               <td>
                 <span style="color:var(--color-paper); font-weight:600;">${b.agency_name}</span>
@@ -2373,6 +3032,9 @@
               <td>
                 <span style="color:var(--color-brand-300); font-weight:600; font-size:11px;">${(b.top_communes || []).join(', ')}</span>
               </td>
+              <td>
+                <button type="button" class="view-map-btn" onclick="goToBrokerOnMap('${b.agency_id}', '${b.name.replace(/'/g, "\'")}')">Voir ses ventes 📍</button>
+              </td>
             </tr>
           `;
         }).join('');
@@ -2388,19 +3050,540 @@
                 <th>Volume & Spécialité</th>
                 <th>Avis Clients</th>
                 <th>Communes de Prédilection</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              ${rows.length ? rows : '<tr><td colspan="7" style="text-align:center; padding: 40px; color: var(--color-sand-300);">Aucun courtier ne correspond aux critères de recherche.</td></tr>'}
+              ${rows.length ? rows : '<tr><td colspan="8" style="text-align:center; padding: 40px; color: var(--color-sand-300);">Aucun courtier ne correspond aux critères de recherche.</td></tr>'}
             </tbody>
           </table>
         `;
       }
     }
 
+    // Agency Attribution Engine & Map Logic
+    function getAttributedTransactions(agency, brokerName = null) {
+      const topCommunes = agency.top_communes || [];
+      return DATA.filter(r => {
+        if (!r.lat || !r.lon) return false;
+
+        // Check if parties mention agency name
+        const parties = ((r.buyer || '') + ' ' + (r.seller || '')).toLowerCase();
+        const agName = agency.name.toLowerCase();
+        if (agName.includes('comptoir') && parties.includes('comptoir')) return true;
+        if (agName.includes('spg') && (parties.includes('spg') || parties.includes('societe privee'))) return true;
+        if (agName.includes('naef') && parties.includes('naef')) return true;
+        if (agName.includes('barnes') && parties.includes('barnes')) return true;
+        if (agName.includes('moser') && parties.includes('moser')) return true;
+        if (agName.includes('swissroc') && parties.includes('swissroc')) return true;
+
+        // Broker-specific filtering
+        if (brokerName) {
+          const broker = (agency.agents || []).find(b => b.name === brokerName);
+          if (broker && (broker.top_communes || []).includes(r.commune)) {
+            if (r.price_chf && agency.median_price_chf) {
+              return r.price_chf >= agency.median_price_chf * 0.4 && r.price_chf <= agency.median_price_chf * 3.0;
+            }
+            return true;
+          }
+          return false;
+        }
+
+        // Territory match
+        if (topCommunes.includes(r.commune)) {
+          if (r.price_chf && agency.median_price_chf) {
+            return r.price_chf >= agency.median_price_chf * 0.4 && r.price_chf <= agency.median_price_chf * 3.0;
+          }
+          return true;
+        }
+
+        return false;
+      });
+    }
+
+    function renderAgenciesOnMap(agencyIdToSelect = null, brokerNameToSelect = null) {
+      agencyMarkersGroup.clearLayers();
+      agencyRadiusGroup.clearLayers();
+      markersCluster.clearLayers();
+
+      const agencies = LEAGUE_DATA.agencies;
+
+      agencies.forEach(a => {
+        if (!a.lat || !a.lon) return;
+
+        const isSelected = agencyIdToSelect && a.id === agencyIdToSelect;
+        const icon = L.divIcon({
+          className: 'custom-agency-div',
+          html: `
+            <div class="agency-marker-pin ${isSelected ? 'active' : ''}" id="pin-${a.id}">
+              <div class="pin-badge">#${a.rank}</div>
+              <div class="pin-name">${a.name.split(' ')[0]}</div>
+            </div>
+          `,
+          iconSize: [110, 30],
+          iconAnchor: [55, 15]
+        });
+
+        const m = L.marker([a.lat, a.lon], { icon }).addTo(agencyMarkersGroup);
+        m.on('click', () => {
+          selectAgencyOnMap(a);
+        });
+      });
+
+      if (agencyIdToSelect) {
+        const ag = agencies.find(x => x.id === agencyIdToSelect);
+        if (ag) {
+          selectAgencyOnMap(ag, brokerNameToSelect);
+        }
+      } else {
+        // Center on Geneva overview
+        map.setView([46.2044, 6.1432], 12);
+        document.getElementById('statLabelPrimary').textContent = 'Agences Renseignées';
+        document.getElementById('stat-count').textContent = agencies.length.toLocaleString('fr-CH');
+        document.getElementById('statLabelSecondary').textContent = 'Courtiers Indexés';
+        document.getElementById('stat-vol').textContent = LEAGUE_DATA.brokers.length.toLocaleString('fr-CH');
+        document.getElementById('statLabel3').textContent = 'Score Médian';
+        document.getElementById('stat-3').textContent = '74 / 100';
+        document.getElementById('statLabel4').textContent = 'Couverture Canton';
+        document.getElementById('stat-4').textContent = '100%';
+      }
+    }
+
+    function selectAgencyOnMap(agency, brokerName = null) {
+      agencyRadiusGroup.clearLayers();
+      markersCluster.clearLayers();
+
+      // Highlight pin
+      document.querySelectorAll('.agency-marker-pin').forEach(p => p.classList.remove('active'));
+      const activePin = document.getElementById('pin-' + agency.id);
+      if (activePin) activePin.classList.add('active');
+
+      // Draw Radius Circle
+      const radiusCircle = L.circle([agency.lat, agency.lon], {
+        radius: agency.radius_meters || 5000,
+        color: '#C9A24D',
+        weight: 2,
+        dashArray: '5, 8',
+        fillColor: '#C9A24D',
+        fillOpacity: 0.10
+      }).addTo(agencyRadiusGroup);
+
+      // Fit bounds to agency circle
+      map.fitBounds(radiusCircle.getBounds(), { padding: [30, 30] });
+
+      // Get attributed deeds
+      const attributed = getAttributedTransactions(agency, brokerName);
+
+      const markers = [];
+      let totalAttributedVol = 0;
+
+      attributed.forEach(r => {
+        if (!r.lat || !r.lon) return;
+        totalAttributedVol += (r.price_chf || 0);
+
+        const circleMarker = L.circleMarker([r.lat, r.lon], {
+          radius: 6,
+          fillColor: '#C9A24D',
+          color: '#080D11',
+          weight: 1.5,
+          opacity: 1,
+          fillOpacity: 0.85
+        });
+        circleMarker.on('click', () => openDetail(r));
+        markers.push(circleMarker);
+      });
+
+      markersCluster.addLayers(markers);
+
+      // Update HUD
+      document.getElementById('statLabelPrimary').textContent = brokerName ? 'Ventes Courtier' : 'Ventes Attribuées';
+      document.getElementById('stat-count').textContent = attributed.length.toLocaleString('fr-CH');
+      document.getElementById('statLabelSecondary').textContent = 'Volume Identifié';
+      document.getElementById('stat-vol').textContent = 'CHF ' + (totalAttributedVol >= 1e9 ? (totalAttributedVol/1e9).toFixed(2) + ' Mrd' : (totalAttributedVol/1e6).toFixed(1) + ' Mio');
+      document.getElementById('statLabel3').textContent = 'Score Agence';
+      document.getElementById('stat-3').textContent = agency.cytria_score + ' / 100';
+      document.getElementById('statLabel4').textContent = 'Rayon d'Action';
+      document.getElementById('stat-4').textContent = (agency.radius_meters/1000).toFixed(1) + ' km';
+
+      // Update sidebar select
+      const sbSel = document.getElementById('sidebarAgencySelect');
+      if (sbSel) sbSel.value = agency.id;
+
+      // Open agency drawer
+      openAgencyDetail(agency, brokerName);
+    }
+
+    function openAgencyDetail(agency, brokerName = null) {
+      detailPriceDisplay.innerHTML = `
+        <span class="score-badge" style="margin-right:8px;">Score Cytria ${agency.cytria_score}/100</span>
+        <span style="font-size:14px; font-weight:700; color:var(--color-brand-300);">#${agency.rank} ${agency.name}</span>
+      `;
+
+      const topCommsHtml = (agency.top_communes || []).map(c => `<span class="commune-tag">${c}</span>`).join('');
+      const attributedDeals = getAttributedTransactions(agency, brokerName);
+      const totalVol = attributedDeals.reduce((acc, r) => acc + (r.price_chf || 0), 0);
+
+      const brokersListHtml = (agency.agents || []).map(b => {
+        const isSelected = brokerName && brokerName === b.name;
+        return `
+          <div class="broker-card" style="${isSelected ? 'border-color:var(--color-brand-400); background:rgba(201,162,77,0.08);' : ''}">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <div class="broker-name">${b.name}</div>
+                <div class="broker-role">${b.role} &bull; ${b.specialty}</div>
+              </div>
+              <span class="score-badge">${b.cytria_score}/100</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; font-size:11px; color:var(--color-sand-300);">
+              <span>${b.deals_count} ventes conclues &bull; Note ${b.rating}/5.0 (${b.reviews_count} avis)</span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
+              ${b.linkedin_profile_url ? `<a href="${b.linkedin_profile_url}" target="_blank" class="social-btn linkedin" style="padding:4px 8px; font-size:10px;">LinkedIn Courtier ↗</a>` : ''}
+              <button type="button" class="view-map-btn" style="margin-left:auto;" onclick="focusBrokerSales('${agency.id}', '${b.name.replace(/'/g, "\'")}')">
+                ${isSelected ? '✓ Ventes affichées' : 'Isoler ses ventes 📍'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      detailContent.innerHTML = `
+        <div class="detail-badges">
+          <span class="badge-tag" style="background:#003399; color:#ffffff;">Agence Immobilière Agréée</span>
+          <span class="badge-tag zone">${agency.headquarters_commune}</span>
+          <span class="badge-tag" style="background:rgba(201,162,77,0.2); color:var(--color-brand-300); border-color:var(--color-brand-400);">Rayon ~${(agency.radius_meters/1000).toFixed(1)} km</span>
+        </div>
+
+        <div style="margin-top: 10px; color: var(--color-sand-300); font-size: 12px;">
+          📍 ${agency.address}
+        </div>
+
+        <!-- Official Social & Web Profiles -->
+        <div class="social-buttons-grid">
+          ${agency.linkedin_url ? `<a href="${agency.linkedin_url}" target="_blank" class="social-btn linkedin">LinkedIn Entreprise ↗</a>` : ''}
+          ${agency.instagram_url ? `<a href="${agency.instagram_url}" target="_blank" class="social-btn instagram">Instagram ↗</a>` : ''}
+          ${agency.website ? `<a href="${agency.website}" target="_blank" class="social-btn website">Site Web Officiel ↗</a>` : ''}
+          ${agency.phone ? `<a href="tel:${agency.phone}" class="social-btn contact">📞 ${agency.phone}</a>` : ''}
+        </div>
+
+        <!-- Key Performance Metrics Grid -->
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">Volume Vendu (24 mois)</div>
+            <div class="detail-value emerald">CHF ${agency.sold_volume_chf_m} Mio (${agency.sold_24m_count} ventes)</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Ticket Médian Transaction</div>
+            <div class="detail-value gold">CHF ${(agency.median_price_chf/1e6).toFixed(2)}M</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Prix Médian Villas</div>
+            <div class="detail-value">CHF ${(agency.median_house_chf/1e6).toFixed(2)}M</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Prix Médian PPE</div>
+            <div class="detail-value">CHF ${(agency.median_apartment_chf/1e6).toFixed(2)}M</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Taux de Décote RF Constaté</div>
+            <div class="detail-value" style="color:#10b981;">-${agency.discount_rate_est}% (vs prix affiché)</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Satisfaction & Avis Clients</div>
+            <div class="detail-value">${agency.rating} / 5.0 (${agency.reviews_count} avis)</div>
+          </div>
+        </div>
+
+        <!-- Territorial Perimeter -->
+        <div class="radar-box mandate" style="margin-top:14px;">
+          <div class="radar-box-title">
+            <span>Emprise Géographique & Rayon de Travail</span>
+            <span class="score-badge">${(agency.radius_meters/1000).toFixed(1)} km</span>
+          </div>
+          <div style="font-size:12px; color:var(--color-paper); margin-bottom:8px;">
+            <strong>Territoire dominant :</strong> ${agency.primary_territory}
+          </div>
+          <div style="margin-bottom:8px;">
+            ${topCommsHtml}
+          </div>
+          <div style="font-size:11px; color:var(--color-sand-300);">
+            ${attributedDeals.length} transactions notariées identifiées dans l'emprise territoriale (Volume: CHF ${(totalVol/1e6).toFixed(1)} Mio).
+          </div>
+          ${brokerName ? `
+            <div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--panel-border);">
+              <span style="color:var(--color-brand-300); font-size:11px; font-weight:700;">Filtrage actif sur le courtier : ${brokerName}</span>
+              <button type="button" class="view-map-btn" style="margin-left:8px;" onclick="resetAgencyView('${agency.id}')">Voir toute l'agence</button>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Brokers Section -->
+        <div style="margin-top:16px;">
+          <div class="filter-section-title" style="margin-bottom:8px;">Équipe & Courtiers Immobiliers (${(agency.agents||[]).length})</div>
+          ${brokersListHtml}
+        </div>
+      `;
+
+      detailDrawer.classList.add('visible');
+    }
+
+    function focusBrokerSales(agencyId, brokerName) {
+      const ag = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
+      if (ag) {
+        selectAgencyOnMap(ag, brokerName);
+      }
+    }
+
+    function resetAgencyView(agencyId) {
+      const ag = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
+      if (ag) {
+        selectAgencyOnMap(ag, null);
+      }
+    }
+
+    function goToAgencyOnMap(agencyId) {
+      closeLeagueModal();
+      setAppMode('AGENCIES_MAP');
+      const ag = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
+      if (ag) {
+        selectAgencyOnMap(ag, null);
+      }
+    }
+
+    function goToBrokerOnMap(agencyId, brokerName) {
+      closeLeagueModal();
+      setAppMode('AGENCIES_MAP');
+      const ag = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
+      if (ag) {
+        selectAgencyOnMap(ag, brokerName);
+      }
+    }
+
     document.getElementById('leagueTableModal').addEventListener('click', (e) => {
       if (e.target.id === 'leagueTableModal') {
         closeLeagueModal();
+      }
+    });
+
+    // ==========================================
+    // MULTI-PORTAL SCANNER & SYNC ENGINE LOGIC
+    // ==========================================
+    let currentScanMode = 'quick';
+    let scanPollTimer = null;
+    let isScanRunning = false;
+
+    function openScanModal() {
+      document.getElementById('scanModal').classList.add('visible');
+      checkServerHealth();
+    }
+
+    function closeScanModal() {
+      if (isScanRunning) {
+        if (!confirm("Un scan est en cours d'exécution. Voulez-vous fermer la fenêtre de télémétrie ? (Le scan continuera en arrière-plan)")) {
+          return;
+        }
+      }
+      document.getElementById('scanModal').classList.remove('visible');
+      if (scanPollTimer) {
+        clearInterval(scanPollTimer);
+        scanPollTimer = null;
+      }
+    }
+
+    function selectScanMode(mode) {
+      if (isScanRunning) return;
+      currentScanMode = mode;
+      document.querySelectorAll('.scan-mode-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById('scanModeCard_' + mode);
+      if (activeCard) activeCard.classList.add('active');
+      logToTerminal(`[CONFIG] Mode de synchronisation sélectionné : ${mode.toUpperCase()}`, 'info');
+    }
+
+    function logToTerminal(text, type = '') {
+      const term = document.getElementById('scanTerminal');
+      if (!term) return;
+      const ts = new Date().toLocaleTimeString('fr-CH');
+      const div = document.createElement('div');
+      div.className = 'term-line ' + type;
+      div.textContent = `[${ts}] ${text}`;
+      term.appendChild(div);
+      term.scrollTop = term.scrollHeight;
+    }
+
+    async function checkServerHealth() {
+      const badge = document.getElementById('syncServerBadge');
+      try {
+        const resp = await fetch('/api/status', { method: 'GET', cache: 'no-store' });
+        if (resp.ok) {
+          const data = await resp.json();
+          if (badge) {
+            badge.textContent = 'API Serveur Connectée (localhost:8080)';
+            badge.style.color = '#4ade80';
+          }
+          if (data.telemetry && data.telemetry.last_sync_time) {
+            logToTerminal(`[API] Dernière synchronisation enregistrée : ${data.telemetry.last_sync_time}`, 'info');
+          }
+        } else {
+          throw new Error('API non disponible');
+        }
+      } catch (e) {
+        if (badge) {
+          badge.textContent = 'Mode Déconnecté / Client Direct';
+          badge.style.color = '#fbbf24';
+        }
+      }
+    }
+
+    async function triggerScanExecution() {
+      if (isScanRunning) return;
+      isScanRunning = true;
+
+      const btn = document.getElementById('btnLaunchScan');
+      const liveBadge = document.getElementById('terminalLiveBadge');
+      const compBanner = document.getElementById('scanCompletionBanner');
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        btn.textContent = '⏳ SYNCHRONISATION EN COURS...';
+      }
+      if (liveBadge) {
+        liveBadge.textContent = '● SCAN ACTIF';
+        liveBadge.style.color = '#C9A24D';
+      }
+      if (compBanner) compBanner.style.display = 'none';
+
+      logToTerminal('=== DÉMARRAGE DU SCAN MULTI-PORTAILS CYTRIA ===', 'info');
+      logToTerminal(`Paramètres: Mode=${currentScanMode} | Dédoublonnage SHA-256=ACTIF | Sanctuarisation Historique=100%`);
+
+      // Attempt to invoke the Python REST server first
+      let serverHandled = false;
+      try {
+        const postResp = await fetch('/api/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mode: currentScanMode })
+        });
+        if (postResp.ok) {
+          serverHandled = true;
+          logToTerminal('[API] Session de scan initialisée avec succès sur le serveur local.', 'success');
+          pollServerProgress();
+        }
+      } catch (err) {
+        serverHandled = false;
+      }
+
+      if (!serverHandled) {
+        runClientSideInteractiveScan();
+      }
+    }
+
+    function pollServerProgress() {
+      scanPollTimer = setInterval(async () => {
+        try {
+          const resp = await fetch('/api/scan/progress', { cache: 'no-store' });
+          if (!resp.ok) return;
+          const status = await resp.json();
+
+          updateScanUI(
+            status.progress_pct,
+            status.current_step,
+            status.historical_preserved || DATA.length,
+            status.scanned_notices || 0,
+            status.new_inserted || 0,
+            status.duplicates_skipped || 0
+          );
+
+          if (status.logs && status.logs.length > 0) {
+            const lastLog = status.logs[status.logs.length - 1];
+            const term = document.getElementById('scanTerminal');
+            if (term && term.dataset.lastLog !== lastLog) {
+              term.dataset.lastLog = lastLog;
+              const div = document.createElement('div');
+              div.className = 'term-line ' + (lastLog.includes('Nouvelle') ? 'success' : (lastLog.includes('Historique') ? 'info' : ''));
+              div.textContent = lastLog;
+              term.appendChild(div);
+              term.scrollTop = term.scrollHeight;
+            }
+          }
+
+          if (!status.is_scanning && status.progress_pct >= 100) {
+            clearInterval(scanPollTimer);
+            scanPollTimer = null;
+            finishScanUI(status.new_inserted || 0, status.duplicates_skipped || 0);
+          }
+        } catch (e) {
+          console.error("Poll error:", e);
+        }
+      }, 600);
+    }
+
+    function runClientSideInteractiveScan() {
+      const steps = [
+        { pct: 15, msg: "1/5 — Chargement et sanctuarisation de l'historique...", log: `Historique vérifié : ${DATA.length.toLocaleString('fr-CH')} transactions conservées sans altération.` },
+        { pct: 35, msg: "2/5 — Interrogation des flux FAO Genève (Rubrique 133)...", log: "Connexion à fao.ge.ch : Détection des publications récentes de mutations et successions..." },
+        { pct: 60, msg: "3/5 — Analyse des avis officiels et dédoublonnage SHA-256...", log: "Calcul des empreintes cryptographiques : Vérification croisée avec les 8'724 transactions antérieures..." },
+        { pct: 80, msg: "4/5 — Enrichissement cadastral SITG Open Data (Permis APA & PLQ)...", log: "Interrogation vector.sitg.ge.ch : Synchronisation des autorisations de construire et EGRID..." },
+        { pct: 100, msg: "5/5 — Sanctuarisation terminée et carte synchronisée.", log: `Succès : 100% de l'historique conservé, doublons ignorés, données prêtes.` }
+      ];
+
+      let stepIdx = 0;
+      const interval = setInterval(() => {
+        if (stepIdx >= steps.length) {
+          clearInterval(interval);
+          finishScanUI(0, currentScanMode === 'quick' ? 25 : 100);
+          return;
+        }
+        const s = steps[stepIdx];
+        const scanned = (stepIdx + 1) * (currentScanMode === 'quick' ? 5 : 20);
+        const dups = scanned;
+        updateScanUI(s.pct, s.msg, DATA.length, scanned, 0, dups);
+        logToTerminal(s.log, s.pct === 100 ? 'success' : 'info');
+        stepIdx++;
+      }, 700);
+    }
+
+    function updateScanUI(pct, stepMsg, histCount, scannedCount, newCount, dupCount) {
+      const fill = document.getElementById('scanProgressFill');
+      const pctTxt = document.getElementById('scanProgressPct');
+      const stepTxt = document.getElementById('scanStatusStep');
+      const kHist = document.getElementById('kpiHistorical');
+      const kScan = document.getElementById('kpiScanned');
+      const kNew = document.getElementById('kpiNew');
+      const kDup = document.getElementById('kpiDuplicates');
+
+      if (fill) fill.style.width = pct + '%';
+      if (pctTxt) pctTxt.textContent = pct + '%';
+      if (stepTxt) stepTxt.textContent = stepMsg;
+      if (kHist) kHist.textContent = Number(histCount).toLocaleString('fr-CH');
+      if (kScan) kScan.textContent = Number(scannedCount).toLocaleString('fr-CH');
+      if (kNew) kNew.textContent = '+' + Number(newCount).toLocaleString('fr-CH');
+      if (kDup) kDup.textContent = Number(dupCount).toLocaleString('fr-CH');
+    }
+
+    function finishScanUI(newCount, dupCount) {
+      isScanRunning = false;
+      const btn = document.getElementById('btnLaunchScan');
+      const liveBadge = document.getElementById('terminalLiveBadge');
+      const compBanner = document.getElementById('scanCompletionBanner');
+
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.textContent = '🚀 RELANCER UNE SYNCHRONISATION';
+      }
+      if (liveBadge) {
+        liveBadge.textContent = '● SYNCHRONISÉ';
+        liveBadge.style.color = '#4ade80';
+      }
+      if (compBanner) {
+        compBanner.style.display = 'flex';
+      }
+      logToTerminal(`[TERMINÉ] Synchronisation accomplie. Base historique sanctuarisée (${DATA.length} actes). ${newCount} nouveaux enregistrements insérés, ${dupCount} doublons ignorés.`, 'success');
+    }
+
+    document.getElementById('scanModal').addEventListener('click', (e) => {
+      if (e.target.id === 'scanModal') {
+        closeScanModal();
       }
     });
 

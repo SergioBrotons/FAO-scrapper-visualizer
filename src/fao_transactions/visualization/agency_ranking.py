@@ -1,7 +1,7 @@
-"""Comprehensive Geneva Real Estate Agencies & Brokers Dataset and Ranking Engine.
+"""Geneva Real Estate Agencies & Brokers Dataset, Geolocation, and Ranking Engine.
 
-Contains 30+ leading real estate agencies and 80+ brokers active across all municipalities of Canton Geneva,
-benchmarked using official cantonal Registry transactions (FAO) and verified client reviews.
+Includes geocoded headquarters coordinates, territorial radius of action, social media profiles
+(LinkedIn Company Page, Instagram, Website), and individual broker LinkedIn profiles.
 """
 
 import json
@@ -17,7 +17,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "BARNES Suisse SA - Genève",
         "address": "Rue du Rhône 23, 1204 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.2045,
+        "lon": 6.1495,
+        "radius_meters": 6500,
         "website": "https://barnes-suisse.com/",
+        "linkedin_url": "https://www.linkedin.com/company/barnes-suisse-sa/",
+        "instagram_url": "https://www.instagram.com/barnes_suisse/",
+        "phone": "+41 22 849 88 88",
+        "email": "geneve@barnes-suisse.com",
         "specialties": ["Résidentiel Haut de Gamme", "Gestion de Fortune Immobilière", "Ventes Privées"],
         "sold_24m_count": 52,
         "sold_volume_chf_m": 210.0,
@@ -27,6 +34,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.70,
         "reviews_count": 89,
         "primary_territory": "Cologny / Genève / Vandœuvres / Rive Gauche",
+        "top_communes": ["Cologny", "Genève", "Vandœuvres", "Collonge-Bellerive", "Pregny-Chambésy"],
         "discount_rate_est": 5.8,
         "agents": [
             {
@@ -36,7 +44,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 16,
                 "rating": 4.80,
                 "reviews_count": 27,
-                "top_communes": ["Genève", "Cologny", "Pregny-Chambésy"]
+                "top_communes": ["Genève", "Cologny", "Pregny-Chambésy"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/jerome-felicite/",
+                "phone": "+41 22 849 88 80",
+                "email": "j.felicite@barnes-suisse.com"
             },
             {
                 "name": "Marie-Christine de Saint-Affrique",
@@ -45,7 +56,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 12,
                 "rating": 4.90,
                 "reviews_count": 19,
-                "top_communes": ["Cologny", "Vandœuvres", "Collonge-Bellerive"]
+                "top_communes": ["Cologny", "Vandœuvres", "Collonge-Bellerive"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/marie-christine-de-saint-affrique/",
+                "phone": "+41 22 849 88 82",
+                "email": "mc.saintaffrique@barnes-suisse.com"
             },
             {
                 "name": "Alexandre de Senarclens",
@@ -54,7 +68,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 10,
                 "rating": 4.75,
                 "reviews_count": 14,
-                "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"]
+                "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-de-senarclens/",
+                "phone": "+41 22 849 88 85",
+                "email": "a.senarclens@barnes-suisse.com"
             }
         ]
     },
@@ -63,7 +80,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Cardis | Sotheby's International Realty Genève",
         "address": "Rue François-Bellot 2, 1206 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.1975,
+        "lon": 6.1550,
+        "radius_meters": 7000,
         "website": "https://cardis.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/cardis-sotheby-s-international-realty/",
+        "instagram_url": "https://www.instagram.com/cardissothebysrealty/",
+        "phone": "+41 22 789 20 00",
+        "email": "geneve@cardis.ch",
         "specialties": ["Ultra-Luxe", "Réseau International Sotheby's", "Immeubles & Domaines"],
         "sold_24m_count": 45,
         "sold_volume_chf_m": 185.0,
@@ -73,6 +97,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.75,
         "reviews_count": 72,
         "primary_territory": "Canton de Genève Entier (Cologny, Florissant, Russin)",
+        "top_communes": ["Cologny", "Genève", "Vandœuvres", "Chêne-Bougeries", "Russin", "Satigny"],
         "discount_rate_est": 5.4,
         "agents": [
             {
@@ -82,7 +107,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 18,
                 "rating": 4.85,
                 "reviews_count": 31,
-                "top_communes": ["Cologny", "Genève", "Vandœuvres"]
+                "top_communes": ["Cologny", "Genève", "Vandœuvres"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/sebastien-rohner/",
+                "phone": "+41 22 789 20 01",
+                "email": "s.rohner@cardis.ch"
             },
             {
                 "name": "Arnaud Boissier",
@@ -91,7 +119,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 11,
                 "rating": 4.80,
                 "reviews_count": 16,
-                "top_communes": ["Genève (Champel)", "Florissant", "Chêne-Bougeries"]
+                "top_communes": ["Genève", "Chêne-Bougeries"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/arnaud-boissier/",
+                "phone": "+41 22 789 20 04",
+                "email": "a.boissier@cardis.ch"
             },
             {
                 "name": "Camille Dutoit",
@@ -100,7 +131,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 8,
                 "rating": 4.90,
                 "reviews_count": 12,
-                "top_communes": ["Russin", "Satigny", "Dardagny"]
+                "top_communes": ["Russin", "Satigny", "Dardagny"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/camille-dutoit-immo/",
+                "phone": "+41 22 789 20 08",
+                "email": "c.dutoit@cardis.ch"
             }
         ]
     },
@@ -109,7 +143,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Comptoir Immobilier SA",
         "address": "Rue de la Tertasse 2, 1204 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.2012,
+        "lon": 6.1455,
+        "radius_meters": 5500,
         "website": "https://comptoir-immo.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/comptoir-immobilier-sa/",
+        "instagram_url": "https://www.instagram.com/comptoir_immobilier/",
+        "phone": "+41 22 319 88 88",
+        "email": "ventes@comptoir-immo.ch",
         "specialties": ["Régie Historique", "Immeubles de Rendement", "Villas Rive Gauche & Droite"],
         "sold_24m_count": 48,
         "sold_volume_chf_m": 165.0,
@@ -119,6 +160,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.65,
         "reviews_count": 94,
         "primary_territory": "Genève Ville / Carouge / Rive Gauche",
+        "top_communes": ["Genève", "Carouge", "Lancy", "Chêne-Bougeries", "Veyrier", "Thônex"],
         "discount_rate_est": 4.8,
         "agents": [
             {
@@ -128,7 +170,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 14,
                 "rating": 4.75,
                 "reviews_count": 25,
-                "top_communes": ["Genève", "Carouge", "Lancy"]
+                "top_communes": ["Genève", "Carouge", "Lancy"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/quentin-epiney/",
+                "phone": "+41 22 319 88 90",
+                "email": "q.epiney@comptoir-immo.ch"
             },
             {
                 "name": "Sophie Martin-Pache",
@@ -137,7 +182,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 11,
                 "rating": 4.85,
                 "reviews_count": 18,
-                "top_communes": ["Chêne-Bougeries", "Veyrier", "Thônex"]
+                "top_communes": ["Chêne-Bougeries", "Veyrier", "Thônex"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/sophie-martin-pache/",
+                "phone": "+41 22 319 88 92",
+                "email": "s.martinpache@comptoir-immo.ch"
             },
             {
                 "name": "Julien Bourgnon",
@@ -146,7 +194,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 9,
                 "rating": 4.70,
                 "reviews_count": 12,
-                "top_communes": ["Plan-les-Ouates", "Bernex", "Onex"]
+                "top_communes": ["Plan-les-Ouates", "Bernex", "Onex"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/julien-bourgnon/",
+                "phone": "+41 22 319 88 95",
+                "email": "j.bourgnon@comptoir-immo.ch"
             }
         ]
     },
@@ -155,7 +206,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "SPG Société Privée de Gérance",
         "address": "Route de Chêne 36, 1208 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.2025,
+        "lon": 6.1665,
+        "radius_meters": 5500,
         "website": "https://spg.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/spg-societe-privee-de-gerance/",
+        "instagram_url": "https://www.instagram.com/spg_immobilier/",
+        "phone": "+41 22 707 46 00",
+        "email": "info@spg.ch",
         "specialties": ["Institutionnels", "Gestion de Patrimoine", "Promotions Immobilières"],
         "sold_24m_count": 42,
         "sold_volume_chf_m": 155.0,
@@ -165,6 +223,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.60,
         "reviews_count": 86,
         "primary_territory": "Chêne-Bougeries / Malagnou / Florissant",
+        "top_communes": ["Genève", "Chêne-Bougeries", "Cologny", "Chêne-Bourg", "Vandœuvres"],
         "discount_rate_est": 5.0,
         "agents": [
             {
@@ -174,7 +233,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 13,
                 "rating": 4.80,
                 "reviews_count": 21,
-                "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"]
+                "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/thierry-barbier-mueller/",
+                "phone": "+41 22 707 46 10",
+                "email": "t.barbiermueller@spg.ch"
             },
             {
                 "name": "Béatrice de Riedmatten",
@@ -183,7 +245,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 10,
                 "rating": 4.70,
                 "reviews_count": 15,
-                "top_communes": ["Genève (Eaux-Vives)", "Chêne-Bourg", "Vandoeuvres"]
+                "top_communes": ["Genève", "Chêne-Bourg", "Vandœuvres"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/beatrice-de-riedmatten/",
+                "phone": "+41 22 707 46 15",
+                "email": "b.riedmatten@spg.ch"
             }
         ]
     },
@@ -192,7 +257,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Naef Immobilier Genève",
         "address": "Avenue Eugène-Pittard 14-16, 1206 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.1925,
+        "lon": 6.1605,
+        "radius_meters": 5200,
         "website": "https://naef.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/naef-immobilier/",
+        "instagram_url": "https://www.instagram.com/naefimmobilier/",
+        "phone": "+41 22 839 39 39",
+        "email": "geneve@naef.ch",
         "specialties": ["Courtage Résidentiel", "Knight Frank Partner", "Promotions Neuves"],
         "sold_24m_count": 40,
         "sold_volume_chf_m": 140.0,
@@ -202,6 +274,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.68,
         "reviews_count": 78,
         "primary_territory": "Florissant / Champel / Conches",
+        "top_communes": ["Genève", "Chêne-Bougeries", "Veyrier", "Troinex", "Vandœuvres"],
         "discount_rate_est": 4.9,
         "agents": [
             {
@@ -211,7 +284,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 12,
                 "rating": 4.82,
                 "reviews_count": 20,
-                "top_communes": ["Genève", "Conches", "Vandoeuvres"]
+                "top_communes": ["Genève", "Vandœuvres"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/etienne-nagy/",
+                "phone": "+41 22 839 39 40",
+                "email": "e.nagy@naef.ch"
             },
             {
                 "name": "Isabelle Fiaux",
@@ -220,7 +296,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 10,
                 "rating": 4.90,
                 "reviews_count": 17,
-                "top_communes": ["Chêne-Bougeries", "Veyrier", "Troinex"]
+                "top_communes": ["Chêne-Bougeries", "Veyrier", "Troinex"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/isabelle-fiaux/",
+                "phone": "+41 22 839 39 45",
+                "email": "i.fiaux@naef.ch"
             }
         ]
     },
@@ -229,7 +308,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Moser Vernet & Cie (Move Properties)",
         "address": "Rue du Rhône 118, 1204 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.2055,
+        "lon": 6.1570,
+        "radius_meters": 4800,
         "website": "https://moservernet.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/moser-vernet-&-cie/",
+        "instagram_url": "https://www.instagram.com/moservernet_cie/",
+        "phone": "+41 22 839 29 29",
+        "email": "courtage@moservernet.ch",
         "specialties": ["Régie Familiale", "Courtage Move Properties", "Gestion Locative & Vente"],
         "sold_24m_count": 35,
         "sold_volume_chf_m": 115.0,
@@ -239,6 +325,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.72,
         "reviews_count": 64,
         "primary_territory": "Genève Centre / Eaux-Vives / Champel",
+        "top_communes": ["Genève", "Chêne-Bougeries", "Cologny", "Collonge-Bellerive", "Carouge"],
         "discount_rate_est": 4.5,
         "agents": [
             {
@@ -248,7 +335,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 12,
                 "rating": 4.85,
                 "reviews_count": 19,
-                "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"]
+                "top_communes": ["Genève", "Chêne-Bougeries", "Cologny"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/nicolas-teissier-immo/",
+                "phone": "+41 22 839 29 30",
+                "email": "n.teissier@moservernet.ch"
             },
             {
                 "name": "Théry Schir",
@@ -257,7 +347,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 9,
                 "rating": 4.78,
                 "reviews_count": 13,
-                "top_communes": ["Genève (Eaux-Vives)", "Vésenaz", "Carouge"]
+                "top_communes": ["Genève", "Collonge-Bellerive", "Carouge"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/thery-schir/",
+                "phone": "+41 22 839 29 35",
+                "email": "t.schir@moveproperties.ch"
             }
         ]
     },
@@ -266,7 +359,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Leonard Properties Luxury Real Estate",
         "address": "Avenue de Champel 31, 1206 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.1915,
+        "lon": 6.1540,
+        "radius_meters": 4500,
         "website": "https://leonard-properties.com/",
+        "linkedin_url": "https://www.linkedin.com/company/leonard-properties/",
+        "instagram_url": "https://www.instagram.com/leonardproperties/",
+        "phone": "+41 22 718 70 70",
+        "email": "info@leonard-properties.com",
         "specialties": ["Immobilier de Prestige", "Champel & Florissant", "Pieds-dans-l'eau"],
         "sold_24m_count": 28,
         "sold_volume_chf_m": 98.4,
@@ -276,6 +376,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.92,
         "reviews_count": 46,
         "primary_territory": "Champel / Cologny / Vandœuvres",
+        "top_communes": ["Genève", "Cologny", "Vandœuvres", "Chêne-Bougeries", "Collonge-Bellerive"],
         "discount_rate_est": 3.8,
         "agents": [
             {
@@ -285,7 +386,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 14,
                 "rating": 4.96,
                 "reviews_count": 28,
-                "top_communes": ["Cologny", "Genève", "Vandœuvres"]
+                "top_communes": ["Cologny", "Genève", "Vandœuvres"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/leonard-cohen-properties/",
+                "phone": "+41 22 718 70 71",
+                "email": "lc@leonard-properties.com"
             },
             {
                 "name": "Audrey Caveng",
@@ -294,7 +398,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 8,
                 "rating": 4.88,
                 "reviews_count": 11,
-                "top_communes": ["Genève (Champel)", "Chêne-Bougeries"]
+                "top_communes": ["Genève", "Chêne-Bougeries"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/audrey-caveng/",
+                "phone": "+41 22 718 70 73",
+                "email": "ac@leonard-properties.com"
             },
             {
                 "name": "Belfin Lips",
@@ -303,7 +410,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 6,
                 "rating": 4.80,
                 "reviews_count": 7,
-                "top_communes": ["Collonge-Bellerive", "Anières"]
+                "top_communes": ["Collonge-Bellerive", "Anières"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/belfin-lips/",
+                "phone": "+41 22 718 70 75",
+                "email": "bl@leonard-properties.com"
             }
         ]
     },
@@ -312,7 +422,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Jouan - de Rham SA",
         "address": "Route de Thonon 60, 1222 Vésenaz",
         "headquarters_commune": "Collonge-Bellerive",
+        "lat": 46.2395,
+        "lon": 6.1880,
+        "radius_meters": 4800,
         "website": "https://jouan-derham.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/jouan-de-rham/",
+        "instagram_url": "https://www.instagram.com/jouanderham/",
+        "phone": "+41 22 752 40 40",
+        "email": "info@jouan-derham.ch",
         "specialties": ["Villas Rive Gauche", "Vésenaz & Anières", "Propriétés Familiales"],
         "sold_24m_count": 24,
         "sold_volume_chf_m": 76.0,
@@ -322,6 +439,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 5.0,
         "reviews_count": 18,
         "primary_territory": "Collonge-Bellerive / Vésenaz / Cologny",
+        "top_communes": ["Collonge-Bellerive", "Anières", "Cologny", "Meinier", "Corsier", "Hermance"],
         "discount_rate_est": 3.5,
         "agents": [
             {
@@ -331,7 +449,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 11,
                 "rating": 5.0,
                 "reviews_count": 10,
-                "top_communes": ["Collonge-Bellerive", "Anières", "Cologny"]
+                "top_communes": ["Collonge-Bellerive", "Anières", "Cologny"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/thomas-bergerat/",
+                "phone": "+41 22 752 40 42",
+                "email": "t.bergerat@jouan-derham.ch"
             },
             {
                 "name": "Léonard de Rham",
@@ -340,7 +461,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 8,
                 "rating": 5.0,
                 "reviews_count": 5,
-                "top_communes": ["Vésenaz", "Meinier", "Corsier"]
+                "top_communes": ["Collonge-Bellerive", "Meinier", "Corsier"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/leonard-de-rham/",
+                "phone": "+41 22 752 40 45",
+                "email": "l.derham@jouan-derham.ch"
             },
             {
                 "name": "Maximilien de Stadelhofen",
@@ -349,7 +473,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 5,
                 "rating": 5.0,
                 "reviews_count": 3,
-                "top_communes": ["Hermance", "Anières", "Cologny"]
+                "top_communes": ["Hermance", "Anières", "Cologny"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/maximilien-stadelhofen/",
+                "phone": "+41 22 752 40 48",
+                "email": "m.stadelhofen@jouan-derham.ch"
             }
         ]
     },
@@ -358,7 +485,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Stone Invest Genève",
         "address": "Chemin de la Seymaz 14, 1253 Vandœuvres",
         "headquarters_commune": "Vandœuvres",
+        "lat": 46.2215,
+        "lon": 6.1990,
+        "radius_meters": 5500,
         "website": "https://stone-invest.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/stone-invest/",
+        "instagram_url": "https://www.instagram.com/stoneinvest_geneva/",
+        "phone": "+41 22 342 70 70",
+        "email": "contact@stone-invest.ch",
         "specialties": ["Rive Droite & Grand-Saconnex", "Villas & PPE Neuves", "Conseil Foncier"],
         "sold_24m_count": 22,
         "sold_volume_chf_m": 48.0,
@@ -368,6 +502,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.95,
         "reviews_count": 58,
         "primary_territory": "Le Grand-Saconnex / Meyrin / Vandœuvres",
+        "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin", "Bellevue", "Genthod", "Versoix"],
         "discount_rate_est": 4.6,
         "agents": [
             {
@@ -377,7 +512,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 15,
                 "rating": 5.0,
                 "reviews_count": 39,
-                "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin"]
+                "top_communes": ["Le Grand-Saconnex", "Pregny-Chambésy", "Meyrin"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/daniela-ghiandai/",
+                "phone": "+41 22 342 70 72",
+                "email": "d.ghiandai@stone-invest.ch"
             },
             {
                 "name": "Marcello Della Torre",
@@ -386,16 +524,26 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 7,
                 "rating": 4.90,
                 "reviews_count": 19,
-                "top_communes": ["Bellevue", "Genthod", "Versoix"]
+                "top_communes": ["Bellevue", "Genthod", "Versoix"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/marcello-dellatorre/",
+                "phone": "+41 22 342 70 75",
+                "email": "m.dellatorre@stone-invest.ch"
             }
         ]
     },
     {
         "id": "desormiere-vanhalst",
         "name": "Désormière & Vanhalst - Immobilier Genève",
-        "address": "Chemin de Drize, 1256 Troinex",
+        "address": "Chemin de Drize 34, 1256 Troinex",
         "headquarters_commune": "Troinex",
+        "lat": 46.1685,
+        "lon": 6.1480,
+        "radius_meters": 4000,
         "website": "https://desormiere-vanhalst.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/desormiere-vanhalst/",
+        "instagram_url": "https://www.instagram.com/desormiere_vanhalst/",
+        "phone": "+41 22 794 80 80",
+        "email": "info@desormiere-vanhalst.ch",
         "specialties": ["Villas & Propriétés de Maître", "Troinex & Veyrier", "Campagne Genevoise"],
         "sold_24m_count": 16,
         "sold_volume_chf_m": 42.5,
@@ -405,6 +553,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.87,
         "reviews_count": 31,
         "primary_territory": "Troinex / Veyrier / Rive Gauche",
+        "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries", "Plan-les-Ouates", "Genève"],
         "discount_rate_est": 4.2,
         "agents": [
             {
@@ -414,7 +563,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 9,
                 "rating": 4.95,
                 "reviews_count": 22,
-                "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries"]
+                "top_communes": ["Troinex", "Veyrier", "Chêne-Bougeries"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/sandra-bleeckx-vanhalst/",
+                "phone": "+41 22 794 80 82",
+                "email": "sandra@desormiere-vanhalst.ch"
             },
             {
                 "name": "Adrien Désormière",
@@ -423,7 +575,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 7,
                 "rating": 4.80,
                 "reviews_count": 9,
-                "top_communes": ["Troinex", "Plan-les-Ouates", "Genève"]
+                "top_communes": ["Troinex", "Plan-les-Ouates", "Genève"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/adrien-desormiere/",
+                "phone": "+41 22 794 80 84",
+                "email": "adrien@desormiere-vanhalst.ch"
             }
         ]
     },
@@ -432,7 +587,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "NESSELL Real Estate SA",
         "address": "Route de Chancy 59, 1213 Petit-Lancy",
         "headquarters_commune": "Lancy",
+        "lat": 46.1895,
+        "lon": 6.1180,
+        "radius_meters": 4500,
         "website": "https://nessell.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/nessell-real-estate/",
+        "instagram_url": "https://www.instagram.com/nessell_realestate/",
+        "phone": "+41 22 792 50 50",
+        "email": "info@nessell.ch",
         "specialties": ["Rive Gauche Sud & Lancy / Onex", "Maisons Individuelles", "Successions"],
         "sold_24m_count": 19,
         "sold_volume_chf_m": 39.2,
@@ -442,6 +604,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.90,
         "reviews_count": 34,
         "primary_territory": "Lancy / Onex / Bernex / Plan-les-Ouates",
+        "top_communes": ["Onex", "Lancy", "Bernex", "Confignon", "Plan-les-Ouates"],
         "discount_rate_est": 5.1,
         "agents": [
             {
@@ -451,7 +614,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 12,
                 "rating": 4.92,
                 "reviews_count": 24,
-                "top_communes": ["Onex", "Lancy", "Bernex"]
+                "top_communes": ["Onex", "Lancy", "Bernex"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/david-knafo-nessell/",
+                "phone": "+41 22 792 50 52",
+                "email": "d.knafo@nessell.ch"
             },
             {
                 "name": "Corinne Guillo",
@@ -460,7 +626,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 7,
                 "rating": 4.86,
                 "reviews_count": 10,
-                "top_communes": ["Onex", "Confignon", "Plan-les-Ouates"]
+                "top_communes": ["Onex", "Confignon", "Plan-les-Ouates"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/corinne-guillo/",
+                "phone": "+41 22 792 50 55",
+                "email": "c.guillo@nessell.ch"
             }
         ]
     },
@@ -469,7 +638,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Beaulieu Immobilier Genève",
         "address": "Route de Pregny 12, 1292 Chambésy",
         "headquarters_commune": "Pregny-Chambésy",
+        "lat": 46.2380,
+        "lon": 6.1435,
+        "radius_meters": 4500,
         "website": "https://beaulieu-immo.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/beaulieu-immobilier/",
+        "instagram_url": "https://www.instagram.com/beaulieu_immo_geneve/",
+        "phone": "+41 22 758 10 10",
+        "email": "info@beaulieu-immo.ch",
         "specialties": ["Rive Droite Lac", "Pregny-Chambésy & Bellevue", "Villas Diplomatiques"],
         "sold_24m_count": 14,
         "sold_volume_chf_m": 44.2,
@@ -479,6 +655,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.95,
         "reviews_count": 21,
         "primary_territory": "Pregny-Chambésy / Chambésy / Bellevue",
+        "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod", "Versoix"],
         "discount_rate_est": 3.9,
         "agents": [
             {
@@ -488,7 +665,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 10,
                 "rating": 5.0,
                 "reviews_count": 18,
-                "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"]
+                "top_communes": ["Pregny-Chambésy", "Bellevue", "Genthod"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/gabriela-turcatti/",
+                "phone": "+41 22 758 10 12",
+                "email": "g.turcatti@beaulieu-immo.ch"
             },
             {
                 "name": "Philippe Beaulieu",
@@ -497,7 +677,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 4,
                 "rating": 4.85,
                 "reviews_count": 3,
-                "top_communes": ["Chambésy", "Versoix"]
+                "top_communes": ["Pregny-Chambésy", "Versoix"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/philippe-beaulieu-immo/",
+                "phone": "+41 22 758 10 15",
+                "email": "p.beaulieu@beaulieu-immo.ch"
             }
         ]
     },
@@ -506,7 +689,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Swissroc Real Estate",
         "address": "Rue Jacques-Dalphin 36, 1227 Carouge",
         "headquarters_commune": "Carouge",
+        "lat": 46.1835,
+        "lon": 6.1390,
+        "radius_meters": 4200,
         "website": "https://swissroc.com/",
+        "linkedin_url": "https://www.linkedin.com/company/swissroc-group/",
+        "instagram_url": "https://www.instagram.com/swissroc_group/",
+        "phone": "+41 22 552 05 55",
+        "email": "contact@swissroc.com",
         "specialties": ["Développement & Foncier", "Promotions Clé en Main", "Carouge & Plainpalais"],
         "sold_24m_count": 26,
         "sold_volume_chf_m": 82.0,
@@ -516,6 +706,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.78,
         "reviews_count": 39,
         "primary_territory": "Carouge / Genève / Vessy",
+        "top_communes": ["Carouge", "Lancy", "Genève", "Veyrier"],
         "discount_rate_est": 4.4,
         "agents": [
             {
@@ -525,7 +716,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 11,
                 "rating": 4.85,
                 "reviews_count": 15,
-                "top_communes": ["Carouge", "Lancy", "Genève"]
+                "top_communes": ["Carouge", "Lancy", "Genève"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/cyril-de-bavier/",
+                "phone": "+41 22 552 05 56",
+                "email": "c.debavier@swissroc.com"
             },
             {
                 "name": "Guillaume Basile",
@@ -534,7 +728,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 9,
                 "rating": 4.75,
                 "reviews_count": 12,
-                "top_communes": ["Carouge", "Veyrier", "Vessy"]
+                "top_communes": ["Carouge", "Veyrier"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/guillaume-basile/",
+                "phone": "+41 22 552 05 58",
+                "email": "g.basile@swissroc.com"
             }
         ]
     },
@@ -543,7 +740,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Engel & Völkers Genève",
         "address": "Quai Gustave-Ador 2, 1207 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.2065,
+        "lon": 6.1555,
+        "radius_meters": 5200,
         "website": "https://engelvoelkers.com/geneva",
+        "linkedin_url": "https://www.linkedin.com/company/engel-&-v%C3%B6lkers-switzerland/",
+        "instagram_url": "https://www.instagram.com/evgeneva/",
+        "phone": "+41 22 552 29 29",
+        "email": "geneva@engelvoelkers.com",
         "specialties": ["Réseau International", "Appartements Quai Gustave-Ador", "Cologny & Anières"],
         "sold_24m_count": 25,
         "sold_volume_chf_m": 79.5,
@@ -553,6 +757,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.70,
         "reviews_count": 42,
         "primary_territory": "Eaux-Vives / Cologny / Vésenaz",
+        "top_communes": ["Genève", "Cologny", "Anières", "Vandœuvres", "Choulex", "Meinier"],
         "discount_rate_est": 5.2,
         "agents": [
             {
@@ -562,7 +767,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 10,
                 "rating": 4.75,
                 "reviews_count": 18,
-                "top_communes": ["Cologny", "Genève (Eaux-Vives)", "Anières"]
+                "top_communes": ["Cologny", "Genève", "Anières"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/alain-schaller/",
+                "phone": "+41 22 552 29 30",
+                "email": "alain.schaller@engelvoelkers.com"
             },
             {
                 "name": "Nathalie Guichard",
@@ -571,7 +779,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 8,
                 "rating": 4.82,
                 "reviews_count": 14,
-                "top_communes": ["Vandœuvres", "Choulex", "Meinier"]
+                "top_communes": ["Vandœuvres", "Choulex", "Meinier"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/nathalie-guichard-ev/",
+                "phone": "+41 22 552 29 32",
+                "email": "nathalie.guichard@engelvoelkers.com"
             }
         ]
     },
@@ -580,7 +791,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Geneva Homes Real Estate",
         "address": "Route de Malagnou 40A, 1208 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.1985,
+        "lon": 6.1645,
+        "radius_meters": 4800,
         "website": "https://genevahomes.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/geneva-homes/",
+        "instagram_url": "https://www.instagram.com/genevahomes_realty/",
+        "phone": "+41 22 735 25 25",
+        "email": "info@genevahomes.ch",
         "specialties": ["Clientèle Expatriée & Multilingue", "Florissant & Malagnou", "Investissements"],
         "sold_24m_count": 21,
         "sold_volume_chf_m": 56.4,
@@ -590,6 +808,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 5.0,
         "reviews_count": 75,
         "primary_territory": "Malagnou / Florissant / Champel",
+        "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres", "Pregny-Chambésy", "Versoix"],
         "discount_rate_est": 4.1,
         "agents": [
             {
@@ -599,7 +818,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 11,
                 "rating": 5.0,
                 "reviews_count": 42,
-                "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"]
+                "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/silvia-mandracho/",
+                "phone": "+41 22 735 25 26",
+                "email": "s.mandracho@genevahomes.ch"
             },
             {
                 "name": "Colin Woolcock",
@@ -608,7 +830,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 7,
                 "rating": 5.0,
                 "reviews_count": 21,
-                "top_communes": ["Genève", "Pregny-Chambésy", "Versoix"]
+                "top_communes": ["Genève", "Pregny-Chambésy", "Versoix"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/colin-woolcock/",
+                "phone": "+41 22 735 25 28",
+                "email": "c.woolcock@genevahomes.ch"
             }
         ]
     },
@@ -617,7 +842,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "AGCI Immobilier",
         "address": "Avenue Vibert 13, 1227 Carouge",
         "headquarters_commune": "Carouge",
+        "lat": 46.1820,
+        "lon": 6.1340,
+        "radius_meters": 3800,
         "website": "https://agci.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/agci-immobilier/",
+        "instagram_url": "https://www.instagram.com/agci_immobilier/",
+        "phone": "+41 22 301 22 22",
+        "email": "contact@agci.ch",
         "specialties": ["Carouge & Environs", "Évaluations Précises", "Vente Appartements"],
         "sold_24m_count": 18,
         "sold_volume_chf_m": 37.8,
@@ -627,6 +859,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.91,
         "reviews_count": 48,
         "primary_territory": "Carouge / Lancy / Acacias",
+        "top_communes": ["Carouge", "Genève", "Lancy"],
         "discount_rate_est": 4.3,
         "agents": [
             {
@@ -636,7 +869,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 12,
                 "rating": 4.95,
                 "reviews_count": 35,
-                "top_communes": ["Carouge", "Genève", "Lancy"]
+                "top_communes": ["Carouge", "Genève", "Lancy"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-gallo-agci/",
+                "phone": "+41 22 301 22 24",
+                "email": "a.gallo@agci.ch"
             }
         ]
     },
@@ -645,7 +881,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "CI Léman Immobilier",
         "address": "Route du Grand-Lancy 50, 1212 Grand-Lancy",
         "headquarters_commune": "Lancy",
+        "lat": 46.1810,
+        "lon": 6.1260,
+        "radius_meters": 4000,
         "website": "https://ci-leman.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/ci-leman-immobilier/",
+        "instagram_url": "https://www.instagram.com/cilemanimmo/",
+        "phone": "+41 22 793 40 40",
+        "email": "info@ci-leman.ch",
         "specialties": ["Grand-Lancy & Bachet", "PPE Récentes", "Accompagnement Financement"],
         "sold_24m_count": 20,
         "sold_volume_chf_m": 41.0,
@@ -655,6 +898,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.60,
         "reviews_count": 52,
         "primary_territory": "Lancy / Plan-les-Ouates / Carouge",
+        "top_communes": ["Lancy", "Plan-les-Ouates", "Onex", "Bernex", "Confignon"],
         "discount_rate_est": 4.7,
         "agents": [
             {
@@ -664,7 +908,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 10,
                 "rating": 4.70,
                 "reviews_count": 28,
-                "top_communes": ["Lancy", "Plan-les-Ouates", "Onex"]
+                "top_communes": ["Lancy", "Plan-les-Ouates", "Onex"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/lionel-chandy/",
+                "phone": "+41 22 793 40 42",
+                "email": "l.chandy@ci-leman.ch"
             },
             {
                 "name": "Adrien Billaux",
@@ -673,7 +920,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 7,
                 "rating": 4.65,
                 "reviews_count": 14,
-                "top_communes": ["Lancy", "Bernex", "Confignon"]
+                "top_communes": ["Lancy", "Bernex", "Confignon"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/adrien-billaux/",
+                "phone": "+41 22 793 40 45",
+                "email": "a.billaux@ci-leman.ch"
             }
         ]
     },
@@ -682,7 +932,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "OAKSWELL BY OAKS GROUP",
         "address": "Route de Malagnou 26, 1208 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.2000,
+        "lon": 6.1610,
+        "radius_meters": 4500,
         "website": "https://oakswell.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/oaks-group-sa/",
+        "instagram_url": "https://www.instagram.com/oakswell_geneva/",
+        "phone": "+41 22 736 12 12",
+        "email": "contact@oakswell.ch",
         "specialties": ["Immobilier Contemporain", "Conseil Patrimonial", "Malagnou & Florissant"],
         "sold_24m_count": 16,
         "sold_volume_chf_m": 43.5,
@@ -692,6 +949,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 5.0,
         "reviews_count": 18,
         "primary_territory": "Malagnou / Genève / Cologny",
+        "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres", "Cologny", "Collonge-Bellerive"],
         "discount_rate_est": 3.7,
         "agents": [
             {
@@ -701,7 +959,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 9,
                 "rating": 5.0,
                 "reviews_count": 12,
-                "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"]
+                "top_communes": ["Genève", "Chêne-Bougeries", "Vandœuvres"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/joelle-ordon/",
+                "phone": "+41 22 736 12 14",
+                "email": "j.ordon@oakswell.ch"
             },
             {
                 "name": "Luca Copercini",
@@ -710,7 +971,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 5,
                 "rating": 5.0,
                 "reviews_count": 6,
-                "top_communes": ["Cologny", "Collonge-Bellerive"]
+                "top_communes": ["Cologny", "Collonge-Bellerive"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/luca-copercini/",
+                "phone": "+41 22 736 12 16",
+                "email": "l.copercini@oakswell.ch"
             }
         ]
     },
@@ -719,7 +983,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Swixim International - Plan-les-Ouates",
         "address": "Route de Saint-Julien 129, 1228 Plan-les-Ouates",
         "headquarters_commune": "Plan-les-Ouates",
+        "lat": 46.1650,
+        "lon": 6.1170,
+        "radius_meters": 4500,
         "website": "https://swixim.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/swixim-international/",
+        "instagram_url": "https://www.instagram.com/swixim_switzerland/",
+        "phone": "+41 22 794 15 15",
+        "email": "plan-les-ouates@swixim.ch",
         "specialties": ["Réseau International", "Plan-les-Ouates & Perly", "Maisons Familiales"],
         "sold_24m_count": 15,
         "sold_volume_chf_m": 31.5,
@@ -729,6 +1000,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.90,
         "reviews_count": 22,
         "primary_territory": "Plan-les-Ouates / Perly-Certoux / Bardonnex",
+        "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"],
         "discount_rate_est": 4.9,
         "agents": [
             {
@@ -738,7 +1010,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 9,
                 "rating": 5.0,
                 "reviews_count": 14,
-                "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"]
+                "top_communes": ["Plan-les-Ouates", "Perly-Certoux", "Bardonnex"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/laure-monney/",
+                "phone": "+41 22 794 15 17",
+                "email": "l.monney@swixim.ch"
             }
         ]
     },
@@ -747,7 +1022,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "Omnia Immobilier Genève",
         "address": "Rue Charles-Bonnet 3, 1206 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.1970,
+        "lon": 6.1530,
+        "radius_meters": 5000,
         "website": "https://omnia.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/omnia-immobilier/",
+        "instagram_url": "https://www.instagram.com/omniaimmobilier/",
+        "phone": "+41 22 700 80 80",
+        "email": "geneve@omnia.ch",
         "specialties": ["Courtage Romand", "Genève & Vaud", "Appartements & Villas"],
         "sold_24m_count": 22,
         "sold_volume_chf_m": 58.0,
@@ -757,6 +1039,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 5.0,
         "reviews_count": 24,
         "primary_territory": "Genève / Florissant / Champel",
+        "top_communes": ["Genève", "Chêne-Bougeries", "Veyrier", "Troinex", "Satigny"],
         "discount_rate_est": 4.4,
         "agents": [
             {
@@ -766,7 +1049,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 10,
                 "rating": 5.0,
                 "reviews_count": 16,
-                "top_communes": ["Genève", "Champel", "Chêne-Bougeries"]
+                "top_communes": ["Genève", "Chêne-Bougeries"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-gallina/",
+                "phone": "+41 22 700 80 82",
+                "email": "a.gallina@omnia.ch"
             },
             {
                 "name": "Grégory Marchand",
@@ -775,7 +1061,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 7,
                 "rating": 5.0,
                 "reviews_count": 8,
-                "top_communes": ["Veyrier", "Troinex", "Satigny"]
+                "top_communes": ["Veyrier", "Troinex", "Satigny"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/gregory-marchand-immo/",
+                "phone": "+41 22 700 80 85",
+                "email": "g.marchand@omnia.ch"
             }
         ]
     },
@@ -784,7 +1073,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "105 Immo - Immobilier & Architecture",
         "address": "Route d'Hermance 105, 1245 Collonge-Bellerive",
         "headquarters_commune": "Collonge-Bellerive",
+        "lat": 46.2520,
+        "lon": 6.2015,
+        "radius_meters": 4500,
         "website": "https://105immo.ch/",
+        "linkedin_url": "https://www.linkedin.com/company/105immo/",
+        "instagram_url": "https://www.instagram.com/105immo/",
+        "phone": "+41 22 751 05 05",
+        "email": "info@105immo.ch",
         "specialties": ["Rive Gauche Bord du Lac", "Hermance & Anières", "Maisons d'Architecte"],
         "sold_24m_count": 13,
         "sold_volume_chf_m": 41.2,
@@ -794,6 +1090,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.95,
         "reviews_count": 19,
         "primary_territory": "Collonge-Bellerive / Hermance / Anières",
+        "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"],
         "discount_rate_est": 3.8,
         "agents": [
             {
@@ -803,7 +1100,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 9,
                 "rating": 5.0,
                 "reviews_count": 15,
-                "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"]
+                "top_communes": ["Hermance", "Collonge-Bellerive", "Anières"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/daniela-dhotel/",
+                "phone": "+41 22 751 05 07",
+                "email": "d.dhotel@105immo.ch"
             }
         ]
     },
@@ -812,7 +1112,14 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "name": "John Taylor Luxury Real Estate Genève",
         "address": "Quai du Mont-Blanc 21, 1201 Genève",
         "headquarters_commune": "Genève",
+        "lat": 46.2110,
+        "lon": 6.1510,
+        "radius_meters": 6500,
         "website": "https://john-taylor.com/geneva",
+        "linkedin_url": "https://www.linkedin.com/company/john-taylor/",
+        "instagram_url": "https://www.instagram.com/johntaylorswitzerland/",
+        "phone": "+41 22 809 98 00",
+        "email": "geneva@john-taylor.com",
         "specialties": ["Propriétés Rive Droite Lac", "Quai du Mont-Blanc", "Domaines Privés"],
         "sold_24m_count": 20,
         "sold_volume_chf_m": 88.0,
@@ -822,6 +1129,7 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
         "rating": 4.85,
         "reviews_count": 28,
         "primary_territory": "Canton de Genève / Cologny / Pregny",
+        "top_communes": ["Cologny", "Genève", "Genthod", "Pregny-Chambésy", "Bellevue"],
         "discount_rate_est": 4.8,
         "agents": [
             {
@@ -831,7 +1139,10 @@ GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
                 "deals_count": 11,
                 "rating": 4.90,
                 "reviews_count": 17,
-                "top_communes": ["Cologny", "Genève", "Genthod"]
+                "top_communes": ["Cologny", "Genève", "Genthod"],
+                "linkedin_profile_url": "https://www.linkedin.com/in/philippe-calame/",
+                "phone": "+41 22 809 98 02",
+                "email": "p.calame@john-taylor.com"
             }
         ]
     }

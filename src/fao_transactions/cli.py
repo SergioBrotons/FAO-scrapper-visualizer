@@ -194,6 +194,35 @@ def export(
         build_interactive_map()
 
 
+@app.command()
+def scan(
+    mode: str = typer.Option("quick", "--mode", "-m", help="Scan mode: 'quick' (recent), 'standard', or 'exhaustive'"),
+):
+    """Run incremental multi-portal scan with SHA-256 deduplication and historic data preservation."""
+    from fao_transactions.collector.sync_engine import sync_manager
+    import time
+
+    console.rule("[bold #C9A24D]Starting Cytria Portal Scan & Refresh[/bold #C9A24D]")
+    sync_manager.start_scan(mode=mode)
+    
+    while sync_manager.is_scanning:
+        status = sync_manager.get_status()
+        console.print(f"[{status['progress_pct']}%] {status['current_step']}", end="\r")
+        time.sleep(0.5)
+
+    status = sync_manager.get_status()
+    console.print(f"\n[bold green][OK] Scan completed:[/bold green] {status['new_inserted']} new records, {status['duplicates_skipped']} duplicates preserved.")
+
+
+@app.command()
+def serve(
+    port: int = typer.Option(8080, "--port", "-p", help="Port to serve the interactive web intelligence visualizer"),
+):
+    """Start local Cytria Intelligence web server with REST synchronization API."""
+    from fao_transactions.server import run_server
+    run_server(port=port)
+
+
 def main():
     app()
 

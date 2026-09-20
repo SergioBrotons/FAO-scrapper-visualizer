@@ -4,8 +4,15 @@ import re
 import unicodedata
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-import pymupdf
-import pdfplumber
+try:
+    import pymupdf
+except ImportError:
+    pymupdf = None
+
+try:
+    import pdfplumber
+except ImportError:
+    pdfplumber = None
 from rich.console import Console
 
 from fao_transactions.parser.models import TransactionRecord

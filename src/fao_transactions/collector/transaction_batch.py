@@ -6,7 +6,10 @@ import random
 import re
 from pathlib import Path
 from typing import List, Dict, Any, Optional
-import pymupdf
+try:
+    import pymupdf
+except ImportError:
+    pymupdf = None
 
 if sys.platform == "win32":
     try:
