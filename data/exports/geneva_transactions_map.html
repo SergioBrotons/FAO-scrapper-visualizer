@@ -2303,14 +2303,21 @@
             </div>
           </div>
 
-          <!-- Radius & Action Bar -->
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--panel-border); padding-top: 14px; flex-wrap: wrap; gap: 10px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 11px; text-transform: uppercase; color: var(--color-sand-400); margin-right: 4px;">Rayon de prospection :</span>
-              <button type="button" class="subtool-btn cma-radius-btn" data-radius="100" onclick="setCmaRadius(100)">100 m (Parcelle)</button>
+          <!-- Radius, Quartier Scope & Action Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--panel-border); padding-top: 14px; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 11px; text-transform: uppercase; color: var(--color-sand-400); margin-right: 2px;">Rayon :</span>
+              <button type="button" class="subtool-btn cma-radius-btn" data-radius="100" onclick="setCmaRadius(100)">100 m</button>
               <button type="button" class="subtool-btn cma-radius-btn active" data-radius="250" onclick="setCmaRadius(250)">250 m (Voisinage)</button>
-              <button type="button" class="subtool-btn cma-radius-btn" data-radius="500" onclick="setCmaRadius(500)">500 m (Micro-Quartier)</button>
-              <button type="button" class="subtool-btn cma-radius-btn" data-radius="1000" onclick="setCmaRadius(1000)">1'000 m (Commune)</button>
+              <button type="button" class="subtool-btn cma-radius-btn" data-radius="500" onclick="setCmaRadius(500)">500 m</button>
+              <button type="button" class="subtool-btn cma-radius-btn" data-radius="1000" onclick="setCmaRadius(1000)">1'000 m</button>
+
+              <span style="font-size: 11px; text-transform: uppercase; color: var(--color-sand-400); margin-left: 8px; margin-right: 2px;">Périmètre :</span>
+              <select id="cmaScopeSelect" onchange="runComparativeAnalysis()" style="padding: 6px 10px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 11px; font-weight: 600; outline: none; cursor: pointer;">
+                <option value="HYBRID" selected>Hybride Pondéré (Distance + Même Quartier / Commune)</option>
+                <option value="QUARTIER_STRICT">Strict Même Quartier (Pas de franchissement de frontière)</option>
+                <option value="RADIUS_ONLY">Rayon Métrique Brut (Sans filtre administratif)</option>
+              </select>
             </div>
             <button type="button" id="btnLaunchCma" onclick="runComparativeAnalysis()" style="padding: 9px 20px; background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;">
               CALCULER L'AVIS DE VALEUR & COMPARABLES
@@ -2339,6 +2346,7 @@
             <button type="button" class="league-tab-btn active" id="tabMethHoiries" onclick="setMethodologyTab('HOIRIES')">Mandats & Hoiries</button>
             <button type="button" class="league-tab-btn" id="tabMethFoncier" onclick="setMethodologyTab('FONCIER')">Foncier & Zone 5</button>
             <button type="button" class="league-tab-btn" id="tabMethPrix" onclick="setMethodologyTab('PRIX')">Vérité Prix & LDTR</button>
+            <button type="button" class="league-tab-btn" id="tabMethCMA" onclick="setMethodologyTab('CMA')">Avis de Valeur & CMA</button>
             <button type="button" class="league-tab-btn" id="tabMethAgences" onclick="setMethodologyTab('AGENCES')">Agences & Délais</button>
           </div>
           <button class="modal-close-btn" onclick="closeMethodologyModal()">&times;</button>
@@ -4616,6 +4624,7 @@
         'HOIRIES': document.getElementById('tabMethHoiries'),
         'FONCIER': document.getElementById('tabMethFoncier'),
         'PRIX': document.getElementById('tabMethPrix'),
+        'CMA': document.getElementById('tabMethCMA'),
         'AGENCES': document.getElementById('tabMethAgences')
       };
       Object.keys(tabBtns).forEach(k => {
@@ -4790,6 +4799,72 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
               <p style="font-size: 12px; color: var(--color-paper); font-style: italic; line-height: 1.6; margin: 0; padding: 10px; background: var(--color-ink-900); border-left: 3px solid var(--color-brand-400);">
                 « Monsieur le Propriétaire, voici l'extrait certifié des 5 dernières mutations notariées enregistrées dans votre rue au cours des 18 derniers mois. Le prix moyen effectif signé chez le notaire est de CHF 14'200/m², et non de CHF 17'000/m² comme l'espérait l'annonce du voisin qui stagne sur les portails depuis un an. Si nous fixons votre mise en vente à CHF 14'800/m² avec notre stratégie de valorisation, nous déclencherons 3 offres qualifiées en moins de 45 jours. »
               </p>
+            </div>
+          </div>
+        `;
+      } else if (tabId === 'CMA') {
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
+              <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">SIMULATEUR D'AVIS DE VALEUR MICRO-QUARTIER (CMA) & CIBLAGE TERRITORIAL</h3>
+              <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Méthodologie d'estimation vénale comparative fondée sur les mutations notariées contiguës, l'échantillonnage par quartier SITG et les tranches iso-valeur.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Le Protocole des Ventes Contiguës</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  L'estimation la plus incontestable aux yeux d'un vendeur est la <strong>vente récente sur sa propre parcelle ou son numéro voisin</strong> :
+                </p>
+                <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li>Exemple : Pour un bien au <em>Chemin du Saut-du-Loup 18</em>, l'outil isole immédiatement l'acte du <em>Saut-du-Loup 16</em> (Parcelle 4642-104) conclu à <strong>CHF 1'620'000</strong> (26.02.2026).</li>
+                  <li>Cette référence notariée directe neutralise les prétentions subjectives et ancre la négociation sur une réalité juridique opposable.</li>
+                  <li>Le courtier dispose instantanément des noms des parties (vendeur/acquéreur) et de la désignation cadastrale.</li>
+                </ul>
+              </div>
+
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Ciblage par Quartier & Tranches Iso-Valeur</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+                  <div><strong>Prestige (> 18'000 CHF/m²) :</strong> Cologny, Conches, Frontenex, quais Eaux-Vives.</div>
+                  <div><strong>Haut Standing (14'000 – 18'000 CHF/m²) :</strong> Champel, Florissant, Malagnou, Chêne-Bougeries.</div>
+                  <div><strong>Cœur de Marché (11'000 – 14'000 CHF/m²) :</strong> Chêne-Bourg, Carouge, Plainpalais, Servette.</div>
+                  <div><strong>Entrée / Accessible (< 11'000 CHF/m²) :</strong> Vernier, Meyrin, Onex, Lancy.</div>
+                  <div style="color: var(--color-brand-400); font-size: 11px; margin-top: 4px;">
+                    Règle d'or : Ne jamais mélanger des zones discontinues (ex: franchir l'Arve ou passer d'une villa en Zone 5 à une PPE dense). Utiliser le mode "Strict Même Quartier" pour les estimations sensibles.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h4 style="margin: 0; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Modèle de Courrier d'Avis de Valeur Fondé sur Vente Contiguë</h4>
+                <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('letterCmaText').innerText); alert('Modèle de courrier copié.');" style="padding: 4px 10px; font-size: 11px; background: var(--color-ink-800); border: 1px solid var(--panel-border); color: var(--color-brand-300); cursor: pointer;">COPIER LE TEXTE</button>
+              </div>
+              <pre id="letterCmaText" style="white-space: pre-wrap; font-family: monospace; font-size: 11px; background: var(--color-ink-900); padding: 14px; border: 1px solid var(--panel-border); color: var(--color-sand-200); line-height: 1.5; margin: 0;">
+Objet : Évolution des valeurs vénales dans votre environnement immédiat – [Adresse exacte]
+
+Madame, Monsieur [Nom de famille],
+
+En qualité d'observateur actif des mutations immobilières sur la commune de [Commune / Quartier], notre cabinet suit avec attention les actes notariés authentiques enregistrés au Registre Foncier.
+
+Une transaction majeure a récemment été officialisée au sein même de votre environnement immédiat (au [Numéro voisin], acte du [Date publication FAO] conclu à [Prix notarié CHF]).
+
+Cette transaction fixe un nouvel étalon de valeur sur votre micro-quartier avec un prix moyen réel constaté de CHF [Prix/m²] / m².
+
+Afin de vous permettre de mesurer avec exactitude l'impact de cette vente récente sur la valeur actuelle de votre propre bien, nous avons préparé une note d'analyse comparative de marché (CMA) intégrant :
+- L'ensemble des ventes notariées comparables dans un rayon de 250 mètres.
+- La fourchette vénale objective (basse, médiane, haute) applicable à votre surface.
+- La position de votre bien par rapport à la moyenne officielle du quartier.
+
+Cette étude confidentielle vous est gracieusement remise sur simple demande.
+
+Restant à votre entière écoute, nous vous prions d'agréer nos salutations les meilleures.
+
+[Prénom Nom] — Associé / Courtier Référent
+[Nom de l'Agence Immobilière]
+[Téléphone direct] | [Email]</pre>
             </div>
           </div>
         `;
@@ -5210,26 +5285,64 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
       const container = document.getElementById('cmaResultsArea');
       if (!container) return;
 
-      // 1. Resolve Target Coordinates
+      // 1. Resolve Target Coordinates & Administrative Quartier
       let targetLat = currentCmaTargetLat;
       let targetLon = currentCmaTargetLon;
+      let targetCommune = '';
+      let targetQuartier = '';
+      let bestMatch = null;
 
       if (addrInput) {
         const normTarget = normStr(addrInput);
-        let bestMatch = DATA.find(r => r.address && normStr(r.address) === normTarget);
+        bestMatch = DATA.find(r => r.address && normStr(r.address) === normTarget);
         if (!bestMatch) {
           bestMatch = DATA.find(r => r.address && (normStr(r.address).includes(normTarget) || normTarget.includes(normStr(r.address))));
         }
         if (!bestMatch && normTarget.includes('saut')) {
           bestMatch = DATA.find(r => r.address && normStr(r.address).includes('saut'));
         }
-        if (bestMatch && bestMatch.lat && bestMatch.lon) {
-          targetLat = bestMatch.lat;
-          targetLon = bestMatch.lon;
-          currentCmaTargetLat = targetLat;
-          currentCmaTargetLon = targetLon;
+        if (bestMatch) {
+          if (bestMatch.lat && bestMatch.lon) {
+            targetLat = bestMatch.lat;
+            targetLon = bestMatch.lon;
+            currentCmaTargetLat = targetLat;
+            currentCmaTargetLon = targetLon;
+          }
+          targetCommune = bestMatch.commune || '';
         }
       }
+
+      // If commune not directly in bestMatch, search in DATA by address tokens
+      if (!targetCommune && addrInput) {
+        const lowerAddr = addrInput.toLowerCase();
+        for (const r of DATA) {
+          if (r.commune && lowerAddr.includes(r.commune.toLowerCase())) {
+            targetCommune = r.commune;
+            break;
+          }
+        }
+      }
+      if (!targetCommune) targetCommune = 'Chêne-Bourg';
+
+      // Quartier / Sub-sector resolution for Geneva
+      function getQuartierName(record) {
+        if (!record) return targetCommune || 'Genève';
+        const comm = record.commune || '';
+        if (comm !== 'Genève') return comm;
+        const a = record.address || '';
+        if (a.includes('1206')) return 'Champel-Florissant';
+        if (a.includes('1207')) return 'Eaux-Vives';
+        if (a.includes('1208')) return 'Frontenex-Gradelle';
+        if (a.includes('1205')) return 'Plainpalais-Jonction';
+        if (a.includes('1204')) return 'Vieille-Ville-Cité';
+        if (a.includes('1201')) return 'Pâquis-Grottes';
+        if (a.includes('1202')) return 'Servette-Petit-Saconnex';
+        if (a.includes('1203')) return 'Saint-Jean-Charmilles';
+        if (record.commune_section) return record.commune_section;
+        return 'Genève Centre';
+      }
+
+      targetQuartier = bestMatch ? getQuartierName(bestMatch) : (targetCommune === 'Genève' ? 'Genève Centre' : targetCommune);
 
       // 2. Identify Direct Parcel or Direct Street Mutations
       const streetTokens = normStr(addrInput).split(' ').filter(w => w.length > 3 && !['chemin', 'route', 'avenue', 'rue', 'chene', 'bourg', 'geneve'].includes(w));
@@ -5239,25 +5352,52 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
         return streetTokens.some(t => normA.includes(t));
       });
 
-      // 3. Radius Query & Comparable Filtering
+      // 3. Compute Official Quartier Reference Median for this Typology across the full database
+      const quartierSqmList = [];
+      DATA.forEach(r => {
+        if (!r.sqm_price) return;
+        const isMatch = (targetCommune === 'Genève') ? (getQuartierName(r) === targetQuartier) : (r.commune === targetCommune);
+        if (isMatch && (typoInput === 'ALL' || r.typology_class === typoInput)) {
+          quartierSqmList.push(r.sqm_price);
+        }
+      });
+      quartierSqmList.sort((a, b) => a - b);
+      let quartierMedianSqm = quartierSqmList.length > 0 ? quartierSqmList[Math.floor(quartierSqmList.length / 2)] : (targetCommune === 'Chêne-Bourg' ? 12850 : 13500);
+      let quartierCount = quartierSqmList.length;
+
+      // 4. Radius Query & Comparable Filtering with Scope Mode
+      const scopeMode = document.getElementById('cmaScopeSelect')?.value || 'HYBRID';
       const nearbyComps = [];
       DATA.forEach(r => {
         if (!r.lat || !r.lon) return;
         const dist = getHaversineDistanceM(targetLat, targetLon, r.lat, r.lon);
         if (dist <= currentCmaRadius) {
           const isCompatibleTypo = (typoInput === 'ALL') || (r.typology_class === typoInput);
-          if (isCompatibleTypo) {
-            nearbyComps.push({
-              ...r,
-              dist_m: dist
-            });
+          if (!isCompatibleTypo) return;
+
+          const rQuartier = getQuartierName(r);
+          const isSameQuartier = (targetCommune === 'Genève') ? (rQuartier === targetQuartier) : (r.commune === targetCommune);
+
+          if (scopeMode === 'QUARTIER_STRICT' && !isSameQuartier) {
+            return; // Skip comparables that cross into a different quartier or commune
           }
+
+          const distDecay = 1 / (1 + Math.pow(dist / 120, 2));
+          const weight = scopeMode === 'HYBRID' ? distDecay * (isSameQuartier ? 1.5 : 0.6) : 1;
+
+          nearbyComps.push({
+            ...r,
+            dist_m: dist,
+            quartier_name: rQuartier,
+            is_same_quartier: isSameQuartier,
+            cma_weight: weight
+          });
         }
       });
 
       nearbyComps.sort((a, b) => a.dist_m - b.dist_m);
 
-      // 4. Calculate Sqm Price Statistics
+      // 5. Calculate Sqm Price Statistics
       const sqmPrices = [];
       nearbyComps.forEach(c => {
         if (c.sqm_price) {
@@ -5288,16 +5428,18 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
         p25Sqm = Math.round(medianSqm * 0.93);
         p75Sqm = Math.round(medianSqm * 1.07);
       } else {
-        medianSqm = 13800;
-        p25Sqm = 12600;
-        p75Sqm = 14900;
+        medianSqm = quartierMedianSqm;
+        p25Sqm = Math.round(quartierMedianSqm * 0.92);
+        p75Sqm = Math.round(quartierMedianSqm * 1.08);
       }
 
       const valLow = Math.round((surfInput * p25Sqm) / 1000) * 1000;
       const valMed = Math.round((surfInput * medianSqm) / 1000) * 1000;
       const valHigh = Math.round((surfInput * p75Sqm) / 1000) * 1000;
 
-      // 5. Direct Matches Banner
+      const spreadPct = quartierMedianSqm > 0 ? ((medianSqm - quartierMedianSqm) / quartierMedianSqm) * 100 : 0;
+
+      // 6. Direct Matches Banner
       let directBannerHtml = '';
       if (directMatches.length > 0) {
         const itemsHtml = directMatches.map(m => `
@@ -5314,16 +5456,16 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
         `).join('');
 
         directBannerHtml = `
-          <div style="margin-bottom: 20px;">
+          <div style="margin-bottom: 18px;">
             <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-brand-400); font-weight: 700; margin-bottom: 4px;">
-              ● Actes notariés officiels répertoriés à cette adresse / même rue (${directMatches.length}) :
+              Actes notariés officiels répertoriés à cette adresse / même rue (${directMatches.length}) :
             </div>
             ${itemsHtml}
           </div>
         `;
       }
 
-      // 6. Comparable Rows Table
+      // 7. Comparable Rows Table
       const rowsHtml = nearbyComps.slice(0, 15).map(c => {
         const calcPriceSqm = c.sqm_price || (c.price_chf && c.surface_m2 ? Math.round(c.price_chf / c.surface_m2) : (c.price_chf && c.rooms ? Math.round(c.price_chf / (c.rooms * 25)) : null));
         return `
@@ -5354,6 +5496,31 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
       container.innerHTML = `
         ${directBannerHtml}
 
+        <!-- Quartier Targeting & Benchmark Bar -->
+        <div style="background: rgba(201, 162, 77, 0.08); border: 1px solid rgba(201, 162, 77, 0.3); padding: 12px 16px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="font-size: 10px; text-transform: uppercase; color: var(--color-brand-400); letter-spacing: 0.05em; font-weight: 700;">Quartier & Secteur Cadastral Cible</div>
+            <div style="font-size: 15px; font-weight: 700; color: var(--color-paper); font-family: var(--font-brand);">${targetQuartier} <span style="font-size: 12px; font-weight: 400; color: var(--color-sand-400);">(${targetCommune})</span></div>
+          </div>
+          <div>
+            <div style="font-size: 10px; text-transform: uppercase; color: var(--color-sand-400); letter-spacing: 0.05em;">Médiane Référentielle Quartier (${typoInput})</div>
+            <div style="font-size: 15px; font-weight: 700; color: var(--color-brand-300); font-family: var(--font-brand);">CHF ${Number(quartierMedianSqm).toLocaleString('fr-CH')} / m² <span style="font-size: 11px; font-weight: 400; color: var(--color-sand-400);">(${quartierCount} ventes notariées)</span></div>
+          </div>
+          <div>
+            <div style="font-size: 10px; text-transform: uppercase; color: var(--color-sand-400); letter-spacing: 0.05em;">Écart Micro-Emplacement vs Quartier</div>
+            <div style="font-size: 15px; font-weight: 700; color: ${spreadPct >= 0 ? '#4ade80' : '#38bdf8'}; font-family: var(--font-brand);">
+              ${spreadPct >= 0 ? '+' : ''}${spreadPct.toFixed(1)}%
+              <span style="font-size: 11px; font-weight: 400; color: var(--color-sand-300);">(${spreadPct >= 0 ? 'Prime micro-localisation' : 'Décote / Opportunité'})</span>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 10px; text-transform: uppercase; color: var(--color-sand-400); letter-spacing: 0.05em;">Mode de Ciblage Actif</div>
+            <div style="font-size: 11px; font-weight: 600; color: var(--color-sand-200);">
+              ${scopeMode === 'HYBRID' ? 'Hybride Pondéré (Distance + Quartier)' : (scopeMode === 'QUARTIER_STRICT' ? 'Strict Même Quartier (Cloisonné)' : 'Rayon Métrique Brut')}
+            </div>
+          </div>
+        </div>
+
         <!-- 3 KPI Valuation Cards -->
         <div style="display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 14px; margin-bottom: 20px;">
           <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px; border-left: 3px solid #38bdf8;">
@@ -5379,10 +5546,10 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
         <!-- Summary Metrics Box -->
         <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 12px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <strong>Base d'échantillonnage :</strong> ${nearbyComps.length} transactions notariées dans un rayon de ${currentCmaRadius} m
+            <strong>Échantillonnage :</strong> ${nearbyComps.length} transactions retenues (${currentCmaRadius} m)
           </div>
           <div>
-            <strong>Étalonnage m² :</strong> ${sqmPrices.length} références avec valeur unitaire validée
+            <strong>Étalonnage unitaire :</strong> ${sqmPrices.length} valeurs notariées au m²
           </div>
           <div style="display: flex; gap: 10px;">
             <button type="button" class="subtool-btn" onclick="copyCmaReport()" style="padding: 5px 12px; color: var(--color-brand-300); border-color: rgba(201, 162, 77, 0.4);">
@@ -5414,7 +5581,7 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
                 </tr>
               </thead>
               <tbody>
-                ${rowsHtml || '<tr><td colspan="8" style="text-align: center; padding: 20px; color: var(--color-sand-400);">Aucune transaction comparable trouvée dans ce rayon. Élargissez le périmètre à 500m ou 1km.</td></tr>'}
+                ${rowsHtml || '<tr><td colspan="8" style="text-align: center; padding: 20px; color: var(--color-sand-400);">Aucune transaction comparable trouvée selon ces critères. Élargissez le rayon ou le mode de ciblage.</td></tr>'}
               </tbody>
             </table>
           </div>
@@ -5423,17 +5590,22 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
 
       currentCmaReportText = `SYNTHÈSE D'AVIS DE VALEUR CERTIFIÉ REGISTRE FONCIER (CYTRIA)
 Adresse cible : ${addrInput}
+Commune & Quartier : ${targetQuartier} (${targetCommune})
 Typologie : ${typoInput} | Surface retenue : ${surfInput} m² (${roomsInput} pièces)
-Périmètre d'analyse : Rayon de ${currentCmaRadius} mètres
+Périmètre d'analyse : Rayon de ${currentCmaRadius} mètres (Mode : ${scopeMode})
 
 1. ÉVALUATION VÉNALE INDICATIVE (RÉFÉRENTIEL REGISTRE FONCIER) :
 - Fourchette Basse (P25) : CHF ${Number(valLow).toLocaleString('fr-CH')} (CHF ${Number(p25Sqm).toLocaleString('fr-CH')}/m²)
 - VALEUR VÉNALE RECOMMANDÉE (MÉDIANE) : CHF ${Number(valMed).toLocaleString('fr-CH')} (CHF ${Number(medianSqm).toLocaleString('fr-CH')}/m²)
 - Fourchette Haute (P75) : CHF ${Number(valHigh).toLocaleString('fr-CH')} (CHF ${Number(p75Sqm).toLocaleString('fr-CH')}/m²)
 
-2. ÉCHANTILLONNAGE NOTARIÉ DU MICRO-QUARTIER :
+2. ÉTALONNAGE & BENCHMARK DU QUARTIER :
+- Médiane référentielle du quartier (${targetQuartier}) : CHF ${Number(quartierMedianSqm).toLocaleString('fr-CH')}/m² (N = ${quartierCount})
+- Écart micro-emplacement vs quartier : ${spreadPct >= 0 ? '+' : ''}${spreadPct.toFixed(1)}%
+
+3. ÉCHANTILLONNAGE NOTARIÉ DU MICRO-QUARTIER :
 - ${nearbyComps.length} transactions analysées dans le rayon de ${currentCmaRadius}m.
-${directMatches.length > 0 ? `- Acte direct sur la même assiette foncière : ${directMatches[0].address} (${directMatches[0].notice_date}) vendu CHF ${Number(directMatches[0].price_chf || 0).toLocaleString('fr-CH')}` : ''}
+${directMatches.length > 0 ? `- Acte direct sur la même assiette foncière : ${directMatches[0].address} (${directMatches[0].notice_date}) conclu à CHF ${Number(directMatches[0].price_chf || 0).toLocaleString('fr-CH')}` : ''}
 
 Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genève certifié par Cytria.`;
     }
