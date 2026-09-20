@@ -8,6 +8,7 @@ from typing import Dict, Any, Optional, List, Tuple
 from rich.console import Console
 
 from fao_transactions.config import settings
+from fao_transactions.visualization.agency_ranking import get_ranked_league_table
 
 console = Console()
 
@@ -1035,6 +1036,150 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       color: var(--color-paper) !important;
       border: 1px solid var(--panel-border) !important;
     }
+
+    /* League Table Modal Styling */
+    .league-modal-window {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      width: 92vw;
+      max-width: 1240px;
+      height: 86vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .league-header {
+      padding: 16px 24px;
+      background: var(--color-ink-950);
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .league-title-box h2 {
+      font-family: var(--font-brand);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-brand-300);
+      margin: 0 0 3px 0;
+    }
+
+    .league-title-box p {
+      margin: 0;
+      font-size: 11px;
+      color: var(--color-sand-300);
+    }
+
+    .league-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .league-tab-btn {
+      padding: 7px 14px;
+      background: var(--color-ink-800);
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-300);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .league-tab-btn.active {
+      background: var(--color-brand-500);
+      border-color: var(--color-brand-400);
+      color: var(--color-ink-950);
+      font-weight: 700;
+    }
+
+    .league-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+      background: var(--color-ink-900);
+    }
+
+    .league-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .league-table th {
+      background: var(--color-ink-950);
+      color: var(--color-brand-300);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--panel-border);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .league-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--color-paper);
+      vertical-align: middle;
+    }
+
+    .league-table tr:hover td {
+      background: rgba(201, 162, 77, 0.05);
+    }
+
+    .rank-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 12px;
+      border: 1px solid var(--panel-border);
+      background: var(--color-ink-800);
+      color: var(--color-sand-300);
+    }
+
+    .rank-pill.top-1 {
+      border-color: var(--color-brand-400);
+      background: rgba(201, 162, 77, 0.2);
+      color: var(--color-brand-300);
+    }
+
+    .rank-pill.top-2 {
+      border-color: #94a3b8;
+      background: rgba(148, 163, 184, 0.15);
+      color: #cbd5e1;
+    }
+
+    .rank-pill.top-3 {
+      border-color: #b45309;
+      background: rgba(180, 83, 9, 0.15);
+      color: #fcd34d;
+    }
+
+    .score-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 11px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #6ee7b7;
+    }
   </style>
 </head>
 <body>
@@ -1070,6 +1215,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </button>
         <button type="button" class="nav-mode-btn" id="modeBtnDev" onclick="setAppMode('DEVELOPMENT')">
           Radar Promotion <span class="nav-mode-badge" id="navBadgeDev">__DEV_COUNT__</span>
+        </button>
+        <button type="button" class="nav-mode-btn" id="btnOpenLeagueTable" onclick="openLeagueModal()" style="border-color: var(--color-brand-400); color: var(--color-brand-300);">
+          Palmarès Agences & Courtiers
         </button>
       </div>
 
@@ -1300,6 +1448,28 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       </div>
       <div class="modal-body">
         <iframe id="modalIframe" class="modal-iframe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cytria League Table: Agency & Agent Ranking Modal -->
+  <div class="modal-overlay" id="leagueTableModal">
+    <div class="league-modal-window">
+      <div class="league-header">
+        <div class="league-title-box">
+          <h2>Palmarès & Performance des Agences et Courtiers de Genève</h2>
+          <p>Indice de performance Cytria (0-100) calibré sur les transactions officielles du Registre Foncier (FAO) et le track record vérifié.</p>
+        </div>
+        <div style="display:flex; align-items:center; gap: 14px;">
+          <div class="league-tabs">
+            <button type="button" class="league-tab-btn active" id="leagueTabAgencies" onclick="setLeagueTab('AGENCIES')">Classement Agences</button>
+            <button type="button" class="league-tab-btn" id="leagueTabBrokers" onclick="setLeagueTab('BROKERS')">Top Courtiers Individuels</button>
+          </div>
+          <button class="modal-close-btn" id="leagueModalCloseBtn" onclick="closeLeagueModal()">&times;</button>
+        </div>
+      </div>
+      <div class="league-body" id="leagueBodyContent">
+        <!-- Injected via JavaScript -->
       </div>
     </div>
   </div>
@@ -2049,6 +2219,142 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       createMarkers(filtered);
     }
 
+    // League Table Ranking Modal Logic
+    const LEAGUE_DATA = __LEAGUE_JSON__;
+    let currentLeagueTab = 'AGENCIES';
+
+    function openLeagueModal() {
+      renderLeagueContent();
+      document.getElementById('leagueTableModal').classList.add('visible');
+    }
+
+    function closeLeagueModal() {
+      document.getElementById('leagueTableModal').classList.remove('visible');
+    }
+
+    function setLeagueTab(tab) {
+      currentLeagueTab = tab;
+      document.querySelectorAll('.league-tab-btn').forEach(b => b.classList.remove('active'));
+      if (tab === 'AGENCIES') {
+        document.getElementById('leagueTabAgencies').classList.add('active');
+      } else {
+        document.getElementById('leagueTabBrokers').classList.add('active');
+      }
+      renderLeagueContent();
+    }
+
+    function renderLeagueContent() {
+      const container = document.getElementById('leagueBodyContent');
+      if (currentLeagueTab === 'AGENCIES') {
+        const rows = LEAGUE_DATA.agencies.map(a => {
+          const rankClass = a.rank === 1 ? 'top-1' : a.rank === 2 ? 'top-2' : a.rank === 3 ? 'top-3' : '';
+          return `
+            <tr>
+              <td><span class="rank-pill ${rankClass}">#${a.rank}</span></td>
+              <td>
+                <strong style="color:var(--color-brand-300); font-size:13px;">${a.name}</strong><br>
+                <span style="color:var(--color-sand-300); font-size:11px;">${a.address}</span>
+                ${a.website ? `<br><a href="${a.website}" target="_blank" style="color:var(--color-brand-400); text-decoration:none; font-size:10px;">Visiter Site Web ↗</a>` : ''}
+              </td>
+              <td><span class="score-badge">${a.cytria_score} / 100</span></td>
+              <td>
+                <strong>CHF ${a.sold_volume_chf_m} Mio</strong><br>
+                <span style="color:var(--color-sand-300); font-size:11px;">${a.sold_24m_count} ventes conclues</span>
+              </td>
+              <td>
+                <strong>CHF ${(a.median_price_chf/1e6).toFixed(2)}M</strong><br>
+                <span style="color:var(--color-sand-300); font-size:10px;">Villas: CHF ${(a.median_house_chf/1e6).toFixed(1)}M &bull; PPE: CHF ${(a.median_apartment_chf/1e6).toFixed(1)}M</span>
+              </td>
+              <td>
+                <strong style="color:#10b981;">-${a.discount_rate_est}%</strong><br>
+                <span style="color:var(--color-sand-300); font-size:10px;">Écart prix affiché / RF</span>
+              </td>
+              <td>
+                <strong>${a.rating} / 5.0</strong><br>
+                <span style="color:var(--color-sand-300); font-size:10px;">${a.reviews_count} avis vérifiés</span>
+              </td>
+              <td>
+                <span style="color:var(--color-brand-300); font-weight:600; font-size:11px;">${a.primary_territory}</span>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        container.innerHTML = `
+          <table class="league-table">
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Agence Immobilière</th>
+                <th>Score Cytria</th>
+                <th>Volume (24M)</th>
+                <th>Ticket Médian</th>
+                <th>Taux Décote</th>
+                <th>Avis & Note</th>
+                <th>Territoire Leader</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows}
+            </tbody>
+          </table>
+        `;
+      } else {
+        const rows = LEAGUE_DATA.brokers.map(b => {
+          const rankClass = b.rank === 1 ? 'top-1' : b.rank === 2 ? 'top-2' : b.rank === 3 ? 'top-3' : '';
+          return `
+            <tr>
+              <td><span class="rank-pill ${rankClass}">#${b.rank}</span></td>
+              <td>
+                <strong style="color:var(--color-brand-300); font-size:13px;">${b.name}</strong><br>
+                <span style="color:var(--color-sand-300); font-size:11px;">${b.role}</span>
+              </td>
+              <td>
+                <span style="color:var(--color-paper); font-weight:600;">${b.agency_name}</span>
+              </td>
+              <td><span class="score-badge">${b.cytria_score} / 100</span></td>
+              <td>
+                <strong>${b.deals_count} transactions</strong><br>
+                <span style="color:var(--color-sand-300); font-size:10px;">Spécialité : ${b.specialty}</span>
+              </td>
+              <td>
+                <strong>${b.rating} / 5.0</strong><br>
+                <span style="color:var(--color-sand-300); font-size:10px;">${b.reviews_count} avis vérifiés</span>
+              </td>
+              <td>
+                <span style="color:var(--color-brand-300); font-weight:600; font-size:11px;">${(b.top_communes || []).join(', ')}</span>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        container.innerHTML = `
+          <table class="league-table">
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Courtier / Agent</th>
+                <th>Agence Affiliée</th>
+                <th>Score Cytria</th>
+                <th>Volume & Spécialité</th>
+                <th>Avis Clients</th>
+                <th>Communes de Prédilection</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows}
+            </tbody>
+          </table>
+        `;
+      }
+    }
+
+    document.getElementById('leagueTableModal').addEventListener('click', (e) => {
+      if (e.target.id === 'leagueTableModal') {
+        closeLeagueModal();
+      }
+    });
+
     // Initial render
     setAppMode('MARKET');
   </script>
@@ -2317,11 +2623,15 @@ def build_interactive_map(
     communes_json = json.dumps(communes, ensure_ascii=False)
     zones_json = json.dumps(zones, ensure_ascii=False)
 
+    league_data = get_ranked_league_table()
+    league_json = json.dumps(league_data, ensure_ascii=False)
+
     html_content = (
         HTML_TEMPLATE
         .replace("__RECORDS_JSON__", records_json)
         .replace("__COMMUNES_JSON__", communes_json)
         .replace("__ZONES_JSON__", zones_json)
+        .replace("__LEAGUE_JSON__", league_json)
         .replace("__TOTAL_ROWS__", f"{len(rows):,}")
         .replace("__TOTAL_VOLUME__", f"{total_volume/1e9:.2f}")
         .replace("__PRICED_COUNT__", f"{priced_count:,}")
