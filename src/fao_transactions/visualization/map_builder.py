@@ -1,4 +1,4 @@
-"""Standalone interactive HTML map generator for Geneva Property Transactions."""
+"""Standalone interactive HTML map generator for Geneva Property Transactions with Cytria Brand Design."""
 
 import json
 import sqlite3
@@ -16,8 +16,8 @@ def build_interactive_map(
     db_path: Optional[str] = None,
     output_path: Optional[str] = None,
 ) -> Path:
-    """Build a standalone, single-file interactive Leaflet/Swiss map containing all enriched transactions."""
-    console.rule("[bold cyan]Building Interactive Geneva Real Estate Map[/bold cyan]")
+    """Build a standalone, single-file interactive Leaflet/Swiss map styled with the Cytria brand identity."""
+    console.rule("[bold #C9A24D]Building Cytria Geneva Real Estate Intelligence Map[/bold #C9A24D]")
     
     db_file = Path(db_path or settings.storage.database_path)
     out_file = Path(output_path or (Path(settings.storage.exports_dir) / "geneva_transactions_map.html"))
@@ -64,7 +64,7 @@ def build_interactive_map(
             """)
             rows = [dict(r) for r in cursor.fetchall()]
     else:
-        # Fallback to loading directly from CSV export (for fresh clones from GitHub)
+        # Fallback to loading directly from CSV export
         csv_file = Path(settings.storage.exports_dir) / "geneva_property_transactions.csv"
         if csv_file.exists():
             import pandas as pd
@@ -84,7 +84,7 @@ def build_interactive_map(
         else:
             rows = []
 
-    console.print(f"Loaded [bold]{len(rows)}[/bold] geocoded transactions from SQLite.")
+    console.print(f"Loaded [bold]{len(rows)}[/bold] geocoded transactions.")
 
     # Distinct communes and zones for filters
     communes = sorted(list({r["commune"] for r in rows if r["commune"]}))
@@ -102,12 +102,12 @@ def build_interactive_map(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Genève Immobilier — Carte Interactive des Transactions FAO & SITG</title>
+  <title>CYTRIA — Intelligence Immobilière Genève (FAO × SITG)</title>
   
-  <!-- Google Fonts: Inter -->
+  <!-- Cytria Fonts: Hanken Grotesk, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Leaflet & MarkerCluster CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -116,19 +116,44 @@ def build_interactive_map(
 
   <style>
     :root {{
-      --bg-dark: #0f172a;
-      --panel-bg: rgba(15, 23, 42, 0.85);
-      --panel-border: rgba(255, 255, 255, 0.1);
-      --accent-blue: #38bdf8;
-      --accent-emerald: #10b981;
-      --accent-purple: #a855f7;
-      --accent-amber: #f59e0b;
-      --accent-rose: #f43f5e;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --radius-lg: 16px;
-      --radius-md: 10px;
-      --shadow-elevation: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+      /* Cytria Official Brand System */
+      --color-brand-50: #FBF7ED;
+      --color-brand-100: #F5EACF;
+      --color-brand-200: #EBD49A;
+      --color-brand-300: #DEBC69;
+      --color-brand-400: #D2AA4F;
+      --color-brand-500: #C9A24D;
+      --color-brand-600: #A77F22;
+      --color-brand-700: #805E0D;
+
+      --color-ink-950: #080D11;
+      --color-ink-900: #0B1117;
+      --color-ink-850: #101820;
+      --color-ink-800: #17212A;
+      --color-ink-700: #25313B;
+      --color-ink-600: #3B4650;
+
+      --color-night: #10141B;
+      --color-paper: #F7F4EC;
+      --color-sand-100: #F4F1EA;
+      --color-sand-300: #DDD5C8;
+      --color-neutral-400: #A8A29A;
+      --color-muted-ink: #5A6068;
+
+      --color-success: #2F6B57;
+      --color-warning: #A46D13;
+      --color-error: #B33A33;
+      --color-info: #315E78;
+
+      --panel-bg: rgba(16, 20, 27, 0.94);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --panel-border-gold: rgba(201, 162, 77, 0.35);
+
+      --font-brand: "Hanken Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+
+      --shadow-elevation: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+      --radius-strict: 0px;
     }}
 
     * {{
@@ -138,19 +163,20 @@ def build_interactive_map(
     }}
 
     body {{
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-main);
+      font-family: var(--font-brand);
+      background: var(--color-ink-950);
+      color: var(--color-paper);
       overflow: hidden;
       height: 100vh;
       width: 100vw;
+      -webkit-font-smoothing: antialiased;
     }}
 
     #map {{
       height: 100vh;
       width: 100vw;
       z-index: 1;
-      background: #090d16;
+      background: var(--color-ink-950);
     }}
 
     /* Top Bar HUD */
@@ -169,44 +195,76 @@ def build_interactive_map(
 
     .hud-card {{
       background: var(--panel-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--panel-border);
-      border-radius: var(--radius-lg);
-      padding: 12px 20px;
+      border-radius: var(--radius-strict);
+      padding: 12px 22px;
       box-shadow: var(--shadow-elevation);
       pointer-events: auto;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
     }}
 
-    .brand-title {{
-      font-weight: 800;
-      font-size: 16px;
-      letter-spacing: -0.02em;
+    .brand-group {{
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 14px;
     }}
 
-    .brand-title span.badge {{
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-      color: #fff;
+    .cytria-logo-svg {{
+      height: 30px;
+      width: auto;
+      display: block;
+    }}
+
+    .brand-divider {{
+      width: 1px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.15);
+    }}
+
+    .brand-meta {{
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }}
+
+    .brand-meta-title {{
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--color-paper);
+      text-transform: uppercase;
+    }}
+
+    .brand-meta-sub {{
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--color-brand-400);
+      text-transform: uppercase;
+      font-weight: 600;
+    }}
+
+    .badge-fao {{
+      background: rgba(201, 162, 77, 0.12);
+      border: 1px solid var(--panel-border-gold);
+      color: var(--color-brand-400);
+      font-family: var(--font-mono);
       font-size: 10px;
       font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 6px;
+      padding: 3px 8px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }}
 
     .hud-stats {{
       display: flex;
-      gap: 20px;
+      gap: 24px;
       font-size: 12px;
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      padding-left: 16px;
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+      padding-left: 20px;
     }}
 
     .stat-item {{
@@ -215,177 +273,226 @@ def build_interactive_map(
     }}
 
     .stat-label {{
-      color: var(--text-muted);
+      color: var(--color-sand-300);
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
+      font-weight: 600;
     }}
 
     .stat-value {{
+      font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 14px;
-      color: var(--accent-blue);
+      font-size: 15px;
+      color: var(--color-paper);
+      letter-spacing: -0.02em;
     }}
 
-    .stat-value.emerald {{ color: var(--accent-emerald); }}
-    .stat-value.amber {{ color: var(--accent-amber); }}
+    .stat-value.gold {{ color: var(--color-brand-400); }}
+    .stat-value.emerald {{ color: #10b981; }}
 
     /* Sidebar Controls */
     .sidebar {{
       position: absolute;
-      top: 80px;
+      top: 84px;
       left: 16px;
       bottom: 24px;
-      width: 360px;
+      width: 370px;
       z-index: 1000;
       background: var(--panel-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--panel-border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
+      border-radius: var(--radius-strict);
+      padding: 22px;
       box-shadow: var(--shadow-elevation);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
       overflow-y: auto;
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }}
 
+    /* Custom Scrollbars */
+    .sidebar::-webkit-scrollbar, .detail-drawer::-webkit-scrollbar {{
+      width: 5px;
+    }}
+    .sidebar::-webkit-scrollbar-track, .detail-drawer::-webkit-scrollbar-track {{
+      background: rgba(0, 0, 0, 0.2);
+    }}
+    .sidebar::-webkit-scrollbar-thumb, .detail-drawer::-webkit-scrollbar-thumb {{
+      background: rgba(201, 162, 77, 0.4);
+    }}
+
     .filter-section-title {{
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-blue);
+      letter-spacing: 0.12em;
+      color: var(--color-brand-400);
       margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }}
+
+    .filter-section-title::before {{
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: var(--color-brand-500);
     }}
 
     .search-box input {{
       width: 100%;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-md);
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-strict);
       padding: 10px 14px;
-      color: #fff;
+      color: var(--color-paper);
+      font-family: var(--font-brand);
       font-size: 13px;
       outline: none;
       transition: all 0.2s ease;
     }}
 
     .search-box input:focus {{
-      border-color: var(--accent-blue);
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+      border-color: var(--color-brand-500);
+      background: var(--color-ink-850);
+      box-shadow: 0 0 0 1px var(--color-brand-500);
     }}
 
     .select-control select {{
       width: 100%;
-      background: #1e293b;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-md);
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-strict);
       padding: 10px 14px;
-      color: #fff;
+      color: var(--color-paper);
+      font-family: var(--font-brand);
       font-size: 13px;
       outline: none;
-      cursor: pointer;
-    }}
-
-    .filter-pills {{
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }}
-
-    .pill-btn {{
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 6px 12px;
-      color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
     }}
 
+    .select-control select:focus {{
+      border-color: var(--color-brand-500);
+    }}
+
+    .filter-pills {{
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }}
+
+    .pill-btn {{
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-strict);
+      padding: 7px 12px;
+      color: var(--color-sand-300);
+      font-family: var(--font-brand);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }}
+
+    .pill-btn:hover {{
+      border-color: var(--color-brand-400);
+      color: var(--color-paper);
+    }}
+
     .pill-btn.active {{
-      background: var(--accent-blue);
-      color: #0f172a;
+      background: var(--color-brand-500);
+      color: var(--color-ink-950);
       font-weight: 700;
-      border-color: var(--accent-blue);
+      border-color: var(--color-brand-500);
     }}
 
     .toggle-row {{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 13px;
+      font-size: 12px;
+      color: var(--color-paper);
       cursor: pointer;
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      padding: 10px 14px;
     }}
 
     .toggle-row input {{
       cursor: pointer;
       width: 16px;
       height: 16px;
-      accent-color: var(--accent-blue);
+      accent-color: var(--color-brand-500);
     }}
 
     .reset-btn {{
-      background: rgba(244, 63, 94, 0.15);
-      border: 1px solid rgba(244, 63, 94, 0.3);
-      color: var(--accent-rose);
-      border-radius: var(--radius-md);
+      background: transparent;
+      border: 1px solid rgba(179, 58, 51, 0.4);
+      color: #e27d76;
+      border-radius: var(--radius-strict);
       padding: 10px;
-      font-size: 12px;
-      font-weight: 600;
+      font-family: var(--font-brand);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       cursor: pointer;
       transition: all 0.2s ease;
       text-align: center;
     }}
 
     .reset-btn:hover {{
-      background: var(--accent-rose);
+      background: var(--color-error);
       color: #fff;
+      border-color: var(--color-error);
     }}
 
     /* Legend Box */
     .legend {{
       margin-top: auto;
       padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       font-size: 11px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
     }}
 
     .legend-item {{
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
+      gap: 10px;
+      color: var(--color-sand-300);
     }}
 
     .legend-dot {{
       width: 10px;
       height: 10px;
-      border-radius: 50%;
+      border-radius: var(--radius-strict);
+      flex-shrink: 0;
     }}
 
     /* Detail Drawer */
     .detail-drawer {{
       position: absolute;
-      top: 80px;
+      top: 84px;
       right: 16px;
-      width: 380px;
+      width: 410px;
       max-height: calc(100vh - 120px);
       z-index: 1000;
       background: var(--panel-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--panel-border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-strict);
       padding: 24px;
       box-shadow: var(--shadow-elevation);
       overflow-y: auto;
@@ -396,33 +503,48 @@ def build_interactive_map(
 
     .detail-drawer.visible {{
       display: flex;
-      animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }}
 
     @keyframes slideIn {{
-      from {{ opacity: 0; transform: translateY(20px); }}
-      to {{ opacity: 1; transform: translateY(0); }}
+      from {{ opacity: 0; transform: translateX(20px); }}
+      to {{ opacity: 1; transform: translateX(0); }}
+    }}
+
+    .detail-header {{
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 14px;
     }}
 
     .detail-close {{
-      align-self: flex-end;
-      background: rgba(255, 255, 255, 0.08);
-      border: none;
-      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-300);
       width: 28px;
       height: 28px;
-      border-radius: 50%;
+      border-radius: var(--radius-strict);
       cursor: pointer;
       font-weight: 700;
+      font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.2s ease;
+    }}
+
+    .detail-close:hover {{
+      border-color: var(--color-brand-400);
+      color: var(--color-paper);
     }}
 
     .detail-price {{
+      font-family: var(--font-mono);
       font-size: 26px;
-      font-weight: 800;
-      color: var(--accent-emerald);
+      font-weight: 700;
+      color: var(--color-brand-400);
       letter-spacing: -0.02em;
     }}
 
@@ -433,24 +555,36 @@ def build_interactive_map(
     }}
 
     .badge-tag {{
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 700;
       padding: 4px 8px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-main);
+      border-radius: var(--radius-strict);
+      background: var(--color-ink-800);
+      border: 1px solid var(--panel-border);
+      color: var(--color-paper);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }}
 
     .badge-tag.zone {{
-      background: rgba(168, 85, 247, 0.2);
-      color: #c084fc;
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: rgba(201, 162, 77, 0.15);
+      color: var(--color-brand-300);
+      border-color: var(--panel-border-gold);
     }}
 
     .badge-tag.building {{
-      background: rgba(56, 189, 248, 0.15);
-      color: #7dd3fc;
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: rgba(49, 94, 120, 0.25);
+      color: #8bbcd6;
+      border-color: rgba(49, 94, 120, 0.4);
+    }}
+
+    .detail-grid {{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      padding: 16px;
     }}
 
     .detail-row {{
@@ -461,15 +595,21 @@ def build_interactive_map(
     }}
 
     .detail-row .row-label {{
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      color: var(--color-neutral-400);
+      font-weight: 600;
     }}
 
     .detail-row .row-value {{
       font-weight: 500;
-      color: #fff;
+      color: var(--color-paper);
+    }}
+
+    .detail-row .row-value.mono {{
+      font-family: var(--font-mono);
+      color: var(--color-brand-200);
     }}
 
     .sitg-btn {{
@@ -477,35 +617,57 @@ def build_interactive_map(
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: #fff;
-      padding: 12px 18px;
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      font-weight: 600;
+      background: var(--color-brand-500);
+      color: var(--color-ink-950);
+      padding: 14px 20px;
+      border-radius: var(--radius-strict);
+      font-family: var(--font-brand);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       text-decoration: none;
-      margin-top: 8px;
+      margin-top: 6px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 4px 14px rgba(201, 162, 77, 0.25);
     }}
 
     .sitg-btn:hover {{
+      background: var(--color-brand-400);
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
+      box-shadow: 0 6px 20px rgba(201, 162, 77, 0.4);
     }}
 
     /* Custom Leaflet Cluster Styling */
     .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {{
-      background-color: rgba(15, 23, 42, 0.75) !important;
+      background-color: rgba(16, 20, 27, 0.85) !important;
       backdrop-filter: blur(8px);
-      border: 2px solid var(--accent-blue);
+      border: 2px solid var(--color-brand-500) !important;
+      border-radius: var(--radius-strict) !important;
     }}
     .marker-cluster div {{
       background-color: transparent !important;
-      color: #fff !important;
+      color: var(--color-paper) !important;
       font-weight: 700 !important;
       font-size: 12px !important;
-      font-family: 'Inter', sans-serif !important;
+      font-family: var(--font-mono) !important;
+    }}
+
+    /* Leaflet Controls Styling */
+    .leaflet-control-layers {{
+      background: var(--panel-bg) !important;
+      border: 1px solid var(--panel-border) !important;
+      border-radius: var(--radius-strict) !important;
+      color: var(--color-paper) !important;
+      font-family: var(--font-brand) !important;
+      font-size: 12px !important;
+      box-shadow: var(--shadow-elevation) !important;
+    }}
+    .leaflet-control-zoom a {{
+      background: var(--panel-bg) !important;
+      color: var(--color-paper) !important;
+      border: 1px solid var(--panel-border) !important;
+      border-radius: var(--radius-strict) !important;
     }}
   </style>
 </head>
@@ -517,10 +679,23 @@ def build_interactive_map(
   <!-- Top Bar HUD -->
   <div class="top-bar">
     <div class="hud-card">
-      <div class="brand-title">
-        Genève Immobilier
-        <span class="badge">FAO & SITG</span>
+      <div class="brand-group">
+        <!-- Official Cytria Vector Logo -->
+        <svg class="cytria-logo-svg" viewBox="606 188 836 309" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#F7F4EC" fill-rule="evenodd" d="M731.0,202.5 L757.0,202.5 L778.5,207.0 L745.0,250.5 L728.0,251.5 L709.0,258.5 L695.0,268.5 L687.5,276.0 L676.5,293.0 L670.5,311.0 L669.5,332.0 L674.5,351.0 L685.5,370.0 L697.0,381.5 L704.0,386.5 L721.0,394.5 L733.0,397.5 L755.0,397.5 L773.0,392.5 L791.0,382.5 L803.0,370.5 L856.5,371.0 L852.5,380.0 L842.5,396.0 L821.0,418.5 L808.0,427.5 L793.0,435.5 L779.0,440.5 L760.0,444.5 L739.0,445.5 L713.0,441.5 L693.0,434.5 L680.0,427.5 L667.0,418.5 L653.5,406.0 L644.5,395.0 L635.5,381.0 L624.5,353.0 L621.5,336.0 L621.5,313.0 L625.5,292.0 L636.5,265.0 L649.5,246.0 L666.0,229.5 L689.0,214.5 L710.0,206.5 L731.0,202.5 Z M1243.0,234.5 L1255.0,234.5 L1260.0,236.5 L1266.5,242.0 L1269.5,248.0 L1270.5,252.0 L1269.5,260.0 L1267.5,264.0 L1259.0,271.5 L1251.0,273.5 L1242.0,272.5 L1236.0,269.5 L1230.5,264.0 L1228.5,260.0 L1227.5,252.0 L1231.5,242.0 L1238.0,236.5 L1243.0,234.5 Z M1044.0,257.5 L1077.0,257.5 L1078.5,259.0 L1079.0,293.5 L1114.5,294.0 L1114.0,319.5 L1078.5,320.0 L1078.5,394.0 L1082.0,399.5 L1088.0,402.5 L1113.0,401.5 L1114.5,427.0 L1095.0,430.5 L1072.0,429.5 L1057.0,423.5 L1049.5,416.0 L1045.5,408.0 L1043.5,399.0 L1043.5,320.0 L1014.0,319.5 L966.5,421.0 L963.5,425.0 L950.5,453.0 L942.5,465.0 L933.0,474.5 L927.0,478.5 L917.0,482.5 L903.0,484.5 L876.0,483.5 L875.5,480.0 L882.5,456.0 L904.0,455.5 L913.0,451.5 L920.5,443.0 L930.5,424.0 L930.5,421.0 L871.5,294.0 L910.5,294.0 L934.5,351.0 L947.5,386.0 L949.0,386.5 L976.5,322.0 L986.5,295.0 L988.0,293.5 L1043.0,293.5 L1044.0,257.5 Z M1351.0,289.5 L1374.0,290.5 L1390.0,294.5 L1399.0,298.5 L1408.0,304.5 L1418.5,316.0 L1423.5,327.0 L1426.5,346.0 L1426.5,423.0 L1425.5,424.0 L1426.5,427.0 L1425.0,428.5 L1392.0,428.5 L1390.5,427.0 L1390.5,420.0 L1389.0,419.5 L1375.0,426.5 L1363.0,429.5 L1333.0,430.5 L1323.0,428.5 L1306.0,421.5 L1292.5,408.0 L1289.5,402.0 L1287.5,393.0 L1288.5,381.0 L1294.5,369.0 L1308.0,357.5 L1319.0,352.5 L1338.0,347.5 L1353.0,346.5 L1354.0,345.5 L1392.5,345.0 L1391.5,337.0 L1387.5,328.0 L1380.0,320.5 L1370.0,316.5 L1346.0,315.5 L1326.0,321.5 L1314.0,329.5 L1311.5,328.0 L1298.5,309.0 L1298.0,305.5 L1314.0,297.5 L1326.0,293.5 L1351.0,289.5 Z M1199.0,290.5 L1214.0,290.5 L1217.5,292.0 L1217.5,321.0 L1209.0,319.5 L1194.0,320.5 L1184.0,324.5 L1174.5,333.0 L1169.5,341.0 L1167.5,348.0 L1167.5,427.0 L1166.0,428.5 L1134.0,428.5 L1133.5,294.0 L1167.0,293.5 L1168.0,311.5 L1183.0,296.5 L1199.0,290.5 Z M1232.0,293.5 L1266.5,294.0 L1266.5,427.0 L1265.0,428.5 L1231.5,428.0 L1232.0,293.5 Z M1359.0,368.5 L1337.0,372.5 L1331.0,375.5 L1325.5,381.0 L1323.5,386.0 L1323.5,391.0 L1326.5,398.0 L1330.0,401.5 L1341.0,406.5 L1358.0,407.5 L1372.0,404.5 L1381.0,399.5 L1386.5,394.0 L1390.5,387.0 L1392.5,379.0 L1392.5,370.0 L1391.0,368.5 L1359.0,368.5 Z"/>
+          <path fill="#C9A24D" fill-rule="evenodd" d="M790.0,210.5 L807.0,218.5 L819.0,226.5 L838.5,245.0 L853.5,268.0 L857.5,277.0 L858.0,281.5 L806.0,281.5 L786.0,261.5 L770.0,253.5 L759.5,251.0 L763.5,244.0 L790.0,210.5 Z"/>
+        </svg>
+
+        <div class="brand-divider"></div>
+
+        <div class="brand-meta">
+          <div class="brand-meta-title">Transactions Immobilières</div>
+          <div class="brand-meta-sub">Canton de Genève</div>
+        </div>
+
+        <span class="badge-fao">FAO × SITG</span>
       </div>
+
       <div class="hud-stats">
         <div class="stat-item">
           <span class="stat-label">Transactions</span>
@@ -531,8 +706,8 @@ def build_interactive_map(
           <span class="stat-value emerald">CHF {total_volume/1e9:.2f} Mrd</span>
         </div>
         <div class="stat-item">
-          <span class="stat-label">Avec Prix</span>
-          <span class="stat-value amber">{priced_count}</span>
+          <span class="stat-label">Transactions Publiées</span>
+          <span class="stat-value gold">{priced_count}</span>
         </div>
       </div>
     </div>
@@ -546,7 +721,7 @@ def build_interactive_map(
     </div>
 
     <div>
-      <div class="filter-section-title">Type de notice</div>
+      <div class="filter-section-title">Type de notice officielle</div>
       <div class="filter-pills">
         <button class="pill-btn active" data-source="ALL">Toutes</button>
         <button class="pill-btn" data-source="LDTR_Appartement">LDTR Appartements</button>
@@ -589,7 +764,7 @@ def build_interactive_map(
     <div>
       <div class="filter-section-title">Filtre de prix</div>
       <label class="toggle-row">
-        <span>Transactions avec prix uniquement</span>
+        <span>Transactions avec prix publié uniquement</span>
         <input type="checkbox" id="onlyPricedCheckbox">
       </label>
     </div>
@@ -597,17 +772,20 @@ def build_interactive_map(
     <button class="reset-btn" id="resetBtn">Réinitialiser les filtres</button>
 
     <div class="legend">
-      <div class="filter-section-title">Légende des points</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div> Prix supérieur à CHF 3M</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#38bdf8;"></div> LDTR Vente appartement</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Zone 5 Villas & Terrains</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> Autre mutation Registre Foncier</div>
+      <div class="filter-section-title">Légende des marqueurs</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C9A24D;"></div> Prix supérieur à CHF 3M (Gold)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#315E78;"></div> LDTR Vente appartement</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#A46D13;"></div> Zone 5 Villas & Terrains</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2F6B57;"></div> Autre mutation Registre Foncier</div>
     </div>
   </aside>
 
   <!-- Detail Drawer -->
   <div class="detail-drawer" id="detailDrawer">
-    <button class="detail-close" id="detailClose">&times;</button>
+    <div class="detail-header">
+      <div class="detail-price" id="detailPriceDisplay"></div>
+      <button class="detail-close" id="detailClose">&times;</button>
+    </div>
     <div id="detailContent"></div>
   </div>
 
@@ -637,7 +815,7 @@ def build_interactive_map(
       zoneSelect.appendChild(opt);
     }});
 
-    // Initialize Map with Swisstopo & Carto basemaps
+    // Initialize Map with Swisstopo & Esri basemaps
     const map = leafletMap();
 
     function leafletMap() {{
@@ -652,11 +830,11 @@ def build_interactive_map(
       L.control.zoom({{ position: 'bottomright' }}).addTo(m);
 
       const darkTiles = L.layerGroup([
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {{
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{{z}}/{{y}}/{{x}}', {{
           attribution: '&copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
           maxZoom: 16
         }}),
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {{
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{{z}}/{{y}}/{{x}}', {{
           maxZoom: 16
         }})
       ]).addTo(m);
@@ -677,7 +855,7 @@ def build_interactive_map(
       }});
 
       L.control.layers({{
-        "Carte Sombre": darkTiles,
+        "Carte Sombre (Cytria Dark)": darkTiles,
         "Plan Officiel Swisstopo": swissGrey,
         "Photo Aérienne Swisstopo": swissImage,
         "OpenStreetMap": osmStandard
@@ -696,10 +874,10 @@ def build_interactive_map(
     map.addLayer(clusterGroup);
 
     function getMarkerColor(r) {{
-      if (r.price_chf && r.price_chf >= 3000000) return '#10b981'; // Green high price
-      if (r.source_category === 'LDTR_Appartement') return '#38bdf8'; // Blue LDTR
-      if (r.zone_code === '5') return '#a855f7'; // Purple Zone 5
-      return '#f59e0b'; // Amber
+      if (r.price_chf && r.price_chf >= 3000000) return '#C9A24D'; // Cytria Gold for >= 3M
+      if (r.source_category === 'LDTR_Appartement') return '#315E78'; // Cytria Slate Blue
+      if (r.zone_code === '5') return '#A46D13'; // Cytria Warm Ochre
+      return '#2F6B57'; // Cytria Forest Green
     }}
 
     function createMarkers(records) {{
@@ -715,7 +893,7 @@ def build_interactive_map(
         const marker = L.circleMarker([r.lat, r.lon], {{
           radius: radius,
           fillColor: color,
-          color: '#fff',
+          color: '#F7F4EC',
           weight: 1.5,
           opacity: 0.9,
           fillOpacity: 0.85
@@ -735,57 +913,72 @@ def build_interactive_map(
     // Detail Drawer
     const detailDrawer = document.getElementById('detailDrawer');
     const detailContent = document.getElementById('detailContent');
+    const detailPriceDisplay = document.getElementById('detailPriceDisplay');
+
     document.getElementById('detailClose').addEventListener('click', () => {{
       detailDrawer.classList.remove('visible');
     }});
 
     function openDetail(r) {{
-      const formattedPrice = r.price_chf 
+      detailPriceDisplay.innerHTML = r.price_chf 
         ? 'CHF ' + Math.round(r.price_chf).toLocaleString('fr-CH') 
-        : '<span style="color:#94a3b8; font-size:16px;">Prix non publié (Mutation RF)</span>';
+        : '<span style="color:#A8A29A; font-size:15px; font-weight:500;">Prix non publié (Mutation RF)</span>';
 
       const sitgLink = (r.lv95_e && r.lv95_n) 
         ? `https://map.sitg.ge.ch/?center=${{r.lv95_e}},${{r.lv95_n}}&scale=2500&mapresources=CADASTRE` 
         : null;
 
       detailContent.innerHTML = `
-        <div class="detail-price">${{formattedPrice}}</div>
         <div class="detail-badges">
           <span class="badge-tag">${{r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier'}}</span>
           ${{r.zone_code ? `<span class="badge-tag zone">${{r.zone_name || ('Zone ' + r.zone_code)}}</span>` : ''}}
           ${{r.building_period ? `<span class="badge-tag building">${{r.building_period}}</span>` : ''}}
         </div>
 
-        <div class="detail-row">
-          <span class="row-label">Commune & Adresse</span>
-          <span class="row-value">${{r.address || (r.commune + ' (Parcelle ' + (r.parcel_number || 'N/A') + ')')}}</span>
-        </div>
+        <div class="detail-grid">
+          <div class="detail-row">
+            <span class="row-label">Commune & Adresse</span>
+            <span class="row-value">${{r.address || (r.commune + ' (Parcelle ' + (r.parcel_number || 'N/A') + ')')}}</span>
+          </div>
 
-        ${{r.surface_m2 ? `
-        <div class="detail-row">
-          <span class="row-label">Surface & Pièces</span>
-          <span class="row-value">${{r.surface_m2}} m² ${{r.rooms ? ' | ' + r.rooms + ' pièces' : ''}}</span>
-        </div>` : ''}}
+          ${{r.egrid ? `
+          <div class="detail-row">
+            <span class="row-label">Identifiant Fédéral EGRID</span>
+            <span class="row-value mono">${{r.egrid}}</span>
+          </div>` : ''}}
 
-        ${{r.building_destination ? `
-        <div class="detail-row">
-          <span class="row-label">Destination bâtiment</span>
-          <span class="row-value">${{r.building_destination}} ${{r.building_floors ? '(' + r.building_floors + ' étages)' : ''}}</span>
-        </div>` : ''}}
+          ${{r.parcel_number ? `
+          <div class="detail-row">
+            <span class="row-label">Numéro de Parcelle</span>
+            <span class="row-value mono">${{r.parcel_number}}</span>
+          </div>` : ''}}
 
-        <div class="detail-row">
-          <span class="row-label">Acquéreur (Acheteur)</span>
-          <span class="row-value">${{r.buyer || 'Non précisé'}}</span>
-        </div>
+          ${{r.surface_m2 ? `
+          <div class="detail-row">
+            <span class="row-label">Surface & Pièces</span>
+            <span class="row-value mono">${{r.surface_m2}} m² ${{r.rooms ? ' | ' + r.rooms + ' pièces' : ''}}</span>
+          </div>` : ''}}
 
-        <div class="detail-row">
-          <span class="row-label">Aliénateur (Vendeur)</span>
-          <span class="row-value">${{r.seller || 'Non précisé'}}</span>
-        </div>
+          ${{r.building_destination ? `
+          <div class="detail-row">
+            <span class="row-label">Destination bâtiment</span>
+            <span class="row-value">${{r.building_destination}} ${{r.building_floors ? '(' + r.building_floors + ' étages)' : ''}}</span>
+          </div>` : ''}}
 
-        <div class="detail-row">
-          <span class="row-label">Date publication FAO</span>
-          <span class="row-value">${{r.notice_date || 'N/A'}}</span>
+          <div class="detail-row">
+            <span class="row-label">Acquéreur (Acheteur)</span>
+            <span class="row-value">${{r.buyer || 'Non précisé'}}</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="row-label">Aliénateur (Vendeur)</span>
+            <span class="row-value">${{r.seller || 'Non précisé'}}</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="row-label">Date publication FAO</span>
+            <span class="row-value mono">${{r.notice_date || 'N/A'}}</span>
+          </div>
         </div>
 
         ${{sitgLink ? `
@@ -849,7 +1042,7 @@ def build_interactive_map(
         }}
 
         if (q) {{
-          const str = [(r.address||''), (r.commune||''), (r.buyer||''), (r.seller||''), (r.parcel_number||'')].join(' ').toLowerCase();
+          const str = [(r.address||''), (r.commune||''), (r.buyer||''), (r.seller||''), (r.parcel_number||''), (r.egrid||'')].join(' ').toLowerCase();
           if (!str.includes(q)) return false;
         }}
 
@@ -863,5 +1056,5 @@ def build_interactive_map(
 </html>
 """
     out_file.write_text(html_content, encoding="utf-8")
-    console.print(f"[bold green][OK] Interactive Map Generated:[/bold green] {out_file.resolve()} ({len(html_content)/1024:.1f} KB)\n")
+    console.print(f"[bold green][OK] Cytria Interactive Map Generated:[/bold green] {out_file.resolve()} ({len(html_content)/1024:.1f} KB)\n")
     return out_file
