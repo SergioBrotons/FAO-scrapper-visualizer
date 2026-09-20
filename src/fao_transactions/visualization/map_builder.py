@@ -1,4 +1,4 @@
-"""Standalone interactive HTML map generator for Geneva Property Transactions with Cytria Brand Design and 3-Phase Intelligence Enrichment."""
+"""Standalone interactive HTML map generator for Geneva Property Transactions with Cytria Brand Design, In-App 360° Modal, and 3-Phase Intelligence Enrichment."""
 
 import json
 import sqlite3
@@ -16,7 +16,7 @@ def build_interactive_map(
     db_path: Optional[str] = None,
     output_path: Optional[str] = None,
 ) -> Path:
-    """Build a standalone, single-file interactive Leaflet/Swiss map styled with Cytria branding and full planning/visual enrichment."""
+    """Build a standalone, single-file interactive Leaflet/Swiss map styled with Cytria branding, in-app Street View modal, and full planning/visual enrichment."""
     console.rule("[bold #C9A24D]Building Cytria Geneva Real Estate Intelligence Map[/bold #C9A24D]")
     
     db_file = Path(db_path or settings.storage.database_path)
@@ -703,6 +703,141 @@ def build_interactive_map(
       color: var(--color-brand-200);
     }}
 
+    /* Street View In-App Modal */
+    .modal-overlay {{
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 13, 17, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }}
+
+    .modal-overlay.visible {{
+      display: flex;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }}
+
+    @keyframes modalFadeIn {{
+      from {{ opacity: 0; transform: scale(0.98); }}
+      to {{ opacity: 1; transform: scale(1); }}
+    }}
+
+    .modal-window {{
+      width: 100%;
+      max-width: 1050px;
+      height: 80vh;
+      background: var(--color-night);
+      border: 1px solid var(--panel-border-gold);
+      border-radius: var(--radius-strict);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95);
+      overflow: hidden;
+    }}
+
+    .modal-header {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: var(--color-ink-900);
+      border-bottom: 1px solid var(--panel-border);
+    }}
+
+    .modal-header-left {{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }}
+
+    .modal-title-box {{
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }}
+
+    .modal-title {{
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-paper);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }}
+
+    .modal-subtitle {{
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-brand-400);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }}
+
+    .modal-header-actions {{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }}
+
+    .modal-ext-link {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--color-ink-800);
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-300);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }}
+
+    .modal-ext-link:hover {{
+      border-color: var(--color-brand-400);
+      color: var(--color-paper);
+    }}
+
+    .modal-close-btn {{
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-300);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }}
+
+    .modal-close-btn:hover {{
+      border-color: var(--color-brand-400);
+      color: var(--color-paper);
+    }}
+
+    .modal-body {{
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: var(--color-ink-950);
+    }}
+
+    .modal-iframe {{
+      width: 100%;
+      height: 100%;
+      border: none;
+    }}
+
     /* Custom Leaflet Cluster Styling */
     .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {{
       background-color: rgba(16, 20, 27, 0.85) !important;
@@ -879,6 +1014,29 @@ def build_interactive_map(
     <div id="detailContent"></div>
   </div>
 
+  <!-- In-App Street View 360° Modal -->
+  <div class="modal-overlay" id="streetViewModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-title-box">
+            <div class="modal-title" id="modalTitle">Vue 360°</div>
+            <div class="modal-subtitle">Panorama Street View &bull; Cytria Intelligence</div>
+          </div>
+        </div>
+        <div class="modal-header-actions">
+          <a href="#" id="modalExtLink" target="_blank" rel="noopener" class="modal-ext-link">
+            Ouvrir dans Google Maps ↗
+          </a>
+          <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="modalIframe" class="modal-iframe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- Leaflet & MarkerCluster JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -1023,6 +1181,8 @@ def build_interactive_map(
         ? (r.streetview_url || `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${{r.lat}},${{r.lon}}`)
         : null;
 
+      const escapedTitle = (r.address || (r.commune + ' Parcelle ' + (r.parcel_number || ''))).replace(/'/g, "\\'");
+
       detailContent.innerHTML = `
         <div class="detail-badges">
           <span class="badge-tag">${{r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier'}}</span>
@@ -1033,12 +1193,12 @@ def build_interactive_map(
           ${{r.grand_projet_name ? `<span class="badge-tag grandprojet">${{r.grand_projet_name}}</span>` : ''}}
         </div>
 
-        <!-- Action Toolbar (Visual Inspection & GIS) -->
+        <!-- Action Toolbar (Street View Modal & SITG) -->
         <div class="action-toolbar">
-          ${{streetViewLink ? `
-          <a href="${{streetViewLink}}" target="_blank" rel="noopener" class="action-btn streetview">
-            Street View 360° ↗
-          </a>` : ''}}
+          ${{r.lat && r.lon ? `
+          <button type="button" class="action-btn streetview" onclick="openStreetViewModal('${{r.lat}}', '${{r.lon}}', '${{escapedTitle}}', '${{streetViewLink}}')">
+            Street View 360° ⛶
+          </button>` : ''}}
           ${{sitgLink ? `
           <a href="${{sitgLink}}" target="_blank" rel="noopener" class="action-btn sitg">
             SITG 5cm Aérien ↗
@@ -1142,6 +1302,38 @@ def build_interactive_map(
       detailDrawer.classList.add('visible');
     }}
 
+    // Street View In-App Modal Logic
+    const streetViewModal = document.getElementById('streetViewModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIframe = document.getElementById('modalIframe');
+    const modalExtLink = document.getElementById('modalExtLink');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    function openStreetViewModal(lat, lon, title, extUrl) {{
+      modalTitle.textContent = title || 'Vue Panoramique 360°';
+      modalExtLink.href = extUrl || `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${{lat}},${{lon}}`;
+      modalIframe.src = `https://maps.google.com/maps?q=&layer=c&cbll=${{lat}},${{lon}}&cbp=11,0,0,0,0&output=svembed`;
+      streetViewModal.classList.add('visible');
+    }}
+
+    function closeStreetViewModal() {{
+      streetViewModal.classList.remove('visible');
+      modalIframe.src = 'about:blank';
+    }}
+
+    modalCloseBtn.addEventListener('click', closeStreetViewModal);
+    streetViewModal.addEventListener('click', (e) => {{
+      if (e.target === streetViewModal) {{
+        closeStreetViewModal();
+      }}
+    }});
+
+    document.addEventListener('keydown', (e) => {{
+      if (e.key === 'Escape' && streetViewModal.classList.contains('visible')) {{
+        closeStreetViewModal();
+      }}
+    }});
+
     // Filter Logic
     let currentSource = 'ALL';
 
@@ -1220,5 +1412,5 @@ def build_interactive_map(
 </html>
 """
     out_file.write_text(html_content, encoding="utf-8")
-    console.print(f"[bold green][OK] Cytria Multi-Layer Map Generated:[/bold green] {out_file.resolve()} ({len(html_content)/1024:.1f} KB)\n")
+    console.print(f"[bold green][OK] Cytria Interactive Map with Street View Modal Generated:[/bold green] {out_file.resolve()} ({len(html_content)/1024:.1f} KB)\n")
     return out_file
