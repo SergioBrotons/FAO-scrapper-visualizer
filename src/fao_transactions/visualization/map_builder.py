@@ -5573,8 +5573,8 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
         if (!isMatch) return;
         if (typoInput !== 'ALL' && r.typology_class !== typoInput) return;
 
-        let s = r.surface_m2;
-        if (r.typology_class === 'PPE' && s && s > 300) s = null; // Exclude land parcel plot sizes
+        let s = r.surface_habitable_m2 || r.surface_m2;
+        if (r.typology_class === 'PPE' && s && s > 320) s = null; // Exclude land parcel plot sizes
         if (!s && r.id === 246) s = 92;
         if (!s && r.rooms && r.rooms >= 1.5) s = r.rooms * 25;
 
@@ -5607,16 +5607,16 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
           if (scopeMode === 'QUARTIER_STRICT' && !isSameQuartier) return;
 
           // Determine clean usable surface & sqm price for this comparable
-          let cleanSurf = r.surface_m2;
-          if (r.typology_class === 'PPE' && cleanSurf && cleanSurf > 300) cleanSurf = null;
+          let cleanSurf = r.surface_habitable_m2 || r.surface_m2;
+          if (r.typology_class === 'PPE' && cleanSurf && cleanSurf > 320) cleanSurf = null;
           if (!cleanSurf && (r.id === 246 || (r.parcel_number === '4642-104'))) cleanSurf = 92;
           if (!cleanSurf && r.rooms && r.rooms >= 1.5) cleanSurf = Math.round(r.rooms * 25);
 
-          let cleanSqm = null;
-          if (r.price_chf && r.price_chf > 50000 && cleanSurf && cleanSurf >= 20) {
+          let cleanSqm = r.sqm_price;
+          if (!cleanSqm && r.price_chf && r.price_chf > 50000 && cleanSurf && cleanSurf >= 15) {
             cleanSqm = Math.round(r.price_chf / cleanSurf);
-          } else if (r.sqm_price && r.sqm_price >= 5000 && r.sqm_price <= 40000) {
-            cleanSqm = r.sqm_price;
+          } else if (cleanSqm && (cleanSqm < 3000 || cleanSqm > 60000)) {
+            cleanSqm = null;
           }
 
           const distDecay = 1 / (1 + Math.pow(dist / 120, 2));
@@ -5629,6 +5629,7 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
             is_same_quartier: isSameQuartier,
             clean_surface_m2: cleanSurf,
             clean_sqm_price: cleanSqm,
+            surface_source: r.surface_source,
             cma_weight: weight
           });
         }
@@ -5753,7 +5754,25 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
           ? `<span style="font-weight: 700; color: #4ade80; font-size: 12px;">CHF ${Number(c.price_chf).toLocaleString('fr-CH')}</span>` 
           : `<span style="color: var(--color-sand-400); font-style: italic;">Non publié (RF)</span>`;
 
-        const surfDisplay = c.clean_surface_m2 ? `${c.clean_surface_m2} m²` : (c.rooms ? `${c.rooms} pièces` : '—');
+        const surfDisplay = (() => {
+          if (!c.clean_surface_m2) {
+            return c.rooms ? `${c.rooms} pièces` : '—';
+          }
+          const roomsPart = c.rooms ? ` <span style="font-size:10px; color:var(--color-sand-400);">(${c.rooms} p.)</span>` : '';
+          const isCertified = c.surface_source === 'NOTARIEE_FAO' || c.surface_source === 'STANDARD_PIECES_LDTR' || isSameRes;
+          const badgeLabel = isCertified ? 'Certifié' : 'Étalonné';
+          const badgeColor = isCertified ? '#10b981' : '#38bdf8';
+          const badgeBorder = isCertified ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.3)';
+          const badgeBg = isCertified ? 'rgba(16, 185, 129, 0.1)' : 'rgba(56, 189, 248, 0.1)';
+          return `
+            <div>
+              <span style="font-weight:700; color:var(--color-paper); font-size:12px;">${c.clean_surface_m2} m²</span>${roomsPart}
+              <div style="margin-top:2px;">
+                <span style="display:inline-block; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:${badgeColor}; background:${badgeBg}; border:1px solid ${badgeBorder}; padding:1px 5px;">${badgeLabel}</span>
+              </div>
+            </div>
+          `;
+        })();
         const unitPriceDisplay = c.clean_sqm_price ? `<span style="font-weight: 700; color: var(--color-brand-400);">CHF ${Number(c.clean_sqm_price).toLocaleString('fr-CH')} / m²</span>` : '—';
 
         return `
@@ -6331,23 +6350,31 @@ def build_interactive_map(
         r["nature_class"] = nature
         r["rive"] = classify_rive(r)
 
-        # Real Sqm price calculation with strict PPE surface cleaning
+        # Real Sqm price calculation with prioritized living surface
         price = r.get("price_chf")
-        surface = r.get("surface_m2") or r.get("surface_official_m2")
-
-        # Guard against cadastral plot land surfaces contaminating PPE apartments:
-        # In Geneva cadastral data, parcel plot sizes (e.g. 879 m², 1228 m², 11473 m²)
-        # must NOT be treated as apartment living surface!
-        if typo == "PPE" and surface and surface > 320:
-            surface = None
-            r["surface_m2"] = None
+        surf_hab = r.get("surface_habitable_m2")
+        surf_terr = r.get("surface_terrain_m2")
+        surf_src = r.get("surface_source") or "NOTARIEE_FAO"
 
         # Explicit verified benchmark in Geneva (Saut-du-Loup 16, parcel 4642-104, contemporary 2016 residence)
         if r.get("id") == 246 or (str(r.get("parcel_number")) == "4642-104"):
-            surface = 92.0
+            surf_hab = 92.0
+            r["surface_habitable_m2"] = 92.0
             r["surface_m2"] = 92.0
             r["building_year"] = 2016
             r["rooms"] = 4.0
+            surf_src = "NOTARIEE_FAO"
+
+        surface = surf_hab or r.get("surface_m2") or r.get("surface_official_m2")
+
+        # Guard against cadastral plot land surfaces contaminating PPE apartments:
+        if typo == "PPE" and surface and surface > 320:
+            surface = None
+
+        r["surface_habitable_m2"] = surf_hab or surface
+        r["surface_terrain_m2"] = surf_terr
+        r["surface_source"] = surf_src
+        r["surface_m2"] = surf_hab or surface
 
         if price and surface and surface > 15 and price > 50000:
             sqm = price / surface
@@ -6356,7 +6383,7 @@ def build_interactive_map(
             else:
                 r["sqm_price"] = None
         else:
-            r["sqm_price"] = None
+            r["sqm_price"] = r.get("sqm_price")
 
         # Mandate lead scoring
         m_score, m_reasons, is_hoirie = compute_mandate_score(r)
