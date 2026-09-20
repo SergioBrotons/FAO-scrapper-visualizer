@@ -4206,18 +4206,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         });
 
         const statusTag = isConfirmed 
-          ? `<span style="color:#10b981; font-weight:700;">✓ Acte Notarié Publié FAO</span>` 
-          : `<span style="color:#C9A24D; font-weight:700;">⏳ En Cours de Transcription RF</span>`;
+          ? `<span style="color:#10b981; font-weight:700;">Acte Notarie Publie FAO</span>` 
+          : `<span style="color:#C9A24D; font-weight:700;">En Cours de Transcription RF</span>`;
 
         const dateMeta = isConfirmed 
-          ? `<span>Date de publication FAO : <strong>${p.date}</strong> (délai : ~${p.publishing_delay_days || 42}j)</span>` 
-          : `<span>Parution FAO attendue : <strong>${p.expected_fao_date || 'Prochainement'}</strong> (délai standard : ~45j)</span>`;
+          ? `<span>Date de publication FAO : <strong>${p.date}</strong> (delai : ~${p.publishing_delay_days || 42}j)</span>` 
+          : `<span>Parution FAO attendue : <strong>${p.expected_fao_date || 'Prochainement'}</strong> (delai standard : ~45j)</span>`;
+
+        const precBadge = p.address_precision === 'EXACT_STREET_NUMBER'
+          ? `<span style="color:#10b981; font-size:9px; font-weight:700; background:rgba(16,185,129,0.12); padding:1px 4px; border-radius:2px; border:1px solid rgba(16,185,129,0.3);">Adresse complete certifiee</span>`
+          : (p.address_precision === 'STREET_ONLY'
+            ? `<span style="color:#C9A24D; font-size:9px; font-weight:700; background:rgba(201,162,77,0.12); padding:1px 4px; border-radius:2px; border:1px solid rgba(201,162,77,0.3);">Voie publiee (N° non diffuse)</span>`
+            : `<span style="color:#38bdf8; font-size:9px; font-weight:700; background:rgba(56,189,248,0.12); padding:1px 4px; border-radius:2px; border:1px solid rgba(56,189,248,0.3);">Zone / Secteur cadastral</span>`);
+
+        const precClarif = p.address_clarification 
+          ? `<div style="font-size:9px; color:var(--color-sand-400); margin-top:2px; font-style:italic;">${p.address_clarification}</div>` 
+          : '';
 
         soldMarker.bindTooltip(`
-          <div style="font-family:'Hanken Grotesk',sans-serif; padding:4px; max-width:240px;">
+          <div style="font-family:'Hanken Grotesk',sans-serif; padding:4px; max-width:270px;">
             <div style="font-size:10px; margin-bottom:2px;">${statusTag} &bull; ${agency.name}</div>
             <div style="font-size:11px; font-weight:600; color:#fff;">${p.typology} — ${p.address}</div>
-            <div style="font-size:12px; font-weight:700; color:#10b981; margin:2px 0;">CHF ${p.price_chf ? Math.round(p.price_chf).toLocaleString('fr-CH') : 'Prix confidentiel'}</div>
+            <div style="margin-top:2px;">${precBadge}</div>
+            ${precClarif}
+            <div style="font-size:12px; font-weight:700; color:#10b981; margin:3px 0 1px 0;">CHF ${p.price_chf ? Math.round(p.price_chf).toLocaleString('fr-CH') : 'Prix confidentiel'}</div>
             <div style="font-size:10px; color:#A8A29A; line-height:1.35; margin-top:3px; border-top:1px solid rgba(255,255,255,0.1); padding-top:3px;">
               <span>Courtier : <strong style="color:#fff;">${p.agent_name}</strong></span><br>
               ${dateMeta}
@@ -4461,7 +4473,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
               Tous (${soldProps.length})
             </button>
             <button type="button" class="btn-sm" id="soldFilterBtnConfirmed" onclick="filterSoldPropertiesDrawer('CONFIRMED_FAO')" style="font-size:10px; padding:3px 8px; cursor:pointer; color:#10b981;">
-              ✓ Actes FAO (${confirmedCount})
+              Actes FAO (${confirmedCount})
             </button>
             <button type="button" class="btn-sm" id="soldFilterBtnPending" onclick="filterSoldPropertiesDrawer('PENDING_TRANSCRIPTION')" style="font-size:10px; padding:3px 8px; cursor:pointer; color:#C9A24D;">
               En transcription (${pendingCount})
@@ -4469,26 +4481,39 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </div>
 
           <div class="sold-props-list" id="soldPropsListContainer">
-            ${soldProps.map(p => `
+            ${soldProps.map(p => {
+              const precBadgeDrawer = p.address_precision === 'EXACT_STREET_NUMBER'
+                ? `<span style="color:#10b981; font-size:8px; font-weight:700; background:rgba(16,185,129,0.12); padding:1px 5px; border-radius:2px; border:1px solid rgba(16,185,129,0.3);">Adresse complete</span>`
+                : (p.address_precision === 'STREET_ONLY'
+                  ? `<span style="color:#C9A24D; font-size:8px; font-weight:700; background:rgba(201,162,77,0.12); padding:1px 5px; border-radius:2px; border:1px solid rgba(201,162,77,0.3);">Voie seule (N° non diffuse)</span>`
+                  : `<span style="color:#38bdf8; font-size:8px; font-weight:700; background:rgba(56,189,248,0.12); padding:1px 5px; border-radius:2px; border:1px solid rgba(56,189,248,0.3);">Zone / Secteur</span>`);
+              
+              const precClarifDrawer = p.address_clarification
+                ? `<div style="font-size:8.5px; color:var(--color-sand-400); margin-top:2px; font-style:italic;">${p.address_clarification}</div>`
+                : '';
+
+              return `
               <div class="sold-prop-item sold-prop-entry" data-level="${p.reconciliation_level || 'CONFIRMED_FAO'}" style="cursor:pointer;" onclick="map.setView([${p.lat}, ${p.lon}], 16)">
-                <div>
-                  <div style="display:flex; align-items:center; gap:6px;">
+                <div style="flex:1; min-width:0;">
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     <span style="font-weight:600; color:var(--color-paper);">${p.typology} &bull; ${p.commune}</span>
                     <span class="badge-tag" style="font-size:8px; padding:1px 4px; ${p.reconciliation_level === 'CONFIRMED_FAO' ? 'background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;' : 'background:rgba(201,162,77,0.15); color:var(--color-brand-300); border-color:var(--color-brand-400);'}">
-                      ${p.reconciliation_level === 'CONFIRMED_FAO' ? '✓ Acté FAO' : 'Parution estimée'}
+                      ${p.reconciliation_level === 'CONFIRMED_FAO' ? 'Acte FAO' : 'Parution estimee'}
                     </span>
+                    ${precBadgeDrawer}
                   </div>
-                  <div style="font-size:10px; color:var(--color-sand-300); margin-top:2px;">${p.address}</div>
+                  <div style="font-size:10px; color:var(--color-sand-300); margin-top:2px; font-weight:500;">${p.address}</div>
+                  ${precClarifDrawer}
                   <div style="font-size:9px; color:var(--color-sand-400); margin-top:2px;">
-                    Courtier : <strong style="color:var(--color-sand-200);">${p.agent_name}</strong> &bull; ${p.reconciliation_level === 'CONFIRMED_FAO' ? `Publié FAO : ${p.date}` : `Attendue : ${p.expected_fao_date || 'prochainement'}`}
+                    Courtier : <strong style="color:var(--color-sand-200);">${p.agent_name}</strong> &bull; ${p.reconciliation_level === 'CONFIRMED_FAO' ? `Publie FAO : ${p.date}` : `Attendue : ${p.expected_fao_date || 'prochainement'}`}
                   </div>
                 </div>
                 <div style="text-align:right; white-space:nowrap; margin-left:8px;">
                   <div style="font-weight:700; color:#10b981; font-family:var(--font-mono); font-size:12px;">CHF ${Math.round(p.price_chf).toLocaleString('fr-CH')}</div>
-                  <div style="font-size:9px; color:var(--color-sand-400); margin-top:2px;">Délai : ~${p.publishing_delay_days || 45}j</div>
+                  <div style="font-size:9px; color:var(--color-sand-400); margin-top:2px;">Delai : ~${p.publishing_delay_days || 45}j</div>
                 </div>
               </div>
-            `).join('')}
+            `}).join('')}
           </div>
         </div>
 
