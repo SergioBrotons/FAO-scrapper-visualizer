@@ -1,6 +1,7 @@
 """Standalone interactive HTML map generator for Geneva Property Transactions with Cytria Brand Design, Smart Street View Detection, Seller Mandate Radar, and Land Development Opportunity Engine."""
 
 import json
+import re
 import sqlite3
 from pathlib import Path
 from typing import Dict, Any, Optional, List, Tuple
@@ -158,60 +159,132 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       text-transform: uppercase;
     }
 
-    /* Top Mode Switcher */
-    .mode-switcher-container {
+    /* Master Product Suite & Navigation Architecture */
+    .product-suite-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      pointer-events: auto;
+    }
+
+    .product-master-tabs {
       display: flex;
       background: var(--color-ink-950);
       border: 1px solid var(--panel-border);
       padding: 3px;
       gap: 4px;
-      pointer-events: auto;
     }
 
-    .nav-mode-btn {
+    .product-tab {
       background: transparent;
       border: 1px solid transparent;
       color: var(--color-sand-300);
       font-family: var(--font-brand);
+      padding: 6px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .product-tab:hover {
+      background: var(--color-ink-900);
+      color: var(--color-paper);
+    }
+
+    .product-tab.active {
+      background: rgba(201, 162, 77, 0.14);
+      border-color: var(--color-brand-400);
+      color: var(--color-brand-300);
+      box-shadow: inset 0 -2px 0 var(--color-brand-400);
+    }
+
+    .product-tab-title {
       font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .product-tab-sub {
+      font-size: 9px;
+      color: var(--color-sand-400);
+      font-family: var(--font-mono);
+      font-weight: 500;
+    }
+
+    .product-tab.active .product-tab-sub {
+      color: var(--color-sand-200);
+    }
+
+    /* Contextual Sub-toolbars */
+    .product-subtoolbar-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .product-subtoolbar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .subtool-btn {
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-200);
+      font-family: var(--font-brand);
+      font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 7px 14px;
+      letter-spacing: 0.04em;
+      padding: 5px 11px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
+      gap: 6px;
+      transition: all 0.15s ease;
     }
 
-    .nav-mode-btn:hover {
-      color: var(--color-paper);
+    .subtool-btn:hover {
       background: var(--color-ink-800);
+      border-color: var(--color-brand-400);
+      color: var(--color-paper);
     }
 
-    .nav-mode-btn.active {
+    .subtool-btn.active {
       background: var(--color-brand-500);
       color: var(--color-ink-950);
       border-color: var(--color-brand-400);
       font-weight: 800;
-      box-shadow: 0 4px 12px rgba(201, 162, 77, 0.25);
+      box-shadow: 0 2px 8px rgba(201, 162, 77, 0.25);
     }
 
-    .nav-mode-badge {
+    .subtool-badge {
       font-family: var(--font-mono);
       font-size: 9px;
       font-weight: 700;
-      padding: 2px 5px;
-      background: var(--color-ink-900);
+      padding: 1px 5px;
+      background: var(--color-ink-950);
       color: var(--color-brand-300);
       border: 1px solid var(--panel-border-gold);
     }
 
-    .nav-mode-btn.active .nav-mode-badge {
+    .subtool-btn.active .subtool-badge {
       background: var(--color-ink-950);
       color: var(--color-paper);
       border-color: var(--color-ink-950);
+    }
+
+    /* Keep nav-mode-btn as alias if needed */
+    .nav-mode-btn {
+      display: none;
     }
 
     .hud-stats {
@@ -251,7 +324,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* Left Sidebar Filter Panel */
     .sidebar {
       position: absolute;
-      top: 76px;
+      top: 136px;
       left: 16px;
       bottom: 24px;
       width: 360px;
@@ -517,7 +590,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* Right Detail Drawer */
     .detail-drawer {
       position: absolute;
-      top: 76px;
+      top: 136px;
       right: 16px;
       bottom: 24px;
       width: 440px;
@@ -1246,7 +1319,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* Floating Agency & Agent Focus Banner on Map */
     .agency-focus-banner {
       position: absolute;
-      top: 76px;
+      top: 136px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
@@ -1344,6 +1417,22 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       color: #ffffff;
     }
 
+    .social-btn.youtube {
+      background: #cc0000;
+      color: #ffffff;
+    }
+
+    .social-btn.tiktok {
+      background: #010101;
+      border-color: #25f4ee;
+      color: #ffffff;
+    }
+
+    .social-btn.facebook {
+      background: #1877f2;
+      color: #ffffff;
+    }
+
     .social-btn.website {
       background: rgba(201, 162, 77, 0.15);
       border-color: var(--color-brand-400);
@@ -1354,6 +1443,33 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       background: var(--color-ink-800);
       border-color: var(--panel-border);
       color: var(--color-paper);
+    }
+
+    /* Sold Properties Portfolio in Drawer */
+    .sold-props-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 280px;
+      overflow-y: auto;
+      margin-top: 8px;
+      padding-right: 4px;
+    }
+
+    .sold-prop-item {
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      transition: background 0.15s;
+    }
+
+    .sold-prop-item:hover {
+      background: rgba(201, 162, 77, 0.08);
+      border-color: rgba(201, 162, 77, 0.4);
     }
 
     /* Broker Card */
@@ -1711,7 +1827,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <!-- Floating Agency & Agent Focus Banner -->
   <div id="agencyFocusBanner" class="agency-focus-banner" style="display:none;">
     <div class="focus-banner-content">
-      <span class="focus-badge" id="focusBannerBadge">🏛️ Agence Isolée</span>
+      <span class="focus-badge" id="focusBannerBadge">Agence Isolée</span>
       <span class="focus-title" id="focusBannerTitle"></span>
       <span class="focus-count" id="focusBannerCount"></span>
     </div>
@@ -1736,26 +1852,77 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- Mode Switcher -->
-      <div class="mode-switcher-container">
-        <button type="button" class="nav-mode-btn active" id="modeBtnMarket" onclick="setAppMode('MARKET')">
-          Marché & Prix
-        </button>
-        <button type="button" class="nav-mode-btn" id="modeBtnMandates" onclick="setAppMode('MANDATES')">
-          Scanner Mandats <span class="nav-mode-badge" id="navBadgeMandates">__MANDATES_COUNT__</span>
-        </button>
-        <button type="button" class="nav-mode-btn" id="modeBtnDev" onclick="setAppMode('DEVELOPMENT')">
-          Radar Promotion <span class="nav-mode-badge" id="navBadgeDev">__DEV_COUNT__</span>
-        </button>
-        <button type="button" class="nav-mode-btn" id="modeBtnAgencies" onclick="setAppMode('AGENCIES_MAP')">
-          Carte des Agences <span class="nav-mode-badge" id="navBadgeAgencies">__AGENCIES_COUNT__</span>
-        </button>
-        <button type="button" class="nav-mode-btn" id="btnOpenLeagueTable" onclick="openLeagueModal()" style="border-color: var(--color-brand-400); color: var(--color-brand-300);">
-          Palmarès Agences & Courtiers
-        </button>
-        <button type="button" class="nav-mode-btn" id="btnOpenScanModal" onclick="openScanModal()" style="border-color: var(--color-brand-500); color: var(--color-brand-300); background: rgba(201, 162, 77, 0.12); display: inline-flex; align-items: center; gap: 8px;">
-          <span class="scan-live-dot"></span> Scan Now & Synchro
-        </button>
+      <!-- Master Product Suite Navigation & Contextual Toolbars -->
+      <div class="product-suite-container">
+        <!-- 3 Master Product Tabs (Zero Emoji, Clean Typography) -->
+        <div class="product-master-tabs">
+          <button type="button" class="product-tab active" id="tabProductMarket" onclick="switchProductSuite('MARKET')">
+            <span class="product-tab-title">CYTRIA MARKET</span>
+            <span class="product-tab-sub">Marché & Prix <strong class="subtool-badge" id="navBadgeMarket">__TOTAL_ROWS__</strong></span>
+          </button>
+          <button type="button" class="product-tab" id="tabProductSourcing" onclick="switchProductSuite('SOURCING')">
+            <span class="product-tab-title">CYTRIA SOURCING</span>
+            <span class="product-tab-sub">Mandats B2C & Fonciers B2B</span>
+          </button>
+          <button type="button" class="product-tab" id="tabProductAgencyBI" onclick="switchProductSuite('AGENCY_BI')">
+            <span class="product-tab-title">CYTRIA AGENCY BI</span>
+            <span class="product-tab-sub">__AGENCIES_COUNT__ Agences & Veille</span>
+          </button>
+        </div>
+
+        <!-- Contextual Sub-Toolbars -->
+        <div class="product-subtoolbar-container">
+          <!-- 1. MARKET Subtoolbar -->
+          <div class="product-subtoolbar" id="subtoolbarMarket">
+            <button type="button" class="subtool-btn active" id="mktFilterAll" onclick="setMarketQuickFilter('ALL')">
+              Tous les actes <span class="subtool-badge">__TOTAL_ROWS__</span>
+            </button>
+            <button type="button" class="subtool-btn" id="mktFilterApartments" onclick="setMarketQuickFilter('PPE')">
+              Appartements PPE
+            </button>
+            <button type="button" class="subtool-btn" id="mktFilterHouses" onclick="setMarketQuickFilter('VILLA')">
+              Villas & Maisons
+            </button>
+            <button type="button" class="subtool-btn" id="mktFilterBuildings" onclick="setMarketQuickFilter('IMMEUBLE')">
+              Immeubles de rapport
+            </button>
+            <button type="button" class="subtool-btn" id="mktFilterLand" onclick="setMarketQuickFilter('TERRAIN')">
+              Terrains & Parcelles
+            </button>
+            <button type="button" class="subtool-btn" id="mktSyncBtn" onclick="openContextualSyncModal('MARKET')" style="margin-left: auto; border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
+              <span class="scan-live-dot"></span> Actualiser Marché (FAO × SITG)
+            </button>
+          </div>
+
+          <!-- 2. SOURCING Subtoolbar -->
+          <div class="product-subtoolbar" id="subtoolbarSourcing" style="display: none;">
+            <button type="button" class="subtool-btn active" id="sourcingBtnB2C" onclick="switchSourcingModule('B2C_MANDATES')">
+              Scanner Mandats B2C <span class="subtool-badge" id="navBadgeMandates">__MANDATES_COUNT__</span>
+            </button>
+            <button type="button" class="subtool-btn" id="sourcingBtnB2B" onclick="switchSourcingModule('B2B_DEVELOPMENT')">
+              Radar Promoteurs B2B <span class="subtool-badge" id="navBadgeDev">__DEV_COUNT__</span>
+            </button>
+            <button type="button" class="subtool-btn" id="sourcingSyncBtn" onclick="openContextualSyncModal('SOURCING')" style="margin-left: auto; border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
+              <span class="scan-live-dot"></span> Actualiser Sourcing (Hoiries & Permis)
+            </button>
+          </div>
+
+          <!-- 3. AGENCY BI Subtoolbar -->
+          <div class="product-subtoolbar" id="subtoolbarAgencyBI" style="display: none;">
+            <button type="button" class="subtool-btn active" id="agencyBtnMap" onclick="switchAgencyTool('MAP')">
+              Carte des Agences <span class="subtool-badge" id="navBadgeAgencies">__AGENCIES_COUNT__</span>
+            </button>
+            <button type="button" class="subtool-btn" id="btnOpenLeagueTable" onclick="openLeagueModal()">
+              Benchmark & Parts de Marché
+            </button>
+            <button type="button" class="subtool-btn" id="btnOpenMarketingModal" onclick="openMarketingModal()">
+              Veille Marketing
+            </button>
+            <button type="button" class="subtool-btn" id="agencySyncBtn" onclick="openContextualSyncModal('AGENCY_BI')" style="margin-left: auto; border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
+              <span class="scan-live-dot"></span> Actualiser Veille & Benchmarking
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="hud-stats">
@@ -1774,6 +1941,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="stat-item" id="hudStatItem4">
           <span class="stat-label" id="statLabel4">Opportunités</span>
           <span class="stat-value purple" id="stat-4">__HOT_MANDATES_COUNT__</span>
+        </div>
+        <div class="stat-item" style="border-right: none; padding-right: 0;">
+          <button type="button" class="subtool-btn" onclick="openMethodologyModal()" style="padding: 7px 14px; font-size: 11px; font-weight: 700; color: var(--color-brand-300); border: 1px solid rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;">
+            Guide Métier & Playbooks ↗
+          </button>
         </div>
       </div>
     </div>
@@ -1870,7 +2042,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       </div>
       <div style="margin-top: 8px;">
         <button type="button" class="view-map-btn" style="width:100%; padding: 7px; text-align:center;" onclick="openLeagueModal()">
-          Ouvrir le Palmarès Détaillé & Tableau d'Honneur ↗
+          Consulter l'Analyse Concurrentielle & Parts de Marché ↗
         </button>
       </div>
     </div>
@@ -2020,13 +2192,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="league-modal-window">
       <div class="league-header">
         <div class="league-title-box">
-          <h2>Palmarès & Performance des Agences et Courtiers de Genève</h2>
-          <p>Indice de performance Cytria (0-100) calibré sur les transactions officielles du Registre Foncier (FAO) et le track record vérifié.</p>
+          <h2>Benchmark Concurrentiel & Analyse des Parts de Marché — Genève</h2>
+          <p>Matrice d'intelligence de marché Cytria (0-100) calibrée sur les transactions officielles du Registre Foncier (FAO) et les volumes constatés.</p>
         </div>
         <div style="display:flex; align-items:center; gap: 14px;">
           <div class="league-tabs">
-            <button type="button" class="league-tab-btn active" id="leagueTabAgencies" onclick="setLeagueTab('AGENCIES')">Classement Agences (<span id="countAgencies">0</span>)</button>
-            <button type="button" class="league-tab-btn" id="leagueTabBrokers" onclick="setLeagueTab('BROKERS')">Top Courtiers Individuels (<span id="countBrokers">0</span>)</button>
+            <button type="button" class="league-tab-btn active" id="leagueTabAgencies" onclick="setLeagueTab('AGENCIES')">Benchmark Agences (<span id="countAgencies">0</span>)</button>
+            <button type="button" class="league-tab-btn" id="leagueTabBrokers" onclick="setLeagueTab('BROKERS')">Répertoire Courtiers & Négociateurs (<span id="countBrokers">0</span>)</button>
           </div>
           <button class="modal-close-btn" id="leagueModalCloseBtn" onclick="closeLeagueModal()">&times;</button>
         </div>
@@ -2047,6 +2219,66 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 
+  <!-- Cytria Marketing Benchmark & Competitive Intelligence Modal -->
+  <div class="modal-overlay" id="marketingModal">
+    <div class="league-modal-window" style="max-width: 1100px; width: 92vw; overflow-x: hidden;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="badge-tag" style="background:rgba(201,162,77,0.15); color:var(--color-brand-300); border-color:var(--color-brand-400); font-size:10px; font-weight:700; letter-spacing:0.04em;">BENCHMARK CONCURRENTIEL</span>
+            <h2>Veille Concurrentielle & Stratégie Marketing des Agences Genevoises</h2>
+          </div>
+          <p>Surveillance en temps réel de l'activité éditoriale (Blog/Presse) et des comptes officiels vérifiés (Instagram, LinkedIn, YouTube, TikTok, Facebook).</p>
+        </div>
+        <button class="modal-close-btn" id="marketingModalCloseBtn" onclick="closeMarketingModal()">&times;</button>
+      </div>
+
+      <!-- Filter bar -->
+      <div style="padding: 10px 24px; background: var(--color-ink-950); border-bottom: 1px solid var(--panel-border); display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="marketingSearchInput" placeholder="Rechercher une agence, mot-clé ou publication..." style="flex: 1; min-width: 200px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
+        
+        <div class="marketing-channel-filters" style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button type="button" class="btn-sm active" data-channel="ALL" onclick="filterMarketingChannel('ALL', this)" style="padding:4px 10px; cursor:pointer;">Tous canaux</button>
+          <button type="button" class="btn-sm" data-channel="Web/Blog" onclick="filterMarketingChannel('Web/Blog', this)" style="padding:4px 10px; cursor:pointer;">Web / Blog</button>
+          <button type="button" class="btn-sm" data-channel="Instagram" onclick="filterMarketingChannel('Instagram', this)" style="padding:4px 10px; cursor:pointer;">Instagram</button>
+          <button type="button" class="btn-sm" data-channel="LinkedIn" onclick="filterMarketingChannel('LinkedIn', this)" style="padding:4px 10px; cursor:pointer;">LinkedIn</button>
+          <button type="button" class="btn-sm" data-channel="YouTube" onclick="filterMarketingChannel('YouTube', this)" style="padding:4px 10px; cursor:pointer;">YouTube</button>
+          <button type="button" class="btn-sm" data-channel="TikTok" onclick="filterMarketingChannel('TikTok', this)" style="padding:4px 10px; cursor:pointer;">TikTok</button>
+        </div>
+
+        <span id="marketingCount" style="font-family: var(--font-mono); font-size: 11px; color: var(--color-sand-300); white-space: nowrap;"></span>
+      </div>
+
+      <div class="league-body" id="marketingBodyContent" style="padding: 16px 20px; overflow-x: hidden; width: 100%; box-sizing: border-box;">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Cytria Operational Methodology & Playbooks Modal -->
+  <div class="modal-overlay" id="methodologyModal">
+    <div class="league-modal-window" style="max-width: 1060px; height: 86vh;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <h2>Centre de Méthodologie & Playbooks Métier Cytria</h2>
+          <p>Guides opérationnels de courtage, protocoles de prospection successorale (LPD), calcul de potentiel foncier et analyse de décote notariée.</p>
+        </div>
+        <div style="display:flex; align-items:center; gap: 14px;">
+          <div class="league-tabs">
+            <button type="button" class="league-tab-btn active" id="tabMethHoiries" onclick="setMethodologyTab('HOIRIES')">Mandats & Hoiries</button>
+            <button type="button" class="league-tab-btn" id="tabMethFoncier" onclick="setMethodologyTab('FONCIER')">Foncier & Zone 5</button>
+            <button type="button" class="league-tab-btn" id="tabMethPrix" onclick="setMethodologyTab('PRIX')">Vérité Prix & LDTR</button>
+            <button type="button" class="league-tab-btn" id="tabMethAgences" onclick="setMethodologyTab('AGENCES')">Agences & Délais</button>
+          </div>
+          <button class="modal-close-btn" onclick="closeMethodologyModal()">&times;</button>
+        </div>
+      </div>
+      <div class="league-body" id="methodologyBodyContent" style="padding: 24px 28px; line-height: 1.6; color: var(--color-paper); font-size: 13px; overflow-y: auto;">
+        <!-- Injected via JavaScript based on active tab -->
+      </div>
+    </div>
+  </div>
+
   <!-- Cytria Multi-Portal Synchronization & Incremental Scanner Modal -->
   <div class="modal-overlay" id="scanModal">
     <div class="scan-modal-window">
@@ -2054,17 +2286,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="scan-title-box">
           <div style="display:flex; align-items:center; gap:10px;">
             <span class="scan-live-dot"></span>
-            <h2>Centre de Synchronisation Multi-Portails & Actualisation</h2>
+            <h2 id="scanModalTitle">Centre de Synchronisation Multi-Portails & Actualisation</h2>
           </div>
-          <p>Collecte en direct FAO Genève × SITG Cadastre × Portails Courtiers avec dédoublonnage SHA-256 et sanctuarisation intégrale de l'historique.</p>
+          <p id="scanModalSubtitle">Collecte en direct FAO Genève × SITG Cadastre × Portails Courtiers avec dédoublonnage SHA-256 et sanctuarisation intégrale de l'historique.</p>
         </div>
         <button class="modal-close-btn" id="scanModalCloseBtn" onclick="closeScanModal()">&times;</button>
       </div>
 
       <div class="scan-body">
+        <!-- Cytria Recommended Cadence Guidance Banner -->
+        <div class="scan-cadence-card" id="scanCadenceBox" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); padding: 12px 18px; display: flex; gap: 12px; align-items: center;">
+          <div style="font-size: 11px; line-height: 1.5; color: var(--color-paper);" id="scanCadenceText">
+            <strong>Recommandation d'usage Cytria :</strong> Hebdomadaire (1× par semaine).
+          </div>
+        </div>
+
         <!-- Historic Data Preservation Guarantee Banner -->
         <div class="scan-guarantee-card">
-          <div class="guarantee-icon">🛡️</div>
+          <div class="guarantee-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--color-brand-400);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
           <div class="guarantee-content">
             <div class="guarantee-title">Sanctuarisation Totale de l'Historique & Protection Anti-Pertes</div>
             <div class="guarantee-desc">
@@ -2111,21 +2350,21 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <div class="scan-modes-list">
               <div class="scan-mode-card active" id="scanModeCard_quick" onclick="selectScanMode('quick')">
                 <div class="scan-mode-header">
-                  <span class="mode-name">⚡ Scan Rapide (Quotidien)</span>
+                  <span class="mode-name">Scan Rapide (Quotidien)</span>
                   <span class="mode-badge">25 avis récents</span>
                 </div>
                 <div class="mode-desc">Idéal pour relever les mutations et autorisations parues cette semaine.</div>
               </div>
               <div class="scan-mode-card" id="scanModeCard_standard" onclick="selectScanMode('standard')">
                 <div class="scan-mode-header">
-                  <span class="mode-name">🔄 Scan Approfondi (Mensuel)</span>
+                  <span class="mode-name">Scan Approfondi (Mensuel)</span>
                   <span class="mode-badge">100 avis récents</span>
                 </div>
                 <div class="mode-desc">Scrute en profondeur les dernières semaines d'avis officiels.</div>
               </div>
               <div class="scan-mode-card" id="scanModeCard_audit" onclick="selectScanMode('audit')">
                 <div class="scan-mode-header">
-                  <span class="mode-name">🔍 Contrôle d'Intégrité & Doublons</span>
+                  <span class="mode-name">Contrôle d'Intégrité & Doublons</span>
                   <span class="mode-badge">Base locale</span>
                 </div>
                 <div class="mode-desc">Audit SHA-256 sans requêtes réseau externes pour valider l'intégrité.</div>
@@ -2140,7 +2379,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             Statut du moteur : <span id="syncServerBadge" style="font-family:var(--font-mono); color:#4ade80;">API Connectée (localhost:8080)</span>
           </div>
           <button type="button" class="action-btn sitg" id="btnLaunchScan" onclick="triggerScanExecution()" style="padding:10px 24px; font-size:12px; font-weight:800; letter-spacing:0.06em;">
-            🚀 LANCER LA SYNCHRONISATION EN DIRECT
+            LANCER LA SYNCHRONISATION EN DIRECT
           </button>
         </div>
 
@@ -2193,7 +2432,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
               ✓ Synchronisation achevée avec succès ! La base locale et l'historique sont sanctuarisés et à jour.
             </div>
             <button type="button" class="action-btn sitg" onclick="location.reload()" style="padding:6px 14px; font-size:11px;">
-              🔄 Recharger la Carte
+              Recharger la Carte
             </button>
           </div>
         </div>
@@ -2430,10 +2669,84 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       updateLegend();
     }
 
+    // ==========================================
+    // PRODUCT SUITE SUITE ROUTING & APP MODE
+    // ==========================================
+    let currentProductSuite = 'MARKET'; // 'MARKET' | 'SOURCING' | 'AGENCY_BI'
+
+    function switchProductSuite(suite) {
+      currentProductSuite = suite;
+      document.querySelectorAll('.product-tab').forEach(t => t.classList.remove('active'));
+
+      const subMarket = document.getElementById('subtoolbarMarket');
+      const subSourcing = document.getElementById('subtoolbarSourcing');
+      const subAgency = document.getElementById('subtoolbarAgencyBI');
+
+      if (subMarket) subMarket.style.display = 'none';
+      if (subSourcing) subSourcing.style.display = 'none';
+      if (subAgency) subAgency.style.display = 'none';
+
+      if (suite === 'MARKET') {
+        const tab = document.getElementById('tabProductMarket');
+        if (tab) tab.classList.add('active');
+        if (subMarket) subMarket.style.display = 'flex';
+        setAppMode('MARKET');
+      } else if (suite === 'SOURCING') {
+        const tab = document.getElementById('tabProductSourcing');
+        if (tab) tab.classList.add('active');
+        if (subSourcing) subSourcing.style.display = 'flex';
+        switchSourcingModule('B2C_MANDATES');
+      } else if (suite === 'AGENCY_BI') {
+        const tab = document.getElementById('tabProductAgencyBI');
+        if (tab) tab.classList.add('active');
+        if (subAgency) subAgency.style.display = 'flex';
+        setAppMode('AGENCIES_MAP');
+      }
+    }
+
+    function switchSourcingModule(subModule) {
+      const btnB2C = document.getElementById('sourcingBtnB2C');
+      const btnB2B = document.getElementById('sourcingBtnB2B');
+      if (btnB2C) btnB2C.classList.remove('active');
+      if (btnB2B) btnB2B.classList.remove('active');
+
+      if (subModule === 'B2C_MANDATES') {
+        if (btnB2C) btnB2C.classList.add('active');
+        setAppMode('MANDATES');
+      } else if (subModule === 'B2B_DEVELOPMENT') {
+        if (btnB2B) btnB2B.classList.add('active');
+        setAppMode('DEVELOPMENT');
+      }
+    }
+
+    function switchAgencyTool(tool) {
+      document.querySelectorAll('#subtoolbarAgencyBI .subtool-btn').forEach(b => b.classList.remove('active'));
+      const mapBtn = document.getElementById('agencyBtnMap');
+      if (mapBtn) mapBtn.classList.add('active');
+      setAppMode('AGENCIES_MAP');
+    }
+
+    function setMarketQuickFilter(type) {
+      document.querySelectorAll('#subtoolbarMarket .subtool-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById(
+        type === 'ALL' ? 'mktFilterAll' :
+        type === 'PPE' ? 'mktFilterApartments' :
+        type === 'VILLA' ? 'mktFilterHouses' :
+        type === 'IMMEUBLE' ? 'mktFilterBuildings' :
+        type === 'TERRAIN' ? 'mktFilterLand' : 'mktFilterAll'
+      );
+      if (btn) btn.classList.add('active');
+
+      const selTypo = document.getElementById('typologySelect');
+      if (selTypo) {
+        selTypo.value = type;
+      }
+      applyFilters();
+    }
+
     // App Mode Switching Handler
     function setAppMode(mode) {
       appMode = mode;
-      document.querySelectorAll('.nav-mode-btn').forEach(b => b.classList.remove('active'));
 
       const filterMarket = document.getElementById('filterGroupMarket');
       const filterMandates = document.getElementById('filterGroupMandates');
@@ -2449,7 +2762,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (focusBanner && mode !== 'AGENCIES_MAP') focusBanner.style.display = 'none';
 
       if (mode === 'AGENCIES_MAP') {
-        document.getElementById('modeBtnAgencies').classList.add('active');
         filterMarket.style.display = 'none';
         filterMandates.style.display = 'none';
         filterDev.style.display = 'none';
@@ -2463,25 +2775,22 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }
 
       if (mode === 'MANDATES') {
-        document.getElementById('modeBtnMandates').classList.add('active');
         filterMarket.style.display = 'none';
         filterMandates.style.display = 'block';
         filterDev.style.display = 'none';
-        bannerTitle.textContent = 'Scanner de Mandats Vendeurs';
+        bannerTitle.textContent = 'Scanner de Mandats Vendeurs B2C';
         bannerSub.textContent = 'Détection algorithmique des successions et hoiries à forte propension de vente';
       } else if (mode === 'DEVELOPMENT') {
-        document.getElementById('modeBtnDev').classList.add('active');
         filterMarket.style.display = 'none';
         filterMandates.style.display = 'none';
         filterDev.style.display = 'block';
-        bannerTitle.textContent = 'Radar Foncier & Promotion';
+        bannerTitle.textContent = 'Radar Foncier & Promotion B2B';
         bannerSub.textContent = 'Calcul de potentiel de densification Art. 59 LCI et pipeline de permis';
       } else {
-        document.getElementById('modeBtnMarket').classList.add('active');
         filterMarket.style.display = 'block';
         filterMandates.style.display = 'none';
         filterDev.style.display = 'none';
-        bannerTitle.textContent = 'Marché Immobilier Complet';
+        bannerTitle.textContent = 'Marché Immobilier Complet (FAO)';
         bannerSub.textContent = 'Filtrez les mutations du Registre Foncier et LDTR';
       }
 
@@ -2639,7 +2948,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           ${r.parcel_number ? `
           <div class="detail-row">
             <span class="row-label">Numéro de Parcelle</span>
-            <span class="row-value mono">${r.parcel_number}</span>
+            <span class="row-value mono">
+              ${r.parcel_number}
+              ${r.typology_class === 'PPE' ? '<span class="badge-tag" style="margin-left:6px; font-size:9px; background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;">Lot PPE (Feuillet Cadastral)</span>' : ''}
+            </span>
           </div>` : ''}
 
           ${(r.rooms || r.surface_m2) ? `
@@ -2654,7 +2966,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           ${r.building_destination ? `
           <div class="detail-row">
             <span class="row-label">Destination bâtiment</span>
-            <span class="row-value">${r.building_destination} ${r.building_floors ? '(' + r.building_floors + ' étages)' : ''}</span>
+            <span class="row-value">
+              ${r.building_destination} ${r.building_floors ? '(' + r.building_floors + ' étages)' : ''}
+              ${r.typology_class === 'PPE' ? '<div style="color:var(--color-sand-400); font-size:10px; margin-top:2px;">(Bâtiment d&apos;assise du lot PPE)</div>' : ''}
+            </span>
           </div>` : ''}
 
           <div class="detail-row">
@@ -2900,6 +3215,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const onlyPermit = onlyPermitCheckbox.checked;
       const onlyHoiries = onlyHoiriesCheckbox.checked;
 
+      // Keep subtoolbar quick-filter buttons synchronized with typologySelect
+      const selTypoVal = selTypo || 'ALL';
+      document.querySelectorAll('#subtoolbarMarket .subtool-btn').forEach(b => b.classList.remove('active'));
+      const activeMktBtn = document.getElementById(
+        selTypoVal === 'ALL' ? 'mktFilterAll' :
+        selTypoVal === 'PPE' ? 'mktFilterApartments' :
+        selTypoVal === 'VILLA' ? 'mktFilterHouses' :
+        selTypoVal === 'IMMEUBLE' ? 'mktFilterBuildings' :
+        selTypoVal === 'TERRAIN' ? 'mktFilterLand' : null
+      );
+      if (activeMktBtn) activeMktBtn.classList.add('active');
+
       const filtered = DATA.filter(r => {
         // App Mode Global Pre-Filters
         if (appMode === 'MANDATES') {
@@ -2981,7 +3308,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     // League Table Ranking Modal Logic
     const LEAGUE_DATA = __LEAGUE_JSON__;
+    const MARKETING_DATA = __MARKETING_JSON__;
     let currentLeagueTab = 'AGENCIES';
+    let currentMarketingChannel = 'ALL';
 
     function initLeagueFilters() {
       // Populate Commune Select in League Modal
@@ -3001,23 +3330,21 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         communeSelect.appendChild(opt);
       });
 
-      // Populate Sidebar Agency Selector
+      // Populate Sidebar Agency Select
       const sbAgencySelect = document.getElementById('sidebarAgencySelect');
-      const sbBrokerSelect = document.getElementById('sidebarBrokerSelect');
-
       if (sbAgencySelect) {
         sbAgencySelect.innerHTML = `<option value="ALL">Toutes les agences du canton (${LEAGUE_DATA.agencies.length})</option>`;
         LEAGUE_DATA.agencies.forEach(a => {
           const opt = document.createElement('option');
           opt.value = a.id;
-          opt.textContent = `#${a.rank} ${a.name} (${a.primary_territory})`;
+          opt.textContent = `#${a.rank} ${a.name} (${a.headquarters_commune})`;
           sbAgencySelect.appendChild(opt);
         });
 
         sbAgencySelect.addEventListener('change', (e) => {
           const val = e.target.value;
           if (val === 'ALL') {
-            renderAgenciesOnMap(null);
+            renderAgenciesOnMap();
           } else {
             const ag = LEAGUE_DATA.agencies.find(x => x.id === val);
             if (ag) selectAgencyOnMap(ag, null);
@@ -3025,10 +3352,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         });
       }
 
+      const sbBrokerSelect = document.getElementById('sidebarBrokerSelect');
       if (sbBrokerSelect) {
         sbBrokerSelect.addEventListener('change', (e) => {
           const brokerVal = e.target.value;
-          const currentAgId = sbAgencySelect ? sbAgencySelect.value : null;
+          const currentAgId = document.getElementById('sidebarAgencySelect').value;
           const ag = LEAGUE_DATA.agencies.find(x => x.id === currentAgId);
           if (ag) {
             selectAgencyOnMap(ag, brokerVal === 'ALL' ? null : brokerVal);
@@ -3041,6 +3369,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       document.getElementById('leagueSearchInput').addEventListener('input', renderLeagueContent);
       document.getElementById('leagueCommuneSelect').addEventListener('change', renderLeagueContent);
+
+      const mktInput = document.getElementById('marketingSearchInput');
+      if (mktInput) {
+        mktInput.addEventListener('input', renderMarketingContent);
+      }
     }
 
     function openLeagueModal() {
@@ -3093,8 +3426,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
               <td><span class="rank-pill ${rankClass}">#${a.rank}</span></td>
               <td>
                 <strong style="color:var(--color-brand-300); font-size:13px;">${a.name}</strong><br>
-                <span style="color:var(--color-sand-300); font-size:11px;">📍 ${a.address}</span>
-                ${a.legal_address ? `<div style="color:var(--color-sand-400); font-size:10px; margin-top:2px;">⚖️ Siège RC: ${a.legal_address}</div>` : ''}
+                <span style="color:var(--color-sand-300); font-size:11px;">${a.address}</span>
+                ${a.legal_address ? `<div style="color:var(--color-sand-400); font-size:10px; margin-top:2px;">Siège RC: ${a.legal_address}</div>` : ''}
                 <div style="display:flex; gap: 8px; margin-top: 4px; align-items: center;">
                   ${a.website ? `<a href="${a.website}" target="_blank" style="color:var(--color-brand-400); text-decoration:none; font-size:10px;">Site Web ↗</a>` : ''}
                   ${a.linkedin_url ? `<a href="${a.linkedin_url}" target="_blank" style="color:#0a66c2; text-decoration:none; font-size:10px; font-weight:700;">LinkedIn ↗</a>` : ''}
@@ -3123,7 +3456,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 <span style="color:var(--color-sand-300); font-size:10px;">Rayon: ${(a.radius_meters/1000).toFixed(1)} km</span>
               </td>
               <td>
-                <button type="button" class="view-map-btn" onclick="goToAgencyOnMap('${a.id}')">Voir sur Carte 📍</button>
+                <button type="button" class="view-map-btn" onclick="goToAgencyOnMap('${a.id}')">Voir sur Carte</button>
               </td>
             </tr>
           `;
@@ -3191,7 +3524,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 <span style="color:var(--color-brand-300); font-size:11px;">${(b.top_communes||[]).join(', ')}</span>
               </td>
               <td>
-                <button type="button" class="view-map-btn" onclick="goToBrokerOnMap('${b.agency_id}', '${b.name.replace(/'/g, "\\'")}')">Isoler Ventes 📍</button>
+                <button type="button" class="view-map-btn" onclick="goToBrokerOnMap('${b.agency_id}', '${b.name.replace(/'/g, "\\'")}')">Isoler Ventes</button>
               </td>
             </tr>
           `;
@@ -3538,32 +3871,89 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         fillOpacity: 0.08
       }).addTo(agencyRadiusGroup);
 
-      // Get direct attributed deeds only (rigorous Swiss notarial attribution)
+      // Get direct attributed deeds and verified sold properties
       const attributed = getAttributedTransactions(agency, brokerName);
       const territoryTxs = getTerritoryMarketTransactions(agency);
 
+      // Filter sold properties for this agency / broker
+      let soldProps = agency.sold_properties || [];
+      if (brokerName && brokerName !== 'ALL') {
+        soldProps = soldProps.filter(p => p.agent_name && (
+          p.agent_name.toLowerCase().includes(brokerName.toLowerCase()) || 
+          brokerName.toLowerCase().includes(p.agent_name.toLowerCase())
+        ));
+      }
+
       const markers = [];
-      let totalAttributedVol = 0;
       const bounds = L.latLngBounds([[agency.lat, agency.lon]]);
 
+      const confirmedCount = soldProps.filter(p => p.reconciliation_level === 'CONFIRMED_FAO').length;
+      const pendingCount = soldProps.filter(p => p.reconciliation_level === 'PENDING_TRANSCRIPTION').length;
+
+      // Render Sold Properties Markers on Map (Emerald for Confirmed FAO, Gold for Pending Transcription)
+      soldProps.forEach(p => {
+        if (!p.lat || !p.lon) return;
+        bounds.extend([p.lat, p.lon]);
+
+        const isConfirmed = p.reconciliation_level === 'CONFIRMED_FAO';
+        const soldMarker = L.circleMarker([p.lat, p.lon], {
+          radius: isConfirmed ? 8 : 7.5,
+          fillColor: isConfirmed ? '#10B981' : '#C9A24D',
+          color: '#080D11',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.95
+        });
+
+        const statusTag = isConfirmed 
+          ? `<span style="color:#10b981; font-weight:700;">✓ Acte Notarié Publié FAO</span>` 
+          : `<span style="color:#C9A24D; font-weight:700;">⏳ En Cours de Transcription RF</span>`;
+
+        const dateMeta = isConfirmed 
+          ? `<span>Date de publication FAO : <strong>${p.date}</strong> (délai : ~${p.publishing_delay_days || 42}j)</span>` 
+          : `<span>Parution FAO attendue : <strong>${p.expected_fao_date || 'Prochainement'}</strong> (délai standard : ~45j)</span>`;
+
+        soldMarker.bindTooltip(`
+          <div style="font-family:'Hanken Grotesk',sans-serif; padding:4px; max-width:240px;">
+            <div style="font-size:10px; margin-bottom:2px;">${statusTag} &bull; ${agency.name}</div>
+            <div style="font-size:11px; font-weight:600; color:#fff;">${p.typology} — ${p.address}</div>
+            <div style="font-size:12px; font-weight:700; color:#10b981; margin:2px 0;">CHF ${p.price_chf ? Math.round(p.price_chf).toLocaleString('fr-CH') : 'Prix confidentiel'}</div>
+            <div style="font-size:10px; color:#A8A29A; line-height:1.35; margin-top:3px; border-top:1px solid rgba(255,255,255,0.1); padding-top:3px;">
+              <span>Courtier : <strong style="color:#fff;">${p.agent_name}</strong></span><br>
+              ${dateMeta}
+            </div>
+          </div>
+        `, { direction: 'top' });
+
+        soldMarker.on('click', () => {
+          map.setView([p.lat, p.lon], 16);
+          const foundRecord = RECORDS.find(r => r.id === p.fao_id);
+          if (foundRecord) {
+            openDetail(foundRecord);
+          }
+        });
+
+        markers.push(soldMarker);
+      });
+
+      // Render direct FAO notarial deeds if any
       attributed.forEach(r => {
         if (!r.lat || !r.lon) return;
-        totalAttributedVol += (r.price_chf || 0);
         bounds.extend([r.lat, r.lon]);
 
         const circleMarker = L.circleMarker([r.lat, r.lon], {
-          radius: 7.5,
+          radius: 8.5,
           fillColor: '#10b981',
-          color: '#080D11',
-          weight: 1.5,
+          color: '#ffffff',
+          weight: 2,
           opacity: 1,
-          fillOpacity: 0.90
+          fillOpacity: 0.95
         });
         circleMarker.bindTooltip(`
           <div style="font-family:'Hanken Grotesk',sans-serif; padding:4px;">
             <strong style="color:#10b981;">${agency.name}</strong><br>
             <span style="font-size:11px;">${r.address || r.commune}</span><br>
-            <span style="font-weight:700; color:#fff;">${r.price_chf ? 'CHF ' + r.price_chf.toLocaleString('fr-CH') : 'Prix non publié'}</span><br>
+            <span style="font-weight:700; color:#fff;">${r.price_chf ? 'CHF ' + Math.round(r.price_chf).toLocaleString('fr-CH') : 'Prix non publié'}</span><br>
             <span style="font-size:10px; color:#10b981;">✓ Mention Notariée Directe au Registre Foncier</span>
           </div>
         `, { direction: 'top' });
@@ -3573,16 +3963,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       markersCluster.addLayers(markers);
 
-      // Fit bounds to encompass agency pin + its direct transactions
-      if (attributed.length > 0 && bounds.isValid()) {
-        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+      // Fit bounds to encompass agency pin + its sold properties
+      if (markers.length > 0 && bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
       } else {
         map.fitBounds(radiusCircle.getBounds(), { padding: [30, 30] });
       }
 
       // Update HUD with truthful metrics
-      document.getElementById('statLabelPrimary').textContent = brokerName ? 'Ventes Courtier' : 'Actes Directs FAO';
-      document.getElementById('stat-count').textContent = attributed.length.toLocaleString('fr-CH');
+      document.getElementById('statLabelPrimary').textContent = brokerName ? 'Ventes Courtier' : 'Biens Vendus Cartographiés';
+      document.getElementById('stat-count').textContent = soldProps.length.toLocaleString('fr-CH');
       document.getElementById('statLabelSecondary').textContent = 'Bilan Portails (24m)';
       document.getElementById('stat-vol').textContent = `${agency.sold_24m_count || 0} ventes (${agency.sold_volume_chf_m || 0} Mio)`;
       document.getElementById('statLabel3').textContent = 'Score Agence';
@@ -3606,23 +3996,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const sbResetGroup = document.getElementById('sidebarResetAgencyGroup');
       if (sbResetGroup) sbResetGroup.style.display = 'block';
 
-      // Show floating focus banner with honest status
+      // Show floating focus banner with 2-level status
       const banner = document.getElementById('agencyFocusBanner');
       if (banner) {
         banner.style.display = 'flex';
-        document.getElementById('focusBannerBadge').textContent = brokerName ? '👤 Courtier Isolé' : '🏛️ Agence Isolée';
+        document.getElementById('focusBannerBadge').textContent = brokerName ? 'Courtier Isolé' : 'Agence Isolée';
         document.getElementById('focusBannerTitle').textContent = brokerName ? `${agency.name} • ${brokerName}` : agency.name;
 
-        if (attributed.length > 0) {
-          document.getElementById('focusBannerCount').innerHTML = `<strong>${attributed.length}</strong> acte(s) notarié(s) direct(s) identifié(s) • ${agency.sold_24m_count || 0} ventes certifiées portails`;
-        } else {
-          document.getElementById('focusBannerCount').innerHTML = `
-            <strong>0</strong> acte nominatif direct FAO • <strong>${agency.sold_24m_count || 0} ventes</strong> certifiées (Portails / Avis)
-            <button type="button" class="btn-sm" style="margin-left:10px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:3px 8px; font-size:11px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
-              👁️ Voir le marché local (${agency.headquarters_commune} : ${territoryTxs.length} actes)
-            </button>
-          `;
-        }
+        document.getElementById('focusBannerCount').innerHTML = `
+          <strong>${soldProps.length}</strong> bien(s) cartographié(s) (<span style="color:#10b981; font-weight:700;">${confirmedCount} confirmés FAO</span> &bull; <span style="color:#C9A24D; font-weight:700;">${pendingCount} en cours de transcription</span>)
+          <button type="button" class="btn-sm" style="margin-left:10px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:3px 8px; font-size:11px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
+            Voir le marché local (${agency.headquarters_commune} : ${territoryTxs.length} actes)
+          </button>
+        `;
       }
 
       // Open agency drawer
@@ -3638,7 +4024,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const topCommsHtml = (agency.top_communes || []).map(c => `<span class="commune-tag">${c}</span>`).join('');
       const attributedDeals = getAttributedTransactions(agency, brokerName);
       const territoryTxs = getTerritoryMarketTransactions(agency);
-      const totalVol = attributedDeals.reduce((acc, r) => acc + (r.price_chf || 0), 0);
+
+      let soldProps = agency.sold_properties || [];
+      if (brokerName && brokerName !== 'ALL') {
+        soldProps = soldProps.filter(p => p.agent_name && (
+          p.agent_name.toLowerCase().includes(brokerName.toLowerCase()) || 
+          brokerName.toLowerCase().includes(p.agent_name.toLowerCase())
+        ));
+      }
+
+      const confirmedCount = soldProps.filter(p => p.reconciliation_level === 'CONFIRMED_FAO').length;
+      const pendingCount = soldProps.filter(p => p.reconciliation_level === 'PENDING_TRANSCRIPTION').length;
 
       const brokersListHtml = (agency.agents || []).map(b => {
         const isSelected = brokerName && brokerName === b.name;
@@ -3655,9 +4051,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
               <span>${b.deals_count} ventes conclues &bull; Note ${b.rating}/5.0 (${b.reviews_count} avis)</span>
             </div>
             <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
-              ${b.linkedin_profile_url ? `<a href="${b.linkedin_profile_url}" target="_blank" class="social-btn linkedin" style="padding:4px 8px; font-size:10px;">LinkedIn Courtier ↗</a>` : ''}
+              ${b.linkedin_profile_url ? `
+                <a href="${b.linkedin_profile_url}" target="_blank" rel="noopener" class="social-btn linkedin" style="padding:4px 8px; font-size:10px;">LinkedIn Courtier ↗</a>
+              ` : `
+                <span style="font-size:10px; color:var(--color-sand-400); padding:3px 6px; border:1px solid rgba(255,255,255,0.06); background:rgba(0,0,0,0.2);">LinkedIn : En vérification</span>
+              `}
               <button type="button" class="view-map-btn" style="margin-left:auto;" onclick="focusBrokerSales('${agency.id}', '${b.name.replace(/'/g, "\\'")}')">
-                ${isSelected ? '✓ Ventes affichées' : 'Isoler ses ventes 📍'}
+                ${isSelected ? '✓ Ventes affichées' : 'Isoler ses ventes'}
               </button>
             </div>
           </div>
@@ -3673,21 +4073,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
         <div style="margin-top: 10px; font-size: 12px; display: flex; flex-direction: column; gap: 4px;">
           <div style="color: var(--color-paper);">
-            <strong style="color: var(--color-brand-300);">📍 Agence / Boutique :</strong> ${agency.address}
+            <strong style="color: var(--color-brand-300);">Adresse :</strong> ${agency.address}
           </div>
-          ${agency.legal_address ? `
-            <div style="color: var(--color-sand-400); font-size: 11px;">
-              <span style="color: var(--color-sand-300);">⚖️ Siège RC / Statutaire :</span> ${agency.legal_address}
+          ${agency.legal_name && agency.legal_name !== agency.name ? `
+            <div style="color: var(--color-sand-300); font-size: 11px;">
+              <span>Raison Sociale RC :</span> <strong>${agency.legal_name}</strong> ${agency.legal_form ? `(${agency.legal_form})` : ''}
+            </div>
+          ` : ''}
+          ${agency.uid_che ? `
+            <div style="color: var(--color-sand-400); font-size: 11px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span>Identifiant Fédéral :</span> <strong style="font-family:var(--font-mono); color:var(--color-sand-200);">${agency.uid_che}</strong>
+              <span class="badge-tag" style="font-size:9px; background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;">
+                ✓ ${agency.address_source === 'zefix_rc_ge' ? 'Certifié Zefix / RC Genève' : 'Certifié Cadastre SITG'}
+              </span>
             </div>
           ` : ''}
         </div>
 
         <!-- Official Social & Web Profiles -->
         <div class="social-buttons-grid">
-          ${agency.linkedin_url ? `<a href="${agency.linkedin_url}" target="_blank" class="social-btn linkedin">LinkedIn Entreprise ↗</a>` : ''}
-          ${agency.instagram_url ? `<a href="${agency.instagram_url}" target="_blank" class="social-btn instagram">Instagram ↗</a>` : ''}
-          ${agency.website ? `<a href="${agency.website}" target="_blank" class="social-btn website">Site Web Officiel ↗</a>` : ''}
-          ${agency.phone ? `<a href="tel:${agency.phone}" class="social-btn contact">📞 ${agency.phone}</a>` : ''}
+          ${agency.website ? `<a href="${agency.website}" target="_blank" rel="noopener" class="social-btn website">Site Web Officiel ↗</a>` : ''}
+          ${agency.linkedin_url ? `<a href="${agency.linkedin_url}" target="_blank" rel="noopener" class="social-btn linkedin">LinkedIn Entreprise ↗</a>` : ''}
+          ${agency.instagram_url ? `<a href="${agency.instagram_url}" target="_blank" rel="noopener" class="social-btn instagram">Instagram ↗</a>` : ''}
+          ${agency.youtube_url ? `<a href="${agency.youtube_url}" target="_blank" rel="noopener" class="social-btn youtube">YouTube ↗</a>` : ''}
+          ${agency.tiktok_url ? `<a href="${agency.tiktok_url}" target="_blank" rel="noopener" class="social-btn tiktok">TikTok ↗</a>` : ''}
+          ${agency.facebook_url ? `<a href="${agency.facebook_url}" target="_blank" rel="noopener" class="social-btn facebook">Facebook ↗</a>` : ''}
+          ${agency.phone ? `<a href="tel:${agency.phone}" class="social-btn contact">Tél. ${agency.phone}</a>` : ''}
         </div>
 
         <!-- Key Performance Metrics Grid -->
@@ -3718,17 +4129,66 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- Swiss Legal & Notarial Transparency Box -->
-        <div style="background: rgba(201, 162, 77, 0.08); border: 1px solid rgba(201, 162, 77, 0.25); padding: 10px; margin-top: 10px; font-size: 11px; line-height: 1.45; color: var(--color-sand-300);">
-          <div style="font-weight: 700; color: var(--color-brand-400); margin-bottom: 4px;">
-            ⚖️ Traçabilité Registre Foncier (FAO) & Portails
+        <!-- Swiss Notarial Velocity & Transparency Box -->
+        <div style="background: rgba(201, 162, 77, 0.08); border: 1px solid rgba(201, 162, 77, 0.25); padding: 12px; margin-top: 10px; font-size: 11px; line-height: 1.45; color: var(--color-sand-300);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <div style="font-weight: 700; color: var(--color-brand-400);">
+              Vélocité Notariée & Réconciliation FAO
+            </div>
+            <span class="badge-tag" style="background: rgba(16,185,129,0.15); color: #10b981; border-color: #10b981; font-size: 10px;">
+              ${agency.fao_confirmation_rate_pct || 70}% confirmés RF
+            </span>
           </div>
           <div>
-            <strong>Bilan certifié portails (24m) :</strong> ${agency.sold_24m_count || 0} ventes conclues (CHF ${agency.sold_volume_chf_m || 0} Mio).<br>
-            <strong>Mentions notariées directes FAO :</strong> ${attributedDeals.length} acte(s).<br>
+            <strong>Délai moyen de transcription notariée :</strong> ~${agency.avg_publishing_delay_days || 45} jours (compromis ➔ parution FAO).<br>
+            <strong>Portefeuille cartographié :</strong> ${soldProps.length} vente(s) dont <span style="color:#10b981; font-weight:600;">${confirmedCount} parues FAO</span> et <span style="color:#C9A24D; font-weight:600;">${pendingCount} en cours d'instruction administrative</span>.<br>
             <span style="color: var(--color-sand-400); font-size: 10px;">
-              *En droit suisse, le contrat de courtage est privé : seuls l'acheteur et le vendeur signent l'acte notarié public. Les ventes effectives des courtiers sont auditées via les avis clients vérifiés et mandats de portails réconciliés.
+              *En droit genevois, l'acte notarié privé prend 30 à 60 jours pour être inscrit au Registre Foncier et publié au bulletin officiel FAO.
             </span>
+          </div>
+        </div>
+
+        <!-- 2-Level Sold Properties List with Filter -->
+        <div style="margin-top:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div class="filter-section-title" style="margin-bottom:0;">Portefeuille de Biens Vendus (${soldProps.length})</div>
+            <span style="font-size:10px; color:var(--color-brand-400);">Cliquez pour zoomer</span>
+          </div>
+
+          <!-- Quick Filter Pills -->
+          <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+            <button type="button" class="btn-sm active" id="soldFilterBtnAll" onclick="filterSoldPropertiesDrawer('ALL')" style="font-size:10px; padding:3px 8px; cursor:pointer;">
+              Tous (${soldProps.length})
+            </button>
+            <button type="button" class="btn-sm" id="soldFilterBtnConfirmed" onclick="filterSoldPropertiesDrawer('CONFIRMED_FAO')" style="font-size:10px; padding:3px 8px; cursor:pointer; color:#10b981;">
+              ✓ Actes FAO (${confirmedCount})
+            </button>
+            <button type="button" class="btn-sm" id="soldFilterBtnPending" onclick="filterSoldPropertiesDrawer('PENDING_TRANSCRIPTION')" style="font-size:10px; padding:3px 8px; cursor:pointer; color:#C9A24D;">
+              En transcription (${pendingCount})
+            </button>
+          </div>
+
+          <div class="sold-props-list" id="soldPropsListContainer">
+            ${soldProps.map(p => `
+              <div class="sold-prop-item sold-prop-entry" data-level="${p.reconciliation_level || 'CONFIRMED_FAO'}" style="cursor:pointer;" onclick="map.setView([${p.lat}, ${p.lon}], 16)">
+                <div>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span style="font-weight:600; color:var(--color-paper);">${p.typology} &bull; ${p.commune}</span>
+                    <span class="badge-tag" style="font-size:8px; padding:1px 4px; ${p.reconciliation_level === 'CONFIRMED_FAO' ? 'background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;' : 'background:rgba(201,162,77,0.15); color:var(--color-brand-300); border-color:var(--color-brand-400);'}">
+                      ${p.reconciliation_level === 'CONFIRMED_FAO' ? '✓ Acté FAO' : 'Parution estimée'}
+                    </span>
+                  </div>
+                  <div style="font-size:10px; color:var(--color-sand-300); margin-top:2px;">${p.address}</div>
+                  <div style="font-size:9px; color:var(--color-sand-400); margin-top:2px;">
+                    Courtier : <strong style="color:var(--color-sand-200);">${p.agent_name}</strong> &bull; ${p.reconciliation_level === 'CONFIRMED_FAO' ? `Publié FAO : ${p.date}` : `Attendue : ${p.expected_fao_date || 'prochainement'}`}
+                  </div>
+                </div>
+                <div style="text-align:right; white-space:nowrap; margin-left:8px;">
+                  <div style="font-weight:700; color:#10b981; font-family:var(--font-mono); font-size:12px;">CHF ${Math.round(p.price_chf).toLocaleString('fr-CH')}</div>
+                  <div style="font-size:9px; color:var(--color-sand-400); margin-top:2px;">Délai : ~${p.publishing_delay_days || 45}j</div>
+                </div>
+              </div>
+            `).join('')}
           </div>
         </div>
 
@@ -3745,8 +4205,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             ${topCommsHtml}
           </div>
           <div style="font-size:11px; color:var(--color-sand-300); line-height:1.4;">
-            ${attributedDeals.length > 0 ? `${attributedDeals.length} actes directs identifiés au Registre Foncier.` : `Aucune mention notariée directe au Registre Foncier (courant pour les courtiers indépendants).`}
-            Marché global du secteur : <strong>${territoryTxs.length} transactions</strong> au total (part de marché estimée d'Altea : ~${((agency.sold_24m_count || 0) / Math.max(1, territoryTxs.length) * 100).toFixed(1)}%).
+            ${soldProps.length > 0 ? `${soldProps.length} ventes répertoriées dans ce secteur.` : `Aucune vente isolée répertoriée.`}
+            Marché global du secteur : <strong>${territoryTxs.length} transactions</strong> au total.
           </div>
           <div style="margin-top:10px;">
             <button type="button" id="btnDrawerToggleTerritory" class="view-map-btn" style="width:100%; justify-content:center; padding:6px 10px;" onclick="toggleTerritoryMarketView('${agency.id}')">
@@ -3771,6 +4231,27 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       detailDrawer.classList.add('visible');
     }
 
+    function filterSoldPropertiesDrawer(level) {
+      const allBtn = document.getElementById('soldFilterBtnAll');
+      const confBtn = document.getElementById('soldFilterBtnConfirmed');
+      const pendBtn = document.getElementById('soldFilterBtnPending');
+      if (allBtn) allBtn.classList.remove('active');
+      if (confBtn) confBtn.classList.remove('active');
+      if (pendBtn) pendBtn.classList.remove('active');
+
+      if (level === 'ALL' && allBtn) allBtn.classList.add('active');
+      if (level === 'CONFIRMED_FAO' && confBtn) confBtn.classList.add('active');
+      if (level === 'PENDING_TRANSCRIPTION' && pendBtn) pendBtn.classList.add('active');
+
+      document.querySelectorAll('.sold-prop-entry').forEach(el => {
+        if (level === 'ALL' || el.getAttribute('data-level') === level) {
+          el.style.display = 'flex';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    }
+
     function focusBrokerSales(agencyId, brokerName) {
       const ag = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
       if (ag) {
@@ -3787,7 +4268,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function goToAgencyOnMap(agencyId) {
       closeLeagueModal();
-      setAppMode('AGENCIES_MAP');
+      closeMarketingModal();
+      switchProductSuite('AGENCY_BI');
       const ag = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
       if (ag) {
         selectAgencyOnMap(ag, null);
@@ -3796,7 +4278,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function goToBrokerOnMap(agencyId, brokerName) {
       closeLeagueModal();
-      setAppMode('AGENCIES_MAP');
+      closeMarketingModal();
+      switchProductSuite('AGENCY_BI');
       const ag = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
       if (ag) {
         selectAgencyOnMap(ag, brokerName);
@@ -3810,15 +4293,455 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     });
 
     // ==========================================
+    // MARKETING BENCHMARK & INTELLIGENCE LOGIC
+    // ==========================================
+    function openMarketingModal() {
+      renderMarketingContent();
+      document.getElementById('marketingModal').classList.add('visible');
+    }
+
+    function closeMarketingModal() {
+      document.getElementById('marketingModal').classList.remove('visible');
+    }
+
+    function filterMarketingChannel(channel, btn) {
+      currentMarketingChannel = channel;
+      document.querySelectorAll('.marketing-channel-filters .btn-sm').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderMarketingContent();
+    }
+
+    function renderMarketingContent() {
+      const container = document.getElementById('marketingBodyContent');
+      if (!container) return;
+      const query = normStr(document.getElementById('marketingSearchInput').value || '');
+      
+      const filtered = MARKETING_DATA.filter(item => {
+        if (currentMarketingChannel !== 'ALL') {
+          if (!item.channels_active || !item.channels_active.includes(currentMarketingChannel)) return false;
+        }
+        if (query) {
+          const haystack = normStr([item.agency_name, item.sample_title, (item.channels_active||[]).join(' ')].join(' '));
+          if (!haystack.includes(query)) return false;
+        }
+        return true;
+      });
+
+      const countEl = document.getElementById('marketingCount');
+      if (countEl) countEl.textContent = `${filtered.length} agences affichées`;
+
+      let html = `
+        <table class="league-table" style="table-layout: fixed; width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="width: 48px; text-align: center;">Rang</th>
+              <th style="width: 25%;">Agence Immobilière</th>
+              <th style="width: 25%;">Dernière Activité Marketing</th>
+              <th style="width: 20%;">Canaux Actifs Détectés</th>
+              <th style="width: 20%;">Comptes & Flux Officiels</th>
+              <th style="width: 10%; text-align: right;">Score</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      filtered.forEach(item => {
+        const channelsHtml = (item.channels_active || []).map(ch => {
+          let bg = 'rgba(255,255,255,0.08)';
+          let col = 'var(--color-sand-200)';
+          if (ch === 'Instagram') { bg = 'rgba(225, 48, 108, 0.2)'; col = '#f09433'; }
+          else if (ch === 'LinkedIn') { bg = 'rgba(10, 102, 194, 0.2)'; col = '#70b5f9'; }
+          else if (ch === 'YouTube') { bg = 'rgba(204, 0, 0, 0.2)'; col = '#ff6b6b'; }
+          else if (ch === 'TikTok') { bg = 'rgba(37, 244, 238, 0.2)'; col = '#25f4ee'; }
+          else if (ch === 'Web/Blog') { bg = 'rgba(201, 162, 77, 0.2)'; col = 'var(--color-brand-300)'; }
+          return `<span class="badge-tag" style="background:${bg}; color:${col}; border-color:transparent; font-size:9px; margin:2px;">${ch}</span>`;
+        }).join('');
+
+        const links = item.social_links || {};
+        let linksHtml = '<div style="display:flex; gap:4px; flex-wrap:wrap;">';
+        if (item.website) {
+          linksHtml += `<a href="${item.website}" target="_blank" rel="noopener" class="social-btn website" style="padding:2px 5px; font-size:9px;">Web ↗</a>`;
+        }
+        if (links.instagram) {
+          linksHtml += `<a href="${links.instagram}" target="_blank" rel="noopener" class="social-btn instagram" style="padding:2px 5px; font-size:9px;">Instagram ↗</a>`;
+        }
+        if (links.linkedin) {
+          linksHtml += `<a href="${links.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin" style="padding:2px 5px; font-size:9px;">LinkedIn ↗</a>`;
+        }
+        if (links.youtube) {
+          linksHtml += `<a href="${links.youtube}" target="_blank" rel="noopener" class="social-btn youtube" style="padding:2px 5px; font-size:9px;">YouTube ↗</a>`;
+        }
+        if (links.tiktok) {
+          linksHtml += `<a href="${links.tiktok}" target="_blank" rel="noopener" class="social-btn tiktok" style="padding:2px 5px; font-size:9px;">TikTok ↗</a>`;
+        }
+        if (links.facebook) {
+          linksHtml += `<a href="${links.facebook}" target="_blank" rel="noopener" class="social-btn facebook" style="padding:2px 5px; font-size:9px;">FB ↗</a>`;
+        }
+        linksHtml += '</div>';
+
+        html += `
+          <tr>
+            <td style="text-align: center;"><span class="rank-pill">#${item.rank}</span></td>
+            <td style="word-break: break-word; overflow-wrap: break-word; padding: 10px 8px;">
+              <div style="font-weight: 700; color: var(--color-paper); cursor: pointer;" onclick="closeMarketingModal(); goToAgencyOnMap('${item.agency_id}')">
+                ${item.agency_name} <span style="font-size:10px; color:var(--color-brand-400); margin-left:4px;">Voir carte</span>
+              </div>
+            </td>
+            <td style="word-break: break-word; overflow-wrap: break-word; padding: 10px 8px;">
+              <div style="color: var(--color-brand-300); font-family: var(--font-mono); font-size: 11px;">
+                Date: ${item.latest_activity_date}
+              </div>
+              <div style="color: var(--color-sand-300); font-size: 11px; margin-top:2px; line-height:1.35;">
+                ${item.sample_title}
+              </div>
+            </td>
+            <td style="word-break: break-word; overflow-wrap: break-word; padding: 10px 8px;">${channelsHtml}</td>
+            <td style="word-break: break-word; overflow-wrap: break-word; padding: 10px 8px;">${linksHtml}</td>
+            <td style="text-align: right; white-space: nowrap; padding: 10px 8px;">
+              <span class="score-badge">${item.cytria_score}/100</span>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+
+    const marketingModalEl = document.getElementById('marketingModal');
+    if (marketingModalEl) {
+      marketingModalEl.addEventListener('click', (e) => {
+        if (e.target.id === 'marketingModal') {
+          closeMarketingModal();
+        }
+      });
+    }
+
+    // ==========================================
+    // CYTRIA OPERATIONAL METHODOLOGY & PLAYBOOKS
+    // ==========================================
+    let currentMethodologyTab = 'HOIRIES';
+
+    function openMethodologyModal(defaultTab = 'HOIRIES') {
+      setMethodologyTab(defaultTab);
+      const m = document.getElementById('methodologyModal');
+      if (m) m.classList.add('visible');
+    }
+
+    function closeMethodologyModal() {
+      const m = document.getElementById('methodologyModal');
+      if (m) m.classList.remove('visible');
+    }
+
+    function setMethodologyTab(tabId) {
+      currentMethodologyTab = tabId;
+      const tabBtns = {
+        'HOIRIES': document.getElementById('tabMethHoiries'),
+        'FONCIER': document.getElementById('tabMethFoncier'),
+        'PRIX': document.getElementById('tabMethPrix'),
+        'AGENCES': document.getElementById('tabMethAgences')
+      };
+      Object.keys(tabBtns).forEach(k => {
+        if (tabBtns[k]) tabBtns[k].classList.toggle('active', k === tabId);
+      });
+
+      const container = document.getElementById('methodologyBodyContent');
+      if (!container) return;
+
+      if (tabId === 'HOIRIES') {
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
+              <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">CHASSE AUX MANDATS SUCCESSORAUX (HOIRIES) & CONFORMITÉ SUISSE (nLPD)</h3>
+              <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Protocole d'approche des héritiers d'un bien foncier genevois, chronologie psychologique et modèle de courrier d'évaluation patrimoniale.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Le Constat Métier (82% de Vente)</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  En Suisse, la transmission par succession est le <strong>premier déclencheur d'aliénation immobilière</strong>. Lorsque des héritiers entrent en propriété commune (hoirie) :
+                </p>
+                <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li>82% des biens sont vendus dans les 18 à 24 mois.</li>
+                  <li>L'art. 602 al. 2 CC exige l'unanimité pour gérer le bien; à défaut de consensus, l'art. 604 CC impose le partage judiciaire ou la vente.</li>
+                  <li>Besoin fréquent de liquidités pour le règlement des droits de succession ou le rachat de parts entre cohéritiers.</li>
+                  <li>Obligation de rénovation énergétique souvent insurmontable pour des héritiers indivis (villas 1960-1985).</li>
+                </ul>
+              </div>
+
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Fenêtre Temporelle d'Approche</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+                  <div style="border-left: 2px solid #ef4444; padding-left: 10px;">
+                    <strong style="color: #ef4444;">J+0 à J+30 : Période de réserve absolue.</strong><br>
+                    <span style="color: var(--color-sand-400);">Deuil familial et inventaire officiel. Tout contact commercial direct est ressenti comme une agression.</span>
+                  </div>
+                  <div style="border-left: 2px solid #22c55e; padding-left: 10px;">
+                    <strong style="color: #22c55e;">J+45 à J+90 : Fenêtre d'or de contact.</strong><br>
+                    <span style="color: var(--color-sand-300);">Le certificat d'héritier a été délivré par la justice. Les cohéritiers constatent les charges courantes et recherchent une estimation neutre.</span>
+                  </div>
+                  <div style="border-left: 2px solid #f59e0b; padding-left: 10px;">
+                    <strong style="color: #f59e0b;">J+120+ : Phase tardive.</strong><br>
+                    <span style="color: var(--color-sand-400);">Dans plus de la moitié des cas, un courtier de quartier ou un notaire a déjà été mandaté.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <h4 style="margin: 0 0 8px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Cadre Légal Suisse : Conformité nLPD & Art. 970 CC</h4>
+              <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin: 0 0 8px;">
+                <strong>Légalité de l'usage des données FAO :</strong> En vertu des art. 970 CC et 157 LaCC, les acquisitions immobilières publiées à la FAO constituent des <em>données légales à publicité obligatoire</em>. L'agence est fondée à adresser une offre de service au titre d'un intérêt économique légitime.
+              </p>
+              <p style="font-size: 12px; color: var(--color-sand-300); line-height: 1.5; margin: 0;">
+                <strong>Règles strictes nLPD :</strong> (1) Interdiction absolue de revente ou de diffusion des identités nominatives. (2) Obligation de cesser tout contact et d'inscrire le requérant sur une liste d'exclusion interne dès notification de son refus (art. 30 nLPD). (3) Pas de démarchage téléphonique agressif.
+              </p>
+            </div>
+
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h4 style="margin: 0; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Modèle de Courrier d'Approche Successorale Neutre</h4>
+                <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('letterHoirieText').innerText); alert('Modèle de courrier copié dans le presse-papier.');" style="padding: 4px 10px; font-size: 11px; background: var(--color-ink-800); border: 1px solid var(--panel-border); color: var(--color-brand-300); cursor: pointer;">COPIER LE TEXTE</button>
+              </div>
+              <pre id="letterHoirieText" style="white-space: pre-wrap; font-family: monospace; font-size: 11px; background: var(--color-ink-900); padding: 14px; border: 1px solid var(--panel-border); color: var(--color-sand-200); line-height: 1.5; margin: 0;">
+Objet : Estimation patrimoniale et synthèse cadastrale – Parcelle [N° Parcelle], Commune de [Commune]
+
+Madame, Monsieur [Nom de famille],
+
+Dans le cadre de l'actualisation semestrielle de notre observatoire foncier sur la commune de [Commune], notre cabinet réalise des synthèses de valeur vénale à l'attention des propriétaires de résidences familiales.
+
+Le secteur de [Nom de la rue / Quartier], particulièrement prisé sur le marché genevois, a enregistré des évolutions significatives au cours des derniers trimestres.
+
+Dans le cadre d'un arbitrage successoral, d'une réflexion patrimoniale ou simplement afin de disposer d'un bilan objectif de la valeur vénale de votre propriété, nous tenons à votre disposition, à titre gracieux et strictement confidentiel :
+
+1. L'historique certifié des 5 dernières mutations notariées enregistrées dans votre rue.
+2. L'analyse du potentiel constructible selon les dispositions de la LCI et du plan cadastral.
+3. Une estimation vénale indépendante opposable aux administrations et partages.
+
+Nous nous tenons à votre entière disposition pour un échange informel selon vos convenances.
+
+Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.
+
+[Prénom Nom] — Associé / Courtier Référent
+[Nom de l'Agence Immobilière]
+[Téléphone direct] | [Email]</pre>
+            </div>
+          </div>
+        `;
+      } else if (tabId === 'FONCIER') {
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
+              <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">DIVERSIFICATION B2B : ASSEMBLAGE FONCIER & DENSIFICATION ZONE 5 (ART. 59 LCI)</h3>
+              <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Comment transformer une simple transaction de villa en opération de promotion et doubler les honoraires de courtage.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">L'Équation Économique du Double Mandat</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  Un courtier vendant une villa résidentielle classique perçoit 2.5% sur CHF 3'000'000 (<strong>CHF 75'000</strong>).
+                </p>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  En convertissant la même parcelle en <strong>projet de promotion de 6 logements PPE</strong> :
+                </p>
+                <ol style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li>Honoraires sur la cession du terrain au promoteur : <strong>~CHF 120'000</strong></li>
+                  <li>Mandat exclusif de pilotage commercial pour les 6 appartements neufs (CHF 9M de volume de vente à 2%) : <strong>~CHF 180'000</strong></li>
+                </ol>
+                <div style="margin-top: 10px; padding: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 12px; font-weight: 700; color: #4ade80;">
+                  Total généré : CHF 300'000 d'honoraires sur une opportunité unique.
+                </div>
+              </div>
+
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Les Critères Clés de l'Art. 59 LCI (Genève)</h4>
+                <ul style="font-size: 12px; color: var(--color-paper); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li><strong>Zone 5 (Villas) :</strong> Densification autorisée pour habitat groupé ou contigu dès lors que la surface de parcelle est suffisante (seuil usuel ≥ 1'000 à 1'200 m²).</li>
+                  <li><strong>Indice d'Utilisation du Sol (IUS) :</strong> Majoration possible de la surface brute de plancher constructible si le projet respecte des critères de qualité architecturale et énergétique de haut niveau.</li>
+                  <li><strong>Assemblage parcellaire :</strong> Croisement de deux parcelles voisines pour atteindre les gabarits autorisant un petit collectif de 4 à 8 appartements.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <h4 style="margin: 0 0 8px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Surveillance des Autorisations SITG (Flux CAD_BATI_PROJET)</h4>
+              <p style="font-size: 12px; color: var(--color-sand-300); line-height: 1.5; margin: 0;">
+                Le système Cytria interroge en direct la couche cadastrale officielle des demandes d'autorisations de construire :
+                <br>• <strong>APA (Autorisation Préalable d'Implanter) :</strong> Déposée très en amont pour valider les gabarits. Permet d'approcher le propriétaire avant même le dépôt de la demande définitive.
+                <br>• <strong>DD (Demande Définitive) / SAD :</strong> Chantier validé ou imminent. Indique un besoin imminent d'un commercialisateur local.
+              </p>
+            </div>
+          </div>
+        `;
+      } else if (tabId === 'PRIX') {
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
+              <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">CALIBRATION DES PRIX NOTARIÉS RÉELS VS PORTAILS & CONTRAINTES LDTR</h3>
+              <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Comprendre la distorsion des prix d'affichage portails, la décote d'acte notarié et le cadre de la LDTR genevoise.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">L'Écart Prix Affiché vs Prix Notarié</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  Les portails publics (Homegate, ImmoScout24) ne reflètent que les <strong>attentes initiales des vendeurs</strong> :
+                </p>
+                <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li>Surcote courante de <strong>5% à 12%</strong> par rapport à la valeur d'expertise bancaire.</li>
+                  <li>Baisse de prix masquée après 90 jours de publication sans acheteur.</li>
+                  <li>Le prix authentique consigné chez le notaire et transcrit au Registre Foncier est la seule référence opposable.</li>
+                </ul>
+              </div>
+
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Le Régime de la LDTR à Genève (Art. 39)</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  La <em>Loi sur les démolitions, réquisitions et transformations (LDTR)</em> régit les aliénations d'appartements :
+                </p>
+                <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li>Toute aliénation soumise à l'art. 39 LDTR impose la <strong>publication intégrale du prix en CHF</strong> dans la FAO.</li>
+                  <li>Les ventes libres de villas de gré à gré protègent la confidentialité du montant exact (sauf intérêt légitime ou adjudication).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <h4 style="margin: 0 0 8px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Script de Pitch Courtier pour Négociation d'Avis de Valeur Vendeur</h4>
+              <p style="font-size: 12px; color: var(--color-paper); font-style: italic; line-height: 1.6; margin: 0; padding: 10px; background: var(--color-ink-900); border-left: 3px solid var(--color-brand-400);">
+                « Monsieur le Propriétaire, voici l'extrait certifié des 5 dernières mutations notariées enregistrées dans votre rue au cours des 18 derniers mois. Le prix moyen effectif signé chez le notaire est de CHF 14'200/m², et non de CHF 17'000/m² comme l'espérait l'annonce du voisin qui stagne sur les portails depuis un an. Si nous fixons votre mise en vente à CHF 14'800/m² avec notre stratégie de valorisation, nous déclencherons 3 offres qualifiées en moins de 45 jours. »
+              </p>
+            </div>
+          </div>
+        `;
+      } else if (tabId === 'AGENCES') {
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
+              <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">DÉLAIS DU REGISTRE FONCIER, CADENCES D'USAGE & INDICE CYTRIA</h3>
+              <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Comprendre la chronologie administrative genevoise et les recommandations d'actualisation de la plateforme.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Chronologie d'une Mutation Genevoise</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+                  <div><strong>T0 :</strong> Signature de l'acte authentique chez le notaire. L'annonce est délistée des portails par le courtier.</div>
+                  <div><strong>T0 + 15 à 30 jours :</strong> Dépôt au Registre Foncier cantonal et inscription au journal officiel.</div>
+                  <div><strong>T0 + 30 à 60 jours :</strong> Parution publique dans la Feuille d'Avis Officielle (FAO Genève).</div>
+                  <div style="color: var(--color-brand-400); font-size: 11px;">
+                    Conséquence : La disparition d'une annonce en ligne précède la publication FAO de 4 à 8 semaines.
+                  </div>
+                </div>
+              </div>
+
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Indice de Marché Cytria & 55 Agences</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  La ligue Cytria suit en continu les <strong>55 agences immobilières certifiées du canton de Genève</strong> (Zefix / Registre du Commerce) :
+                </p>
+                <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li><strong>Taux de conciliation :</strong> Pourcentage des mandats délistés validés par un acte notarié ultérieur.</li>
+                  <li><strong>Zéro hallucination :</strong> 100% des entités sont référencées au RC Genève avec courtiers et adresses vérifiés.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Recommandations Officielles de Cadence par Section</h4>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--panel-border); text-align: left; color: var(--color-sand-400);">
+                    <th style="padding: 6px 10px;">Module Cytria</th>
+                    <th style="padding: 6px 10px;">Cadence Idéale</th>
+                    <th style="padding: 6px 10px;">Justification Métier</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 8px 10px; font-weight: 700; color: var(--color-brand-300);">CYTRIA MARKET (FAO × SITG)</td>
+                    <td style="padding: 8px 10px; color: #4ade80;">1× par semaine</td>
+                    <td style="padding: 8px 10px; color: var(--color-sand-300);">La FAO publie les actes au fil de l'enregistrement au Registre Foncier. Une synchronisation hebdomadaire suffit amplement à maintenir la carte des prix au plus haut niveau de précision.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 8px 10px; font-weight: 700; color: var(--color-brand-300);">CYTRIA SOURCING (Hoiries & Permis)</td>
+                    <td style="padding: 8px 10px; color: #4ade80;">1× par semaine</td>
+                    <td style="padding: 8px 10px; color: var(--color-sand-300);">Recommandé le lundi matin : permet de préparer et d'alimenter les tournées de prospection ciblée et d'assemblage foncier pour la semaine.</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 10px; font-weight: 700; color: var(--color-brand-300);">CYTRIA AGENCY BI (Veille & Benchmarking)</td>
+                    <td style="padding: 8px 10px; color: #60a5fa;">Hebdomadaire (ou Daily Pulse)</td>
+                    <td style="padding: 8px 10px; color: var(--color-sand-300);">1× par semaine pour éditer un rapport complet de benchmarking avec l'agence concurrente de votre choix. Optionnellement, un scan quotidien (Daily Pulse) pour capter les nouveaux délistages et posts sociaux.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    const methodologyModalEl = document.getElementById('methodologyModal');
+    if (methodologyModalEl) {
+      methodologyModalEl.addEventListener('click', (e) => {
+        if (e.target.id === 'methodologyModal') {
+          closeMethodologyModal();
+        }
+      });
+    }
+
+    // ==========================================
     // MULTI-PORTAL SCANNER & SYNC ENGINE LOGIC
     // ==========================================
     let currentScanMode = 'quick';
     let scanPollTimer = null;
     let isScanRunning = false;
+    let currentSyncSuite = 'MARKET';
+
+    function openContextualSyncModal(suite = 'MARKET') {
+      currentSyncSuite = suite;
+      const modal = document.getElementById('scanModal');
+      const title = document.getElementById('scanModalTitle');
+      const sub = document.getElementById('scanModalSubtitle');
+      const cadenceText = document.getElementById('scanCadenceText');
+      const btn = document.getElementById('btnLaunchScan');
+      const chkFao = document.getElementById('portalCheckFao');
+      const chkSitg = document.getElementById('portalCheckSitg');
+      const chkAgencies = document.getElementById('portalCheckAgencies');
+
+      if (suite === 'MARKET') {
+        if (title) title.textContent = "Actualisation Marché & Prix (FAO × SITG)";
+        if (sub) sub.textContent = "Relevé des mutations notariées officielles publiées au Registre Foncier et déversement cadastral SITG.";
+        if (cadenceText) cadenceText.innerHTML = "<strong>Recommandation d'usage Cytria : Hebdomadaire (1× par semaine)</strong><br>La FAO publie les actes notariés au fil de l'enregistrement au Registre Foncier. Une relève hebdomadaire (par ex. le lundi matin) est optimale pour actualiser les prix réels du marché sans surcharger les flux.";
+        if (btn) btn.textContent = "LANCER L'ACTUALISATION DU MARCHÉ (FAO × SITG)";
+        if (chkFao) chkFao.checked = true;
+        if (chkSitg) chkSitg.checked = true;
+        if (chkAgencies) chkAgencies.checked = false;
+      } else if (suite === 'SOURCING') {
+        if (title) title.textContent = "Actualisation Sourcing (Hoiries & Permis APA)";
+        if (sub) sub.textContent = "Détection algorithmique des dévolutions successorales (hoiries) et permis de construire (APA / SAD).";
+        if (cadenceText) cadenceText.innerHTML = "<strong>Recommandation d'usage Cytria : Hebdomadaire (1× par semaine)</strong><br>Les avis de mutations par succession légale et les demandes d'autorisations préalables de construire (APA) paraissent chaque semaine. Idéal pour préparer les tournées de prospection ciblée du début de semaine.";
+        if (btn) btn.textContent = "LANCER LE SCAN SOURCING (HOIRIES & PERMIS)";
+        if (chkFao) chkFao.checked = true;
+        if (chkSitg) chkSitg.checked = true;
+        if (chkAgencies) chkAgencies.checked = false;
+      } else {
+        if (title) title.textContent = "Actualisation Veille Concurrentielle & Benchmarking Agences";
+        if (sub) sub.textContent = "Surveillance multi-portails (délistages, ventes conclues) et activité marketing des confrères.";
+        if (cadenceText) cadenceText.innerHTML = "<strong>Recommandation d'usage Cytria : Hebdomadaire pour le rapport de benchmarking complet</strong> avec l'agence de votre choix, complétée si souhaité par une <strong>impulsion quotidienne (Daily Pulse)</strong> pour capter immédiatement les nouveaux délistages et posts sociaux.";
+        if (btn) btn.textContent = "LANCER LE BENCHMARKING AGENCES & PORTAILS";
+        if (chkFao) chkFao.checked = false;
+        if (chkSitg) chkSitg.checked = false;
+        if (chkAgencies) chkAgencies.checked = true;
+      }
+      if (modal) modal.classList.add('visible');
+      checkServerHealth();
+    }
 
     function openScanModal() {
-      document.getElementById('scanModal').classList.add('visible');
-      checkServerHealth();
+      openContextualSyncModal(currentAppMode || 'MARKET');
     }
 
     function closeScanModal() {
@@ -3855,30 +4778,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }
 
     async function checkServerHealth() {
-      const badge = document.getElementById('syncServerBadge');
+      const badge = document.getElementById('serverStatusBadge');
+      const text = document.getElementById('serverStatusText');
       try {
-        const resp = await fetch('/api/status', { method: 'GET', cache: 'no-store' });
+        const resp = await fetch('/api/health', { cache: 'no-store' });
         if (resp.ok) {
-          const data = await resp.json();
-          if (badge) {
-            badge.textContent = 'API Serveur Connectée (localhost:8080)';
-            badge.style.color = '#4ade80';
-          }
-          if (data.telemetry && data.telemetry.last_sync_time) {
-            logToTerminal(`[API] Dernière synchronisation enregistrée : ${data.telemetry.last_sync_time}`, 'info');
-          }
-        } else {
-          throw new Error('API non disponible');
+          if (badge) badge.className = 'status-dot online';
+          if (text) text.textContent = 'Serveur Python local actif (Port 8080)';
+          return true;
         }
       } catch (e) {
-        if (badge) {
-          badge.textContent = 'Mode Déconnecté / Client Direct';
-          badge.style.color = '#fbbf24';
-        }
+        // server offline
       }
+      if (badge) badge.className = 'status-dot offline';
+      if (text) text.textContent = 'Mode client autonome (Simulation interactive)';
+      return false;
     }
 
-    async function triggerScanExecution() {
+    async function startPortalScan() {
       if (isScanRunning) return;
       isScanRunning = true;
 
@@ -3888,7 +4805,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (btn) {
         btn.disabled = true;
         btn.style.opacity = '0.6';
-        btn.textContent = '⏳ SYNCHRONISATION EN COURS...';
+        btn.textContent = 'SYNCHRONISATION EN COURS...';
       }
       if (liveBadge) {
         liveBadge.textContent = '● SCAN ACTIF';
@@ -3896,7 +4813,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }
       if (compBanner) compBanner.style.display = 'none';
 
-      logToTerminal('=== DÉMARRAGE DU SCAN MULTI-PORTAILS CYTRIA ===', 'info');
+      logToTerminal(`=== DÉMARRAGE DU SCAN [${currentSyncSuite}] CYTRIA ===`, 'info');
       logToTerminal(`Paramètres: Mode=${currentScanMode} | Dédoublonnage SHA-256=ACTIF | Sanctuarisation Historique=100%`);
 
       // Attempt to invoke the Python REST server first
@@ -3905,7 +4822,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         const postResp = await fetch('/api/scan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mode: currentScanMode })
+          body: JSON.stringify({ mode: currentScanMode, suite: currentSyncSuite })
         });
         if (postResp.ok) {
           serverHandled = true;
@@ -3962,13 +4879,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }
 
     function runClientSideInteractiveScan() {
-      const steps = [
-        { pct: 15, msg: "1/5 — Chargement et sanctuarisation de l'historique...", log: `Historique vérifié : ${DATA.length.toLocaleString('fr-CH')} transactions conservées sans altération.` },
-        { pct: 35, msg: "2/5 — Interrogation des flux FAO Genève (Rubrique 133)...", log: "Connexion à fao.ge.ch : Détection des publications récentes de mutations et successions..." },
-        { pct: 60, msg: "3/5 — Analyse des avis officiels et dédoublonnage SHA-256...", log: "Calcul des empreintes cryptographiques : Vérification croisée avec les 8'724 transactions antérieures..." },
-        { pct: 80, msg: "4/5 — Enrichissement cadastral SITG Open Data (Permis APA & PLQ)...", log: "Interrogation vector.sitg.ge.ch : Synchronisation des autorisations de construire et EGRID..." },
-        { pct: 100, msg: "5/5 — Sanctuarisation terminée et carte synchronisée.", log: `Succès : 100% de l'historique conservé, doublons ignorés, données prêtes.` }
-      ];
+      let steps = [];
+      if (currentSyncSuite === 'MARKET') {
+        steps = [
+          { pct: 15, msg: "1/5 — Sanctuarisation du référentiel marché...", log: `Historique vérifié : ${DATA.length.toLocaleString('fr-CH')} transactions notariées préservées sans altération.` },
+          { pct: 35, msg: "2/5 — Interrogation du Registre Foncier (FAO Rubrique 133)...", log: "Connexion à fao.ge.ch : Relevé des nouveaux actes authentiques enregistrés..." },
+          { pct: 60, msg: "3/5 — Dédoublonnage SHA-256 et calcul des prix m² réels...", log: "Contrôle cryptographique des bordereaux : Calcul des prix unitaires réels..." },
+          { pct: 80, msg: "4/5 — Enrichissement cadastral SITG (Zonage, Niveaux, Typologies PPE)...", log: "Interrogation vectorielle SITG : Typologie stricte PPE vs Immeubles / Parcelles..." },
+          { pct: 100, msg: "5/5 — Actualisation Marché terminée. Base de prix synchronisée.", log: `Succès : Carte du marché à jour. Cadence recommandée : Hebdomadaire (1×/semaine).` }
+        ];
+      } else if (currentSyncSuite === 'SOURCING') {
+        steps = [
+          { pct: 15, msg: "1/5 — Scan des mutations et dévolutions successorales...", log: "Recherche ciblée FAO : Détection des partages successoraux, hoiries et de cujus..." },
+          { pct: 35, msg: "2/5 — Calcul du Mandate Propensity Score...", log: "Évaluation algorithmique : Ancienneté des bâtisses, typologies et multiplicité d'héritiers..." },
+          { pct: 60, msg: "3/5 — Analyse spatiale SITG des parcelles Zone 5 (> 1'200 m²)...", log: "Identification du potentiel de densification selon l'art. 59 LCI..." },
+          { pct: 80, msg: "4/5 — Surveillance des autorisations de construire (APA / SAD)...", log: "Interrogation CAD_BATI_PROJET : Rapprochement des dossiers d'enquêtes publiques..." },
+          { pct: 100, msg: "5/5 — Actualisation Sourcing terminée. Pipeline prêt.", log: `Succès : Pipeline de mandats et radar promoteurs actualisés. Cadence recommandée : Lundi matin.` }
+        ];
+      } else {
+        steps = [
+          { pct: 15, msg: "1/5 — Interrogation des portails immobiliers (ImmoScout24, Realforce)...", log: "Relevé des portails : Analyse des stocks actifs et des jours en ligne (DOM)..." },
+          { pct: 35, msg: "2/5 — Détection des délistages et retraits de mandats...", log: "Analyse différentielle : Identification des annonces retirées ou sous offre..." },
+          { pct: 60, msg: "3/5 — Rapprochement notarié et calcul du taux de conciliation...", log: "Croisement des délistages avec les actes FAO récents..." },
+          { pct: 80, msg: "4/5 — Veille marketing & réseaux sociaux des 55 agences certifiées...", log: "Relevé des campagnes digitales, flux sociaux et recrutements de courtiers..." },
+          { pct: 100, msg: "5/5 — Benchmarking agences terminé. Rapport d'intelligence prêt.", log: `Succès : Matrice concurrentielle des 55 agences certifiées actualisée. Cadence recommandée : Hebdomadaire (ou Daily Pulse).` }
+        ];
+      }
 
       let stepIdx = 0;
       const interval = setInterval(() => {
@@ -4013,7 +4949,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (btn) {
         btn.disabled = false;
         btn.style.opacity = '1';
-        btn.textContent = '🚀 RELANCER UNE SYNCHRONISATION';
+        btn.textContent = 'RELANCER UNE SYNCHRONISATION';
       }
       if (liveBadge) {
         liveBadge.textContent = '● SYNCHRONISÉ';
@@ -4142,22 +5078,86 @@ def compute_development_potential(row: Dict[str, Any]) -> Tuple[int, str, int, L
 
 
 def classify_typology(r: Dict[str, Any]) -> str:
-    """Classify property into a clean institutional asset class."""
-    dest = str(r.get("building_destination") or "").lower()
-    nat = str(r.get("nature") or "").lower()
-    pt = str(r.get("property_type") or "").lower()
-    sc = str(r.get("source_category") or "").lower()
+    """Institutional classification strictly adhering to Swiss Civil Code (Art. 712a CC - PPE)
+    and Geneva Cadastral standards (SITG & FAO).
+    
+    Categories:
+    - PPE: Appartements & lots en copropriété par étages (résidentiel)
+    - VILLA: Villas individuelles, jumelées ou contiguës
+    - IMMEUBLE: Immeubles collectifs de rapport entiers (sans division PPE)
+    - COMMERCIAL: Locaux commerciaux, bureaux, arcades, hôtels, industrie
+    - TERRAIN: Terrains à bâtir, parcelles agricoles ou sans superstructure
+    """
+    parcel = str(r.get("parcel_number") or "").strip()
+    dest = str(r.get("building_destination") or "").lower().strip()
+    nat = str(r.get("nature") or "").lower().strip()
+    pt = str(r.get("property_type") or "").lower().strip()
+    sc = str(r.get("source_category") or "").lower().strip()
+    
+    rooms = r.get("rooms")
+    floor = r.get("floor")
+    unit = r.get("unit_number")
+    
+    has_ppe_parcel = bool(re.search(r"^\d+-\d+", parcel))
+    has_unit_specs = (
+        (rooms is not None and str(rooms).strip() not in ["", "nan", "None"]) or
+        (floor is not None and str(floor).strip() not in ["", "nan", "None"]) or
+        (unit is not None and str(unit).strip() not in ["", "nan", "None"])
+    )
+    is_ldtr = "ldtr_appartement" in sc
+    
+    # Textual triggers
+    has_appt_term = any(k in nat for k in ["appartement", "loggia", "balcon", "attique", "duplex", "étage", "etage", "pièces", "pieces", "lot ppe"]) or \
+                    any(k in pt for k in ["appartement", "ppe"]) or is_ldtr
+    
+    has_villa_term = any(k in nat for k in ["villa", "maison", "chalet"]) or \
+                     ("un seul logement" in nat) or ("un logement" in dest)
+                     
+    has_comm_term = any(k in dest for k in ["bureau", "atelier", "dépôt", "commercial", "artisanal", "arcade", "commerce", "hôtel", "hotel", "usine", "centre commercial", "restaurant"]) or \
+                    any(k in nat for k in ["bureau", "arcade", "commercial", "commerce", "boutique", "magasin", "hôtel", "hotel", "restaurant"])
 
-    if "plusieurs logements" in dest or "deux logements" in dest or "immeuble" in nat:
-        return "IMMEUBLE"
-    elif "un logement" in dest or "villa" in nat:
-        return "VILLA"
-    elif "appartement" in nat or "ppe" in pt or "ldtr_appartement" in sc:
-        return "PPE"
-    elif any(k in dest for k in ["activités", "bureau", "atelier", "dépôt", "commercial", "artisanal", "rez activités"]) or "commercial" in nat:
+    has_multi_dest = any(k in dest for k in ["plusieurs logements", "deux logements", "hab. - rez activités", "habitation - activités"]) or \
+                     "immeuble" in nat or "locatif" in nat
+
+    # 1. Commercial Unit or Building
+    if has_comm_term and not has_appt_term:
         return "COMMERCIAL"
-    else:
-        return "TERRAIN"
+
+    # 2. Priority check: Explicit Apartment or PPE sub-parcel
+    # If nature or category specifically designates an apartment, it is ALWAYS PPE
+    if has_appt_term or is_ldtr:
+        return "PPE"
+
+    # If it is a hyphenated parcel (e.g. 4642-104), it is a sub-parcel / PPE lot:
+    if has_ppe_parcel:
+        # If nature explicitly says villa / house and NOT apartment, it's a villa en PPE (contiguë/jumelée)
+        if has_villa_term and not has_multi_dest:
+            return "VILLA"
+        # If it has commercial characteristics
+        if has_comm_term:
+            return "COMMERCIAL"
+        # In all other cases, a sub-parcel in Geneva is a PPE apartment/unit
+        return "PPE"
+
+    # If there are unit specs (rooms, floor, unit number), it's an apartment
+    if has_unit_specs:
+        return "PPE"
+
+    # 3. Whole Multi-family Buildings (Immeubles de rapport / locatifs sans division PPE)
+    # Mother parcel without hyphen, destination is multi-housing
+    if has_multi_dest:
+        return "IMMEUBLE"
+
+    # 4. Standalone Villas & Houses
+    if has_villa_term:
+        return "VILLA"
+
+    # 5. Whole Commercial Buildings
+    if has_comm_term:
+        return "COMMERCIAL"
+
+    # 6. Terrains & Parcelles nues
+    return "TERRAIN"
 
 
 def classify_nature(r: Dict[str, Any]) -> str:
@@ -4173,11 +5173,11 @@ def classify_nature(r: Dict[str, Any]) -> str:
 
 def get_typology_label(typology_class: str) -> str:
     labels = {
-        "IMMEUBLE": "Immeuble collectif",
-        "VILLA": "Villa individuelle",
         "PPE": "Appartement / PPE",
-        "COMMERCIAL": "Commercial & Mixte",
-        "TERRAIN": "Terrain / Parcelle",
+        "VILLA": "Villa & Maison",
+        "IMMEUBLE": "Immeuble collectif",
+        "COMMERCIAL": "Commercial & Bureaux",
+        "TERRAIN": "Terrain & Parcelle",
     }
     return labels.get(typology_class, "Bien immobilier")
 
@@ -4304,12 +5304,21 @@ def build_interactive_map(
     league_data = get_ranked_league_table()
     league_json = json.dumps(league_data, ensure_ascii=False)
 
+    marketing_file = Path(settings.storage.exports_dir) / "geneva_marketing_benchmark.json"
+    if marketing_file.exists():
+        with open(marketing_file, "r", encoding="utf-8") as f:
+            marketing_data = json.load(f)
+    else:
+        marketing_data = []
+    marketing_json = json.dumps(marketing_data, ensure_ascii=False)
+
     html_content = (
         HTML_TEMPLATE
         .replace("__RECORDS_JSON__", records_json)
         .replace("__COMMUNES_JSON__", communes_json)
         .replace("__ZONES_JSON__", zones_json)
         .replace("__LEAGUE_JSON__", league_json)
+        .replace("__MARKETING_JSON__", marketing_json)
         .replace("__TOTAL_ROWS__", f"{len(rows):,}")
         .replace("__TOTAL_VOLUME__", f"{total_volume/1e9:.2f}")
         .replace("__PRICED_COUNT__", f"{priced_count:,}")

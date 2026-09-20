@@ -1,0 +1,1017 @@
+[
+  {
+    "agency_id": "barnes-suisse",
+    "agency_name": "BARNES Suisse SA - Genève",
+    "rank": 1,
+    "cytria_score": 92,
+    "website": "https://barnes-suisse.com/",
+    "latest_activity_date": "2026-08-05",
+    "sample_title": "<div class=\"article-header-vignette exclusif\"><span>Résidence secondaire</span>",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "YouTube",
+      "TikTok",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/barnesswitzerland/",
+      "linkedin": "https://www.linkedin.com/company/barnes-suisse-sa/",
+      "youtube": "https://www.youtube.com/channel/UCQn2RFoe810W5WYkgGY_veQ",
+      "tiktok": "https://www.tiktok.com/@barnesswitzerland",
+      "facebook": "https://www.facebook.com/Barnes.Suisse/"
+    }
+  },
+  {
+    "agency_id": "cardis-sothebys",
+    "agency_name": "Cardis | Sotheby's International Realty Genève",
+    "rank": 2,
+    "cytria_score": 90,
+    "website": "https://cardis.ch/",
+    "latest_activity_date": "2026-08-24",
+    "sample_title": "Actualités",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "YouTube"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/cardis_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/cardis-immobilier-sa/",
+      "youtube": "https://www.youtube.com/channel/UC5xWCkUjb_Dvcz69kiGGmDQ",
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "spg-one",
+    "agency_name": "SPG One | Christie's International Real Estate",
+    "rank": 3,
+    "cytria_score": 88,
+    "website": "https://spgone.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "TikTok",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/spgone.realty/",
+      "linkedin": "https://www.linkedin.com/company/spg-one/",
+      "youtube": null,
+      "tiktok": "https://www.tiktok.com/@spgone.realty?is_from_webapp=1&sender_device=pc",
+      "facebook": "https://www.facebook.com/spgone.realty"
+    }
+  },
+  {
+    "agency_id": "naef-prestige",
+    "agency_name": "Naef Prestige Knight Frank Genève",
+    "rank": 4,
+    "cytria_score": 86,
+    "website": "https://naefprestige-knightfrank.ch/",
+    "latest_activity_date": "2026-09-12",
+    "sample_title": "Actualités",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/naefprestigeknightfrank/?hl=fr",
+      "linkedin": "https://www.linkedin.com/company/naef-prestige-knight-frank",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/Naef-Prestige-Knight-Frank-405142143020089/"
+    }
+  },
+  {
+    "agency_id": "comptoir-immobilier",
+    "agency_name": "Comptoir Immobilier SA",
+    "rank": 5,
+    "cytria_score": 82,
+    "website": "https://comptoir-immo.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "YouTube",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/comptoir_immobilier",
+      "linkedin": "https://www.linkedin.com/company/comptoir-immobilier-sa/",
+      "youtube": "https://www.youtube.com/user/COMPTOIRIMMOBILIER/featured",
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/ComptoirImmo"
+    }
+  },
+  {
+    "agency_id": "neho",
+    "agency_name": "Neho Suisse (Commission Fixe)",
+    "rank": 6,
+    "cytria_score": 81,
+    "website": "https://neho.ch/fr",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Espace presse",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/neho_immo/",
+      "linkedin": "https://www.linkedin.com/company/11255753/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/nehoimmo"
+    }
+  },
+  {
+    "agency_id": "gerofinance-dunand",
+    "agency_name": "Gerofinance Régie du Rhône",
+    "rank": 7,
+    "cytria_score": 80,
+    "website": "https://gerofinance.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/gerofinance-regie-du-rhone/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "m3-immobilier",
+    "agency_name": "m3 Immobilier",
+    "rank": 8,
+    "cytria_score": 76,
+    "website": "https://m3immobilier.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/m3immobilier/",
+      "linkedin": "https://www.linkedin.com/company/m3immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "swissroc",
+    "agency_name": "Swissroc Properties",
+    "rank": 9,
+    "cytria_score": 74,
+    "website": "https://swissroc.com/properties",
+    "latest_activity_date": "2025-07-25",
+    "sample_title": "<span class=\"w-nav-title\">Actualités</span>",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/swissroc_group/",
+      "linkedin": "https://www.linkedin.com/company/swissroc",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "brolliet-sa",
+    "agency_name": "Brolliet SA (Groupe Bernard Nicod)",
+    "rank": 10,
+    "cytria_score": 73,
+    "website": "https://brolliet.ch/",
+    "latest_activity_date": "2026-09-12",
+    "sample_title": "",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/vimova.deutschschweiz/",
+      "linkedin": "https://www.linkedin.com/company/vimova-deutschschweiz",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/Domicim.Suisse"
+    }
+  },
+  {
+    "agency_id": "swixim",
+    "agency_name": "Swixim International Genève",
+    "rank": 11,
+    "cytria_score": 73,
+    "website": "https://swixim.ch/",
+    "latest_activity_date": "2025-11-03",
+    "sample_title": "Actualités",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/swixim_international/",
+      "linkedin": "https://www.linkedin.com/company/swixim-international/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/Swixim.international/"
+    }
+  },
+  {
+    "agency_id": "moser-vernet",
+    "agency_name": "Moser Vernet & Cie SA",
+    "rank": 12,
+    "cytria_score": 72,
+    "website": "https://moservernet.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Voir toute l’actualité",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/reel/DdESeoXtcX1/",
+      "linkedin": "https://www.linkedin.com/company/moser-vernet-&-cie",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/moservernetcie/"
+    }
+  },
+  {
+    "agency_id": "grange-cie",
+    "agency_name": "Grange & Cie SA",
+    "rank": 13,
+    "cytria_score": 71,
+    "website": "https://grange.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/grange-cie/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "jouan-de-rham",
+    "agency_name": "Jouan - de Rham SA",
+    "rank": 14,
+    "cytria_score": 70,
+    "website": "https://jouan-derham.ch/",
+    "latest_activity_date": "2026-07-21",
+    "sample_title": "Actualités",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/jouanderham/",
+      "linkedin": "https://www.linkedin.com/company/jouan---de-rham-sa/?originalSubdomain=ch",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/jouanderham/?locale=fr_FR"
+    }
+  },
+  {
+    "agency_id": "engel-voelkers-geneve",
+    "agency_name": "Engel & Völkers Genève",
+    "rank": 15,
+    "cytria_score": 65,
+    "website": "https://www.engelvoelkers.com/geneva",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "<div class=\"sc-2da0bc42-3 gMmozV\"><span class=\"sc-8cb19037-0 bzlZFU\"><span class",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "YouTube",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/engelvoelkers.geneva",
+      "linkedin": "https://www.linkedin.com/company/engel-voelkers-geneva/?viewAsMember=true",
+      "youtube": "https://www.youtube.com/@EVSchweiz",
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/engelvoelkers.geneva"
+    }
+  },
+  {
+    "agency_id": "remax-geneve",
+    "agency_name": "RE/MAX Genève",
+    "rank": 16,
+    "cytria_score": 65,
+    "website": "https://remax.ch/geneve",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/remax-switzerland/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "rosset-cie",
+    "agency_name": "Rosset & Cie SA",
+    "rank": 17,
+    "cytria_score": 64,
+    "website": "https://rosset.ch/",
+    "latest_activity_date": "2026-05-04",
+    "sample_title": "En</button>",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/rosset_immobilier/?hl=en",
+      "linkedin": "https://www.linkedin.com/company/rosset-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/RegieRosset/"
+    }
+  },
+  {
+    "agency_id": "leonard-properties",
+    "agency_name": "Leonard Properties Luxury Real Estate",
+    "rank": 18,
+    "cytria_score": 63,
+    "website": "https://leonard-properties.com/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/leonardproperties/?hl=fr",
+      "linkedin": "https://www.linkedin.com/company/leonard-properties-sa/?originalSubdomain=ch",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/profile.php?id=100065495799516&#038;fref=ts"
+    }
+  },
+  {
+    "agency_id": "fgp-swiss-alps",
+    "agency_name": "FGP Swiss & Alps (Forbes Global Properties)",
+    "rank": 19,
+    "cytria_score": 62,
+    "website": "https://fgp-swissandalps.com/",
+    "latest_activity_date": "2024-05-22",
+    "sample_title": "News",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "YouTube",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/fgpswissandalps/",
+      "linkedin": "https://www.linkedin.com/company/forbesglobalproperties-swiss-and-alps/",
+      "youtube": "https://www.youtube.com/channel/UCcyKObLQ0WyRoeGYG1Vlrdg",
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/fgp.swissandalps/"
+    }
+  },
+  {
+    "agency_id": "wincasa",
+    "agency_name": "Wincasa AG - Succursale Genève",
+    "rank": 20,
+    "cytria_score": 61,
+    "website": "https://wincasa.ch/",
+    "latest_activity_date": "2026-09-16",
+    "sample_title": "<div class=\"w-full flex flex-col items-stretch gap-14 py-16 md:py-26\"><div class",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "YouTube"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/wincasa-sa",
+      "youtube": "https://www.youtube.com/channel/UCZVt5h3xsRGSiDnYS86PzUg",
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "omnia-immobilier",
+    "agency_name": "Omnia Immobilier Genève",
+    "rank": 21,
+    "cytria_score": 59,
+    "website": "https://omnia.ch/",
+    "latest_activity_date": "2026-08-13",
+    "sample_title": "En savoir plus",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "YouTube",
+      "TikTok",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/omnia_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/omniaimmobilier/posts/?feedView=all",
+      "youtube": "https://www.youtube.com/channel/UCsvaxkH0pVAm-gHci849A1Q",
+      "tiktok": "https://www.tiktok.com/@omnia.immobilier",
+      "facebook": "https://www.facebook.com/omniaimmobilier/?locale=fr_FR"
+    }
+  },
+  {
+    "agency_id": "dhotel-105",
+    "agency_name": "105 Immobilier (Daniela Dhotel)",
+    "rank": 22,
+    "cytria_score": 58,
+    "website": "https://105immo.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/kasamea.immobilier",
+      "linkedin": "https://www.linkedin.com/company/kasamea",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/KasaMea.Immobilier"
+    }
+  },
+  {
+    "agency_id": "capvest",
+    "agency_name": "Capvest Advisors SA",
+    "rank": 23,
+    "cytria_score": 58,
+    "website": "https://capvest.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/capvest-advisors-sa/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "leman-property",
+    "agency_name": "Léman Property SA",
+    "rank": 24,
+    "cytria_score": 58,
+    "website": "https://leman-property.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "stonehage-fleming",
+    "agency_name": "Stonehage Fleming Real Estate",
+    "rank": 25,
+    "cytria_score": 58,
+    "website": "https://stonehagefleming.com/services/property",
+    "latest_activity_date": "2026-06-30",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "http://linkedin.com/company/CorientPrivateWealth",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "john-taylor-geneva",
+    "agency_name": "John Taylor Luxury Real Estate Genève",
+    "rank": 26,
+    "cytria_score": 57,
+    "website": "https://john-taylor.com/geneva",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "BLOG",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/johntaylorluxury/",
+      "linkedin": "https://www.linkedin.com/company/john-taylor---luxury-real-estate",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/johntaylorluxury"
+    }
+  },
+  {
+    "agency_id": "riva-immobilier",
+    "agency_name": "Riva Immobilier SA",
+    "rank": 27,
+    "cytria_score": 57,
+    "website": "https://rivaimmo.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "betterhomes",
+    "agency_name": "Betterhomes (Schweiz) AG",
+    "rank": 28,
+    "cytria_score": 57,
+    "website": "https://betterhomes.ch/fr",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "<source srcset=\"https://www.betterhomes.ch/_Resources/Persistent/f/1/2/1/f121b5b",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "YouTube",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/betterhomes_ag/",
+      "linkedin": "https://www.linkedin.com/company/betterhomes-schweiz-ag/",
+      "youtube": "https://www.youtube.com/user/BetterhomesAG",
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/betterhomes.international.ag/"
+    }
+  },
+  {
+    "agency_id": "geneva-luxury-re",
+    "agency_name": "Geneva Luxury Real Estate",
+    "rank": 29,
+    "cytria_score": 56,
+    "website": "https://genevaluxuryre.com/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "livit",
+    "agency_name": "Livit SA Real Estate Management",
+    "rank": 30,
+    "cytria_score": 55,
+    "website": "https://livit.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/livit-ag-real-estate-management",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "desormiere-vanhalst",
+    "agency_name": "Désormière & Vanhalst - Immobilier Genève",
+    "rank": 31,
+    "cytria_score": 54,
+    "headquarters_commune": "Troinex",
+    "primary_territory": "Troinex / Veyrier / Rive Gauche",
+    "website": "https://www.desormiere-vanhalst.ch/",
+    "active_channels": [
+      "Instagram",
+      "LinkedIn",
+      "Web"
+    ],
+    "latest_activity_date": "18 mars 2026",
+    "sample_title": "Exclusivité : Splendide propriété de maître nichée au cœur du vieux village de Troinex",
+    "links": {
+      "instagram": "https://www.instagram.com/desormiere_vanhalst/",
+      "linkedin": "https://www.linkedin.com/company/desormiere-vanhalst/"
+    }
+  },
+  {
+    "agency_id": "immosky",
+    "agency_name": "ImmoSky Suisse Romande",
+    "rank": 32,
+    "cytria_score": 53,
+    "website": "https://immosky.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "reCAPTCHA",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/immosky/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "regie-du-lac",
+    "agency_name": "Régie du Lac SA",
+    "rank": 33,
+    "cytria_score": 53,
+    "website": "https://regiedulac.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "privera",
+    "agency_name": "Privera SA - Succursale Genève",
+    "rank": 34,
+    "cytria_score": 52,
+    "website": "https://privera.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "YouTube"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": "https://ch.linkedin.com/company/privera-ag",
+      "youtube": "https://www.youtube.com/channel/UCIoi96pDJKiAEiZjMzhhyqg",
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "hermance-prestige",
+    "agency_name": "Hermance Prestige & Village",
+    "rank": 35,
+    "cytria_score": 51,
+    "website": "https://hermance-prestige.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "immo-de-charme",
+    "agency_name": "Immobilier de Charme Genève",
+    "rank": 36,
+    "cytria_score": 50,
+    "website": "https://immocharme-geneve.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "veyrier-immo",
+    "agency_name": "Veyrier Immobilier SA",
+    "rank": 37,
+    "cytria_score": 50,
+    "website": "https://veyrier-immo.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "optimum-immo",
+    "agency_name": "Optimum Immobilier Sàrl",
+    "rank": 38,
+    "cytria_score": 48,
+    "website": "https://optimum-immo.ch/",
+    "latest_activity_date": "2026-09-20",
+    "sample_title": "Publication Immobilière Genève",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/optimum_immobilien/",
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/Optimum.Immobilien/"
+    }
+  },
+  {
+    "agency_id": "versoix-immobilier",
+    "agency_name": "Versoix Immobilier Sàrl",
+    "rank": 39,
+    "cytria_score": 48,
+    "website": "https://versoix-immobilier.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "carouge-transactions",
+    "agency_name": "Carouge Transactions Immobilières",
+    "rank": 40,
+    "cytria_score": 48,
+    "website": "https://carouge-transactions.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "dome-immobilier",
+    "agency_name": "Dôme Immobilier Sàrl",
+    "rank": 41,
+    "cytria_score": 48,
+    "website": "https://dome-immobilier.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "vaudaux-immo",
+    "agency_name": "Vaudaux Immobilier SA",
+    "rank": 42,
+    "cytria_score": 48,
+    "website": "https://vaudaux-immo.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "prestige-geneva-re",
+    "agency_name": "Prestige Geneva Real Estate",
+    "rank": 43,
+    "cytria_score": 48,
+    "website": "https://prestige-geneva.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "plainpalais-courtage",
+    "agency_name": "Plainpalais Courtage Immobilier",
+    "rank": 44,
+    "cytria_score": 48,
+    "website": "https://plainpalais-courtage.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "meyrin-immo",
+    "agency_name": "Meyrin Immo Mandats SA",
+    "rank": 45,
+    "cytria_score": 47,
+    "website": "https://meyrin-immo.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "regie-mandement",
+    "agency_name": "Régie du Mandement Sàrl",
+    "rank": 46,
+    "cytria_score": 47,
+    "website": "https://regiedumandement.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "altea-immo",
+    "agency_name": "Altea Immobilier SA",
+    "rank": 47,
+    "cytria_score": 44,
+    "website": "https://altea-immo.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "regie-braun",
+    "agency_name": "Régie Braun SA",
+    "rank": 48,
+    "cytria_score": 43,
+    "website": "https://regiebraun.ch/",
+    "latest_activity_date": "2026-10-01",
+    "sample_title": "Presse",
+    "channels_active": [
+      "Web/Blog",
+      "Instagram",
+      "LinkedIn",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/regiebraunsa/",
+      "linkedin": "https://www.linkedin.com/company/regiebraunsa",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/regiebraun"
+    }
+  },
+  {
+    "agency_id": "agence-tour",
+    "agency_name": "Agence Immobilière de la Tour",
+    "rank": 49,
+    "cytria_score": 41,
+    "website": "https://agence-tour.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Actualités immobilières & marché",
+    "channels_active": [
+      "Web/Blog"
+    ],
+    "social_links": {
+      "instagram": null,
+      "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  }
+]

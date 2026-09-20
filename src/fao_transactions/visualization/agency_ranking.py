@@ -1180,51 +1180,45 @@ def compute_broker_score(broker: Dict[str, Any], agency_score: int) -> int:
 
 
 def get_ranked_league_table() -> Dict[str, Any]:
-    """Generate the full ranked league table for Geneva agencies and individual brokers, merging curated agencies and the full 83-agency master dataset."""
-    ranked_agencies = []
-    all_brokers = []
-
-    # Start with curated GENEVA_AGENCIES_DATA
-    combined_agencies = list(GENEVA_AGENCIES_DATA)
-    seen_ids = {a["id"] for a in combined_agencies}
-    seen_names = {a["name"].lower().strip() for a in combined_agencies}
-
-    # Merge external master dataset if available (filtering out synthetic commune placeholders)
+    """Generate the full ranked league table for Geneva agencies and individual brokers from the authoritative 83-agency master dataset."""
     master_file = Path("data/exports/geneva_agencies_master.json")
     if not master_file.exists():
         master_file = Path("C:/Users/AI-Mini-PC/DEV/Real-state-agencies-intelligence/src/data/exports/geneva_agencies_master.json")
 
-    # Synthetic placeholder agency IDs generated from commune names to exclude
-    SYNTHETIC_COMMUNE_IDS = {
-        "gy-foncier", "presinge-properties", "puplinge-demeures", "bardonnex-immo",
-        "perly-certoux-habitat", "aire-la-ville-foncier", "avusy-proprietes", "avully-immo",
-        "chancy-campagne", "satigny-vignobles", "russin-domaines", "dardagny-demeures",
-        "bellevue-prestige", "pregny-diplomatie", "collex-bossy-villas", "grand-saconnex-immo",
-        "vernier-courtage", "meyrin-aeroport", "onex-villas", "confignon-village",
-        "bernex-terroirs", "troinex-campagne", "carouge-lofts", "eaux-vives-quais",
-        "servette-ppe", "champel-attiques", "vieille-ville-patrimoine", "jonction-rhone",
-        "paquis-investissement", "conches-prestige", "anieres-villas", "hermance-prestige",
-        "veyrier-immo", "carouge-transactions", "plainpalais-courtage", "meyrin-immo",
-        "bernex-foncier", "jussy-domaines", "choulex-foncier", "cartigny-terroirs"
-    }
-
+    agencies_list = []
     if master_file.exists():
         try:
             with open(master_file, "r", encoding="utf-8") as f:
-                ext_agencies = json.load(f)
-            for ea in ext_agencies:
-                eid = ea.get("id", "")
-                ename = ea.get("name", "").lower().strip()
-                if eid in SYNTHETIC_COMMUNE_IDS:
-                    continue
-                if eid not in seen_ids and ename not in seen_names:
-                    combined_agencies.append(ea)
-                    seen_ids.add(eid)
-                    seen_names.add(ename)
+                agencies_list = json.load(f)
         except Exception as e:
-            logger.warning("Could not merge master agencies JSON: %s", e)
+            logger.warning("Could not load master agencies JSON: %s", e)
 
-    for ag in combined_agencies:
+    if not agencies_list:
+        agencies_list = list(GENEVA_AGENCIES_DATA)
+    else:
+        # Enrich master list with any rich curated broker definitions from GENEVA_AGENCIES_DATA
+        curated_by_id = {a["id"]: a for a in GENEVA_AGENCIES_DATA}
+        curated_aliases = {
+            "spg-one": "spg-groupe",
+            "naef-prestige": "naef-immobilier",
+            "swissroc": "swissroc-group",
+        }
+        for ag in agencies_list:
+            cid = ag.get("id")
+            curated = curated_by_id.get(cid) or curated_by_id.get(curated_aliases.get(cid))
+            if curated:
+                # Merge curated agents if master has fewer or missing agents
+                if not ag.get("agents") and curated.get("agents"):
+                    ag["agents"] = curated["agents"]
+                # Keep other rich fields
+                for k in ["specialties", "primary_territory", "discount_rate_est"]:
+                    if k in curated and not ag.get(k):
+                        ag[k] = curated[k]
+
+    ranked_agencies = []
+    all_brokers = []
+
+    for ag in agencies_list:
         score = compute_agency_score(ag)
         ag_copy = dict(ag)
         ag_copy["cytria_score"] = score
