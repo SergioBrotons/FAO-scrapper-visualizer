@@ -715,7 +715,7 @@ def build_interactive_map(
         : '<span style="color:#94a3b8; font-size:16px;">Prix non publié (Mutation RF)</span>';
 
       const sitgLink = (r.lv95_e && r.lv95_n) 
-        ? `https://ge.ch/sitg/sitg_catalog/geoportail/?x=${{r.lv95_e}}&y=${{r.lv95_n}}&scale=2500` 
+        ? `https://map.sitg.ge.ch/?center=${{r.lv95_e}},${{r.lv95_n}}&scale=2500&mapresources=CADASTRE` 
         : null;
 
       detailContent.innerHTML = `

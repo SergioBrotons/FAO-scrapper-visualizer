@@ -151,7 +151,7 @@ class UnifiedBatchProcessor:
                     e.centroid_lv95_n,
                     CASE 
                         WHEN e.centroid_lv95_e IS NOT NULL THEN 
-                            'https://ge.ch/sitg/sitg_catalog/geoportail/?x=' || CAST(ROUND(e.centroid_lv95_e, 0) AS INT) || '&y=' || CAST(ROUND(e.centroid_lv95_n, 0) AS INT) || '&scale=2500'
+                            'https://map.sitg.ge.ch/?center=' || CAST(ROUND(e.centroid_lv95_e, 0) AS INT) || ',' || CAST(ROUND(e.centroid_lv95_n, 0) AS INT) || '&scale=2500&mapresources=CADASTRE'
                         ELSE NULL 
                     END as sitg_map_url,
                     t.file_source,
