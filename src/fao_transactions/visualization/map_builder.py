@@ -23,45 +23,66 @@ def build_interactive_map(
     out_file = Path(output_path or (Path(settings.storage.exports_dir) / "geneva_transactions_map.html"))
     out_file.parent.mkdir(parents=True, exist_ok=True)
 
-    with sqlite3.connect(db_file) as conn:
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT 
-                t.id,
-                t.source_category,
-                t.notice_date,
-                t.commune,
-                t.parcel_number,
-                t.transaction_type,
-                t.property_type,
-                t.nature,
-                t.address,
-                t.rooms,
-                t.floor,
-                t.surface_m2,
-                t.seller,
-                t.buyer,
-                t.price_chf,
-                t.case_number,
-                e.egrid,
-                e.zone_code,
-                e.zone_name,
-                e.building_destination,
-                e.building_period,
-                e.building_year,
-                e.building_floors,
-                e.surface_official_m2,
-                round(e.centroid_wgs84_lon, 5) as lon,
-                round(e.centroid_wgs84_lat, 5) as lat,
-                round(e.centroid_lv95_e, 0) as lv95_e,
-                round(e.centroid_lv95_n, 0) as lv95_n
-            FROM transactions t
-            JOIN enrichments e ON t.id = e.transaction_id
-            WHERE e.centroid_wgs84_lon IS NOT NULL
-            ORDER BY t.notice_date DESC
-        """)
-        rows = [dict(r) for r in cursor.fetchall()]
+    if db_file.exists():
+        with sqlite3.connect(db_file) as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT 
+                    t.id,
+                    t.source_category,
+                    t.notice_date,
+                    t.commune,
+                    t.parcel_number,
+                    t.transaction_type,
+                    t.property_type,
+                    t.nature,
+                    t.address,
+                    t.rooms,
+                    t.floor,
+                    t.surface_m2,
+                    t.seller,
+                    t.buyer,
+                    t.price_chf,
+                    t.case_number,
+                    e.egrid,
+                    e.zone_code,
+                    e.zone_name,
+                    e.building_destination,
+                    e.building_period,
+                    e.building_year,
+                    e.building_floors,
+                    e.surface_official_m2,
+                    round(e.centroid_wgs84_lon, 5) as lon,
+                    round(e.centroid_wgs84_lat, 5) as lat,
+                    round(e.centroid_lv95_e, 0) as lv95_e,
+                    round(e.centroid_lv95_n, 0) as lv95_n
+                FROM transactions t
+                JOIN enrichments e ON t.id = e.transaction_id
+                WHERE e.centroid_wgs84_lon IS NOT NULL
+                ORDER BY t.notice_date DESC
+            """)
+            rows = [dict(r) for r in cursor.fetchall()]
+    else:
+        # Fallback to loading directly from CSV export (for fresh clones from GitHub)
+        csv_file = Path(settings.storage.exports_dir) / "geneva_property_transactions.csv"
+        if csv_file.exists():
+            import pandas as pd
+            console.print(f"[cyan]SQLite database not found. Loading from CSV deliverable:[/cyan] {csv_file.name}")
+            df = pd.read_csv(csv_file)
+            df = df[df["centroid_wgs84_lon"].notna() & df["centroid_wgs84_lat"].notna()]
+            df = df.rename(columns={
+                "centroid_wgs84_lon": "lon",
+                "centroid_wgs84_lat": "lat",
+                "centroid_lv95_e": "lv95_e",
+                "centroid_lv95_n": "lv95_n",
+            })
+            rows = [
+                {k: (None if pd.isna(v) else v) for k, v in row.items()}
+                for row in df.to_dict(orient="records")
+            ]
+        else:
+            rows = []
 
     console.print(f"Loaded [bold]{len(rows)}[/bold] geocoded transactions from SQLite.")
 
