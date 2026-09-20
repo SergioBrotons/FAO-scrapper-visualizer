@@ -92,53 +92,87 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       z-index: 1;
     }
 
-    /* Top Bar HUD */
+    /* Master Command Bar (Unified 2-Tier Architecture) */
     .top-bar {
       position: absolute;
-      top: 14px;
+      top: 10px;
       left: 14px;
       right: 14px;
       z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      pointer-events: none;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .hud-card {
       background: var(--panel-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--panel-border);
-      padding: 8px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      pointer-events: auto;
       box-shadow: var(--shadow-elevation);
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      overflow: visible;
     }
 
-    .hud-card.main-nav-card {
-      flex: 1 1 auto;
-      max-width: fit-content;
-    }
-
-    .hud-card.hud-stats-card {
+    /* Tier 1: Brand + Master Product Suite Tabs + Global Utilities */
+    .top-bar-tier-1 {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 14px;
       gap: 12px;
-      flex-wrap: wrap;
-      margin-left: auto;
+      border-bottom: 1px solid var(--panel-border);
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .top-bar-tier-1::-webkit-scrollbar { display: none; }
 
-    .hud-quick-actions {
+    /* Tier 2: Contextual Module Subtoolbar + Live KPI Stats Strip */
+    .top-bar-tier-2 {
       display: flex;
       align-items: center;
-      gap: 8px;
-      border-left: 1px solid var(--panel-border);
-      padding-left: 12px;
+      justify-content: space-between;
+      height: 40px;
+      padding: 0 14px;
+      gap: 12px;
+      background: rgba(8, 13, 17, 0.45);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .top-bar-tier-2::-webkit-scrollbar { display: none; }
+
+    .tier-2-subtoolbar-area {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      min-width: 0;
+    }
+
+    .top-bar-utilities {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .utility-btn {
+      font-size: 10px !important;
+      padding: 4px 10px !important;
+      border-color: rgba(201, 162, 77, 0.4) !important;
+      background: rgba(201, 162, 77, 0.08) !important;
+      color: var(--color-brand-300) !important;
+      white-space: nowrap;
+    }
+    .utility-btn:hover {
+      background: rgba(201, 162, 77, 0.2) !important;
+      border-color: var(--color-brand-400) !important;
+      color: #fff !important;
+    }
+
+    .subtool-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--panel-border);
+      margin: 0 4px;
+      display: inline-block;
+      flex-shrink: 0;
     }
 
     .brand-group {
@@ -202,13 +236,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       border: 1px solid transparent;
       color: var(--color-sand-300);
       font-family: var(--font-brand);
-      padding: 6px 14px;
+      padding: 5px 12px;
       cursor: pointer;
       display: inline-flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2px;
+      flex-direction: row;
+      align-items: center;
+      gap: 7px;
       transition: all 0.2s ease;
+      white-space: nowrap;
       text-align: left;
     }
 
@@ -347,9 +382,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* Left Sidebar Filter Panel */
     .sidebar {
       position: absolute;
-      top: 136px;
-      left: 16px;
-      bottom: 24px;
+      top: 104px;
+      left: 14px;
+      bottom: 18px;
       width: 360px;
       background: var(--panel-bg);
       backdrop-filter: blur(16px);
@@ -613,9 +648,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* Right Detail Drawer */
     .detail-drawer {
       position: absolute;
-      top: 136px;
-      right: 16px;
-      bottom: 24px;
+      top: 104px;
+      right: 14px;
+      bottom: 18px;
       width: 440px;
       background: var(--panel-bg);
       backdrop-filter: blur(20px);
@@ -1342,48 +1377,59 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* Floating Agency & Agent Focus Banner on Map */
     .agency-focus-banner {
       position: absolute;
-      top: 136px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
+      top: 102px;
+      left: 388px;
+      max-width: calc(100vw - 860px);
+      z-index: 995;
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: rgba(8, 13, 17, 0.94);
+      gap: 10px;
+      background: rgba(8, 13, 17, 0.96);
       border: 1px solid var(--color-brand-400);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 16px rgba(201, 162, 77, 0.25);
-      padding: 8px 16px;
-      backdrop-filter: blur(8px);
+      padding: 5px 12px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      white-space: nowrap;
     }
 
     .focus-banner-content {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-shrink: 1;
+      min-width: 0;
     }
 
     .agency-focus-banner .focus-badge {
       background: rgba(201, 162, 77, 0.2);
       color: var(--color-brand-300);
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border: 1px solid rgba(201, 162, 77, 0.4);
+      flex-shrink: 0;
     }
 
     .agency-focus-banner .focus-title {
       color: var(--color-paper);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .agency-focus-banner .focus-count {
       color: var(--color-sand-300);
       font-size: 11px;
       font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
     }
 
     .agency-focus-banner .focus-banner-reset {
@@ -1391,11 +1437,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       border: 1px solid #ef4444;
       color: #fca5a5;
       font-family: var(--font-brand);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 9px;
       cursor: pointer;
       transition: all 0.2s;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .agency-focus-banner .focus-banner-reset:hover {
@@ -1854,132 +1902,118 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <span class="focus-title" id="focusBannerTitle"></span>
       <span class="focus-count" id="focusBannerCount"></span>
     </div>
-    <button type="button" class="focus-banner-reset" onclick="renderAgenciesOnMap(null)">✕ Réinitialiser le focus (Voir tout le réseau)</button>
+    <button type="button" class="focus-banner-reset" onclick="renderAgenciesOnMap(null)" title="Voir tout le réseau (Réinitialiser le focus)">✕</button>
   </div>
 
-  <!-- Top Bar HUD & Mode Switcher -->
-  <div class="top-bar">
-    <div class="hud-card main-nav-card">
+  <!-- Master Top Command Bar -->
+  <header class="top-bar">
+    <!-- Tier 1: Brand Identity + Master Product Suite Tabs + Global Utilities -->
+    <div class="top-bar-tier-1">
       <div class="brand-group">
         <!-- Official Cytria Vector Logo -->
         <svg class="cytria-logo-svg" viewBox="606 188 836 309" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill="#F7F4EC" fill-rule="evenodd" d="M731.0,202.5 L757.0,202.5 L778.5,207.0 L745.0,250.5 L728.0,251.5 L709.0,258.5 L695.0,268.5 L687.5,276.0 L676.5,293.0 L670.5,311.0 L669.5,332.0 L674.5,351.0 L685.5,370.0 L697.0,381.5 L704.0,386.5 L721.0,394.5 L733.0,397.5 L755.0,397.5 L773.0,392.5 L791.0,382.5 L803.0,370.5 L856.5,371.0 L852.5,380.0 L842.5,396.0 L821.0,418.5 L808.0,427.5 L793.0,435.5 L779.0,440.5 L760.0,444.5 L739.0,445.5 L713.0,441.5 L693.0,434.5 L680.0,427.5 L667.0,418.5 L653.5,406.0 L644.5,395.0 L635.5,381.0 L624.5,353.0 L621.5,336.0 L621.5,313.0 L625.5,292.0 L636.5,265.0 L649.5,246.0 L666.0,229.5 L689.0,214.5 L710.0,206.5 L731.0,202.5 Z M1243.0,234.5 L1255.0,234.5 L1260.0,236.5 L1266.5,242.0 L1269.5,248.0 L1270.5,252.0 L1269.5,260.0 L1267.5,264.0 L1259.0,271.5 L1251.0,273.5 L1242.0,272.5 L1236.0,269.5 L1230.5,264.0 L1228.5,260.0 L1227.5,252.0 L1231.5,242.0 L1238.0,236.5 L1243.0,234.5 Z M1044.0,257.5 L1077.0,257.5 L1078.5,259.0 L1079.0,293.5 L1114.5,294.0 L1114.0,319.5 L1078.5,320.0 L1078.5,394.0 L1082.0,399.5 L1088.0,402.5 L1113.0,401.5 L1114.5,427.0 L1095.0,430.5 L1072.0,429.5 L1057.0,423.5 L1049.5,416.0 L1045.5,408.0 L1043.5,399.0 L1043.5,320.0 L1014.0,319.5 L966.5,421.0 L963.5,425.0 L950.5,453.0 L942.5,465.0 L933.0,474.5 L927.0,478.5 L917.0,482.5 L903.0,484.5 L876.0,483.5 L875.5,480.0 L882.5,456.0 L904.0,455.5 L913.0,451.5 L920.5,443.0 L930.5,424.0 L930.5,421.0 L871.5,294.0 L910.5,294.0 L934.5,351.0 L947.5,386.0 L949.0,386.5 L976.5,322.0 L986.5,295.0 L988.0,293.5 L1043.0,293.5 L1044.0,257.5 Z M1351.0,289.5 L1374.0,290.5 L1390.0,294.5 L1399.0,298.5 L1408.0,304.5 L1418.5,316.0 L1423.5,327.0 L1426.5,346.0 L1426.5,423.0 L1425.5,424.0 L1426.5,427.0 L1425.0,428.5 L1392.0,428.5 L1390.5,427.0 L1390.5,420.0 L1389.0,419.5 L1375.0,426.5 L1363.0,429.5 L1333.0,430.5 L1323.0,428.5 L1306.0,421.5 L1292.5,408.0 L1289.5,402.0 L1287.5,393.0 L1288.5,381.0 L1294.5,369.0 L1308.0,357.5 L1319.0,352.5 L1338.0,347.5 L1353.0,346.5 L1354.0,345.5 L1392.5,345.0 L1391.5,337.0 L1387.5,328.0 L1380.0,320.5 L1370.0,316.5 L1346.0,315.5 L1326.0,321.5 L1314.0,329.5 L1311.5,328.0 L1298.5,309.0 L1298.0,305.5 L1314.0,297.5 L1326.0,293.5 L1351.0,289.5 Z M1199.0,290.5 L1214.0,290.5 L1217.5,292.0 L1217.5,321.0 L1209.0,319.5 L1194.0,320.5 L1184.0,324.5 L1174.5,333.0 L1169.5,341.0 L1167.5,348.0 L1167.5,427.0 L1166.0,428.5 L1134.0,428.5 L1133.5,294.0 L1167.0,293.5 L1168.0,311.5 L1183.0,296.5 L1199.0,290.5 Z M1232.0,293.5 L1266.5,294.0 L1266.5,427.0 L1265.0,428.5 L1231.5,428.0 L1232.0,293.5 Z M1359.0,368.5 L1337.0,372.5 L1331.0,375.5 L1325.5,381.0 L1323.5,386.0 L1323.5,391.0 L1326.5,398.0 L1330.0,401.5 L1341.0,406.5 L1358.0,407.5 L1372.0,404.5 L1381.0,399.5 L1386.5,394.0 L1390.5,387.0 L1392.5,379.0 L1392.5,370.0 L1391.0,368.5 L1359.0,368.5 Z"/>
           <path fill="#C9A24D" fill-rule="evenodd" d="M790.0,210.5 L807.0,218.5 L819.0,226.5 L838.5,245.0 L853.5,268.0 L857.5,277.0 L858.0,281.5 L806.0,281.5 L786.0,261.5 L770.0,253.5 L759.5,251.0 L763.5,244.0 L790.0,210.5 Z"/>
         </svg>
-
         <div class="brand-divider"></div>
-
         <div class="brand-meta">
           <div class="brand-meta-title">Intelligence Foncière</div>
           <div class="brand-meta-sub">Canton de Genève</div>
         </div>
       </div>
 
-      <!-- Master Product Suite Navigation & Contextual Toolbars -->
-      <div class="product-suite-container">
-        <!-- 3 Master Product Tabs (Zero Emoji, Clean Typography) -->
-        <div class="product-master-tabs">
-          <button type="button" class="product-tab active" id="tabProductMarket" onclick="switchProductSuite('MARKET')">
-            <span class="product-tab-title">CYTRIA MARKET</span>
-            <span class="product-tab-sub">Marché & Prix <strong class="subtool-badge" id="navBadgeMarket">__TOTAL_ROWS__</strong></span>
-          </button>
-          <button type="button" class="product-tab" id="tabProductSourcing" onclick="switchProductSuite('SOURCING')">
-            <span class="product-tab-title">CYTRIA SOURCING</span>
-            <span class="product-tab-sub">Mandats B2C & Fonciers B2B</span>
-          </button>
-          <button type="button" class="product-tab" id="tabProductAgencyBI" onclick="switchProductSuite('AGENCY_BI')">
-            <span class="product-tab-title">CYTRIA AGENCY BI</span>
-            <span class="product-tab-sub">__AGENCIES_COUNT__ Agences & Veille</span>
-          </button>
-        </div>
+      <!-- 3 Master Product Tabs -->
+      <nav class="product-master-tabs">
+        <button type="button" class="product-tab active" id="tabProductMarket" onclick="switchProductSuite('MARKET')">
+          <span class="product-tab-title">CYTRIA MARKET</span>
+          <span class="product-tab-sub">Marché & Prix <strong class="subtool-badge" id="navBadgeMarket">__TOTAL_ROWS__</strong></span>
+        </button>
+        <button type="button" class="product-tab" id="tabProductSourcing" onclick="switchProductSuite('SOURCING')">
+          <span class="product-tab-title">CYTRIA SOURCING</span>
+          <span class="product-tab-sub">Mandats B2C & Fonciers B2B</span>
+        </button>
+        <button type="button" class="product-tab" id="tabProductAgencyBI" onclick="switchProductSuite('AGENCY_BI')">
+          <span class="product-tab-title">CYTRIA AGENCY BI</span>
+          <span class="product-tab-sub">__AGENCIES_COUNT__ Agences & Veille</span>
+        </button>
+      </nav>
 
-        <!-- Contextual Sub-Toolbars -->
-        <div class="product-subtoolbar-container">
-          <!-- 1. MARKET Subtoolbar -->
-          <div class="product-subtoolbar" id="subtoolbarMarket">
-            <button type="button" class="subtool-btn mkt-typo-btn active" id="mktFilterAll" onclick="setMarketQuickFilter('ALL')">
-              Tous les actes <span class="subtool-badge">__TOTAL_ROWS__</span>
-            </button>
-            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterApartments" onclick="setMarketQuickFilter('PPE')">
-              Appartements PPE
-            </button>
-            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterHouses" onclick="setMarketQuickFilter('VILLA')">
-              Villas & Maisons
-            </button>
-            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterBuildings" onclick="setMarketQuickFilter('IMMEUBLE')">
-              Immeubles de rapport
-            </button>
-            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterLand" onclick="setMarketQuickFilter('TERRAIN')">
-              Terrains & Parcelles
-            </button>
-
-            <!-- Separator -->
-            <span style="width: 1px; height: 16px; background: var(--panel-border); margin: 0 4px; align-self: center;"></span>
-
-            <!-- Rive Gauche / Rive Droite Macro Zones -->
-            <button type="button" class="subtool-btn active" id="mktRiveAll" onclick="setRiveFilter('ALL')">
-              Toute la République
-            </button>
-            <button type="button" class="subtool-btn" id="mktRiveGauche" onclick="setRiveFilter('GAUCHE')">
-              Rive Gauche
-            </button>
-            <button type="button" class="subtool-btn" id="mktRiveDroite" onclick="setRiveFilter('DROITE')">
-              Rive Droite
-            </button>
-
-            <!-- Separator -->
-            <span style="width: 1px; height: 16px; background: var(--panel-border); margin: 0 4px; align-self: center;"></span>
-
-            <!-- Sqm Price Layer Toggle -->
-            <button type="button" class="subtool-btn" id="mktSqmPriceLayerBtn" onclick="toggleSqmPriceLayer()" style="border-color: rgba(14, 165, 233, 0.4); color: #38bdf8;">
-              Calque Prix / m²
-            </button>
-
-            <!-- CMA Valuation Tool Button -->
-            <button type="button" class="subtool-btn" id="mktOpenCmaBtn" onclick="openCmaModal()" style="border-color: rgba(201, 162, 77, 0.5); background: rgba(201, 162, 77, 0.12); color: var(--color-brand-300); font-weight: 700;">
-              Simulateur d'Avis de Valeur & Comparables (CMA) ↗
-            </button>
-
-            <button type="button" class="subtool-btn" id="mktSyncBtn" onclick="openContextualSyncModal('MARKET')" style="margin-left: auto; border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
-              <span class="scan-live-dot"></span> Actualiser Marché (FAO × SITG)
-            </button>
-          </div>
-
-          <!-- 2. SOURCING Subtoolbar -->
-          <div class="product-subtoolbar" id="subtoolbarSourcing" style="display: none;">
-            <button type="button" class="subtool-btn active" id="sourcingBtnB2C" onclick="switchSourcingModule('B2C_MANDATES')">
-              Scanner Mandats B2C <span class="subtool-badge" id="navBadgeMandates">__MANDATES_COUNT__</span>
-            </button>
-            <button type="button" class="subtool-btn" id="sourcingBtnB2B" onclick="switchSourcingModule('B2B_DEVELOPMENT')">
-              Radar Promoteurs B2B <span class="subtool-badge" id="navBadgeDev">__DEV_COUNT__</span>
-            </button>
-            <button type="button" class="subtool-btn" id="sourcingSyncBtn" onclick="openContextualSyncModal('SOURCING')" style="margin-left: auto; border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
-              <span class="scan-live-dot"></span> Actualiser Sourcing (Hoiries & Permis)
-            </button>
-          </div>
-
-          <!-- 3. AGENCY BI Subtoolbar -->
-          <div class="product-subtoolbar" id="subtoolbarAgencyBI" style="display: none;">
-            <button type="button" class="subtool-btn active" id="agencyBtnMap" onclick="switchAgencyTool('MAP')">
-              Carte des Agences <span class="subtool-badge" id="navBadgeAgencies">__AGENCIES_COUNT__</span>
-            </button>
-            <button type="button" class="subtool-btn" id="btnOpenLeagueTable" onclick="openLeagueModal()">
-              Benchmark & Parts de Marché
-            </button>
-            <button type="button" class="subtool-btn" id="btnOpenMarketingModal" onclick="openMarketingModal()">
-              Veille Marketing
-            </button>
-            <button type="button" class="subtool-btn" id="agencySyncBtn" onclick="openContextualSyncModal('AGENCY_BI')" style="margin-left: auto; border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
-              <span class="scan-live-dot"></span> Actualiser Veille & Benchmarking
-            </button>
-          </div>
-        </div>
+      <!-- Global Header Utilities -->
+      <div class="top-bar-utilities">
+        <button type="button" class="subtool-btn utility-btn" id="hudOpenCmaBtn" onclick="openCmaModal()">
+          Simulateur CMA ↗
+        </button>
+        <button type="button" class="subtool-btn utility-btn" id="hudGuideBtn" onclick="openMethodologyModal()">
+          Guide Métier & Playbooks
+        </button>
+        <button type="button" class="subtool-btn utility-btn" id="hudSyncBtn" onclick="openContextualSyncModal(typeof currentProductSuite !== 'undefined' ? currentProductSuite : 'MARKET')">
+          <span class="scan-live-dot"></span> Actualiser
+        </button>
       </div>
     </div>
 
-    <!-- HUD Stats & Direct Tool Actions Card -->
-    <div class="hud-card hud-stats-card">
-      <div class="hud-stats" style="border-left: none; padding-left: 0;">
+    <!-- Tier 2: Contextual Module Subtoolbar (Left) + Live KPI HUD (Right) -->
+    <div class="top-bar-tier-2">
+      <div class="tier-2-subtoolbar-area">
+        <!-- 1. MARKET Subtoolbar -->
+        <div class="product-subtoolbar" id="subtoolbarMarket">
+          <button type="button" class="subtool-btn mkt-typo-btn active" id="mktFilterAll" onclick="setMarketQuickFilter('ALL')">
+            Tous les actes <span class="subtool-badge">__TOTAL_ROWS__</span>
+          </button>
+          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterApartments" onclick="setMarketQuickFilter('PPE')">
+            Appartements PPE
+          </button>
+          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterHouses" onclick="setMarketQuickFilter('VILLA')">
+            Villas & Maisons
+          </button>
+          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterBuildings" onclick="setMarketQuickFilter('IMMEUBLE')">
+            Immeubles de rapport
+          </button>
+          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterLand" onclick="setMarketQuickFilter('TERRAIN')">
+            Terrains & Parcelles
+          </button>
+          <span class="subtool-divider"></span>
+          <button type="button" class="subtool-btn active" id="mktRiveAll" onclick="setRiveFilter('ALL')">
+            Toute la République
+          </button>
+          <button type="button" class="subtool-btn" id="mktRiveGauche" onclick="setRiveFilter('GAUCHE')">
+            Rive Gauche
+          </button>
+          <button type="button" class="subtool-btn" id="mktRiveDroite" onclick="setRiveFilter('DROITE')">
+            Rive Droite
+          </button>
+          <span class="subtool-divider"></span>
+          <button type="button" class="subtool-btn" id="mktSqmPriceLayerBtn" onclick="toggleSqmPriceLayer()">
+            Calque Prix / m²
+          </button>
+        </div>
+
+        <!-- 2. SOURCING Subtoolbar -->
+        <div class="product-subtoolbar" id="subtoolbarSourcing" style="display: none;">
+          <button type="button" class="subtool-btn active" id="sourcingBtnB2C" onclick="switchSourcingModule('B2C_MANDATES')">
+            Scanner Mandats B2C <span class="subtool-badge" id="navBadgeMandates">__MANDATES_COUNT__</span>
+          </button>
+          <button type="button" class="subtool-btn" id="sourcingBtnB2B" onclick="switchSourcingModule('B2B_DEVELOPMENT')">
+            Radar Promoteurs B2B <span class="subtool-badge" id="navBadgeDev">__DEV_COUNT__</span>
+          </button>
+        </div>
+
+        <!-- 3. AGENCY BI Subtoolbar -->
+        <div class="product-subtoolbar" id="subtoolbarAgencyBI" style="display: none;">
+          <button type="button" class="subtool-btn active" id="agencyBtnMap" onclick="switchAgencyTool('MAP')">
+            Carte des Agences <span class="subtool-badge" id="navBadgeAgencies">__AGENCIES_COUNT__</span>
+          </button>
+          <button type="button" class="subtool-btn" id="btnOpenLeagueTable" onclick="openLeagueModal()">
+            Benchmark & Parts de Marché
+          </button>
+          <button type="button" class="subtool-btn" id="btnOpenMarketingModal" onclick="openMarketingModal()">
+            Veille Marketing
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Contextual HUD KPIs -->
+      <div class="hud-stats" id="topHudStats">
         <div class="stat-item">
           <span class="stat-label" id="statLabelPrimary">Transactions</span>
           <span class="stat-value" id="stat-count">__TOTAL_ROWS__</span>
@@ -1997,20 +2031,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <span class="stat-value purple" id="stat-4">__HOT_MANDATES_COUNT__</span>
         </div>
       </div>
-
-      <div class="hud-quick-actions">
-        <button type="button" class="subtool-btn" id="hudOpenCmaBtn" onclick="openCmaModal()" style="border-color: rgba(201, 162, 77, 0.5); background: rgba(201, 162, 77, 0.12); color: var(--color-brand-300); font-weight: 700;">
-          Avis de Valeur (CMA)
-        </button>
-        <button type="button" class="subtool-btn" id="hudSyncBtn" onclick="openContextualSyncModal(typeof currentAppMode !== 'undefined' ? currentAppMode : 'MARKET')" style="border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
-          <span class="scan-live-dot"></span> Actualiser
-        </button>
-        <button type="button" class="subtool-btn" id="hudGuideBtn" onclick="openMethodologyModal()" style="border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
-          Guide Métier & Playbooks
-        </button>
-      </div>
     </div>
-  </div>
+  </header>
 
   <!-- Sidebar Filter Panel -->
   <aside class="sidebar">
@@ -4039,8 +4061,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         } else {
           countEl.innerHTML = `
             <strong>0</strong> acte nominatif direct FAO • <strong>${agency.sold_24m_count || 0} ventes</strong> certifiées (Portails / Avis)
-            <button type="button" class="btn-sm" style="margin-left:10px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:3px 8px; font-size:11px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
-              ${isShowingTerritoryMarket ? '✕ Masquer le marché local' : `👁️ Voir le marché local (${agency.headquarters_commune} : ${territoryTxs.length} actes)`}
+            <button type="button" class="btn-sm" style="margin-left:8px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:2px 7px; font-size:10px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
+              ${isShowingTerritoryMarket ? 'Masquer le marche local' : `Marche local (${agency.headquarters_commune} : ${territoryTxs.length})`}
             </button>
           `;
         }
@@ -4317,8 +4339,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
         document.getElementById('focusBannerCount').innerHTML = `
           <strong>${soldProps.length}</strong> bien(s) cartographié(s) (<span style="color:#10b981; font-weight:700;">${confirmedCount} confirmés FAO</span> &bull; <span style="color:#C9A24D; font-weight:700;">${pendingCount} en cours de transcription</span>)
-          <button type="button" class="btn-sm" style="margin-left:10px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:3px 8px; font-size:11px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
-            Voir le marché local (${agency.headquarters_commune} : ${territoryTxs.length} actes)
+          <button type="button" class="btn-sm" style="margin-left:8px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:2px 7px; font-size:10px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
+            Marché local (${agency.headquarters_commune} : ${territoryTxs.length} actes)
           </button>
         `;
       }
