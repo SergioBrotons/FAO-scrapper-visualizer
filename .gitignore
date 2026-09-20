@@ -39,7 +39,7 @@ data/cache/
 data/raw/
 data/browser_profile/
 data/state/
-data/exports/
+data/exports/*_geocoded.csv
 *.sqlite
 *.db
 
