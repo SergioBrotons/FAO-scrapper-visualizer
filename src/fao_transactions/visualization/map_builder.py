@@ -1218,6 +1218,70 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       color: var(--color-paper);
     }
 
+    /* Floating Agency & Agent Focus Banner on Map */
+    .agency-focus-banner {
+      position: absolute;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(8, 13, 17, 0.94);
+      border: 1px solid var(--color-brand-400);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 16px rgba(201, 162, 77, 0.25);
+      padding: 8px 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .focus-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .agency-focus-banner .focus-badge {
+      background: rgba(201, 162, 77, 0.2);
+      color: var(--color-brand-300);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border: 1px solid rgba(201, 162, 77, 0.4);
+    }
+
+    .agency-focus-banner .focus-title {
+      color: var(--color-paper);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .agency-focus-banner .focus-count {
+      color: var(--color-sand-300);
+      font-size: 11px;
+      font-family: var(--font-mono);
+    }
+
+    .agency-focus-banner .focus-banner-reset {
+      background: rgba(239, 68, 68, 0.18);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      font-family: var(--font-brand);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .agency-focus-banner .focus-banner-reset:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
     /* Social Action Buttons */
     .social-buttons-grid {
       display: grid;
@@ -1619,6 +1683,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <!-- Map Container -->
   <div id="map"></div>
 
+  <!-- Floating Agency & Agent Focus Banner -->
+  <div id="agencyFocusBanner" class="agency-focus-banner" style="display:none;">
+    <div class="focus-banner-content">
+      <span class="focus-badge" id="focusBannerBadge">🏛️ Agence Isolée</span>
+      <span class="focus-title" id="focusBannerTitle"></span>
+      <span class="focus-count" id="focusBannerCount"></span>
+    </div>
+    <button type="button" class="focus-banner-reset" onclick="renderAgenciesOnMap(null)">✕ Réinitialiser le focus (Voir tout le réseau)</button>
+  </div>
+
   <!-- Top Bar HUD & Mode Switcher -->
   <div class="top-bar">
     <div class="hud-card">
@@ -1757,6 +1831,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <select class="select-input" id="sidebarAgencySelect" style="border-color: var(--color-brand-400); color: var(--color-brand-300);">
           <option value="ALL">Toutes les agences du canton (__AGENCIES_COUNT__)</option>
         </select>
+      </div>
+      <div id="sidebarBrokerGroup" style="display:none; margin-top: 8px;">
+        <div class="filter-section-title">Filtrer par Courtier / Agent</div>
+        <select class="select-input" id="sidebarBrokerSelect" style="border-color: var(--color-brand-400); color: var(--color-sand-100);">
+          <option value="ALL">Tous les courtiers de l'agence</option>
+        </select>
+      </div>
+      <div id="sidebarResetAgencyGroup" style="display:none; margin-top: 8px;">
+        <button type="button" class="view-map-btn" style="width:100%; padding: 6px; background: rgba(239,68,68,0.15); border-color: #ef4444; color: #fca5a5; text-align: center;" onclick="renderAgenciesOnMap(null)">
+          ✕ Réinitialiser le focus (Voir tout le réseau)
+        </button>
       </div>
       <div style="margin-top: 8px;">
         <button type="button" class="view-map-btn" style="width:100%; padding: 7px; text-align:center;" onclick="openLeagueModal()">
@@ -2102,6 +2187,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     let appMode = 'MARKET'; // 'MARKET' | 'MANDATES' | 'DEVELOPMENT'
 
+    // Universal accent-insensitive string normalizer
+    function normStr(str) {
+      return (str || '')
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+    }
+
     // Helper: Determine if Street View coverage is available upfront
     function hasStreetViewCoverage(r) {
       if (!r || !r.lat || !r.lon) return false;
@@ -2326,14 +2420,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       agencyMarkersGroup.clearLayers();
       agencyRadiusGroup.clearLayers();
 
+      const focusBanner = document.getElementById('agencyFocusBanner');
+      if (focusBanner && mode !== 'AGENCIES_MAP') focusBanner.style.display = 'none';
+
       if (mode === 'AGENCIES_MAP') {
         document.getElementById('modeBtnAgencies').classList.add('active');
         filterMarket.style.display = 'none';
         filterMandates.style.display = 'none';
         filterDev.style.display = 'none';
         filterAgencies.style.display = 'block';
-        bannerTitle.textContent = 'Réseau des Agences & Rayon d\'Action';
-        bannerSub.textContent = 'Sièges d\'agences, périmètres d\'intervention et transactions attribuées';
+        bannerTitle.textContent = "Réseau des Agences & Rayon d'Action";
+        bannerSub.textContent = "Sièges d'agences, périmètres d'intervention et transactions attribuées";
         renderAgenciesOnMap();
         return;
       } else {
@@ -2764,7 +2861,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     });
 
     function applyFilters() {
-      const q = searchInput.value.toLowerCase().trim();
+      const q = normStr(searchInput.value);
       const selComm = communeSelect.value;
       const selZone = zoneSelect.value;
       const selTypo = typologySelect.value;
@@ -2841,13 +2938,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           if (s < parseFloat(selSurf)) return false;
         }
 
-        // Global search query
+        // Global search query (accent-insensitive)
         if (q) {
-          const str = [
+          const str = normStr([
             (r.address||''), (r.commune||''), (r.buyer||''), (r.seller||''),
             (r.parcel_number||''), (r.egrid||''), (r.plq_name||''),
             (r.permit_number||''), (r.grand_projet_name||''), (r.nature||'')
-          ].join(' ').toLowerCase();
+          ].join(' '));
           if (!str.includes(q)) return false;
         }
 
@@ -2881,7 +2978,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       // Populate Sidebar Agency Selector
       const sbAgencySelect = document.getElementById('sidebarAgencySelect');
+      const sbBrokerSelect = document.getElementById('sidebarBrokerSelect');
+
       if (sbAgencySelect) {
+        sbAgencySelect.innerHTML = `<option value="ALL">Toutes les agences du canton (${LEAGUE_DATA.agencies.length})</option>`;
         LEAGUE_DATA.agencies.forEach(a => {
           const opt = document.createElement('option');
           opt.value = a.id;
@@ -2892,10 +2992,21 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         sbAgencySelect.addEventListener('change', (e) => {
           const val = e.target.value;
           if (val === 'ALL') {
-            renderAgenciesOnMap();
+            renderAgenciesOnMap(null);
           } else {
             const ag = LEAGUE_DATA.agencies.find(x => x.id === val);
-            if (ag) selectAgencyOnMap(ag);
+            if (ag) selectAgencyOnMap(ag, null);
+          }
+        });
+      }
+
+      if (sbBrokerSelect) {
+        sbBrokerSelect.addEventListener('change', (e) => {
+          const brokerVal = e.target.value;
+          const currentAgId = sbAgencySelect ? sbAgencySelect.value : null;
+          const ag = LEAGUE_DATA.agencies.find(x => x.id === currentAgId);
+          if (ag) {
+            selectAgencyOnMap(ag, brokerVal === 'ALL' ? null : brokerVal);
           }
         });
       }
@@ -2929,16 +3040,20 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function renderLeagueContent() {
       const container = document.getElementById('leagueBodyContent');
-      const query = (document.getElementById('leagueSearchInput').value || '').toLowerCase().trim();
+      const query = normStr(document.getElementById('leagueSearchInput').value);
       const selCommune = document.getElementById('leagueCommuneSelect').value;
+      const normCommune = normStr(selCommune);
 
       if (currentLeagueTab === 'AGENCIES') {
         const filtered = LEAGUE_DATA.agencies.filter(a => {
-          if (selCommune !== 'ALL' && a.headquarters_commune !== selCommune && !a.primary_territory.toLowerCase().includes(selCommune.toLowerCase())) {
-            return false;
+          if (selCommune !== 'ALL') {
+            const matchesComm = normStr(a.headquarters_commune).includes(normCommune) ||
+                                normStr(a.primary_territory).includes(normCommune) ||
+                                (a.top_communes || []).some(c => normStr(c).includes(normCommune));
+            if (!matchesComm) return false;
           }
           if (query) {
-            const haystack = [a.name, a.address, a.primary_territory, (a.specialties||[]).join(' ')].join(' ').toLowerCase();
+            const haystack = normStr([a.name, a.address, a.primary_territory, (a.top_communes||[]).join(' '), (a.specialties||[]).join(' ')].join(' '));
             if (!haystack.includes(query)) return false;
           }
           return true;
@@ -3010,11 +3125,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         `;
       } else {
         const filtered = LEAGUE_DATA.brokers.filter(b => {
-          if (selCommune !== 'ALL' && !(b.top_communes || []).includes(selCommune)) {
-            return false;
+          if (selCommune !== 'ALL') {
+            const matchesComm = (b.top_communes || []).some(c => normStr(c).includes(normCommune));
+            if (!matchesComm) return false;
           }
           if (query) {
-            const haystack = [b.name, b.role, b.agency_name, b.specialty, (b.top_communes||[]).join(' ')].join(' ').toLowerCase();
+            const haystack = normStr([b.name, b.role, b.agency_name, b.specialty, (b.top_communes||[]).join(' ')].join(' '));
             if (!haystack.includes(query)) return false;
           }
           return true;
@@ -3033,22 +3149,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 ${b.linkedin_profile_url ? `<br><a href="${b.linkedin_profile_url}" target="_blank" style="color:#0a66c2; text-decoration:none; font-size:10px; font-weight:700;">LinkedIn Profil ↗</a>` : ''}
               </td>
               <td>
-                <span style="color:var(--color-paper); font-weight:600;">${b.agency_name}</span>
+                <strong style="color:var(--color-paper);">${b.agency_name}</strong><br>
+                <span style="color:var(--color-brand-400); font-size:11px;">Spécialité: ${b.specialty}</span>
               </td>
               <td><span class="score-badge">${b.cytria_score} / 100</span></td>
               <td>
-                <strong>${b.deals_count} transactions</strong><br>
-                <span style="color:var(--color-sand-300); font-size:10px;">Spécialité : ${b.specialty}</span>
+                <strong>${b.deals_count} ventes conclues</strong><br>
+                <span style="color:var(--color-sand-300); font-size:10px;">Track record officiel FAO</span>
               </td>
               <td>
                 <strong>${b.rating} / 5.0</strong><br>
-                <span style="color:var(--color-sand-300); font-size:10px;">${b.reviews_count} avis vérifiés</span>
+                <span style="color:var(--color-sand-300); font-size:10px;">${b.reviews_count} recommandations</span>
               </td>
               <td>
-                <span style="color:var(--color-brand-300); font-weight:600; font-size:11px;">${(b.top_communes || []).join(', ')}</span>
+                <span style="color:var(--color-brand-300); font-size:11px;">${(b.top_communes||[]).join(', ')}</span>
               </td>
               <td>
-                <button type="button" class="view-map-btn" onclick="goToBrokerOnMap('${b.agency_id}', '${b.name.replace(/'/g, "\\'")}')">Voir ses ventes 📍</button>
+                <button type="button" class="view-map-btn" onclick="goToBrokerOnMap('${b.agency_id}', '${b.name.replace(/'/g, "\\'")}')">Isoler Ventes 📍</button>
               </td>
             </tr>
           `;
@@ -3059,12 +3176,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <thead>
               <tr>
                 <th>Rang</th>
-                <th>Courtier / Agent</th>
-                <th>Agence Affiliée</th>
-                <th>Score Cytria</th>
-                <th>Volume & Spécialité</th>
-                <th>Avis Clients</th>
-                <th>Communes de Prédilection</th>
+                <th>Courtier / Négociateur</th>
+                <th>Agence de Rattachement</th>
+                <th>Score Courtier</th>
+                <th>Ventes Vérifiées</th>
+                <th>Avis & Satisfaction</th>
+                <th>Secteurs d'Intervention</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -3078,37 +3195,78 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     // Agency Attribution Engine & Map Logic
     function getAttributedTransactions(agency, brokerName = null) {
-      const topCommunes = agency.top_communes || [];
+      const agNorm = normStr(agency.name);
+      const topCommsNorm = (agency.top_communes || []).map(c => normStr(c));
+      const primaryTerrNorm = normStr(agency.primary_territory || '');
+
+      let brokerObj = null;
+      let brokerSurnameNorm = '';
+      if (brokerName) {
+        brokerObj = (agency.agents || []).find(b => normStr(b.name) === normStr(brokerName));
+        const parts = brokerName.split(' ');
+        brokerSurnameNorm = normStr(parts[parts.length - 1]);
+      }
+
       return DATA.filter(r => {
         if (!r.lat || !r.lon) return false;
 
-        // Check if parties mention agency name
-        const parties = ((r.buyer || '') + ' ' + (r.seller || '')).toLowerCase();
-        const agName = agency.name.toLowerCase();
-        if (agName.includes('comptoir') && parties.includes('comptoir')) return true;
-        if (agName.includes('spg') && (parties.includes('spg') || parties.includes('societe privee'))) return true;
-        if (agName.includes('naef') && parties.includes('naef')) return true;
-        if (agName.includes('barnes') && parties.includes('barnes')) return true;
-        if (agName.includes('moser') && parties.includes('moser')) return true;
-        if (agName.includes('swissroc') && parties.includes('swissroc')) return true;
+        const buyerNorm = normStr(r.buyer || '');
+        const sellerNorm = normStr(r.seller || '');
+        const partiesNorm = buyerNorm + ' ' + sellerNorm;
+        const commNorm = normStr(r.commune || '');
 
-        // Broker-specific filtering
-        if (brokerName) {
-          const broker = (agency.agents || []).find(b => b.name === brokerName);
-          if (broker && (broker.top_communes || []).includes(r.commune)) {
+        // 1. Direct notarial mention check
+        let isDirect = false;
+        if (agNorm.includes('comptoir') && partiesNorm.includes('comptoir')) isDirect = true;
+        else if (agNorm.includes('spg') && (partiesNorm.includes('spg') || partiesNorm.includes('societe privee'))) isDirect = true;
+        else if (agNorm.includes('naef') && partiesNorm.includes('naef')) isDirect = true;
+        else if (agNorm.includes('barnes') && partiesNorm.includes('barnes')) isDirect = true;
+        else if (agNorm.includes('moser') && partiesNorm.includes('moser')) isDirect = true;
+        else if (agNorm.includes('swissroc') && partiesNorm.includes('swissroc')) isDirect = true;
+        else if ((agNorm.includes('desormiere') || agNorm.includes('vanhalst')) && (partiesNorm.includes('desormiere') || partiesNorm.includes('vanhalst'))) isDirect = true;
+        else if (agNorm.includes('neho') && partiesNorm.includes('neho')) isDirect = true;
+        else if (agNorm.includes('cardis') && partiesNorm.includes('cardis')) isDirect = true;
+        else if (agNorm.includes('engel') && partiesNorm.includes('engel')) isDirect = true;
+        else if (agNorm.includes('pilet') && partiesNorm.includes('pilet')) isDirect = true;
+
+        if (isDirect) {
+          r._attributionType = 'DIRECT';
+          if (brokerName && brokerSurnameNorm && partiesNorm.includes(brokerSurnameNorm)) {
+            return true;
+          }
+          return !brokerName;
+        }
+
+        // 2. Broker-specific territory attribution
+        if (brokerName && brokerObj) {
+          const brokerComms = (brokerObj.top_communes || []).map(c => normStr(c));
+          if (brokerComms.some(c => commNorm.includes(c) || c.includes(commNorm))) {
             if (r.price_chf && agency.median_price_chf) {
-              return r.price_chf >= agency.median_price_chf * 0.4 && r.price_chf <= agency.median_price_chf * 3.0;
+              const matchesPrice = r.price_chf >= agency.median_price_chf * 0.35 && r.price_chf <= agency.median_price_chf * 3.5;
+              if (matchesPrice) {
+                r._attributionType = 'TERRITORY';
+                return true;
+              }
+              return false;
             }
+            r._attributionType = 'TERRITORY';
             return true;
           }
           return false;
         }
 
-        // Territory match
-        if (topCommunes.includes(r.commune)) {
+        // 3. Agency-wide territorial attribution
+        const matchesTerritory = topCommsNorm.some(c => commNorm.includes(c) || c.includes(commNorm)) || primaryTerrNorm.includes(commNorm);
+        if (matchesTerritory) {
           if (r.price_chf && agency.median_price_chf) {
-            return r.price_chf >= agency.median_price_chf * 0.4 && r.price_chf <= agency.median_price_chf * 3.0;
+            const matchesPrice = r.price_chf >= agency.median_price_chf * 0.35 && r.price_chf <= agency.median_price_chf * 3.5;
+            if (matchesPrice) {
+              r._attributionType = 'TERRITORY';
+              return true;
+            }
+            return false;
           }
+          r._attributionType = 'TERRITORY';
           return true;
         }
 
@@ -3121,16 +3279,27 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       agencyRadiusGroup.clearLayers();
       markersCluster.clearLayers();
 
+      const banner = document.getElementById('agencyFocusBanner');
+      if (banner) banner.style.display = 'none';
+
       const agencies = LEAGUE_DATA.agencies;
 
+      if (agencyIdToSelect) {
+        const ag = agencies.find(x => x.id === agencyIdToSelect);
+        if (ag) {
+          selectAgencyOnMap(ag, brokerNameToSelect);
+          return;
+        }
+      }
+
+      // No agency selected: show all agency HQ markers across Geneva
       agencies.forEach(a => {
         if (!a.lat || !a.lon) return;
 
-        const isSelected = agencyIdToSelect && a.id === agencyIdToSelect;
         const icon = L.divIcon({
           className: 'custom-agency-div',
           html: `
-            <div class="agency-marker-pin ${isSelected ? 'active' : ''}" id="pin-${a.id}">
+            <div class="agency-marker-pin" id="pin-${a.id}">
               <div class="pin-badge">#${a.rank}</div>
               <div class="pin-name">${a.name.split(' ')[0]}</div>
             </div>
@@ -3141,37 +3310,51 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
         const m = L.marker([a.lat, a.lon], { icon }).addTo(agencyMarkersGroup);
         m.on('click', () => {
-          selectAgencyOnMap(a);
+          selectAgencyOnMap(a, null);
         });
       });
 
-      if (agencyIdToSelect) {
-        const ag = agencies.find(x => x.id === agencyIdToSelect);
-        if (ag) {
-          selectAgencyOnMap(ag, brokerNameToSelect);
-        }
-      } else {
-        // Center on Geneva overview
-        map.setView([46.2044, 6.1432], 12);
-        document.getElementById('statLabelPrimary').textContent = 'Agences Renseignées';
-        document.getElementById('stat-count').textContent = agencies.length.toLocaleString('fr-CH');
-        document.getElementById('statLabelSecondary').textContent = 'Courtiers Indexés';
-        document.getElementById('stat-vol').textContent = LEAGUE_DATA.brokers.length.toLocaleString('fr-CH');
-        document.getElementById('statLabel3').textContent = 'Score Médian';
-        document.getElementById('stat-3').textContent = '74 / 100';
-        document.getElementById('statLabel4').textContent = 'Couverture Canton';
-        document.getElementById('stat-4').textContent = '100%';
-      }
+      // Reset sidebar controls
+      const sbAgencySelect = document.getElementById('sidebarAgencySelect');
+      if (sbAgencySelect) sbAgencySelect.value = 'ALL';
+      const sbBrokerGroup = document.getElementById('sidebarBrokerGroup');
+      if (sbBrokerGroup) sbBrokerGroup.style.display = 'none';
+      const sbResetGroup = document.getElementById('sidebarResetAgencyGroup');
+      if (sbResetGroup) sbResetGroup.style.display = 'none';
+
+      // Reset map view to Geneva overview
+      map.setView([46.2044, 6.1432], 12);
+
+      // Restore Canton overview HUD stats
+      document.getElementById('statLabelPrimary').textContent = 'Agences Référencées';
+      document.getElementById('stat-count').textContent = agencies.length.toLocaleString('fr-CH');
+      document.getElementById('statLabelSecondary').textContent = 'Courtiers Indexés';
+      document.getElementById('stat-vol').textContent = LEAGUE_DATA.brokers.length.toLocaleString('fr-CH');
+      document.getElementById('statLabel3').textContent = 'Score Médian';
+      document.getElementById('stat-3').textContent = '74 / 100';
+      document.getElementById('statLabel4').textContent = "Rayon d'Action";
+      document.getElementById('stat-4').textContent = 'Genève 100%';
     }
 
     function selectAgencyOnMap(agency, brokerName = null) {
+      agencyMarkersGroup.clearLayers();
       agencyRadiusGroup.clearLayers();
       markersCluster.clearLayers();
 
-      // Highlight pin
-      document.querySelectorAll('.agency-marker-pin').forEach(p => p.classList.remove('active'));
-      const activePin = document.getElementById('pin-' + agency.id);
-      if (activePin) activePin.classList.add('active');
+      // Highlight pin on map
+      const icon = L.divIcon({
+        className: 'custom-agency-div',
+        html: `
+          <div class="agency-marker-pin active" id="pin-${agency.id}">
+            <div class="pin-badge">#${agency.rank}</div>
+            <div class="pin-name">${agency.name.split(' ')[0]}</div>
+          </div>
+        `,
+        iconSize: [110, 30],
+        iconAnchor: [55, 15]
+      });
+      const agMarker = L.marker([agency.lat, agency.lon], { icon }).addTo(agencyMarkersGroup);
+      agMarker.on('click', () => openAgencyDetail(agency, brokerName));
 
       // Draw Radius Circle
       const radiusCircle = L.circle([agency.lat, agency.lon], {
@@ -3180,35 +3363,50 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         weight: 2,
         dashArray: '5, 8',
         fillColor: '#C9A24D',
-        fillOpacity: 0.10
+        fillOpacity: 0.08
       }).addTo(agencyRadiusGroup);
-
-      // Fit bounds to agency circle
-      map.fitBounds(radiusCircle.getBounds(), { padding: [30, 30] });
 
       // Get attributed deeds
       const attributed = getAttributedTransactions(agency, brokerName);
 
       const markers = [];
       let totalAttributedVol = 0;
+      const bounds = L.latLngBounds([[agency.lat, agency.lon]]);
 
       attributed.forEach(r => {
         if (!r.lat || !r.lon) return;
         totalAttributedVol += (r.price_chf || 0);
+        bounds.extend([r.lat, r.lon]);
 
+        const isDirect = r._attributionType === 'DIRECT';
         const circleMarker = L.circleMarker([r.lat, r.lon], {
-          radius: 6,
-          fillColor: '#C9A24D',
+          radius: isDirect ? 7.5 : 6,
+          fillColor: isDirect ? '#10b981' : '#C9A24D',
           color: '#080D11',
           weight: 1.5,
           opacity: 1,
-          fillOpacity: 0.85
+          fillOpacity: 0.90
         });
+        circleMarker.bindTooltip(`
+          <div style="font-family:'Hanken Grotesk',sans-serif; padding:4px;">
+            <strong style="color:#C9A24D;">${agency.name}</strong><br>
+            <span style="font-size:11px;">${r.address || r.commune}</span><br>
+            <span style="font-weight:700; color:#fff;">${r.price_chf ? 'CHF ' + r.price_chf.toLocaleString('fr-CH') : 'Prix non publié'}</span><br>
+            <span style="font-size:10px; color:${isDirect ? '#10b981' : '#C9A24D'};">${isDirect ? '✓ Mention Notariée Directe' : '◎ Attribution Mandat & Territoire'}</span>
+          </div>
+        `, { direction: 'top' });
         circleMarker.on('click', () => openDetail(r));
         markers.push(circleMarker);
       });
 
       markersCluster.addLayers(markers);
+
+      // Fit bounds to encompass agency pin + its attributed transactions
+      if (attributed.length > 0 && bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+      } else {
+        map.fitBounds(radiusCircle.getBounds(), { padding: [30, 30] });
+      }
 
       // Update HUD
       document.getElementById('statLabelPrimary').textContent = brokerName ? 'Ventes Courtier' : 'Ventes Attribuées';
@@ -3217,12 +3415,33 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       document.getElementById('stat-vol').textContent = 'CHF ' + (totalAttributedVol >= 1e9 ? (totalAttributedVol/1e9).toFixed(2) + ' Mrd' : (totalAttributedVol/1e6).toFixed(1) + ' Mio');
       document.getElementById('statLabel3').textContent = 'Score Agence';
       document.getElementById('stat-3').textContent = agency.cytria_score + ' / 100';
-      document.getElementById('statLabel4').textContent = 'Rayon d\'Action';
+      document.getElementById('statLabel4').textContent = "Rayon d'Action";
       document.getElementById('stat-4').textContent = (agency.radius_meters/1000).toFixed(1) + ' km';
 
-      // Update sidebar select
+      // Update sidebar controls
       const sbSel = document.getElementById('sidebarAgencySelect');
       if (sbSel) sbSel.value = agency.id;
+
+      const sbBrokerGroup = document.getElementById('sidebarBrokerGroup');
+      const sbBrokerSelect = document.getElementById('sidebarBrokerSelect');
+      if (sbBrokerGroup && sbBrokerSelect) {
+        sbBrokerGroup.style.display = 'block';
+        const agents = agency.agents || [];
+        sbBrokerSelect.innerHTML = `<option value="ALL">Tous les courtiers de l'agence (${agents.length})</option>` +
+          agents.map(b => `<option value="${b.name}" ${brokerName === b.name ? 'selected' : ''}>${b.name} (${b.role})</option>`).join('');
+      }
+
+      const sbResetGroup = document.getElementById('sidebarResetAgencyGroup');
+      if (sbResetGroup) sbResetGroup.style.display = 'block';
+
+      // Show floating focus banner
+      const banner = document.getElementById('agencyFocusBanner');
+      if (banner) {
+        banner.style.display = 'flex';
+        document.getElementById('focusBannerBadge').textContent = brokerName ? '👤 Courtier Isolé' : '🏛️ Agence Isolée';
+        document.getElementById('focusBannerTitle').textContent = brokerName ? `${agency.name} • ${brokerName}` : agency.name;
+        document.getElementById('focusBannerCount').textContent = `${attributed.length} ventes réelles affichées`;
+      }
 
       // Open agency drawer
       openAgencyDetail(agency, brokerName);

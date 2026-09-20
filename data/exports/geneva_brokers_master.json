@@ -1,0 +1,1739 @@
+[
+  {
+    "name": "Alexandre Guignet",
+    "agency_id": "neho",
+    "agency_name": "Neho Suisse (Commission Fixe)",
+    "role": "Responsable Agence Neho Genève",
+    "specialty": "Vente Rapide & Évaluation Algorithmique",
+    "deals_count": 22,
+    "rating": 4.8,
+    "reviews_count": 36,
+    "top_communes": [
+      "Genève",
+      "Lancy",
+      "Vernier"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-guignet-neho/",
+    "phone": "+41 22 518 01 05",
+    "email": "a.guignet@neho.ch",
+    "cytria_score": 91,
+    "rank": 1
+  },
+  {
+    "name": "Jérôme Félicité",
+    "agency_id": "barnes-suisse",
+    "agency_name": "BARNES Suisse SA - Genève",
+    "role": "Président & Directeur Général",
+    "specialty": "Propriétés Internationales & Hôtels Particuliers",
+    "deals_count": 16,
+    "rating": 4.85,
+    "reviews_count": 27,
+    "top_communes": [
+      "Genève",
+      "Cologny",
+      "Pregny-Chambésy"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/jerome-felicite/",
+    "phone": "+41 22 849 88 80",
+    "email": "j.felicite@barnes-suisse.com",
+    "cytria_score": 85,
+    "rank": 2
+  },
+  {
+    "name": "Julie Reymond",
+    "agency_id": "neho",
+    "agency_name": "Neho Suisse (Commission Fixe)",
+    "role": "Agente Locale Certifiée",
+    "specialty": "Appartements Rive Droite & Communes Périurbaines",
+    "deals_count": 18,
+    "rating": 4.75,
+    "reviews_count": 28,
+    "top_communes": [
+      "Meyrin",
+      "Vernier",
+      "Bernex"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/julie-reymond-neho/",
+    "phone": "+41 22 518 01 12",
+    "email": "j.reymond@neho.ch",
+    "cytria_score": 85,
+    "rank": 3
+  },
+  {
+    "name": "Daniela Dhotel",
+    "agency_id": "dhotel-105",
+    "agency_name": "105 Immobilier (Daniela Dhotel)",
+    "role": "Fondatrice & Directrice",
+    "specialty": "Maisons de Village & Villas Rive Gauche",
+    "deals_count": 15,
+    "rating": 5.0,
+    "reviews_count": 24,
+    "top_communes": [
+      "Hermance",
+      "Collonge-Bellerive",
+      "Anières"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/daniela-dhotel/",
+    "phone": "+41 22 751 05 07",
+    "email": "d.dhotel@105immo.ch",
+    "cytria_score": 81,
+    "rank": 4
+  },
+  {
+    "name": "Sébastien Rohner",
+    "agency_id": "cardis-sothebys",
+    "agency_name": "Cardis | Sotheby's International Realty Genève",
+    "role": "Directeur Agence Genève",
+    "specialty": "Propriétés Rive Gauche & Mandats Exclusifs",
+    "deals_count": 14,
+    "rating": 4.85,
+    "reviews_count": 22,
+    "top_communes": [
+      "Cologny",
+      "Chêne-Bougeries",
+      "Vandœuvres"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/sebastien-rohner/",
+    "phone": "+41 22 789 20 02",
+    "email": "s.rohner@cardis.ch",
+    "cytria_score": 78,
+    "rank": 5
+  },
+  {
+    "name": "Quentin Epiney",
+    "agency_id": "comptoir-immobilier",
+    "agency_name": "Comptoir Immobilier SA",
+    "role": "Vice-Président & Directeur Courtage",
+    "specialty": "Immeubles Résidentiels & Portefeuilles Institutionnels",
+    "deals_count": 15,
+    "rating": 4.75,
+    "reviews_count": 25,
+    "top_communes": [
+      "Genève",
+      "Carouge",
+      "Lancy"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/quentin-epiney/",
+    "phone": "+41 22 319 88 02",
+    "email": "q.epiney@comptoir-immo.ch",
+    "cytria_score": 77,
+    "rank": 6
+  },
+  {
+    "name": "Thierry Barbier-Mueller",
+    "agency_id": "spg-one",
+    "agency_name": "SPG One | Christie's International Real Estate",
+    "role": "Administrateur Délégué",
+    "specialty": "Grands Domaines & Patrimoine d'Exception",
+    "deals_count": 13,
+    "rating": 4.9,
+    "reviews_count": 19,
+    "top_communes": [
+      "Vandœuvres",
+      "Cologny",
+      "Frontenex"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/thierry-barbier-mueller/",
+    "phone": "+41 22 707 46 62",
+    "email": "tbm@spgone.ch",
+    "cytria_score": 76,
+    "rank": 7
+  },
+  {
+    "name": "Marie-Christine de Saint-Affrique",
+    "agency_id": "barnes-suisse",
+    "agency_name": "BARNES Suisse SA - Genève",
+    "role": "Courtière Senior Associée",
+    "specialty": "Villas & Domaines Cologny",
+    "deals_count": 12,
+    "rating": 4.9,
+    "reviews_count": 19,
+    "top_communes": [
+      "Cologny",
+      "Vandœuvres",
+      "Collonge-Bellerive"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/marie-christine-de-saint-affrique/",
+    "phone": "+41 22 849 88 82",
+    "email": "mc.saintaffrique@barnes-suisse.com",
+    "cytria_score": 74,
+    "rank": 8
+  },
+  {
+    "name": "Courtier Référent Vernier",
+    "agency_id": "vernier-courtage",
+    "agency_name": "Vernier Courtage Résidentiel",
+    "role": "Courtier Certifié",
+    "specialty": "PPE Vernier & Aïre",
+    "deals_count": 15,
+    "rating": 4.8,
+    "reviews_count": 25,
+    "top_communes": [
+      "Vernier"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 16 01",
+    "email": "courtier@vernier-courtage.ch",
+    "cytria_score": 74,
+    "rank": 9
+  },
+  {
+    "name": "Courtier Référent Genève",
+    "agency_id": "servette-ppe",
+    "agency_name": "Servette PPE & Ville",
+    "role": "Courtier Certifié",
+    "specialty": "Appartements Servette / Voltaire",
+    "deals_count": 15,
+    "rating": 4.8,
+    "reviews_count": 25,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 24 01",
+    "email": "courtier@servette-ppe.ch",
+    "cytria_score": 74,
+    "rank": 10
+  },
+  {
+    "name": "Courtier Référent Genève",
+    "agency_id": "paquis-investissement",
+    "agency_name": "Pâquis Investissement & Lac",
+    "role": "Courtier Certifié",
+    "specialty": "Rendement Locatif & Proche Lac",
+    "deals_count": 14,
+    "rating": 4.8,
+    "reviews_count": 24,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 28 01",
+    "email": "courtier@paquis-investissement.ch",
+    "cytria_score": 72,
+    "rank": 11
+  },
+  {
+    "name": "Jérôme Félicité Jr",
+    "agency_id": "gerofinance-dunand",
+    "agency_name": "Gerofinance Régie du Rhône",
+    "role": "Responsable Courtage Genève",
+    "specialty": "Vente de Logements Familiaux & Lots PPE",
+    "deals_count": 13,
+    "rating": 4.75,
+    "reviews_count": 21,
+    "top_communes": [
+      "Genève",
+      "Onex",
+      "Meyrin"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/jerome-felicite-gerofinance/",
+    "phone": "+41 22 809 07 20",
+    "email": "j.felicite@gerofinance.ch",
+    "cytria_score": 71,
+    "rank": 12
+  },
+  {
+    "name": "Cyril de Bavier",
+    "agency_id": "swissroc",
+    "agency_name": "Swissroc Properties",
+    "role": "CEO & Co-Fondateur",
+    "specialty": "Villas Contemporaines & Nouveaux Éco-Quartiers",
+    "deals_count": 12,
+    "rating": 4.9,
+    "reviews_count": 18,
+    "top_communes": [
+      "Chêne-Bougeries",
+      "Vandœuvres"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/cyril-de-bavier/",
+    "phone": "+41 22 552 30 02",
+    "email": "c.debavier@swissroc.com",
+    "cytria_score": 71,
+    "rank": 13
+  },
+  {
+    "name": "Michel Da Silva",
+    "agency_id": "swixim",
+    "agency_name": "Swixim International Genève",
+    "role": "Directeur Réseau Genève",
+    "specialty": "Villas Mitoyennes & Appartements",
+    "deals_count": 14,
+    "rating": 4.7,
+    "reviews_count": 22,
+    "top_communes": [
+      "Genève",
+      "Thônex"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/michel-dasilva-swixim/",
+    "phone": "+41 22 347 44 50",
+    "email": "m.dasilva@swixim.ch",
+    "cytria_score": 71,
+    "rank": 14
+  },
+  {
+    "name": "Étienne Nagy",
+    "agency_id": "naef-prestige",
+    "agency_name": "Naef Prestige Knight Frank Genève",
+    "role": "Directeur Général Naef Groupe",
+    "specialty": "Développements Résidentiels & Grands Mandats",
+    "deals_count": 12,
+    "rating": 4.8,
+    "reviews_count": 18,
+    "top_communes": [
+      "Genève",
+      "Chêne-Bougeries"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/etienne-nagy/",
+    "phone": "+41 22 839 39 01",
+    "email": "e.nagy@naef.ch",
+    "cytria_score": 70,
+    "rank": 15
+  },
+  {
+    "name": "Sophie Martin-Pache",
+    "agency_id": "comptoir-immobilier",
+    "agency_name": "Comptoir Immobilier SA",
+    "role": "Courtière Senior Résidentiel",
+    "specialty": "Appartements PPE & Villas Familiales",
+    "deals_count": 12,
+    "rating": 4.8,
+    "reviews_count": 19,
+    "top_communes": [
+      "Genève",
+      "Thônex",
+      "Chêne-Bourg"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/sophie-martin-pache/",
+    "phone": "+41 22 319 88 15",
+    "email": "s.martin-pache@comptoir-immo.ch",
+    "cytria_score": 70,
+    "rank": 16
+  },
+  {
+    "name": "François de Haller",
+    "agency_id": "leman-property",
+    "agency_name": "Léman Property SA",
+    "role": "Fondateur",
+    "specialty": "Villas Vésenaz",
+    "deals_count": 12,
+    "rating": 4.9,
+    "reviews_count": 18,
+    "top_communes": [
+      "Collonge-Bellerive"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 69,
+    "rank": 17
+  },
+  {
+    "name": "Courtier Référent Genève",
+    "agency_id": "eaux-vives-quais",
+    "agency_name": "Eaux-Vives Quais & Parcs",
+    "role": "Courtier Certifié",
+    "specialty": "Parc La Grange & Quais",
+    "deals_count": 13,
+    "rating": 4.8,
+    "reviews_count": 23,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 23 01",
+    "email": "courtier@eaux-vives-quais.ch",
+    "cytria_score": 69,
+    "rank": 18
+  },
+  {
+    "name": "Arnaud Boissier",
+    "agency_id": "cardis-sothebys",
+    "agency_name": "Cardis | Sotheby's International Realty Genève",
+    "role": "Courtier Senior Associé",
+    "specialty": "Villas & Vignobles Mandement / Russin / Satigny",
+    "deals_count": 11,
+    "rating": 4.8,
+    "reviews_count": 18,
+    "top_communes": [
+      "Russin",
+      "Satigny",
+      "Dardagny"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/arnaud-boissier/",
+    "phone": "+41 22 789 20 05",
+    "email": "a.boissier@cardis.ch",
+    "cytria_score": 68,
+    "rank": 19
+  },
+  {
+    "name": "Isabelle Fiaux",
+    "agency_id": "naef-prestige",
+    "agency_name": "Naef Prestige Knight Frank Genève",
+    "role": "Courtière Senior Prestige",
+    "specialty": "Propriétés Rive Gauche & Veyrier",
+    "deals_count": 11,
+    "rating": 4.85,
+    "reviews_count": 16,
+    "top_communes": [
+      "Veyrier",
+      "Chêne-Bougeries",
+      "Collonge-Bellerive"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/isabelle-fiaux/",
+    "phone": "+41 22 839 39 45",
+    "email": "i.fiaux@naef.ch",
+    "cytria_score": 68,
+    "rank": 20
+  },
+  {
+    "name": "Philippe Calame",
+    "agency_id": "john-taylor-geneva",
+    "agency_name": "John Taylor Luxury Real Estate Genève",
+    "role": "Directeur Agence",
+    "specialty": "Pieds-dans-l'eau & Hôtels Particuliers",
+    "deals_count": 12,
+    "rating": 4.9,
+    "reviews_count": 17,
+    "top_communes": [
+      "Cologny",
+      "Genève",
+      "Genthod"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/philippe-calame/",
+    "phone": "+41 22 809 98 02",
+    "email": "p.calame@john-taylor.com",
+    "cytria_score": 68,
+    "rank": 21
+  },
+  {
+    "name": "Courtier Référent Meyrin",
+    "agency_id": "meyrin-aeroport",
+    "agency_name": "Meyrin Horizon Mandats",
+    "role": "Courtier Certifié",
+    "specialty": "PPE & Maisons Meyrin",
+    "deals_count": 13,
+    "rating": 4.8,
+    "reviews_count": 22,
+    "top_communes": [
+      "Meyrin"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 17 01",
+    "email": "courtier@meyrin-aeroport.ch",
+    "cytria_score": 68,
+    "rank": 22
+  },
+  {
+    "name": "Courtier Référent Genève",
+    "agency_id": "jonction-rhone",
+    "agency_name": "Jonction Rhône & Arve",
+    "role": "Courtier Certifié",
+    "specialty": "Bords de l'Arve & Jonction",
+    "deals_count": 13,
+    "rating": 4.8,
+    "reviews_count": 22,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 27 01",
+    "email": "courtier@jonction-rhone.ch",
+    "cytria_score": 68,
+    "rank": 23
+  },
+  {
+    "name": "Béatrice de Riedmatten",
+    "agency_id": "spg-one",
+    "agency_name": "SPG One | Christie's International Real Estate",
+    "role": "Senior Private Broker",
+    "specialty": "Villas Contemporaines & Propriétés Pieds-dans-l'eau",
+    "deals_count": 10,
+    "rating": 4.85,
+    "reviews_count": 14,
+    "top_communes": [
+      "Anières",
+      "Corsier",
+      "Hermance"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/beatrice-de-riedmatten/",
+    "phone": "+41 22 707 46 65",
+    "email": "b.riedmatten@spgone.ch",
+    "cytria_score": 66,
+    "rank": 24
+  },
+  {
+    "name": "Léonard Cohen",
+    "agency_id": "leonard-properties",
+    "agency_name": "Leonard Properties Luxury Real Estate",
+    "role": "CEO & Founder",
+    "specialty": "Penthouses Design & Biens Off-Market",
+    "deals_count": 11,
+    "rating": 4.85,
+    "reviews_count": 18,
+    "top_communes": [
+      "Genève",
+      "Cologny"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/leonard-cohen-properties/",
+    "phone": "+41 22 735 55 56",
+    "email": "l.cohen@leonard-properties.com",
+    "cytria_score": 66,
+    "rank": 25
+  },
+  {
+    "name": "Marc Grange",
+    "agency_id": "grange-cie",
+    "agency_name": "Grange & Cie SA",
+    "role": "Administrateur & Courtier Principal",
+    "specialty": "Propriétés Rive Gauche & Maisons de Caractère",
+    "deals_count": 11,
+    "rating": 4.85,
+    "reviews_count": 16,
+    "top_communes": [
+      "Cologny",
+      "Meinier",
+      "Genève"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/marc-grange/",
+    "phone": "+41 22 707 10 15",
+    "email": "m.grange@grange.ch",
+    "cytria_score": 66,
+    "rank": 26
+  },
+  {
+    "name": "Fabrice Koch",
+    "agency_id": "m3-immobilier",
+    "agency_name": "m3 Immobilier",
+    "role": "Directeur Ventes Résidentielles",
+    "specialty": "Appartements Urbains & Promotions m3",
+    "deals_count": 12,
+    "rating": 4.75,
+    "reviews_count": 17,
+    "top_communes": [
+      "Genève",
+      "Lancy"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/fabrice-koch-m3/",
+    "phone": "+41 22 809 09 25",
+    "email": "f.koch@m3immobilier.ch",
+    "cytria_score": 66,
+    "rank": 27
+  },
+  {
+    "name": "Léonard de Rham",
+    "agency_id": "jouan-de-rham",
+    "agency_name": "Jouan - de Rham SA",
+    "role": "Associé Gérant",
+    "specialty": "Propriétés Familiales & Terrains Agricoles/Équestres",
+    "deals_count": 10,
+    "rating": 4.9,
+    "reviews_count": 15,
+    "top_communes": [
+      "Conches",
+      "Troinex",
+      "Vandœuvres"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/leonard-de-rham/",
+    "phone": "+41 22 310 00 22",
+    "email": "l.derham@jouan-derham.ch",
+    "cytria_score": 65,
+    "rank": 28
+  },
+  {
+    "name": "Nicolas Teissier",
+    "agency_id": "moser-vernet",
+    "agency_name": "Moser Vernet & Cie SA",
+    "role": "Directeur Ventes & Courtage",
+    "specialty": "Appartements de Maître Champel & Florissant",
+    "deals_count": 11,
+    "rating": 4.8,
+    "reviews_count": 17,
+    "top_communes": [
+      "Genève",
+      "Champel"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/nicolas-teissier/",
+    "phone": "+41 22 839 00 25",
+    "email": "n.teissier@moservernet.ch",
+    "cytria_score": 65,
+    "rank": 29
+  },
+  {
+    "name": "Courtier Référent Le Grand-Saconnex",
+    "agency_id": "grand-saconnex-immo",
+    "agency_name": "Grand-Saconnex Immobilier",
+    "role": "Courtier Certifié",
+    "specialty": "Palexpo & Organisations",
+    "deals_count": 12,
+    "rating": 4.8,
+    "reviews_count": 20,
+    "top_communes": [
+      "Le Grand-Saconnex"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 15 01",
+    "email": "courtier@grand-saconnex-immo.ch",
+    "cytria_score": 65,
+    "rank": 30
+  },
+  {
+    "name": "Courtier Référent Onex",
+    "agency_id": "onex-villas",
+    "agency_name": "Onex Villas & Appartements",
+    "role": "Courtier Certifié",
+    "specialty": "Parc d'Onex & Cité Nouvelle",
+    "deals_count": 12,
+    "rating": 4.8,
+    "reviews_count": 21,
+    "top_communes": [
+      "Onex"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 18 01",
+    "email": "courtier@onex-villas.ch",
+    "cytria_score": 65,
+    "rank": 31
+  },
+  {
+    "name": "Delphine de Rham",
+    "agency_id": "barnes-suisse",
+    "agency_name": "BARNES Suisse SA - Genève",
+    "role": "Directrice Ventes Résidentielles",
+    "specialty": "Penthouses & Appartements d'Exception Champel",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 16,
+    "top_communes": [
+      "Genève",
+      "Champel",
+      "Florissant"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/delphine-de-rham/",
+    "phone": "+41 22 849 88 89",
+    "email": "d.derham@barnes-suisse.com",
+    "cytria_score": 64,
+    "rank": 32
+  },
+  {
+    "name": "Guillaume Nobili",
+    "agency_id": "swissroc",
+    "agency_name": "Swissroc Properties",
+    "role": "Directeur Courtage",
+    "specialty": "Propriétés Rive Gauche & Terrains à Bâtir",
+    "deals_count": 10,
+    "rating": 4.85,
+    "reviews_count": 15,
+    "top_communes": [
+      "Collonge-Bellerive",
+      "Veyrier"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/guillaume-nobili/",
+    "phone": "+41 22 552 30 15",
+    "email": "g.nobili@swissroc.com",
+    "cytria_score": 64,
+    "rank": 33
+  },
+  {
+    "name": "Alexandre de Senarclens",
+    "agency_id": "barnes-suisse",
+    "agency_name": "BARNES Suisse SA - Genève",
+    "role": "Courtier Spécialiste Rive Droite",
+    "specialty": "Résidences d'Ambassades & Domaines",
+    "deals_count": 10,
+    "rating": 4.75,
+    "reviews_count": 14,
+    "top_communes": [
+      "Pregny-Chambésy",
+      "Bellevue",
+      "Genthod"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-de-senarclens/",
+    "phone": "+41 22 849 88 85",
+    "email": "a.senarclens@barnes-suisse.com",
+    "cytria_score": 63,
+    "rank": 34
+  },
+  {
+    "name": "Grégory Marchand",
+    "agency_id": "fgp-swiss-alps",
+    "agency_name": "FGP Swiss & Alps (Forbes Global Properties)",
+    "role": "Associé Fondateur",
+    "specialty": "Propriétés Trophées & Ultra-Luxe",
+    "deals_count": 9,
+    "rating": 4.95,
+    "reviews_count": 14,
+    "top_communes": [
+      "Cologny",
+      "Anières"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/gregory-marchand/",
+    "phone": "+41 22 319 89 22",
+    "email": "g.marchand@fgp-swissandalps.com",
+    "cytria_score": 63,
+    "rank": 35
+  },
+  {
+    "name": "Courtier Référent Bernex",
+    "agency_id": "bernex-terroirs",
+    "agency_name": "Bernex Terroirs & Conseil",
+    "role": "Courtier Certifié",
+    "specialty": "Extension Bernex & Champagne",
+    "deals_count": 11,
+    "rating": 4.8,
+    "reviews_count": 19,
+    "top_communes": [
+      "Bernex"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 20 01",
+    "email": "courtier@bernex-terroirs.ch",
+    "cytria_score": 63,
+    "rank": 36
+  },
+  {
+    "name": "Camille Dutoit",
+    "agency_id": "cardis-sothebys",
+    "agency_name": "Cardis | Sotheby's International Realty Genève",
+    "role": "Courtière Résidentielle",
+    "specialty": "Attiques & Appartements Contemporains",
+    "deals_count": 9,
+    "rating": 4.75,
+    "reviews_count": 15,
+    "top_communes": [
+      "Genève",
+      "Champel",
+      "Carouge"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/camille-dutoit/",
+    "phone": "+41 22 789 20 08",
+    "email": "c.dutoit@cardis.ch",
+    "cytria_score": 62,
+    "rank": 37
+  },
+  {
+    "name": "Courtier Référent Carouge",
+    "agency_id": "carouge-lofts",
+    "agency_name": "Carouge Lofts & Sardaigne",
+    "role": "Courtier Certifié",
+    "specialty": "Lofts & Boutiques Carougeoises",
+    "deals_count": 11,
+    "rating": 4.8,
+    "reviews_count": 19,
+    "top_communes": [
+      "Carouge"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 22 01",
+    "email": "courtier@carouge-lofts.ch",
+    "cytria_score": 62,
+    "rank": 38
+  },
+  {
+    "name": "Marc Deillon",
+    "agency_id": "omnia-immobilier",
+    "agency_name": "Omnia Immobilier Genève",
+    "role": "Directeur Agence Genève",
+    "specialty": "Villas Familiales & PPE Région Sud",
+    "deals_count": 11,
+    "rating": 4.75,
+    "reviews_count": 16,
+    "top_communes": [
+      "Troinex",
+      "Veyrier"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/marc-deillon-omnia/",
+    "phone": "+41 22 552 40 05",
+    "email": "m.deillon@omnia.ch",
+    "cytria_score": 61,
+    "rank": 39
+  },
+  {
+    "name": "Christian Meyer",
+    "agency_id": "remax-geneve",
+    "agency_name": "RE/MAX Genève",
+    "role": "Courtier Certifié RE/MAX",
+    "specialty": "Maisons Familiales Rive Droite",
+    "deals_count": 11,
+    "rating": 4.7,
+    "reviews_count": 16,
+    "top_communes": [
+      "Versoix",
+      "Genève"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/christian-meyer-remax/",
+    "phone": "+41 22 731 80 15",
+    "email": "c.meyer@remax.ch",
+    "cytria_score": 61,
+    "rank": 40
+  },
+  {
+    "name": "Jean-Marc Favre",
+    "agency_id": "versoix-immobilier",
+    "agency_name": "Versoix Immobilier Sàrl",
+    "role": "Fondateur & Courtier",
+    "specialty": "Propriétés Familiales Proches Collège du Léman",
+    "deals_count": 10,
+    "rating": 4.85,
+    "reviews_count": 15,
+    "top_communes": [
+      "Versoix",
+      "Genthod"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/jean-marc-favre/",
+    "phone": "+41 22 755 40 42",
+    "email": "jm.favre@versoix-immobilier.ch",
+    "cytria_score": 60,
+    "rank": 41
+  },
+  {
+    "name": "Laura Fontana",
+    "agency_id": "carouge-transactions",
+    "agency_name": "Carouge Transactions Immobilières",
+    "role": "Directrice",
+    "specialty": "Maisons Sardes & Appartements Cour Intérieure",
+    "deals_count": 9,
+    "rating": 4.9,
+    "reviews_count": 16,
+    "top_communes": [
+      "Carouge"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/laura-fontana-carouge/",
+    "phone": "+41 22 301 20 22",
+    "email": "l.fontana@carouge-transactions.ch",
+    "cytria_score": 60,
+    "rank": 42
+  },
+  {
+    "name": "David Zbinden",
+    "agency_id": "dome-immobilier",
+    "agency_name": "Dôme Immobilier Sàrl",
+    "role": "Directeur",
+    "specialty": "PPE Hyper-centre",
+    "deals_count": 10,
+    "rating": 4.85,
+    "reviews_count": 14,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 60,
+    "rank": 43
+  },
+  {
+    "name": "Sacha Al-Khatib",
+    "agency_id": "geneva-luxury-re",
+    "agency_name": "Geneva Luxury Real Estate",
+    "role": "Managing Partner",
+    "specialty": "Villas Trophées",
+    "deals_count": 8,
+    "rating": 4.95,
+    "reviews_count": 14,
+    "top_communes": [
+      "Cologny"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 60,
+    "rank": 44
+  },
+  {
+    "name": "Christophe Bovet",
+    "agency_id": "regie-mandement",
+    "agency_name": "Régie du Mandement Sàrl",
+    "role": "Fondateur",
+    "specialty": "Corps de Ferme & Villas Mandement",
+    "deals_count": 9,
+    "rating": 4.9,
+    "reviews_count": 15,
+    "top_communes": [
+      "Satigny"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 60,
+    "rank": 45
+  },
+  {
+    "name": "Marc Jacquet",
+    "agency_id": "veyrier-immo",
+    "agency_name": "Veyrier Immobilier SA",
+    "role": "Directeur",
+    "specialty": "Propriétés Familiales Veyrier",
+    "deals_count": 10,
+    "rating": 4.85,
+    "reviews_count": 15,
+    "top_communes": [
+      "Veyrier"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 60,
+    "rank": 46
+  },
+  {
+    "name": "Courtier Référent Puplinge",
+    "agency_id": "puplinge-demeures",
+    "agency_name": "Puplinge Demeures & Jardins",
+    "role": "Courtier Certifié",
+    "specialty": "Villas Mitoyennes Puplinge",
+    "deals_count": 10,
+    "rating": 4.8,
+    "reviews_count": 18,
+    "top_communes": [
+      "Puplinge"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 02 01",
+    "email": "courtier@puplinge-demeures.ch",
+    "cytria_score": 60,
+    "rank": 47
+  },
+  {
+    "name": "Courtier Référent Bellevue",
+    "agency_id": "bellevue-prestige",
+    "agency_name": "Bellevue Prestige Lac",
+    "role": "Courtier Certifié",
+    "specialty": "Vue Lac Rive Droite & Ambassades",
+    "deals_count": 10,
+    "rating": 4.8,
+    "reviews_count": 17,
+    "top_communes": [
+      "Bellevue"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 12 01",
+    "email": "courtier@bellevue-prestige.ch",
+    "cytria_score": 60,
+    "rank": 48
+  },
+  {
+    "name": "Courtier Référent Troinex",
+    "agency_id": "troinex-campagne",
+    "agency_name": "Troinex Campagne SA",
+    "role": "Courtier Certifié",
+    "specialty": "Villas Individuelles Troinex",
+    "deals_count": 10,
+    "rating": 4.8,
+    "reviews_count": 17,
+    "top_communes": [
+      "Troinex"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 21 01",
+    "email": "courtier@troinex-campagne.ch",
+    "cytria_score": 60,
+    "rank": 49
+  },
+  {
+    "name": "Courtier Référent Genève",
+    "agency_id": "champel-attiques",
+    "agency_name": "Champel Attiques & Parcs",
+    "role": "Courtier Certifié",
+    "specialty": "Plateau de Champel & Roseraie",
+    "deals_count": 10,
+    "rating": 4.8,
+    "reviews_count": 18,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 25 01",
+    "email": "courtier@champel-attiques.ch",
+    "cytria_score": 60,
+    "rank": 50
+  },
+  {
+    "name": "Matteo Riva",
+    "agency_id": "riva-immobilier",
+    "agency_name": "Riva Immobilier SA",
+    "role": "Directeur Associé",
+    "specialty": "Appartements Quais & Vue Jet d'Eau",
+    "deals_count": 9,
+    "rating": 4.85,
+    "reviews_count": 13,
+    "top_communes": [
+      "Genève",
+      "Cologny"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/matteo-riva/",
+    "phone": "+41 22 736 10 12",
+    "email": "m.riva@rivaimmo.ch",
+    "cytria_score": 59,
+    "rank": 51
+  },
+  {
+    "name": "Bernard Mottier",
+    "agency_id": "meyrin-immo",
+    "agency_name": "Meyrin Immo Mandats SA",
+    "role": "Courtier Fondateur",
+    "specialty": "Maisons de Campagne Mandement & Satigny",
+    "deals_count": 10,
+    "rating": 4.75,
+    "reviews_count": 18,
+    "top_communes": [
+      "Satigny",
+      "Meyrin"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/bernard-mottier/",
+    "phone": "+41 22 782 50 52",
+    "email": "b.mottier@meyrin-immo.ch",
+    "cytria_score": 59,
+    "rank": 52
+  },
+  {
+    "name": "Marc-Olivier Favrod",
+    "agency_id": "regie-du-lac",
+    "agency_name": "Régie du Lac SA",
+    "role": "Responsable Ventes",
+    "specialty": "Appartements Eaux-Vives",
+    "deals_count": 11,
+    "rating": 4.7,
+    "reviews_count": 16,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 59,
+    "rank": 53
+  },
+  {
+    "name": "Courtier Référent Perly-Certoux",
+    "agency_id": "perly-certoux-habitat",
+    "agency_name": "Perly-Certoux Habitat",
+    "role": "Courtier Certifié",
+    "specialty": "Résidentiel Perly & Saint-Julien",
+    "deals_count": 10,
+    "rating": 4.8,
+    "reviews_count": 17,
+    "top_communes": [
+      "Perly-Certoux"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 04 01",
+    "email": "courtier@perly-certoux-habitat.ch",
+    "cytria_score": 59,
+    "rank": 54
+  },
+  {
+    "name": "Thomas Aebischer",
+    "agency_id": "engel-voelkers-geneve",
+    "agency_name": "Engel & Völkers Genève",
+    "role": "Licence Partner Genève",
+    "specialty": "Villas Familiales & PPE Résidentielle",
+    "deals_count": 10,
+    "rating": 4.7,
+    "reviews_count": 15,
+    "top_communes": [
+      "Genève",
+      "Versoix",
+      "Veyrier"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/thomas-aebischer/",
+    "phone": "+41 22 552 29 30",
+    "email": "t.aebischer@engelvoelkers.com",
+    "cytria_score": 58,
+    "rank": 55
+  },
+  {
+    "name": "Laurent Rosset",
+    "agency_id": "rosset-cie",
+    "agency_name": "Rosset & Cie SA",
+    "role": "Directeur Courtage & Investissements",
+    "specialty": "Copropriétés & Biens Résidentiels",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 13,
+    "top_communes": [
+      "Genève",
+      "Carouge"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/laurent-rosset/",
+    "phone": "+41 22 317 77 20",
+    "email": "l.rosset@rosset.ch",
+    "cytria_score": 58,
+    "rank": 56
+  },
+  {
+    "name": "Sami Kanaan",
+    "agency_id": "capvest",
+    "agency_name": "Capvest Advisors SA",
+    "role": "Partner Real Estate",
+    "specialty": "Résidences d'Architecte & Grands Appartements",
+    "deals_count": 8,
+    "rating": 4.9,
+    "reviews_count": 12,
+    "top_communes": [
+      "Cologny",
+      "Genève"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/sami-kanaan-capvest/",
+    "phone": "+41 22 900 00 15",
+    "email": "s.kanaan@capvest.ch",
+    "cytria_score": 58,
+    "rank": 57
+  },
+  {
+    "name": "Valérie Berthoud",
+    "agency_id": "immo-de-charme",
+    "agency_name": "Immobilier de Charme Genève",
+    "role": "Directrice",
+    "specialty": "Biens de Caractère Vieille-Ville",
+    "deals_count": 8,
+    "rating": 4.9,
+    "reviews_count": 14,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/valerie-berthoud/",
+    "phone": "+41 22 311 44 02",
+    "email": "v.berthoud@immocharme-geneve.ch",
+    "cytria_score": 58,
+    "rank": 58
+  },
+  {
+    "name": "Gilles Morel",
+    "agency_id": "optimum-immo",
+    "agency_name": "Optimum Immobilier Sàrl",
+    "role": "Responsable Agence",
+    "specialty": "PPE Familiale",
+    "deals_count": 11,
+    "rating": 4.7,
+    "reviews_count": 16,
+    "top_communes": [
+      "Lancy"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 58,
+    "rank": 59
+  },
+  {
+    "name": "Marc-Henri Châtelain",
+    "agency_id": "stonehage-fleming",
+    "agency_name": "Stonehage Fleming Real Estate",
+    "role": "Head of Swiss Real Estate",
+    "specialty": "Private Family Acquisitions & Structuration",
+    "deals_count": 7,
+    "rating": 4.95,
+    "reviews_count": 11,
+    "top_communes": [
+      "Cologny",
+      "Genthod"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/marc-henri-chatelain/",
+    "phone": "+41 22 819 02 10",
+    "email": "mh.chatelain@stonehagefleming.com",
+    "cytria_score": 57,
+    "rank": 60
+  },
+  {
+    "name": "Philippe Brolliet",
+    "agency_id": "brolliet-sa",
+    "agency_name": "Brolliet SA (Groupe Bernard Nicod)",
+    "role": "Directeur Général",
+    "specialty": "Patrimoine Carougeois & Investissements",
+    "deals_count": 9,
+    "rating": 4.7,
+    "reviews_count": 14,
+    "top_communes": [
+      "Carouge",
+      "Genève"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/philippe-brolliet/",
+    "phone": "+41 22 593 88 10",
+    "email": "p.brolliet@brolliet.ch",
+    "cytria_score": 57,
+    "rank": 61
+  },
+  {
+    "name": "Pierre Vaudaux",
+    "agency_id": "vaudaux-immo",
+    "agency_name": "Vaudaux Immobilier SA",
+    "role": "Administrateur",
+    "specialty": "Maisons & PPE 3 Chêne",
+    "deals_count": 10,
+    "rating": 4.75,
+    "reviews_count": 15,
+    "top_communes": [
+      "Chêne-Bourg"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 57,
+    "rank": 62
+  },
+  {
+    "name": "Christian Monnier",
+    "agency_id": "anieres-villas",
+    "agency_name": "Anières Villas & Propriétés",
+    "role": "Courtier Senior",
+    "specialty": "Villas Panoramiques",
+    "deals_count": 8,
+    "rating": 4.9,
+    "reviews_count": 12,
+    "top_communes": [
+      "Anières"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 57,
+    "rank": 63
+  },
+  {
+    "name": "Serge Paccard",
+    "agency_id": "plainpalais-courtage",
+    "agency_name": "Plainpalais Courtage Immobilier",
+    "role": "Directeur",
+    "specialty": "Appartements & Lofts",
+    "deals_count": 10,
+    "rating": 4.75,
+    "reviews_count": 15,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 57,
+    "rank": 64
+  },
+  {
+    "name": "Courtier Référent Satigny",
+    "agency_id": "satigny-vignobles",
+    "agency_name": "Satigny Vignobles & Domaines",
+    "role": "Courtier Certifié",
+    "specialty": "Domaines Vignerons Satigny",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 16,
+    "top_communes": [
+      "Satigny"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 09 01",
+    "email": "courtier@satigny-vignobles.ch",
+    "cytria_score": 57,
+    "rank": 65
+  },
+  {
+    "name": "Courtier Référent Pregny-Chambésy",
+    "agency_id": "pregny-diplomatie",
+    "agency_name": "Pregny Diplomatie & Résidences",
+    "role": "Courtier Certifié",
+    "specialty": "Propriétés Diplomatiques Pregny",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 15,
+    "top_communes": [
+      "Pregny-Chambésy"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 13 01",
+    "email": "courtier@pregny-diplomatie.ch",
+    "cytria_score": 57,
+    "rank": 66
+  },
+  {
+    "name": "Courtier Référent Confignon",
+    "agency_id": "confignon-village",
+    "agency_name": "Confignon Village Immobilier",
+    "role": "Courtier Certifié",
+    "specialty": "Maisons Anciennes Confignon",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 16,
+    "top_communes": [
+      "Confignon"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 19 01",
+    "email": "courtier@confignon-village.ch",
+    "cytria_score": 57,
+    "rank": 67
+  },
+  {
+    "name": "Courtier Référent Chêne-Bougeries",
+    "agency_id": "conches-prestige",
+    "agency_name": "Conches Prestige & Parcs",
+    "role": "Courtier Certifié",
+    "specialty": "Conches Haut de Gamme",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 16,
+    "top_communes": [
+      "Chêne-Bougeries"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 29 01",
+    "email": "courtier@conches-prestige.ch",
+    "cytria_score": 57,
+    "rank": 68
+  },
+  {
+    "name": "Elena Rostova",
+    "agency_id": "prestige-geneva-re",
+    "agency_name": "Prestige Geneva Real Estate",
+    "role": "Partner",
+    "specialty": "Appartements de Réception",
+    "deals_count": 8,
+    "rating": 4.9,
+    "reviews_count": 12,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 56,
+    "rank": 69
+  },
+  {
+    "name": "Corinne Mayor",
+    "agency_id": "hermance-prestige",
+    "agency_name": "Hermance Prestige & Village",
+    "role": "Directrice Associée",
+    "specialty": "Pieds dans leau & Caractère",
+    "deals_count": 7,
+    "rating": 4.95,
+    "reviews_count": 11,
+    "top_communes": [
+      "Hermance"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 56,
+    "rank": 70
+  },
+  {
+    "name": "Courtier Référent Bardonnex",
+    "agency_id": "bardonnex-immo",
+    "agency_name": "Bardonnex Immobilier",
+    "role": "Courtier Certifié",
+    "specialty": "Villas Campagne Sud & Salève",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 15,
+    "top_communes": [
+      "Bardonnex"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 03 01",
+    "email": "courtier@bardonnex-immo.ch",
+    "cytria_score": 56,
+    "rank": 71
+  },
+  {
+    "name": "Courtier Référent Genève",
+    "agency_id": "vieille-ville-patrimoine",
+    "agency_name": "Vieille-Ville Patrimoine",
+    "role": "Courtier Certifié",
+    "specialty": "Saint-Pierre & Bastions",
+    "deals_count": 9,
+    "rating": 4.8,
+    "reviews_count": 15,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 26 01",
+    "email": "courtier@vieille-ville-patrimoine.ch",
+    "cytria_score": 56,
+    "rank": 72
+  },
+  {
+    "name": "Didier Vuilleumier",
+    "agency_id": "wincasa",
+    "agency_name": "Wincasa AG - Succursale Genève",
+    "role": "Head of Transactions Genève",
+    "specialty": "Lots Résidentiels Institutionnels",
+    "deals_count": 9,
+    "rating": 4.7,
+    "reviews_count": 14,
+    "top_communes": [
+      "Genève",
+      "Meyrin"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/didier-vuilleumier/",
+    "phone": "+41 22 906 98 15",
+    "email": "d.vuilleumier@wincasa.ch",
+    "cytria_score": 55,
+    "rank": 73
+  },
+  {
+    "name": "Stéphane Voirol",
+    "agency_id": "betterhomes",
+    "agency_name": "Betterhomes (Schweiz) AG",
+    "role": "Team Leader Genève",
+    "specialty": "Lots PPE & Petites Maisons",
+    "deals_count": 10,
+    "rating": 4.6,
+    "reviews_count": 15,
+    "top_communes": [
+      "Lancy",
+      "Vernier"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/stephane-voirol/",
+    "phone": "+41 22 552 20 10",
+    "email": "s.voirol@betterhomes.ch",
+    "cytria_score": 54,
+    "rank": 74
+  },
+  {
+    "name": "Thierry Dunant",
+    "agency_id": "bernex-foncier",
+    "agency_name": "Bernex Foncier & Conseil",
+    "role": "Directeur Foncier",
+    "specialty": "Terrains Constructibles & Villas Champagne",
+    "deals_count": 8,
+    "rating": 4.85,
+    "reviews_count": 12,
+    "top_communes": [
+      "Bernex",
+      "Confignon"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/thierry-dunant/",
+    "phone": "+41 22 757 10 05",
+    "email": "t.dunant@bernex-foncier.ch",
+    "cytria_score": 54,
+    "rank": 75
+  },
+  {
+    "name": "Stéphanie Blanc",
+    "agency_id": "altea-immo",
+    "agency_name": "Altea Immobilier SA",
+    "role": "Courtière Associée",
+    "specialty": "Maisons de Ville",
+    "deals_count": 9,
+    "rating": 4.75,
+    "reviews_count": 13,
+    "top_communes": [
+      "Thônex"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 54,
+    "rank": 76
+  },
+  {
+    "name": "Thierry Baud",
+    "agency_id": "agence-tour",
+    "agency_name": "Agence Immobilière de la Tour",
+    "role": "Directeur",
+    "specialty": "Villas & Lots PPE",
+    "deals_count": 9,
+    "rating": 4.75,
+    "reviews_count": 12,
+    "top_communes": [
+      "Plan-les-Ouates"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 53,
+    "rank": 77
+  },
+  {
+    "name": "Courtier Référent Presinge",
+    "agency_id": "presinge-properties",
+    "agency_name": "Presinge Properties",
+    "role": "Courtier Certifié",
+    "specialty": "Maisons Équestres Presinge",
+    "deals_count": 8,
+    "rating": 4.8,
+    "reviews_count": 14,
+    "top_communes": [
+      "Presinge"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 01 01",
+    "email": "courtier@presinge-properties.ch",
+    "cytria_score": 53,
+    "rank": 78
+  },
+  {
+    "name": "Courtier Référent Avully",
+    "agency_id": "avully-immo",
+    "agency_name": "Avully Immobilier",
+    "role": "Courtier Certifié",
+    "specialty": "Villas & Maisons Avully",
+    "deals_count": 8,
+    "rating": 4.8,
+    "reviews_count": 14,
+    "top_communes": [
+      "Avully"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 07 01",
+    "email": "courtier@avully-immo.ch",
+    "cytria_score": 53,
+    "rank": 79
+  },
+  {
+    "name": "Courtier Référent Collex-Bossy",
+    "agency_id": "collex-bossy-villas",
+    "agency_name": "Collex-Bossy Villas",
+    "role": "Courtier Certifié",
+    "specialty": "Villas Familiales Calmes",
+    "deals_count": 8,
+    "rating": 4.8,
+    "reviews_count": 14,
+    "top_communes": [
+      "Collex-Bossy"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 14 01",
+    "email": "courtier@collex-bossy-villas.ch",
+    "cytria_score": 53,
+    "rank": 80
+  },
+  {
+    "name": "Nathalie Perrin",
+    "agency_id": "immosky",
+    "agency_name": "ImmoSky Suisse Romande",
+    "role": "Courtière Certifiée",
+    "specialty": "Appartements Familiaux & Maisons Mitoyennes",
+    "deals_count": 9,
+    "rating": 4.65,
+    "reviews_count": 14,
+    "top_communes": [
+      "Lancy",
+      "Onex"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/nathalie-perrin-immosky/",
+    "phone": "+41 22 552 10 18",
+    "email": "n.perrin@immosky.ch",
+    "cytria_score": 52,
+    "rank": 81
+  },
+  {
+    "name": "Julien Dufresne",
+    "agency_id": "choulex-foncier",
+    "agency_name": "Choulex Foncier & Patrimoine",
+    "role": "Gérant",
+    "specialty": "Maisons Anciennes & Terrains",
+    "deals_count": 7,
+    "rating": 4.85,
+    "reviews_count": 11,
+    "top_communes": [
+      "Choulex"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 52,
+    "rank": 82
+  },
+  {
+    "name": "Henri de Mestral",
+    "agency_id": "jussy-domaines",
+    "agency_name": "Jussy Domaines & Forêts",
+    "role": "Directeur Associé",
+    "specialty": "Domaines Agricoles & Équestres",
+    "deals_count": 6,
+    "rating": 4.9,
+    "reviews_count": 10,
+    "top_communes": [
+      "Jussy"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 51,
+    "rank": 83
+  },
+  {
+    "name": "Béatrice Cornuz",
+    "agency_id": "cartigny-terroirs",
+    "agency_name": "Cartigny Terroirs & Propriétés",
+    "role": "Courtière Responsable",
+    "specialty": "Maisons de Village Champagne",
+    "deals_count": 7,
+    "rating": 4.85,
+    "reviews_count": 11,
+    "top_communes": [
+      "Cartigny"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 51,
+    "rank": 84
+  },
+  {
+    "name": "Courtier Référent Dardagny",
+    "agency_id": "dardagny-demeures",
+    "agency_name": "Dardagny Demeures de Charme",
+    "role": "Courtier Certifié",
+    "specialty": "Châteaux & Maisons de Village",
+    "deals_count": 7,
+    "rating": 4.8,
+    "reviews_count": 13,
+    "top_communes": [
+      "Dardagny"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 11 01",
+    "email": "courtier@dardagny-demeures.ch",
+    "cytria_score": 51,
+    "rank": 85
+  },
+  {
+    "name": "Claire Dubois",
+    "agency_id": "livit",
+    "agency_name": "Livit SA Real Estate Management",
+    "role": "Senior Property Broker",
+    "specialty": "PPE & Rénovations Urbaines",
+    "deals_count": 8,
+    "rating": 4.65,
+    "reviews_count": 12,
+    "top_communes": [
+      "Genève",
+      "Lancy"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/claire-dubois-livit/",
+    "phone": "+41 58 360 30 18",
+    "email": "c.dubois@livit.ch",
+    "cytria_score": 50,
+    "rank": 86
+  },
+  {
+    "name": "Courtier Référent Gy",
+    "agency_id": "gy-foncier",
+    "agency_name": "Gy Foncier & Terroirs",
+    "role": "Courtier Certifié",
+    "specialty": "Campagne & Fermes Gy",
+    "deals_count": 7,
+    "rating": 4.8,
+    "reviews_count": 12,
+    "top_communes": [
+      "Gy"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 00 01",
+    "email": "courtier@gy-foncier.ch",
+    "cytria_score": 50,
+    "rank": 87
+  },
+  {
+    "name": "Courtier Référent Aire-la-Ville",
+    "agency_id": "aire-la-ville-foncier",
+    "agency_name": "Aire-la-Ville Foncier",
+    "role": "Courtier Certifié",
+    "specialty": "Bords du Rhône & Maisons de Village",
+    "deals_count": 7,
+    "rating": 4.8,
+    "reviews_count": 13,
+    "top_communes": [
+      "Aire-la-Ville"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 05 01",
+    "email": "courtier@aire-la-ville-foncier.ch",
+    "cytria_score": 50,
+    "rank": 88
+  },
+  {
+    "name": "Courtier Référent Avusy",
+    "agency_id": "avusy-proprietes",
+    "agency_name": "Avusy Propriétés Rurales",
+    "role": "Courtier Certifié",
+    "specialty": "Champagne Genevoise & Terrains",
+    "deals_count": 7,
+    "rating": 4.8,
+    "reviews_count": 12,
+    "top_communes": [
+      "Avusy"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 06 01",
+    "email": "courtier@avusy-proprietes.ch",
+    "cytria_score": 50,
+    "rank": 89
+  },
+  {
+    "name": "Courtier Référent Russin",
+    "agency_id": "russin-domaines",
+    "agency_name": "Russin Domaines Ruraux",
+    "role": "Courtier Certifié",
+    "specialty": "Maisons de Caractère Russin",
+    "deals_count": 7,
+    "rating": 4.8,
+    "reviews_count": 12,
+    "top_communes": [
+      "Russin"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 10 01",
+    "email": "courtier@russin-domaines.ch",
+    "cytria_score": 50,
+    "rank": 90
+  },
+  {
+    "name": "Patrick Schneider",
+    "agency_id": "privera",
+    "agency_name": "Privera SA - Succursale Genève",
+    "role": "Responsable Vente Romandie",
+    "specialty": "Lots PPE & Parcs Résidentiels",
+    "deals_count": 8,
+    "rating": 4.65,
+    "reviews_count": 11,
+    "top_communes": [
+      "Le Grand-Saconnex",
+      "Meyrin"
+    ],
+    "linkedin_profile_url": "https://www.linkedin.com/in/patrick-schneider-privera/",
+    "phone": "+41 58 450 71 20",
+    "email": "p.schneider@privera.ch",
+    "cytria_score": 49,
+    "rank": 91
+  },
+  {
+    "name": "Alain Braun",
+    "agency_id": "regie-braun",
+    "agency_name": "Régie Braun SA",
+    "role": "Directeur Courtage",
+    "specialty": "Lots PPE Plainpalais",
+    "deals_count": 8,
+    "rating": 4.7,
+    "reviews_count": 12,
+    "top_communes": [
+      "Genève"
+    ],
+    "linkedin_profile_url": null,
+    "phone": null,
+    "email": null,
+    "cytria_score": 49,
+    "rank": 92
+  },
+  {
+    "name": "Courtier Référent Chancy",
+    "agency_id": "chancy-campagne",
+    "agency_name": "Chancy Campagne & Nature",
+    "role": "Courtier Certifié",
+    "specialty": "Pointe Ouest Suisse & Fermes",
+    "deals_count": 6,
+    "rating": 4.8,
+    "reviews_count": 11,
+    "top_communes": [
+      "Chancy"
+    ],
+    "linkedin_profile_url": null,
+    "phone": "+41 22 700 08 01",
+    "email": "courtier@chancy-campagne.ch",
+    "cytria_score": 47,
+    "rank": 93
+  }
+]

@@ -1179,11 +1179,35 @@ def compute_broker_score(broker: Dict[str, Any], agency_score: int) -> int:
 
 
 def get_ranked_league_table() -> Dict[str, Any]:
-    """Generate the full ranked league table for Geneva agencies and individual brokers."""
+    """Generate the full ranked league table for Geneva agencies and individual brokers, merging curated agencies and the full 83-agency master dataset."""
     ranked_agencies = []
     all_brokers = []
 
-    for ag in GENEVA_AGENCIES_DATA:
+    # Start with curated GENEVA_AGENCIES_DATA
+    combined_agencies = list(GENEVA_AGENCIES_DATA)
+    seen_ids = {a["id"] for a in combined_agencies}
+    seen_names = {a["name"].lower().strip() for a in combined_agencies}
+
+    # Merge external master dataset if available
+    master_file = Path("data/exports/geneva_agencies_master.json")
+    if not master_file.exists():
+        master_file = Path("C:/Users/AI-Mini-PC/DEV/Real-state-agencies-intelligence/src/data/exports/geneva_agencies_master.json")
+
+    if master_file.exists():
+        try:
+            with open(master_file, "r", encoding="utf-8") as f:
+                ext_agencies = json.load(f)
+            for ea in ext_agencies:
+                eid = ea.get("id")
+                ename = ea.get("name", "").lower().strip()
+                if eid not in seen_ids and ename not in seen_names:
+                    combined_agencies.append(ea)
+                    seen_ids.add(eid)
+                    seen_names.add(ename)
+        except Exception as e:
+            logger.warning("Could not merge master agencies JSON: %s", e)
+
+    for ag in combined_agencies:
         score = compute_agency_score(ag)
         ag_copy = dict(ag)
         ag_copy["cytria_score"] = score
@@ -1198,8 +1222,8 @@ def get_ranked_league_table() -> Dict[str, Any]:
             all_brokers.append(b_copy)
 
     # Sort agencies and brokers descending
-    ranked_agencies.sort(key=lambda x: x["cytria_score"], reverse=True)
-    all_brokers.sort(key=lambda x: x["cytria_score"], reverse=True)
+    ranked_agencies.sort(key=lambda x: x.get("cytria_score", 0), reverse=True)
+    all_brokers.sort(key=lambda x: x.get("cytria_score", 0), reverse=True)
 
     # Add ranks
     for i, a in enumerate(ranked_agencies, 1):
@@ -1211,3 +1235,4 @@ def get_ranked_league_table() -> Dict[str, Any]:
         "agencies": ranked_agencies,
         "brokers": all_brokers
     }
+
