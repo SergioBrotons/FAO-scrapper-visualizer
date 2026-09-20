@@ -1,0 +1,29 @@
+fao:
+  base_url: "https://fao.ge.ch"
+  timeout_seconds: 30
+  rate_limit_delay_min_seconds: 2.0
+  rate_limit_delay_max_seconds: 4.0
+
+browser:
+  headless: false
+  profile_dir: "data/browser_profile"
+  viewport:
+    width: 1400
+    height: 900
+  slow_mo: 100
+
+sitg:
+  rest_base_url: "https://vector.sitg.ge.ch/arcgis/rest/services"
+  layers:
+    parcels: "CAD_PARCELLE_MENSU/FeatureServer/0"
+    historical_parcels: "CAD_PARCELLE_MENSU_HISTO/FeatureServer/0"
+    ddp: "CAD_DDP/FeatureServer/0"
+    ppe: "CAD_PPE/FeatureServer/0"
+    buildings: "CAD_BATIMENT_HORSOL/FeatureServer/0"
+    addresses: "CAD_ADRESSE/FeatureServer/0"
+
+storage:
+  database_path: "data/state/state.sqlite"
+  raw_pdf_dir: "data/raw/fao"
+  discovery_dir: "data/discovery"
+  exports_dir: "data/exports"

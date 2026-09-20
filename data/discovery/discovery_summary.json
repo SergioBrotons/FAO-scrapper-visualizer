@@ -1,0 +1,108 @@
+{
+  "url": "https://fao.ge.ch",
+  "title": "Accueil | FAO - République et canton de Genève",
+  "status": "unknown",
+  "links_found": 83,
+  "forms_found": 2,
+  "artifacts": {
+    "screenshot": "data\\discovery\\fao_portal.png",
+    "html": "data\\discovery\\fao_portal.html"
+  },
+  "current_url": "https://fao.ge.ch/",
+  "relevant_links": [
+    {
+      "text": "Aller au contenu principal",
+      "href": "https://fao.ge.ch/#main-content"
+    },
+    {
+      "text": "Aller à la FAQ",
+      "href": "https://fao.ge.ch/#faq"
+    },
+    {
+      "text": "Aller à la quotidienne",
+      "href": "https://fao.ge.ch/#quotidienne"
+    },
+    {
+      "text": "Aller à la recherche d'avis",
+      "href": "https://fao.ge.ch/#search-avis"
+    },
+    {
+      "text": "Aller à la recherche d'archive",
+      "href": "https://fao.ge.ch/#search-archive"
+    },
+    {
+      "text": "Aller au pied de page",
+      "href": "https://fao.ge.ch/#footer"
+    },
+    {
+      "text": "",
+      "href": "https://fao.ge.ch/"
+    },
+    {
+      "text": "",
+      "href": "https://fao.ge.ch/"
+    },
+    {
+      "text": "La quotidienne du 18 septembre 2026",
+      "href": "https://fao.ge.ch/dwnlquotidienne/276c5888-a201-4ed5-82d3-2f6d475cd838"
+    },
+    {
+      "text": "Voir toutes les quotidiennes",
+      "href": "https://fao.ge.ch/quotidiennes"
+    },
+    {
+      "text": "Requêtes",
+      "href": "https://fao.ge.ch/recherche?rubrique=138"
+    },
+    {
+      "text": "Requêtes d'exploitation préjudiciable et pacage (selon art. 15 LForêts)",
+      "href": "https://fao.ge.ch/recherche?rubrique=147"
+    },
+    {
+      "text": "Ouvrir l'avis dans une nouvelle fenêtre",
+      "href": "https://fao.ge.ch/avis/c99b7335-7521-4733-a92a-1daafecc2acc"
+    },
+    {
+      "text": "Version PDF imprimable",
+      "href": "https://fao.ge.ch/avis-download/c99b7335-7521-4733-a92a-1daafecc2acc"
+    },
+    {
+      "text": "Institutions et numérique",
+      "href": "https://fao.ge.ch/recherche?rubrique=290"
+    },
+    {
+      "text": "Office cantonal de la population et des migrations",
+      "href": "https://fao.ge.ch/recherche?rubrique=294"
+    },
+    {
+      "text": "Ouvrir l'avis dans une nouvelle fenêtre",
+      "href": "https://fao.ge.ch/avis/996e9bf0-b77d-4411-9677-2d2e77891a75"
+    },
+    {
+      "text": "Version PDF imprimable",
+      "href": "https://fao.ge.ch/avis-download/996e9bf0-b77d-4411-9677-2d2e77891a75"
+    },
+    {
+      "text": "Santé et mobilités",
+      "href": "https://fao.ge.ch/recherche?rubrique=282"
+    },
+    {
+      "text": "Office cantonal des véhicules",
+      "href": "https://fao.ge.ch/recherche?rubrique=286"
+    }
+  ],
+  "forms": [
+    {
+      "action": "https://fao.ge.ch/recherche",
+      "method": "get",
+      "id": "-edg-2016-fao-avis-search-form",
+      "inputs": 9
+    },
+    {
+      "action": "https://fao.ge.ch/recherche",
+      "method": "get",
+      "id": "search-avis",
+      "inputs": 10
+    }
+  ]
+}
