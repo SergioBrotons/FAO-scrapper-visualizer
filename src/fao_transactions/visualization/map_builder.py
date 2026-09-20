@@ -1188,15 +1188,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       background: var(--color-ink-950);
       border: 1.5px solid var(--color-brand-400);
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
-      padding: 2px 6px;
+      padding: 2px 7px;
       cursor: pointer;
       white-space: nowrap;
-      gap: 5px;
+      gap: 6px;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .agency-marker-pin:hover, .agency-marker-pin.active {
-      transform: scale(1.15);
+      transform: scale(1.12);
       border-color: #f6e05e;
       background: var(--color-ink-800);
       box-shadow: 0 0 16px rgba(201, 162, 77, 0.75);
@@ -1205,10 +1205,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     /* Semi-transparent state when an agency is focused / clicked */
     .agency-marker-pin.dimmed {
-      opacity: 0.26 !important;
-      filter: grayscale(80%);
-      transform: scale(0.82);
-      border-color: rgba(201, 162, 77, 0.25);
+      opacity: 0.30 !important;
+      filter: grayscale(60%);
+      transform: scale(0.85);
+      border-color: rgba(201, 162, 77, 0.28);
       box-shadow: none;
       z-index: 100 !important;
     }
@@ -1237,7 +1237,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       font-weight: 700;
       font-size: 11px;
       color: var(--color-paper);
-      max-width: 90px;
+      max-width: 140px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -3219,12 +3219,79 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }
     }
 
-    // Agency Attribution Engine & Map Logic
+    // Clean agency brand name formatter for map markers & UI
+    function formatAgencyBrand(name) {
+      if (!name) return '';
+      if (/cardis/i.test(name)) return "Cardis Sotheby's";
+      if (/barnes/i.test(name)) return "BARNES";
+      if (/spg.*one/i.test(name)) return "SPG Christie's";
+      if (/spg/i.test(name)) return "SPG";
+      if (/comptoir/i.test(name)) return "Comptoir Immo";
+      if (/naef.*prestige/i.test(name)) return "Naef Prestige";
+      if (/naef/i.test(name)) return "Naef Immo";
+      if (/altea/i.test(name)) return "Altea Immo";
+      if (/swissroc.*prop/i.test(name)) return "Swissroc Prop.";
+      if (/swissroc/i.test(name)) return "Swissroc";
+      if (/engel/i.test(name)) return "Engel & Völkers";
+      if (/gerofinance/i.test(name)) return "Gerofinance";
+      if (/brolliet/i.test(name)) return "Brolliet";
+      if (/moser/i.test(name)) return "Moser Vernet";
+      if (/jouan/i.test(name)) return "Jouan de Rham";
+      if (/swixim/i.test(name)) return "Swixim";
+      if (/wincasa/i.test(name)) return "Wincasa";
+      if (/re\\/?max/i.test(name)) return "RE/MAX";
+      if (/john\\s+taylor/i.test(name)) return "John Taylor";
+      if (/desormiere/i.test(name)) return "Désormière & V.";
+      if (/leonard/i.test(name)) return "Leonard Prop.";
+      if (/omnia/i.test(name)) return "Omnia Immo";
+      if (/stone\\s+invest/i.test(name)) return "Stone Invest";
+      if (/stonehage/i.test(name)) return "Stonehage";
+      if (/grange/i.test(name)) return "Grange & Cie";
+      if (/rosset/i.test(name)) return "Rosset & Cie";
+      if (/m3/i.test(name)) return "m3 Groupe";
+      if (/neho/i.test(name)) return "Neho";
+      if (/fgp/i.test(name)) return "FGP Swiss";
+      if (/riva/i.test(name)) return "Riva Immo";
+      if (/capvest/i.test(name)) return "Capvest";
+      if (/leman\\s+property/i.test(name)) return "Léman Property";
+      if (/betterhomes/i.test(name)) return "Betterhomes";
+      if (/geneva\\s+homes/i.test(name)) return "Geneva Homes";
+      if (/geneva\\s+luxury/i.test(name)) return "Geneva Luxury";
+      if (/agci/i.test(name)) return "AGCI Immo";
+      if (/livit/i.test(name)) return "Livit";
+      if (/regie\\s+du\\s+lac/i.test(name)) return "Régie du Lac";
+      if (/privera/i.test(name)) return "Privera";
+      if (/ci\\s+leman/i.test(name)) return "CI Léman";
+      if (/nessell/i.test(name)) return "NESSELL";
+      if (/oakswell/i.test(name)) return "OAKSWELL";
+      if (/optimum/i.test(name)) return "Optimum Immo";
+      if (/beaulieu/i.test(name)) return "Beaulieu Immo";
+      if (/versoix/i.test(name)) return "Versoix Immo";
+      if (/dome/i.test(name)) return "Dôme Immo";
+      if (/vaudaux/i.test(name)) return "Vaudaux Immo";
+      if (/regie\\s+braun/i.test(name)) return "Régie Braun";
+      if (/tour/i.test(name)) return "Immo de la Tour";
+      if (/105/i.test(name)) return "105 Immo";
+
+      let clean = name
+        .replace(/\\|/g, ' ')
+        .replace(/\\bSA\\b|\\bSàrl\\b|\\bSARL\\b|\\bAG\\b/gi, '')
+        .replace(/International\\s+Realty/gi, '')
+        .replace(/Luxury\\s+Real\\s+Estate/gi, '')
+        .replace(/Real\\s+Estate/gi, '')
+        .replace(/Genève|Geneva|Suisse/gi, '')
+        .replace(/Succursale|Groupe/gi, '')
+        .replace(/\\(.*?\\)/g, '')
+        .replace(/\\s+/g, ' ')
+        .trim();
+      if (clean.length > 18) clean = clean.substring(0, 16) + '…';
+      return clean || name;
+    }
+
+    // Direct Notarial Attribution Engine
+    // In Swiss law, only direct mentions in deeds are legally attributed to an agency/broker
     function getAttributedTransactions(agency, brokerName = null) {
       const agNorm = normStr(agency.name);
-      const topCommsNorm = (agency.top_communes || []).map(c => normStr(c));
-      const primaryTerrNorm = normStr(agency.primary_territory || '');
-
       let brokerObj = null;
       let brokerSurnameNorm = '';
       if (brokerName) {
@@ -3239,9 +3306,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         const buyerNorm = normStr(r.buyer || '');
         const sellerNorm = normStr(r.seller || '');
         const partiesNorm = buyerNorm + ' ' + sellerNorm;
-        const commNorm = normStr(r.commune || '');
 
-        // 1. Direct notarial mention check
+        // Direct notarial mention check in public deeds
         let isDirect = false;
         if (agNorm.includes('comptoir') && partiesNorm.includes('comptoir')) isDirect = true;
         else if (agNorm.includes('spg') && (partiesNorm.includes('spg') || partiesNorm.includes('societe privee'))) isDirect = true;
@@ -3254,6 +3320,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         else if (agNorm.includes('cardis') && partiesNorm.includes('cardis')) isDirect = true;
         else if (agNorm.includes('engel') && partiesNorm.includes('engel')) isDirect = true;
         else if (agNorm.includes('pilet') && partiesNorm.includes('pilet')) isDirect = true;
+        else if (agNorm.includes('brolliet') && partiesNorm.includes('brolliet')) isDirect = true;
+        else if (agNorm.includes('swixim') && partiesNorm.includes('swixim')) isDirect = true;
+        else if (agNorm.includes('wincasa') && partiesNorm.includes('wincasa')) isDirect = true;
+        else if (agNorm.includes('rosset') && partiesNorm.includes('rosset')) isDirect = true;
+        else if (agNorm.includes('grange') && partiesNorm.includes('grange')) isDirect = true;
+        else if (agNorm.includes('altea') && partiesNorm.includes('altea')) isDirect = true;
 
         if (isDirect) {
           r._attributionType = 'DIRECT';
@@ -3263,47 +3335,97 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           return !brokerName;
         }
 
-        // 2. Broker-specific territory attribution
-        if (brokerName && brokerObj) {
-          const brokerComms = (brokerObj.top_communes || []).map(c => normStr(c));
-          if (brokerComms.some(c => commNorm.includes(c) || c.includes(commNorm))) {
-            if (r.price_chf && agency.median_price_chf) {
-              const matchesPrice = r.price_chf >= agency.median_price_chf * 0.35 && r.price_chf <= agency.median_price_chf * 3.5;
-              if (matchesPrice) {
-                r._attributionType = 'TERRITORY';
-                return true;
-              }
-              return false;
-            }
-            r._attributionType = 'TERRITORY';
-            return true;
-          }
-          return false;
-        }
-
-        // 3. Agency-wide territorial attribution
-        const matchesTerritory = topCommsNorm.some(c => commNorm.includes(c) || c.includes(commNorm)) || primaryTerrNorm.includes(commNorm);
-        if (matchesTerritory) {
-          if (r.price_chf && agency.median_price_chf) {
-            const matchesPrice = r.price_chf >= agency.median_price_chf * 0.35 && r.price_chf <= agency.median_price_chf * 3.5;
-            if (matchesPrice) {
-              r._attributionType = 'TERRITORY';
-              return true;
-            }
-            return false;
-          }
-          r._attributionType = 'TERRITORY';
-          return true;
-        }
-
         return false;
       });
+    }
+
+    // Sector / Territory Market Context (Strictly filtered without empty-string leaks)
+    function getTerritoryMarketTransactions(agency) {
+      const comms = (agency.top_communes || []).map(c => normStr(c)).filter(c => c && c.length >= 3);
+      const hqComm = normStr(agency.headquarters_commune || '');
+      if (hqComm && hqComm.length >= 3 && !comms.includes(hqComm)) {
+        comms.push(hqComm);
+      }
+      if (comms.length === 0) return [];
+
+      return DATA.filter(r => {
+        if (!r.lat || !r.lon) return false;
+        const comm = normStr(r.commune || '');
+        if (!comm || comm.length < 3) return false;
+        return comms.some(c => comm === c || comm.startsWith(c) || c.startsWith(comm));
+      });
+    }
+
+    // State for optional territory market overlay
+    let isShowingTerritoryMarket = false;
+    let territoryMarketLayers = [];
+
+    function toggleTerritoryMarketView(agencyId) {
+      const agency = LEAGUE_DATA.agencies.find(a => a.id === agencyId);
+      if (!agency) return;
+
+      isShowingTerritoryMarket = !isShowingTerritoryMarket;
+
+      // Clear previous territory market markers
+      territoryMarketLayers.forEach(l => markersCluster.removeLayer(l));
+      territoryMarketLayers = [];
+
+      const territoryTxs = getTerritoryMarketTransactions(agency);
+
+      if (isShowingTerritoryMarket) {
+        territoryTxs.forEach(r => {
+          if (!r.lat || !r.lon) return;
+          const circleMarker = L.circleMarker([r.lat, r.lon], {
+            radius: 5,
+            fillColor: '#64748b',
+            color: '#1e293b',
+            weight: 1,
+            opacity: 0.9,
+            fillOpacity: 0.75
+          });
+          circleMarker.bindTooltip(`
+            <div style="font-family:'Hanken Grotesk',sans-serif; padding:4px;">
+              <strong style="color:#94a3b8;">Marché Global du Secteur (${r.commune})</strong><br>
+              <span style="font-size:11px;">${r.address || r.commune}</span><br>
+              <span style="font-weight:700; color:#fff;">${r.price_chf ? 'CHF ' + r.price_chf.toLocaleString('fr-CH') : 'Prix non publié'}</span><br>
+              <span style="font-size:10px; color:#cbd5e1;">Contexte de marché local • Non attribué à l'agence (${agency.name} y détient ${agency.sold_24m_count || 0} ventes)</span>
+            </div>
+          `, { direction: 'top' });
+          circleMarker.on('click', () => openDetail(r));
+          territoryMarketLayers.push(circleMarker);
+        });
+        markersCluster.addLayers(territoryMarketLayers);
+      }
+
+      // Update banner button
+      const countEl = document.getElementById('focusBannerCount');
+      if (countEl) {
+        const directCount = getAttributedTransactions(agency).length;
+        if (directCount > 0) {
+          countEl.innerHTML = `<strong>${directCount}</strong> acte(s) notarié(s) direct(s) • ${agency.sold_24m_count || 0} ventes certifiées portails`;
+        } else {
+          countEl.innerHTML = `
+            <strong>0</strong> acte nominatif direct FAO • <strong>${agency.sold_24m_count || 0} ventes</strong> certifiées (Portails / Avis)
+            <button type="button" class="btn-sm" style="margin-left:10px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:3px 8px; font-size:11px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
+              ${isShowingTerritoryMarket ? '✕ Masquer le marché local' : `👁️ Voir le marché local (${agency.headquarters_commune} : ${territoryTxs.length} actes)`}
+            </button>
+          `;
+        }
+      }
+
+      // Update drawer button
+      const drawerBtn = document.getElementById('btnDrawerToggleTerritory');
+      if (drawerBtn) {
+        drawerBtn.textContent = isShowingTerritoryMarket ? '✕ Masquer le marché global du secteur' : `Afficher le marché global du secteur (${agency.headquarters_commune} : ${territoryTxs.length} actes)`;
+      }
     }
 
     function renderAgenciesOnMap(agencyIdToSelect = null, brokerNameToSelect = null) {
       agencyMarkersGroup.clearLayers();
       agencyRadiusGroup.clearLayers();
       markersCluster.clearLayers();
+      territoryMarketLayers = [];
+      isShowingTerritoryMarket = false;
 
       const banner = document.getElementById('agencyFocusBanner');
       if (banner) banner.style.display = 'none';
@@ -3318,20 +3440,21 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }
       }
 
-      // No agency selected: show all agency HQ markers across Geneva
+      // No agency selected: show all agency HQ markers across Geneva with clean brand names
       agencies.forEach(a => {
         if (!a.lat || !a.lon) return;
 
+        const brand = formatAgencyBrand(a.name);
         const icon = L.divIcon({
           className: 'custom-agency-div',
           html: `
             <div class="agency-marker-pin" id="pin-${a.id}">
               <div class="pin-badge">#${a.rank}</div>
-              <div class="pin-name">${a.name.split(' ')[0]}</div>
+              <div class="pin-name">${brand}</div>
             </div>
           `,
-          iconSize: [110, 30],
-          iconAnchor: [55, 15]
+          iconSize: null,
+          iconAnchor: [60, 14]
         });
 
         const m = L.marker([a.lat, a.lon], { icon }).addTo(agencyMarkersGroup);
@@ -3366,26 +3489,29 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       agencyMarkersGroup.clearLayers();
       agencyRadiusGroup.clearLayers();
       markersCluster.clearLayers();
+      territoryMarketLayers = [];
+      isShowingTerritoryMarket = false;
 
       // Render all agencies: selected agency is active/highlighted, all other agencies are semi-transparent (dimmed)
       LEAGUE_DATA.agencies.forEach(a => {
         if (!a.lat || !a.lon) return;
         const isSelected = a.id === agency.id;
+        const brand = formatAgencyBrand(a.name);
         const icon = L.divIcon({
           className: 'custom-agency-div',
           html: isSelected ? `
             <div class="agency-marker-pin active" id="pin-${a.id}">
               <div class="pin-badge">#${a.rank}</div>
-              <div class="pin-name">${a.name.split(' ')[0]}</div>
+              <div class="pin-name">${brand}</div>
             </div>
           ` : `
             <div class="agency-marker-pin dimmed" id="pin-${a.id}" title="${a.name} (#${a.rank} • ${a.headquarters_commune})">
               <div class="pin-badge">#${a.rank}</div>
-              <div class="pin-name">${a.name.split(' ')[0]}</div>
+              <div class="pin-name">${brand}</div>
             </div>
           `,
-          iconSize: [110, 30],
-          iconAnchor: [55, 15]
+          iconSize: null,
+          iconAnchor: [60, 14]
         });
 
         const m = L.marker([a.lat, a.lon], { 
@@ -3412,8 +3538,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         fillOpacity: 0.08
       }).addTo(agencyRadiusGroup);
 
-      // Get attributed deeds
+      // Get direct attributed deeds only (rigorous Swiss notarial attribution)
       const attributed = getAttributedTransactions(agency, brokerName);
+      const territoryTxs = getTerritoryMarketTransactions(agency);
 
       const markers = [];
       let totalAttributedVol = 0;
@@ -3424,10 +3551,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         totalAttributedVol += (r.price_chf || 0);
         bounds.extend([r.lat, r.lon]);
 
-        const isDirect = r._attributionType === 'DIRECT';
         const circleMarker = L.circleMarker([r.lat, r.lon], {
-          radius: isDirect ? 7.5 : 6,
-          fillColor: isDirect ? '#10b981' : '#C9A24D',
+          radius: 7.5,
+          fillColor: '#10b981',
           color: '#080D11',
           weight: 1.5,
           opacity: 1,
@@ -3435,10 +3561,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         });
         circleMarker.bindTooltip(`
           <div style="font-family:'Hanken Grotesk',sans-serif; padding:4px;">
-            <strong style="color:#C9A24D;">${agency.name}</strong><br>
+            <strong style="color:#10b981;">${agency.name}</strong><br>
             <span style="font-size:11px;">${r.address || r.commune}</span><br>
             <span style="font-weight:700; color:#fff;">${r.price_chf ? 'CHF ' + r.price_chf.toLocaleString('fr-CH') : 'Prix non publié'}</span><br>
-            <span style="font-size:10px; color:${isDirect ? '#10b981' : '#C9A24D'};">${isDirect ? '✓ Mention Notariée Directe' : '◎ Attribution Mandat & Territoire'}</span>
+            <span style="font-size:10px; color:#10b981;">✓ Mention Notariée Directe au Registre Foncier</span>
           </div>
         `, { direction: 'top' });
         circleMarker.on('click', () => openDetail(r));
@@ -3447,18 +3573,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       markersCluster.addLayers(markers);
 
-      // Fit bounds to encompass agency pin + its attributed transactions
+      // Fit bounds to encompass agency pin + its direct transactions
       if (attributed.length > 0 && bounds.isValid()) {
         map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
       } else {
         map.fitBounds(radiusCircle.getBounds(), { padding: [30, 30] });
       }
 
-      // Update HUD
-      document.getElementById('statLabelPrimary').textContent = brokerName ? 'Ventes Courtier' : 'Ventes Attribuées';
+      // Update HUD with truthful metrics
+      document.getElementById('statLabelPrimary').textContent = brokerName ? 'Ventes Courtier' : 'Actes Directs FAO';
       document.getElementById('stat-count').textContent = attributed.length.toLocaleString('fr-CH');
-      document.getElementById('statLabelSecondary').textContent = 'Volume Identifié';
-      document.getElementById('stat-vol').textContent = 'CHF ' + (totalAttributedVol >= 1e9 ? (totalAttributedVol/1e9).toFixed(2) + ' Mrd' : (totalAttributedVol/1e6).toFixed(1) + ' Mio');
+      document.getElementById('statLabelSecondary').textContent = 'Bilan Portails (24m)';
+      document.getElementById('stat-vol').textContent = `${agency.sold_24m_count || 0} ventes (${agency.sold_volume_chf_m || 0} Mio)`;
       document.getElementById('statLabel3').textContent = 'Score Agence';
       document.getElementById('stat-3').textContent = agency.cytria_score + ' / 100';
       document.getElementById('statLabel4').textContent = "Rayon d'Action";
@@ -3480,13 +3606,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const sbResetGroup = document.getElementById('sidebarResetAgencyGroup');
       if (sbResetGroup) sbResetGroup.style.display = 'block';
 
-      // Show floating focus banner
+      // Show floating focus banner with honest status
       const banner = document.getElementById('agencyFocusBanner');
       if (banner) {
         banner.style.display = 'flex';
         document.getElementById('focusBannerBadge').textContent = brokerName ? '👤 Courtier Isolé' : '🏛️ Agence Isolée';
         document.getElementById('focusBannerTitle').textContent = brokerName ? `${agency.name} • ${brokerName}` : agency.name;
-        document.getElementById('focusBannerCount').textContent = `${attributed.length} ventes réelles affichées`;
+
+        if (attributed.length > 0) {
+          document.getElementById('focusBannerCount').innerHTML = `<strong>${attributed.length}</strong> acte(s) notarié(s) direct(s) identifié(s) • ${agency.sold_24m_count || 0} ventes certifiées portails`;
+        } else {
+          document.getElementById('focusBannerCount').innerHTML = `
+            <strong>0</strong> acte nominatif direct FAO • <strong>${agency.sold_24m_count || 0} ventes</strong> certifiées (Portails / Avis)
+            <button type="button" class="btn-sm" style="margin-left:10px; background:var(--color-ink-800); border:1px solid var(--color-brand-400); color:var(--color-brand-300); padding:3px 8px; font-size:11px; cursor:pointer;" onclick="toggleTerritoryMarketView('${agency.id}')">
+              👁️ Voir le marché local (${agency.headquarters_commune} : ${territoryTxs.length} actes)
+            </button>
+          `;
+        }
       }
 
       // Open agency drawer
@@ -3501,6 +3637,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       const topCommsHtml = (agency.top_communes || []).map(c => `<span class="commune-tag">${c}</span>`).join('');
       const attributedDeals = getAttributedTransactions(agency, brokerName);
+      const territoryTxs = getTerritoryMarketTransactions(agency);
       const totalVol = attributedDeals.reduce((acc, r) => acc + (r.price_chf || 0), 0);
 
       const brokersListHtml = (agency.agents || []).map(b => {
@@ -3581,10 +3718,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </div>
         </div>
 
+        <!-- Swiss Legal & Notarial Transparency Box -->
+        <div style="background: rgba(201, 162, 77, 0.08); border: 1px solid rgba(201, 162, 77, 0.25); padding: 10px; margin-top: 10px; font-size: 11px; line-height: 1.45; color: var(--color-sand-300);">
+          <div style="font-weight: 700; color: var(--color-brand-400); margin-bottom: 4px;">
+            ⚖️ Traçabilité Registre Foncier (FAO) & Portails
+          </div>
+          <div>
+            <strong>Bilan certifié portails (24m) :</strong> ${agency.sold_24m_count || 0} ventes conclues (CHF ${agency.sold_volume_chf_m || 0} Mio).<br>
+            <strong>Mentions notariées directes FAO :</strong> ${attributedDeals.length} acte(s).<br>
+            <span style="color: var(--color-sand-400); font-size: 10px;">
+              *En droit suisse, le contrat de courtage est privé : seuls l'acheteur et le vendeur signent l'acte notarié public. Les ventes effectives des courtiers sont auditées via les avis clients vérifiés et mandats de portails réconciliés.
+            </span>
+          </div>
+        </div>
+
         <!-- Territorial Perimeter -->
         <div class="radar-box mandate" style="margin-top:14px;">
           <div class="radar-box-title">
-            <span>Emprise Géographique & Rayon de Travail</span>
+            <span>Zone d'Intervention & Rayon</span>
             <span class="score-badge">${(agency.radius_meters/1000).toFixed(1)} km</span>
           </div>
           <div style="font-size:12px; color:var(--color-paper); margin-bottom:8px;">
@@ -3593,8 +3744,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <div style="margin-bottom:8px;">
             ${topCommsHtml}
           </div>
-          <div style="font-size:11px; color:var(--color-sand-300);">
-            ${attributedDeals.length} transactions notariées identifiées dans l'emprise territoriale (Volume: CHF ${(totalVol/1e6).toFixed(1)} Mio).
+          <div style="font-size:11px; color:var(--color-sand-300); line-height:1.4;">
+            ${attributedDeals.length > 0 ? `${attributedDeals.length} actes directs identifiés au Registre Foncier.` : `Aucune mention notariée directe au Registre Foncier (courant pour les courtiers indépendants).`}
+            Marché global du secteur : <strong>${territoryTxs.length} transactions</strong> au total (part de marché estimée d'Altea : ~${((agency.sold_24m_count || 0) / Math.max(1, territoryTxs.length) * 100).toFixed(1)}%).
+          </div>
+          <div style="margin-top:10px;">
+            <button type="button" id="btnDrawerToggleTerritory" class="view-map-btn" style="width:100%; justify-content:center; padding:6px 10px;" onclick="toggleTerritoryMarketView('${agency.id}')">
+              ${isShowingTerritoryMarket ? '✕ Masquer le marché global du secteur' : `Afficher le marché global du secteur (${agency.headquarters_commune} : ${territoryTxs.length} actes)`}
+            </button>
           </div>
           ${brokerName ? `
             <div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--panel-border);">

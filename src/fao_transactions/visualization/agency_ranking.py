@@ -1189,18 +1189,34 @@ def get_ranked_league_table() -> Dict[str, Any]:
     seen_ids = {a["id"] for a in combined_agencies}
     seen_names = {a["name"].lower().strip() for a in combined_agencies}
 
-    # Merge external master dataset if available
+    # Merge external master dataset if available (filtering out synthetic commune placeholders)
     master_file = Path("data/exports/geneva_agencies_master.json")
     if not master_file.exists():
         master_file = Path("C:/Users/AI-Mini-PC/DEV/Real-state-agencies-intelligence/src/data/exports/geneva_agencies_master.json")
+
+    # Synthetic placeholder agency IDs generated from commune names to exclude
+    SYNTHETIC_COMMUNE_IDS = {
+        "gy-foncier", "presinge-properties", "puplinge-demeures", "bardonnex-immo",
+        "perly-certoux-habitat", "aire-la-ville-foncier", "avusy-proprietes", "avully-immo",
+        "chancy-campagne", "satigny-vignobles", "russin-domaines", "dardagny-demeures",
+        "bellevue-prestige", "pregny-diplomatie", "collex-bossy-villas", "grand-saconnex-immo",
+        "vernier-courtage", "meyrin-aeroport", "onex-villas", "confignon-village",
+        "bernex-terroirs", "troinex-campagne", "carouge-lofts", "eaux-vives-quais",
+        "servette-ppe", "champel-attiques", "vieille-ville-patrimoine", "jonction-rhone",
+        "paquis-investissement", "conches-prestige", "anieres-villas", "hermance-prestige",
+        "veyrier-immo", "carouge-transactions", "plainpalais-courtage", "meyrin-immo",
+        "bernex-foncier", "jussy-domaines", "choulex-foncier", "cartigny-terroirs"
+    }
 
     if master_file.exists():
         try:
             with open(master_file, "r", encoding="utf-8") as f:
                 ext_agencies = json.load(f)
             for ea in ext_agencies:
-                eid = ea.get("id")
+                eid = ea.get("id", "")
                 ename = ea.get("name", "").lower().strip()
+                if eid in SYNTHETIC_COMMUNE_IDS:
+                    continue
                 if eid not in seen_ids and ename not in seen_names:
                     combined_agencies.append(ea)
                     seen_ids.add(eid)
