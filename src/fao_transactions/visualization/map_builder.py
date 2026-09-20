@@ -1192,14 +1192,34 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       cursor: pointer;
       white-space: nowrap;
       gap: 5px;
-      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .agency-marker-pin:hover, .agency-marker-pin.active {
       transform: scale(1.15);
       border-color: #f6e05e;
       background: var(--color-ink-800);
+      box-shadow: 0 0 16px rgba(201, 162, 77, 0.75);
       z-index: 9999 !important;
+    }
+
+    /* Semi-transparent state when an agency is focused / clicked */
+    .agency-marker-pin.dimmed {
+      opacity: 0.26 !important;
+      filter: grayscale(80%);
+      transform: scale(0.82);
+      border-color: rgba(201, 162, 77, 0.25);
+      box-shadow: none;
+      z-index: 100 !important;
+    }
+
+    .agency-marker-pin.dimmed:hover {
+      opacity: 1 !important;
+      filter: none;
+      transform: scale(1.05);
+      border-color: var(--color-brand-400);
+      box-shadow: 0 0 14px rgba(201, 162, 77, 0.5);
+      z-index: 9000 !important;
     }
 
     .pin-badge {
@@ -1209,6 +1229,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       font-weight: 800;
       font-size: 10px;
       padding: 1px 4px;
+      flex-shrink: 0;
     }
 
     .pin-name {
@@ -1216,6 +1237,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       font-weight: 700;
       font-size: 11px;
       color: var(--color-paper);
+      max-width: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     /* Floating Agency & Agent Focus Banner on Map */
@@ -3069,6 +3094,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
               <td>
                 <strong style="color:var(--color-brand-300); font-size:13px;">${a.name}</strong><br>
                 <span style="color:var(--color-sand-300); font-size:11px;">📍 ${a.address}</span>
+                ${a.legal_address ? `<div style="color:var(--color-sand-400); font-size:10px; margin-top:2px;">⚖️ Siège RC: ${a.legal_address}</div>` : ''}
                 <div style="display:flex; gap: 8px; margin-top: 4px; align-items: center;">
                   ${a.website ? `<a href="${a.website}" target="_blank" style="color:var(--color-brand-400); text-decoration:none; font-size:10px;">Site Web ↗</a>` : ''}
                   ${a.linkedin_url ? `<a href="${a.linkedin_url}" target="_blank" style="color:#0a66c2; text-decoration:none; font-size:10px; font-weight:700;">LinkedIn ↗</a>` : ''}
@@ -3341,20 +3367,40 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       agencyRadiusGroup.clearLayers();
       markersCluster.clearLayers();
 
-      // Highlight pin on map
-      const icon = L.divIcon({
-        className: 'custom-agency-div',
-        html: `
-          <div class="agency-marker-pin active" id="pin-${agency.id}">
-            <div class="pin-badge">#${agency.rank}</div>
-            <div class="pin-name">${agency.name.split(' ')[0]}</div>
-          </div>
-        `,
-        iconSize: [110, 30],
-        iconAnchor: [55, 15]
+      // Render all agencies: selected agency is active/highlighted, all other agencies are semi-transparent (dimmed)
+      LEAGUE_DATA.agencies.forEach(a => {
+        if (!a.lat || !a.lon) return;
+        const isSelected = a.id === agency.id;
+        const icon = L.divIcon({
+          className: 'custom-agency-div',
+          html: isSelected ? `
+            <div class="agency-marker-pin active" id="pin-${a.id}">
+              <div class="pin-badge">#${a.rank}</div>
+              <div class="pin-name">${a.name.split(' ')[0]}</div>
+            </div>
+          ` : `
+            <div class="agency-marker-pin dimmed" id="pin-${a.id}" title="${a.name} (#${a.rank} • ${a.headquarters_commune})">
+              <div class="pin-badge">#${a.rank}</div>
+              <div class="pin-name">${a.name.split(' ')[0]}</div>
+            </div>
+          `,
+          iconSize: [110, 30],
+          iconAnchor: [55, 15]
+        });
+
+        const m = L.marker([a.lat, a.lon], { 
+          icon,
+          zIndexOffset: isSelected ? 1500 : 0
+        }).addTo(agencyMarkersGroup);
+
+        m.on('click', () => {
+          if (isSelected) {
+            openAgencyDetail(agency, brokerName);
+          } else {
+            selectAgencyOnMap(a, null);
+          }
+        });
       });
-      const agMarker = L.marker([agency.lat, agency.lon], { icon }).addTo(agencyMarkersGroup);
-      agMarker.on('click', () => openAgencyDetail(agency, brokerName));
 
       // Draw Radius Circle
       const radiusCircle = L.circle([agency.lat, agency.lon], {
@@ -3488,8 +3534,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <span class="badge-tag" style="background:rgba(201,162,77,0.2); color:var(--color-brand-300); border-color:var(--color-brand-400);">Rayon ~${(agency.radius_meters/1000).toFixed(1)} km</span>
         </div>
 
-        <div style="margin-top: 10px; color: var(--color-sand-300); font-size: 12px;">
-          📍 ${agency.address}
+        <div style="margin-top: 10px; font-size: 12px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="color: var(--color-paper);">
+            <strong style="color: var(--color-brand-300);">📍 Agence / Boutique :</strong> ${agency.address}
+          </div>
+          ${agency.legal_address ? `
+            <div style="color: var(--color-sand-400); font-size: 11px;">
+              <span style="color: var(--color-sand-300);">⚖️ Siège RC / Statutaire :</span> ${agency.legal_address}
+            </div>
+          ` : ''}
         </div>
 
         <!-- Official Social & Web Profiles -->
