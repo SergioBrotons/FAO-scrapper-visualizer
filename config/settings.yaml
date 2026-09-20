@@ -21,6 +21,7 @@ sitg:
     ppe: "CAD_PPE/FeatureServer/0"
     buildings: "CAD_BATIMENT_HORSOL/FeatureServer/0"
     addresses: "CAD_ADRESSE/FeatureServer/0"
+    zoning: "SIT_ZONE_AMENAG/FeatureServer/0"
 
 storage:
   database_path: "data/state/state.sqlite"
