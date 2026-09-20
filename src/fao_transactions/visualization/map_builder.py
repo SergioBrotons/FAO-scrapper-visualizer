@@ -206,16 +206,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       top: 80px;
       left: 16px;
       bottom: 24px;
-      width: 340px;
+      width: 360px;
       background: var(--panel-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--panel-border);
       z-index: 1000;
-      padding: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 13px;
       box-shadow: var(--shadow-elevation);
       overflow-y: auto;
     }
@@ -230,7 +230,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       width: 100%;
       background: var(--color-ink-900);
       border: 1px solid var(--panel-border);
-      padding: 10px 14px;
+      padding: 9px 12px;
       color: var(--color-paper);
       font-family: var(--font-body);
       font-size: 12px;
@@ -249,31 +249,34 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--color-brand-400);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .pills-grid {
-      display: grid;
-      grid-template-columns: 1fr;
+    /* Segmented Pill Rows */
+    .pills-row {
+      display: flex;
       gap: 4px;
+      flex-wrap: wrap;
     }
 
     .pill-btn {
+      flex: 1;
+      min-width: 70px;
       background: var(--color-ink-900);
       border: 1px solid var(--panel-border);
       color: var(--color-sand-300);
-      padding: 8px 12px;
-      font-size: 11px;
-      font-weight: 500;
+      padding: 6px 8px;
+      font-size: 10px;
+      font-weight: 600;
       cursor: pointer;
-      text-align: left;
+      text-align: center;
       transition: all 0.15s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .pill-btn:hover {
@@ -283,12 +286,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }
 
     .pill-btn.active {
-      background: rgba(201, 162, 77, 0.15);
+      background: rgba(201, 162, 77, 0.2);
       border-color: var(--color-brand-500);
       color: var(--color-brand-300);
       font-weight: 700;
     }
 
+    /* 2-Column Select Grids */
     .filter-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -300,7 +304,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       background: var(--color-ink-900);
       border: 1px solid var(--panel-border);
       color: var(--color-paper);
-      padding: 8px 10px;
+      padding: 7px 8px;
       font-size: 11px;
       font-family: var(--font-body);
       outline: none;
@@ -311,37 +315,81 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       border-color: var(--color-brand-400);
     }
 
-    .toggle-row {
+    /* 2x2 Toggle Grid for Strategic Filters */
+    .toggle-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .toggle-card {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 8px 10px;
+      gap: 6px;
+      padding: 7px 8px;
       background: var(--color-ink-900);
       border: 1px solid var(--panel-border);
-      font-size: 11px;
+      font-size: 10px;
+      font-weight: 600;
       color: var(--color-sand-300);
       cursor: pointer;
-      margin-bottom: 4px;
+      transition: all 0.15s ease;
     }
 
-    .toggle-row:hover {
+    .toggle-card:hover {
       border-color: rgba(255, 255, 255, 0.2);
+      color: var(--color-paper);
     }
 
-    .toggle-row input {
+    .toggle-card.checked {
+      background: rgba(201, 162, 77, 0.15);
+      border-color: var(--color-brand-500);
+      color: var(--color-brand-300);
+    }
+
+    .toggle-card input {
       accent-color: var(--color-brand-500);
       cursor: pointer;
+    }
+
+    /* Advanced Collapsible Filter */
+    details.advanced-filters {
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      padding: 8px 10px;
+    }
+
+    details.advanced-filters summary {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-sand-300);
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+    }
+
+    details.advanced-filters summary:hover {
+      color: var(--color-brand-300);
+    }
+
+    .advanced-content {
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .reset-btn {
       background: transparent;
       border: 1px solid var(--panel-border);
       color: var(--color-sand-300);
-      padding: 9px;
-      font-size: 11px;
-      font-weight: 600;
+      padding: 8px;
+      font-size: 10px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       cursor: pointer;
       transition: all 0.2s ease;
       margin-top: auto;
@@ -359,7 +407,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       padding: 10px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       font-size: 10px;
     }
 
@@ -373,6 +421,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .legend-dot {
       width: 10px;
       height: 10px;
+      flex-shrink: 0;
     }
 
     /* Right Detail Drawer */
@@ -859,23 +908,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
         <div class="stat-item">
           <span class="stat-label">Volume Déclaré</span>
-          <span class="stat-value emerald">CHF __TOTAL_VOLUME__ Mrd</span>
+          <span class="stat-value emerald" id="stat-vol">CHF __TOTAL_VOLUME__ Mrd</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Avec Prix Publié</span>
-          <span class="stat-value gold">__PRICED_COUNT__</span>
+          <span class="stat-value gold" id="stat-priced">__PRICED_COUNT__</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">PLQ Actifs</span>
-          <span class="stat-value purple">__PLQ_COUNT__</span>
+          <span class="stat-value purple" id="stat-plq">__PLQ_COUNT__</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Zone Dév. (LGZD)</span>
-          <span class="stat-value gold">__DEV_COUNT__</span>
+          <span class="stat-value gold" id="stat-dev">__DEV_COUNT__</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Permis / Projets</span>
-          <span class="stat-value emerald">__PERMIT_COUNT__</span>
+          <span class="stat-value emerald" id="stat-permit">__PERMIT_COUNT__</span>
         </div>
       </div>
     </div>
@@ -887,15 +936,59 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <input type="text" id="searchInput" class="search-input" placeholder="Recherche adresse, acquéreur, aliénateur, PLQ...">
     </div>
 
+    <!-- Source & Transaction Nature -->
     <div>
-      <div class="filter-section-title">Source Juridique</div>
-      <div class="pills-grid">
-        <button class="pill-btn active" data-source="ALL">Toutes (__TOTAL_ROWS__)</button>
-        <button class="pill-btn" data-source="LDTR_Appartement">Appartements LDTR</button>
-        <button class="pill-btn" data-source="Registre_Foncier">Registre Foncier</button>
+      <div class="filter-section-title">Nature de Transaction</div>
+      <div class="pills-row">
+        <button class="pill-btn active" data-nature="ALL">Toutes</button>
+        <button class="pill-btn" data-nature="VENTE">Ventes</button>
+        <button class="pill-btn" data-nature="SUCCESSION">Héritages</button>
+        <button class="pill-btn" data-nature="DONATION">Donations</button>
       </div>
     </div>
 
+    <!-- Price Range Segmented Pills -->
+    <div>
+      <div class="filter-section-title">
+        <span>Fourchette de Prix (CHF)</span>
+        <span id="priceDisplayLabel" style="font-family:var(--font-mono); color:var(--color-brand-300); text-transform:none; font-size:9px;">Tous prix</span>
+      </div>
+      <div class="pills-row">
+        <button class="pill-btn active price-pill" data-price="ALL">Tous</button>
+        <button class="pill-btn price-pill" data-price="0-1.5M">&lt; 1.5M</button>
+        <button class="pill-btn price-pill" data-price="1.5M-5M">1.5M - 5M</button>
+        <button class="pill-btn price-pill" data-price="5M-15M">5M - 15M</button>
+        <button class="pill-btn price-pill" data-price="15M+">&gt; 15M+</button>
+      </div>
+    </div>
+
+    <!-- Typology & Rooms Grid -->
+    <div class="filter-grid-2">
+      <div>
+        <div class="filter-section-title">Typologie du Bien</div>
+        <select class="select-input" id="typologySelect">
+          <option value="ALL">Toutes typologies</option>
+          <option value="IMMEUBLE">🏢 Immeuble collectif</option>
+          <option value="VILLA">🏡 Villa & Maison</option>
+          <option value="PPE">🔑 Appartement & PPE</option>
+          <option value="COMMERCIAL">💼 Commercial & Bureaux</option>
+          <option value="TERRAIN">🌱 Terrain & Parcelle</option>
+        </select>
+      </div>
+      <div>
+        <div class="filter-section-title">Nombre de Pièces</div>
+        <select class="select-input" id="roomsSelect">
+          <option value="ALL">Toutes pièces</option>
+          <option value="2">Studio / 2 pièces</option>
+          <option value="3">3 pièces</option>
+          <option value="4">4 pièces</option>
+          <option value="5">5 pièces</option>
+          <option value="6+">6 pièces et plus</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Location & Zoning Grid -->
     <div class="filter-grid-2">
       <div>
         <div class="filter-section-title">Commune</div>
@@ -911,49 +1004,63 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- Strategic Filters (2x2 Grid) -->
     <div>
-      <div class="filter-section-title">Filtres Stratégiques & Urbanisme</div>
-      <label class="toggle-row">
-        <span>⚡ Avec PLQ (Plan Localisé de Quartier)</span>
-        <input type="checkbox" id="onlyPlqCheckbox">
-      </label>
-      <label class="toggle-row">
-        <span>🏗️ En Zone de Développement (LGZD)</span>
-        <input type="checkbox" id="onlyDevCheckbox">
-      </label>
-      <label class="toggle-row">
-        <span>📋 Avec Permis / Projet Bâtiment</span>
-        <input type="checkbox" id="onlyPermitCheckbox">
-      </label>
-    </div>
-
-    <div class="filter-grid-2">
-      <div>
-        <div class="filter-section-title">Époque Construction</div>
-        <select class="select-input" id="buildingSelect">
-          <option value="ALL">Toutes époques de construction</option>
-          <option value="avant 1919">Bâtiments historiques (Avant 1919)</option>
-          <option value="1919">1919 à 1960</option>
-          <option value="1961">1961 à 1990</option>
-          <option value="1991">1991 à 2015</option>
-          <option value="2016">Récent (2016 à aujourd'hui)</option>
-        </select>
-      </div>
-      <div>
-        <div class="filter-section-title">Prix Publié</div>
-        <label class="toggle-row" style="margin-top: 4px;">
-          <span>Uniquement avec prix</span>
+      <div class="filter-section-title">Filtres Stratégiques SITG</div>
+      <div class="toggle-grid-2">
+        <label class="toggle-card" id="cardPlq">
+          <input type="checkbox" id="onlyPlqCheckbox">
+          <span>⚡ Avec PLQ</span>
+        </label>
+        <label class="toggle-card" id="cardDev">
+          <input type="checkbox" id="onlyDevCheckbox">
+          <span>🏗️ Zone Dév.</span>
+        </label>
+        <label class="toggle-card" id="cardPermit">
+          <input type="checkbox" id="onlyPermitCheckbox">
+          <span>📋 Permis APA</span>
+        </label>
+        <label class="toggle-card" id="cardPriced">
           <input type="checkbox" id="onlyPricedCheckbox">
+          <span>💰 Prix publié</span>
         </label>
       </div>
     </div>
 
-    <button class="reset-btn" id="resetBtn">Réinitialiser les filtres</button>
+    <!-- Collapsible Advanced Filters -->
+    <details class="advanced-filters">
+      <summary>Filtres Avancés (Époque, Surface) ▾</summary>
+      <div class="advanced-content">
+        <div>
+          <div class="filter-section-title">Époque de Construction</div>
+          <select class="select-input" id="buildingSelect">
+            <option value="ALL">Toutes époques de construction</option>
+            <option value="avant 1919">Bâtiments historiques (Avant 1919)</option>
+            <option value="1919">1919 à 1960</option>
+            <option value="1961">1961 à 1990</option>
+            <option value="1991">1991 à 2015</option>
+            <option value="2016">Récent (2016 à aujourd'hui)</option>
+          </select>
+        </div>
+        <div>
+          <div class="filter-section-title">Surface Parcelle Minimale (m²)</div>
+          <select class="select-input" id="surfaceSelect">
+            <option value="ALL">Toutes surfaces</option>
+            <option value="500">&gt; 500 m²</option>
+            <option value="1000">&gt; 1'000 m²</option>
+            <option value="2500">&gt; 2'500 m²</option>
+            <option value="5000">&gt; 5'000 m² (Grand foncier)</option>
+          </select>
+        </div>
+      </div>
+    </details>
+
+    <button class="reset-btn" id="resetBtn">Réinitialiser tous les filtres</button>
 
     <div class="legend">
       <div class="filter-section-title">Légende des marqueurs</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#C9A24D;"></div> Prix ≥ CHF 3M (Gold)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#315E78;"></div> Appartement LDTR</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C9A24D;"></div> Prix ≥ CHF 3M (Trophy / Gold)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#315E78;"></div> Appartement PPE / LDTR</div>
       <div class="legend-item"><div class="legend-dot" style="background:#8A4F7D;"></div> PLQ / Zone de Développement</div>
       <div class="legend-item"><div class="legend-dot" style="background:#A46D13;"></div> Zone 5 (Villas & Terrains)</div>
       <div class="legend-item"><div class="legend-dot" style="background:#2F6B57;"></div> Registre Foncier (Autre)</div>
@@ -1102,7 +1209,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function getMarkerColor(r) {
       if (r.price_chf && r.price_chf >= 3000000) return '#C9A24D'; // Gold
-      if (r.source_category === 'LDTR_Appartement') return '#315E78'; // Cyan-Blue
+      if (r.typology_class === 'PPE' || r.source_category === 'LDTR_Appartement') return '#315E78'; // Cyan-Blue
       if (r.plq_number || r.zone_dev_name) return '#8A4F7D'; // Purple
       if (r.zone_code === '5') return '#A46D13'; // Ochre
       return '#2F6B57'; // Forest green
@@ -1112,8 +1219,22 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       markersCluster.clearLayers();
       const markers = [];
 
+      let totalVol = 0;
+      let pricedCount = 0;
+      let plqCount = 0;
+      let devCount = 0;
+      let permitCount = 0;
+
       records.forEach(r => {
         if (!r.lat || !r.lon) return;
+
+        if (r.price_chf) {
+          totalVol += r.price_chf;
+          pricedCount++;
+        }
+        if (r.plq_number) plqCount++;
+        if (r.zone_dev_name) devCount++;
+        if (r.permit_number) permitCount++;
 
         const color = getMarkerColor(r);
         const radius = (r.price_chf && r.price_chf > 5000000) ? 8 : 6;
@@ -1132,7 +1253,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       });
 
       markersCluster.addLayers(markers);
+      
+      // Update HUD stats dynamically
       document.getElementById('stat-count').textContent = records.length.toLocaleString('fr-CH');
+      document.getElementById('stat-vol').textContent = 'CHF ' + (totalVol >= 1e9 ? (totalVol/1e9).toFixed(2) + ' Mrd' : (totalVol/1e6).toFixed(1) + ' Mio');
+      document.getElementById('stat-priced').textContent = pricedCount.toLocaleString('fr-CH');
+      document.getElementById('stat-plq').textContent = plqCount.toLocaleString('fr-CH');
+      document.getElementById('stat-dev').textContent = devCount.toLocaleString('fr-CH');
+      document.getElementById('stat-permit').textContent = permitCount.toLocaleString('fr-CH');
     }
 
     // Initial render
@@ -1165,7 +1293,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       detailContent.innerHTML = `
         <div class="detail-badges">
-          <span class="badge-tag">${r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier'}</span>
+          <span class="badge-tag">${r.transaction_type || (r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier')}</span>
+          ${r.typology_label ? `<span class="badge-tag" style="background:#172554; color:#93c5fd; border-color:#1e40af;">${r.typology_label}</span>` : ''}
           ${r.zone_code ? `<span class="badge-tag zone">${r.zone_name || ('Zone ' + r.zone_code)}</span>` : ''}
           ${r.plq_number ? `<span class="badge-tag plq">PLQ #${r.plq_number}</span>` : ''}
           ${r.zone_dev_name ? `<span class="badge-tag zonedev">${r.zone_dev_code || 'Zone Dév.'}</span>` : ''}
@@ -1256,10 +1385,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <span class="row-value mono">${r.parcel_number}</span>
           </div>` : ''}
 
-          ${r.surface_m2 ? `
+          ${(r.rooms || r.surface_m2) ? `
           <div class="detail-row">
-            <span class="row-label">Surface & Pièces</span>
-            <span class="row-value mono">${r.surface_m2} m² ${r.rooms ? ' | ' + r.rooms + ' pièces' : ''}</span>
+            <span class="row-label">Typologie & Pièces</span>
+            <span class="row-value mono">
+              ${r.rooms ? '<strong>' + r.rooms + ' pièces</strong>' : ''} 
+              ${r.surface_m2 ? (r.rooms ? ' &bull; ' : '') + r.surface_m2 + ' m²' : ''}
+            </span>
           </div>` : ''}
 
           ${r.building_destination ? `
@@ -1285,7 +1417,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
       `;
 
-      // Attach clean click listeners to avoid string quote parsing issues
+      // Attach clean click listeners
       const btnStreet = document.getElementById('btnStreetViewAction');
       if (btnStreet) {
         btnStreet.onclick = () => {
@@ -1373,26 +1505,59 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }
     });
 
-    // Filter Logic
-    let currentSource = 'ALL';
+    // Filtering State & Handlers
+    let currentNature = 'ALL';
+    let currentPricePreset = 'ALL';
 
-    document.querySelectorAll('.pill-btn').forEach(btn => {
+    // Nature Pill Buttons
+    document.querySelectorAll('.pill-btn[data-nature]').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.pill-btn[data-nature]').forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
-        currentSource = e.target.getAttribute('data-source');
+        currentNature = e.target.getAttribute('data-nature');
         applyFilters();
       });
     });
 
+    // Price Preset Buttons
+    document.querySelectorAll('.price-pill').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.price-pill').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentPricePreset = e.target.getAttribute('data-price');
+        document.getElementById('priceDisplayLabel').textContent = e.target.textContent;
+        applyFilters();
+      });
+    });
+
+    // Strategic Checkbox Cards
+    const cardPlq = document.getElementById('cardPlq');
+    const cardDev = document.getElementById('cardDev');
+    const cardPermit = document.getElementById('cardPermit');
+    const cardPriced = document.getElementById('cardPriced');
+
     const searchInput = document.getElementById('searchInput');
+    const typologySelect = document.getElementById('typologySelect');
+    const roomsSelect = document.getElementById('roomsSelect');
     const buildingSelect = document.getElementById('buildingSelect');
+    const surfaceSelect = document.getElementById('surfaceSelect');
+
     const onlyPricedCheckbox = document.getElementById('onlyPricedCheckbox');
     const onlyDevCheckbox = document.getElementById('onlyDevCheckbox');
     const onlyPlqCheckbox = document.getElementById('onlyPlqCheckbox');
     const onlyPermitCheckbox = document.getElementById('onlyPermitCheckbox');
 
-    [searchInput, communeSelect, zoneSelect, buildingSelect, onlyPricedCheckbox, onlyDevCheckbox, onlyPlqCheckbox, onlyPermitCheckbox].forEach(el => {
+    [onlyPlqCheckbox, onlyDevCheckbox, onlyPermitCheckbox, onlyPricedCheckbox].forEach(chk => {
+      chk.addEventListener('change', () => {
+        cardPlq.classList.toggle('checked', onlyPlqCheckbox.checked);
+        cardDev.classList.toggle('checked', onlyDevCheckbox.checked);
+        cardPermit.classList.toggle('checked', onlyPermitCheckbox.checked);
+        cardPriced.classList.toggle('checked', onlyPricedCheckbox.checked);
+        applyFilters();
+      });
+    });
+
+    [searchInput, typologySelect, roomsSelect, communeSelect, zoneSelect, buildingSelect, surfaceSelect].forEach(el => {
       el.addEventListener('input', applyFilters);
       el.addEventListener('change', applyFilters);
     });
@@ -1401,14 +1566,27 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       searchInput.value = '';
       communeSelect.value = 'ALL';
       zoneSelect.value = 'ALL';
+      typologySelect.value = 'ALL';
+      roomsSelect.value = 'ALL';
       buildingSelect.value = 'ALL';
+      surfaceSelect.value = 'ALL';
+
       onlyPricedCheckbox.checked = false;
       onlyDevCheckbox.checked = false;
       onlyPlqCheckbox.checked = false;
       onlyPermitCheckbox.checked = false;
-      currentSource = 'ALL';
-      document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('.pill-btn[data-source="ALL"]').classList.add('active');
+
+      [cardPlq, cardDev, cardPermit, cardPriced].forEach(c => c.classList.remove('checked'));
+
+      currentNature = 'ALL';
+      document.querySelectorAll('.pill-btn[data-nature]').forEach(b => b.classList.remove('active'));
+      document.querySelector('.pill-btn[data-nature="ALL"]').classList.add('active');
+
+      currentPricePreset = 'ALL';
+      document.querySelectorAll('.price-pill').forEach(b => b.classList.remove('active'));
+      document.querySelector('.price-pill[data-price="ALL"]').classList.add('active');
+      document.getElementById('priceDisplayLabel').textContent = 'Tous prix';
+
       applyFilters();
     });
 
@@ -1416,28 +1594,73 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const q = searchInput.value.toLowerCase().trim();
       const selComm = communeSelect.value;
       const selZone = zoneSelect.value;
+      const selTypo = typologySelect.value;
+      const selRooms = roomsSelect.value;
       const selBuild = buildingSelect.value;
+      const selSurf = surfaceSelect.value;
+
       const onlyPriced = onlyPricedCheckbox.checked;
       const onlyDev = onlyDevCheckbox.checked;
       const onlyPlq = onlyPlqCheckbox.checked;
       const onlyPermit = onlyPermitCheckbox.checked;
 
       const filtered = DATA.filter(r => {
-        if (currentSource !== 'ALL' && r.source_category !== currentSource) return false;
+        // Nature of transaction filter
+        if (currentNature !== 'ALL' && r.nature_class !== currentNature) return false;
+
+        // Price presets filter
+        if (currentPricePreset !== 'ALL') {
+          const p = r.price_chf;
+          if (!p || p <= 0) return false;
+          if (currentPricePreset === '0-1.5M' && p > 1500000) return false;
+          if (currentPricePreset === '1.5M-5M' && (p < 1500000 || p > 5000000)) return false;
+          if (currentPricePreset === '5M-15M' && (p < 5000000 || p > 15000000)) return false;
+          if (currentPricePreset === '15M+' && p < 15000000) return false;
+        }
+
+        // Typology filter
+        if (selTypo !== 'ALL' && r.typology_class !== selTypo) return false;
+
+        // Number of rooms filter
+        if (selRooms !== 'ALL') {
+          if (!r.rooms) return false;
+          const rms = parseFloat(r.rooms);
+          if (selRooms === '2' && rms > 2.5) return false;
+          if (selRooms === '3' && (rms < 2.5 || rms > 3.5)) return false;
+          if (selRooms === '4' && (rms < 3.5 || rms > 4.5)) return false;
+          if (selRooms === '5' && (rms < 4.5 || rms > 5.5)) return false;
+          if (selRooms === '6+' && rms < 5.5) return false;
+        }
+
+        // Location & Zone
         if (selComm !== 'ALL' && r.commune !== selComm) return false;
         if (selZone !== 'ALL' && r.zone_code !== selZone) return false;
+
+        // Strategic checkboxes
         if (onlyPriced && (!r.price_chf || r.price_chf <= 0)) return false;
         if (onlyDev && !r.zone_dev_name) return false;
         if (onlyPlq && !r.plq_number) return false;
         if (onlyPermit && !r.permit_number) return false;
 
+        // Advanced construction period filter
         if (selBuild !== 'ALL') {
           const bp = (r.building_period || '').toLowerCase();
           if (!bp.includes(selBuild.toLowerCase())) return false;
         }
 
+        // Advanced surface filter
+        if (selSurf !== 'ALL') {
+          const s = parseFloat(r.surface_m2 || r.surface_official_m2 || 0);
+          if (s < parseFloat(selSurf)) return false;
+        }
+
+        // Global search query
         if (q) {
-          const str = [(r.address||''), (r.commune||''), (r.buyer||''), (r.seller||''), (r.parcel_number||''), (r.egrid||''), (r.plq_name||''), (r.permit_number||''), (r.grand_projet_name||'')].join(' ').toLowerCase();
+          const str = [
+            (r.address||''), (r.commune||''), (r.buyer||''), (r.seller||''),
+            (r.parcel_number||''), (r.egrid||''), (r.plq_name||''),
+            (r.permit_number||''), (r.grand_projet_name||''), (r.nature||'')
+          ].join(' ').toLowerCase();
           if (!str.includes(q)) return false;
         }
 
@@ -1450,6 +1673,47 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </body>
 </html>
 """
+
+
+def classify_typology(r: Dict[str, Any]) -> str:
+    """Classify property into a clean institutional asset class."""
+    dest = str(r.get("building_destination") or "").lower()
+    nat = str(r.get("nature") or "").lower()
+    pt = str(r.get("property_type") or "").lower()
+    sc = str(r.get("source_category") or "").lower()
+
+    if "plusieurs logements" in dest or "deux logements" in dest or "immeuble" in nat:
+        return "IMMEUBLE"
+    elif "un logement" in dest or "villa" in nat:
+        return "VILLA"
+    elif "appartement" in nat or "ppe" in pt or "ldtr_appartement" in sc:
+        return "PPE"
+    elif any(k in dest for k in ["activités", "bureau", "atelier", "dépôt", "commercial", "artisanal", "rez activités"]) or "commercial" in nat:
+        return "COMMERCIAL"
+    else:
+        return "TERRAIN"
+
+
+def classify_nature(r: Dict[str, Any]) -> str:
+    """Classify legal transaction nature."""
+    tt = str(r.get("transaction_type") or "").lower()
+    if "vente" in tt:
+        return "VENTE"
+    elif any(k in tt for k in ["héritage", "heritage", "succession"]):
+        return "SUCCESSION"
+    else:
+        return "DONATION"
+
+
+def get_typology_label(typology_class: str) -> str:
+    labels = {
+        "IMMEUBLE": "Immeuble collectif",
+        "VILLA": "Villa individuelle",
+        "PPE": "Appartement / PPE",
+        "COMMERCIAL": "Commercial & Mixte",
+        "TERRAIN": "Terrain / Parcelle",
+    }
+    return labels.get(typology_class, "Bien immobilier")
 
 
 def build_interactive_map(
@@ -1475,7 +1739,7 @@ def build_interactive_map(
             "centroid_lv95_e": "lv95_e",
             "centroid_lv95_n": "lv95_n",
         })
-        rows = [
+        raw_rows = [
             {k: (None if pd.isna(v) else v) for k, v in row.items()}
             for row in df.to_dict(orient="records")
         ]
@@ -1518,9 +1782,19 @@ def build_interactive_map(
                 WHERE e.centroid_wgs84_lon IS NOT NULL
                 ORDER BY t.notice_date DESC
             """)
-            rows = [dict(r) for r in cursor.fetchall()]
+            raw_rows = [dict(r) for r in cursor.fetchall()]
     else:
-        rows = []
+        raw_rows = []
+
+    # Enrich each record with normalized typology and transaction nature
+    rows = []
+    for r in raw_rows:
+        typo = classify_typology(r)
+        nature = classify_nature(r)
+        r["typology_class"] = typo
+        r["typology_label"] = get_typology_label(typo)
+        r["nature_class"] = nature
+        rows.append(r)
 
     console.print(f"Loaded [bold]{len(rows)}[/bold] geocoded and enriched transactions.")
 
