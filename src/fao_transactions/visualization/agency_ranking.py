@@ -1224,13 +1224,23 @@ def get_ranked_league_table() -> Dict[str, Any]:
         ag_copy["cytria_score"] = score
         ranked_agencies.append(ag_copy)
 
-        for b in ag.get("agents", []):
-            b_score = compute_broker_score(b, score)
-            b_copy = dict(b)
-            b_copy["cytria_score"] = b_score
-            b_copy["agency_name"] = ag["name"]
-            b_copy["agency_id"] = ag["id"]
-            all_brokers.append(b_copy)
+    brokers_file = Path("data/exports/geneva_brokers_master.json")
+    if brokers_file.exists():
+        try:
+            with open(brokers_file, "r", encoding="utf-8") as f:
+                all_brokers = json.load(f)
+        except Exception as e:
+            logger.warning("Could not load master brokers JSON: %s", e)
+
+    if not all_brokers:
+        for ag in agencies_list:
+            for b in ag.get("agents", []):
+                b_score = compute_broker_score(b, ag.get("cytria_score", 75))
+                b_copy = dict(b)
+                b_copy["cytria_score"] = b_score
+                b_copy["agency_name"] = ag["name"]
+                b_copy["agency_id"] = ag["id"]
+                all_brokers.append(b_copy)
 
     # Sort agencies and brokers descending
     ranked_agencies.sort(key=lambda x: x.get("cytria_score", 0), reverse=True)

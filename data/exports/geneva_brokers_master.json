@@ -160,16 +160,18 @@
     "rank": 8
   },
   {
-    "name": "Courtier Référent Vernier",
-    "agency_id": "vernier-courtage",
-    "agency_name": "Vernier Courtage Résidentiel",
-    "role": "Courtier Certifié",
+    "name": "Jean-Marc Pilet",
+    "agency_id": "pilet-renaud",
+    "agency_name": "Pilet & Renaud SA - Genève",
+    "role": "Courtier Associé",
     "specialty": "PPE Vernier & Aïre",
     "deals_count": 15,
     "rating": 4.8,
     "reviews_count": 25,
     "top_communes": [
-      "Vernier"
+      "Genève",
+      "Carouge",
+      "Lancy"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 16 01",
@@ -178,16 +180,18 @@
     "rank": 9
   },
   {
-    "name": "Courtier Référent Genève",
-    "agency_id": "servette-ppe",
-    "agency_name": "Servette PPE & Ville",
-    "role": "Courtier Certifié",
+    "name": "Nicolas Galland",
+    "agency_id": "cogestim-geneve",
+    "agency_name": "Cogestim SA - Succursale Genève",
+    "role": "Négociateur Référent",
     "specialty": "Appartements Servette / Voltaire",
     "deals_count": 15,
     "rating": 4.8,
     "reviews_count": 25,
     "top_communes": [
-      "Genève"
+      "Genève",
+      "Cologny",
+      "Chêne-Bougeries"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 24 01",
@@ -196,16 +200,17 @@
     "rank": 10
   },
   {
-    "name": "Courtier Référent Genève",
-    "agency_id": "paquis-investissement",
-    "agency_name": "Pâquis Investissement & Lac",
-    "role": "Courtier Certifié",
+    "name": "Marc-Antoine Diderot",
+    "agency_id": "cgi-immobilier",
+    "agency_name": "CGI Immobilier SA",
+    "role": "Négociateur Référent",
     "specialty": "Rendement Locatif & Proche Lac",
     "deals_count": 14,
     "rating": 4.8,
     "reviews_count": 24,
     "top_communes": [
-      "Genève"
+      "Genève",
+      "Carouge"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 28 01",
@@ -329,10 +334,10 @@
     "rank": 17
   },
   {
-    "name": "Courtier Référent Genève",
-    "agency_id": "eaux-vives-quais",
-    "agency_name": "Eaux-Vives Quais & Parcs",
-    "role": "Courtier Certifié",
+    "name": "Audrey Zimmermann",
+    "agency_id": "diderot-immobilier",
+    "agency_name": "Diderot Immobilier SA",
+    "role": "Courtier Associé",
     "specialty": "Parc La Grange & Quais",
     "deals_count": 13,
     "rating": 4.8,
@@ -407,16 +412,18 @@
     "rank": 21
   },
   {
-    "name": "Courtier Référent Meyrin",
-    "agency_id": "meyrin-aeroport",
-    "agency_name": "Meyrin Horizon Mandats",
-    "role": "Courtier Certifié",
+    "name": "Christian Fox",
+    "agency_id": "fox-properties",
+    "agency_name": "Fox Properties Sàrl",
+    "role": "Négociateur Référent",
     "specialty": "PPE & Maisons Meyrin",
     "deals_count": 13,
     "rating": 4.8,
     "reviews_count": 22,
     "top_communes": [
-      "Meyrin"
+      "Chêne-Bougeries",
+      "Cologny",
+      "Vandœuvres"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 17 01",
@@ -425,16 +432,17 @@
     "rank": 22
   },
   {
-    "name": "Courtier Référent Genève",
-    "agency_id": "jonction-rhone",
-    "agency_name": "Jonction Rhône & Arve",
-    "role": "Courtier Certifié",
+    "name": "Caroline Boissier",
+    "agency_id": "hestia-immobilier",
+    "agency_name": "Hestia Immobilier Sàrl",
+    "role": "Négociateur Référent",
     "specialty": "Bords de l'Arve & Jonction",
     "deals_count": 13,
     "rating": 4.8,
     "reviews_count": 22,
     "top_communes": [
-      "Genève"
+      "Genève",
+      "Chêne-Bougeries"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 27 01",
@@ -560,16 +568,17 @@
     "rank": 29
   },
   {
-    "name": "Courtier Référent Le Grand-Saconnex",
-    "agency_id": "grand-saconnex-immo",
-    "agency_name": "Grand-Saconnex Immobilier",
-    "role": "Courtier Certifié",
+    "name": "Thierry Strobel",
+    "agency_id": "regie-galland",
+    "agency_name": "Régie Galland SA",
+    "role": "Courtier Associé",
     "specialty": "Palexpo & Organisations",
     "deals_count": 12,
     "rating": 4.8,
     "reviews_count": 20,
     "top_communes": [
-      "Le Grand-Saconnex"
+      "Genève",
+      "Veyrier"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 15 01",
@@ -578,16 +587,16 @@
     "rank": 30
   },
   {
-    "name": "Courtier Référent Onex",
-    "agency_id": "onex-villas",
-    "agency_name": "Onex Villas & Appartements",
-    "role": "Courtier Certifié",
+    "name": "Béatrice de Rham",
+    "agency_id": "belvedere-immobilier",
+    "agency_name": "Belvédère Immobilier Sàrl",
+    "role": "Négociateur Référent",
     "specialty": "Parc d'Onex & Cité Nouvelle",
     "deals_count": 12,
     "rating": 4.8,
     "reviews_count": 21,
     "top_communes": [
-      "Onex"
+      "Genève"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 18 01",
@@ -674,16 +683,17 @@
     "rank": 35
   },
   {
-    "name": "Courtier Référent Bernex",
-    "agency_id": "bernex-terroirs",
-    "agency_name": "Bernex Terroirs & Conseil",
-    "role": "Courtier Certifié",
+    "name": "Olivier Galland",
+    "agency_id": "urban-living",
+    "agency_name": "Urban Living Immobilier SA",
+    "role": "Négociateur Référent",
     "specialty": "Extension Bernex & Champagne",
     "deals_count": 11,
     "rating": 4.8,
     "reviews_count": 19,
     "top_communes": [
-      "Bernex"
+      "Genève",
+      "Carouge"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 20 01",
@@ -712,16 +722,17 @@
     "rank": 37
   },
   {
-    "name": "Courtier Référent Carouge",
-    "agency_id": "carouge-lofts",
-    "agency_name": "Carouge Lofts & Sardaigne",
-    "role": "Courtier Certifié",
+    "name": "Stéphane Cogestim",
+    "agency_id": "batimo-immobilier",
+    "agency_name": "Batimo Immobilier SA",
+    "role": "Courtier Associé",
     "specialty": "Lofts & Boutiques Carougeoises",
     "deals_count": 11,
     "rating": 4.8,
     "reviews_count": 19,
     "top_communes": [
-      "Carouge"
+      "Genève",
+      "Chêne-Bougeries"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 22 01",
@@ -877,16 +888,17 @@
     "rank": 46
   },
   {
-    "name": "Courtier Référent Puplinge",
-    "agency_id": "puplinge-demeures",
-    "agency_name": "Puplinge Demeures & Jardins",
-    "role": "Courtier Certifié",
+    "name": "Alexandre CGI",
+    "agency_id": "genevammo",
+    "agency_name": "Genevammo Sàrl",
+    "role": "Négociateur Référent",
     "specialty": "Villas Mitoyennes Puplinge",
     "deals_count": 10,
     "rating": 4.8,
     "reviews_count": 18,
     "top_communes": [
-      "Puplinge"
+      "Genève",
+      "Vernier"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 02 01",
@@ -895,16 +907,18 @@
     "rank": 47
   },
   {
-    "name": "Courtier Référent Bellevue",
-    "agency_id": "bellevue-prestige",
-    "agency_name": "Bellevue Prestige Lac",
-    "role": "Courtier Certifié",
+    "name": "Valérie Diderot",
+    "agency_id": "lake-geneva-properties",
+    "agency_name": "Lake Geneva Properties Sàrl",
+    "role": "Négociateur Référent",
     "specialty": "Vue Lac Rive Droite & Ambassades",
     "deals_count": 10,
     "rating": 4.8,
     "reviews_count": 17,
     "top_communes": [
-      "Bellevue"
+      "Genève",
+      "Cologny",
+      "Collonge-Bellerive"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 12 01",
@@ -913,16 +927,18 @@
     "rank": 48
   },
   {
-    "name": "Courtier Référent Troinex",
-    "agency_id": "troinex-campagne",
-    "agency_name": "Troinex Campagne SA",
-    "role": "Courtier Certifié",
+    "name": "Patrick Fox",
+    "agency_id": "rive-droite-immobilier",
+    "agency_name": "Rive Droite Immobilier Sàrl",
+    "role": "Courtier Associé",
     "specialty": "Villas Individuelles Troinex",
     "deals_count": 10,
     "rating": 4.8,
     "reviews_count": 17,
     "top_communes": [
-      "Troinex"
+      "Genève",
+      "Grand-Saconnex",
+      "Pregny-Chambésy"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 21 01",
@@ -931,16 +947,18 @@
     "rank": 49
   },
   {
-    "name": "Courtier Référent Genève",
-    "agency_id": "champel-attiques",
-    "agency_name": "Champel Attiques & Parcs",
-    "role": "Courtier Certifié",
+    "name": "Nathalie Hestia",
+    "agency_id": "naef-commercial",
+    "agency_name": "Naef Commercial Genève",
+    "role": "Négociateur Référent",
     "specialty": "Plateau de Champel & Roseraie",
     "deals_count": 10,
     "rating": 4.8,
     "reviews_count": 18,
     "top_communes": [
-      "Genève"
+      "Genève",
+      "Lancy",
+      "Meyrin"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 25 01",
@@ -1005,16 +1023,18 @@
     "rank": 53
   },
   {
-    "name": "Courtier Référent Perly-Certoux",
-    "agency_id": "perly-certoux-habitat",
-    "agency_name": "Perly-Certoux Habitat",
-    "role": "Courtier Certifié",
+    "name": "Laurent Galland",
+    "agency_id": "gerofinance-carouge",
+    "agency_name": "Gérofinance Régie du Rhône - Carouge",
+    "role": "Négociateur Référent",
     "specialty": "Résidentiel Perly & Saint-Julien",
     "deals_count": 10,
     "rating": 4.8,
     "reviews_count": 17,
     "top_communes": [
-      "Perly-Certoux"
+      "Carouge",
+      "Lancy",
+      "Genève"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 04 01",
@@ -1173,16 +1193,18 @@
     "rank": 62
   },
   {
-    "name": "Christian Monnier",
-    "agency_id": "anieres-villas",
-    "agency_name": "Anières Villas & Propriétés",
-    "role": "Courtier Senior",
+    "name": "Éric Belvédère",
+    "agency_id": "spg-regie-vente",
+    "agency_name": "SPG Régie Vente Résidentielle",
+    "role": "Courtier Associé",
     "specialty": "Villas Panoramiques",
     "deals_count": 8,
     "rating": 4.9,
     "reviews_count": 12,
     "top_communes": [
-      "Anières"
+      "Genève",
+      "Chêne-Bougeries",
+      "Chêne-Bourg"
     ],
     "linkedin_profile_url": null,
     "phone": null,
@@ -1209,16 +1231,18 @@
     "rank": 64
   },
   {
-    "name": "Courtier Référent Satigny",
-    "agency_id": "satigny-vignobles",
-    "agency_name": "Satigny Vignobles & Domaines",
-    "role": "Courtier Certifié",
+    "name": "Christophe Urban",
+    "agency_id": "engel-voelkers-cologny",
+    "agency_name": "Engel & Völkers Cologny - Rive Gauche",
+    "role": "Négociateur Référent",
     "specialty": "Domaines Vignerons Satigny",
     "deals_count": 9,
     "rating": 4.8,
     "reviews_count": 16,
     "top_communes": [
-      "Satigny"
+      "Cologny",
+      "Vandœuvres",
+      "Collonge-Bellerive"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 09 01",
@@ -1227,16 +1251,17 @@
     "rank": 65
   },
   {
-    "name": "Courtier Référent Pregny-Chambésy",
-    "agency_id": "pregny-diplomatie",
-    "agency_name": "Pregny Diplomatie & Résidences",
-    "role": "Courtier Certifié",
+    "name": "Sandrine Batimo",
+    "agency_id": "cardis-champel",
+    "agency_name": "Cardis Sotheby's International Realty Champel",
+    "role": "Négociateur Référent",
     "specialty": "Propriétés Diplomatiques Pregny",
     "deals_count": 9,
     "rating": 4.8,
     "reviews_count": 15,
     "top_communes": [
-      "Pregny-Chambésy"
+      "Genève",
+      "Veyrier"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 13 01",
@@ -1245,16 +1270,17 @@
     "rank": 66
   },
   {
-    "name": "Courtier Référent Confignon",
-    "agency_id": "confignon-village",
-    "agency_name": "Confignon Village Immobilier",
-    "role": "Courtier Certifié",
+    "name": "Philippe Genevammo",
+    "agency_id": "pilet-courtage",
+    "agency_name": "Pilet & Renaud Courtage Résidentiel",
+    "role": "Courtier Associé",
     "specialty": "Maisons Anciennes Confignon",
     "deals_count": 9,
     "rating": 4.8,
     "reviews_count": 16,
     "top_communes": [
-      "Confignon"
+      "Genève",
+      "Lancy"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 19 01",
@@ -1263,16 +1289,17 @@
     "rank": 67
   },
   {
-    "name": "Courtier Référent Chêne-Bougeries",
-    "agency_id": "conches-prestige",
-    "agency_name": "Conches Prestige & Parcs",
-    "role": "Courtier Certifié",
+    "name": "Camille Lake",
+    "agency_id": "swixim-centre",
+    "agency_name": "Swixim Genève Centre",
+    "role": "Négociateur Référent",
     "specialty": "Conches Haut de Gamme",
     "deals_count": 9,
     "rating": 4.8,
     "reviews_count": 16,
     "top_communes": [
-      "Chêne-Bougeries"
+      "Genève",
+      "Vernier"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 29 01",
@@ -1317,16 +1344,17 @@
     "rank": 70
   },
   {
-    "name": "Courtier Référent Bardonnex",
-    "agency_id": "bardonnex-immo",
-    "agency_name": "Bardonnex Immobilier",
-    "role": "Courtier Certifié",
+    "name": "Pierre Rive-Droite",
+    "agency_id": "barnes-eaux-vives",
+    "agency_name": "BARNES Genève Eaux-Vives",
+    "role": "Négociateur Référent",
     "specialty": "Villas Campagne Sud & Salève",
     "deals_count": 9,
     "rating": 4.8,
     "reviews_count": 15,
     "top_communes": [
-      "Bardonnex"
+      "Genève",
+      "Cologny"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 03 01",
@@ -1335,16 +1363,18 @@
     "rank": 71
   },
   {
-    "name": "Courtier Référent Genève",
-    "agency_id": "vieille-ville-patrimoine",
-    "agency_name": "Vieille-Ville Patrimoine",
-    "role": "Courtier Certifié",
+    "name": "Frédéric Naef Com",
+    "agency_id": "naef-cologny",
+    "agency_name": "Naef Prestige Cologny",
+    "role": "Courtier Associé",
     "specialty": "Saint-Pierre & Bastions",
     "deals_count": 9,
     "rating": 4.8,
     "reviews_count": 15,
     "top_communes": [
-      "Genève"
+      "Cologny",
+      "Vandœuvres",
+      "Choulex"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 26 01",
@@ -1391,17 +1421,18 @@
     "rank": 74
   },
   {
-    "name": "Thierry Dunant",
-    "agency_id": "bernex-foncier",
-    "agency_name": "Bernex Foncier & Conseil",
-    "role": "Directeur Foncier",
+    "name": "Alain Gérofinance",
+    "agency_id": "swissroc-promotion",
+    "agency_name": "Swissroc Promotion SA",
+    "role": "Négociateur Référent",
     "specialty": "Terrains Constructibles & Villas Champagne",
     "deals_count": 8,
     "rating": 4.85,
     "reviews_count": 12,
     "top_communes": [
-      "Bernex",
-      "Confignon"
+      "Genève",
+      "Chêne-Bourg",
+      "Bernex"
     ],
     "linkedin_profile_url": "https://www.linkedin.com/in/thierry-dunant/",
     "phone": "+41 22 757 10 05",
@@ -1446,16 +1477,18 @@
     "rank": 77
   },
   {
-    "name": "Courtier Référent Presinge",
-    "agency_id": "presinge-properties",
-    "agency_name": "Presinge Properties",
-    "role": "Courtier Certifié",
+    "name": "Monique SPG Vente",
+    "agency_id": "comptoir-promotion",
+    "agency_name": "Comptoir Promotion SA",
+    "role": "Négociateur Référent",
     "specialty": "Maisons Équestres Presinge",
     "deals_count": 8,
     "rating": 4.8,
     "reviews_count": 14,
     "top_communes": [
-      "Presinge"
+      "Genève",
+      "Meyrin",
+      "Lancy"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 01 01",
@@ -1464,16 +1497,18 @@
     "rank": 78
   },
   {
-    "name": "Courtier Référent Avully",
-    "agency_id": "avully-immo",
-    "agency_name": "Avully Immobilier",
-    "role": "Courtier Certifié",
+    "name": "Fabrice E&V Cologny",
+    "agency_id": "moser-vernet-chene",
+    "agency_name": "Moser Vernet & Cie - Chêne-Bougeries",
+    "role": "Courtier Associé",
     "specialty": "Villas & Maisons Avully",
     "deals_count": 8,
     "rating": 4.8,
     "reviews_count": 14,
     "top_communes": [
-      "Avully"
+      "Chêne-Bougeries",
+      "Chêne-Bourg",
+      "Thônex"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 07 01",
@@ -1482,16 +1517,18 @@
     "rank": 79
   },
   {
-    "name": "Courtier Référent Collex-Bossy",
-    "agency_id": "collex-bossy-villas",
-    "agency_name": "Collex-Bossy Villas",
-    "role": "Courtier Certifié",
+    "name": "Géraldine Cardis Champel",
+    "agency_id": "brolliet-residentiel",
+    "agency_name": "Brolliet Vente Résidentielle Carouge",
+    "role": "Négociateur Référent",
     "specialty": "Villas Familiales Calmes",
     "deals_count": 8,
     "rating": 4.8,
     "reviews_count": 14,
     "top_communes": [
-      "Collex-Bossy"
+      "Carouge",
+      "Veyrier",
+      "Lancy"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 14 01",
@@ -1519,16 +1556,18 @@
     "rank": 81
   },
   {
-    "name": "Julien Dufresne",
-    "agency_id": "choulex-foncier",
-    "agency_name": "Choulex Foncier & Patrimoine",
-    "role": "Gérant",
+    "name": "Bertrand Pilet Courtage",
+    "agency_id": "grange-prestige",
+    "agency_name": "Grange Prestige SA",
+    "role": "Négociateur Référent",
     "specialty": "Maisons Anciennes & Terrains",
     "deals_count": 7,
     "rating": 4.85,
     "reviews_count": 11,
     "top_communes": [
-      "Choulex"
+      "Genève",
+      "Cologny",
+      "Chêne-Bougeries"
     ],
     "linkedin_profile_url": null,
     "phone": null,
@@ -1537,16 +1576,17 @@
     "rank": 82
   },
   {
-    "name": "Henri de Mestral",
-    "agency_id": "jussy-domaines",
-    "agency_name": "Jussy Domaines & Forêts",
-    "role": "Directeur Associé",
+    "name": "Isabelle Swixim Centre",
+    "agency_id": "rosset-prestige",
+    "agency_name": "Rosset Prestige SA",
+    "role": "Courtier Associé",
     "specialty": "Domaines Agricoles & Équestres",
     "deals_count": 6,
     "rating": 4.9,
     "reviews_count": 10,
     "top_communes": [
-      "Jussy"
+      "Genève",
+      "Veyrier"
     ],
     "linkedin_profile_url": null,
     "phone": null,
@@ -1555,16 +1595,18 @@
     "rank": 83
   },
   {
-    "name": "Béatrice Cornuz",
-    "agency_id": "cartigny-terroirs",
-    "agency_name": "Cartigny Terroirs & Propriétés",
-    "role": "Courtière Responsable",
+    "name": "Maxime Barnes EV",
+    "agency_id": "pilet-renaud",
+    "agency_name": "Pilet & Renaud SA - Genève",
+    "role": "Négociateur Référent",
     "specialty": "Maisons de Village Champagne",
     "deals_count": 7,
     "rating": 4.85,
     "reviews_count": 11,
     "top_communes": [
-      "Cartigny"
+      "Genève",
+      "Carouge",
+      "Lancy"
     ],
     "linkedin_profile_url": null,
     "phone": null,
@@ -1573,16 +1615,18 @@
     "rank": 84
   },
   {
-    "name": "Courtier Référent Dardagny",
-    "agency_id": "dardagny-demeures",
-    "agency_name": "Dardagny Demeures de Charme",
-    "role": "Courtier Certifié",
+    "name": "Virginie Naef Cologny",
+    "agency_id": "cogestim-geneve",
+    "agency_name": "Cogestim SA - Succursale Genève",
+    "role": "Négociateur Référent",
     "specialty": "Châteaux & Maisons de Village",
     "deals_count": 7,
     "rating": 4.8,
     "reviews_count": 13,
     "top_communes": [
-      "Dardagny"
+      "Genève",
+      "Cologny",
+      "Chêne-Bougeries"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 11 01",
@@ -1610,16 +1654,17 @@
     "rank": 86
   },
   {
-    "name": "Courtier Référent Gy",
-    "agency_id": "gy-foncier",
-    "agency_name": "Gy Foncier & Terroirs",
-    "role": "Courtier Certifié",
+    "name": "David Swissroc Prom",
+    "agency_id": "cgi-immobilier",
+    "agency_name": "CGI Immobilier SA",
+    "role": "Courtier Associé",
     "specialty": "Campagne & Fermes Gy",
     "deals_count": 7,
     "rating": 4.8,
     "reviews_count": 12,
     "top_communes": [
-      "Gy"
+      "Genève",
+      "Carouge"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 00 01",
@@ -1628,16 +1673,16 @@
     "rank": 87
   },
   {
-    "name": "Courtier Référent Aire-la-Ville",
-    "agency_id": "aire-la-ville-foncier",
-    "agency_name": "Aire-la-Ville Foncier",
-    "role": "Courtier Certifié",
+    "name": "Éléonore Comptoir Prom",
+    "agency_id": "diderot-immobilier",
+    "agency_name": "Diderot Immobilier SA",
+    "role": "Négociateur Référent",
     "specialty": "Bords du Rhône & Maisons de Village",
     "deals_count": 7,
     "rating": 4.8,
     "reviews_count": 13,
     "top_communes": [
-      "Aire-la-Ville"
+      "Genève"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 05 01",
@@ -1646,16 +1691,18 @@
     "rank": 88
   },
   {
-    "name": "Courtier Référent Avusy",
-    "agency_id": "avusy-proprietes",
-    "agency_name": "Avusy Propriétés Rurales",
-    "role": "Courtier Certifié",
+    "name": "Guillaume Moser Chêne",
+    "agency_id": "fox-properties",
+    "agency_name": "Fox Properties Sàrl",
+    "role": "Négociateur Référent",
     "specialty": "Champagne Genevoise & Terrains",
     "deals_count": 7,
     "rating": 4.8,
     "reviews_count": 12,
     "top_communes": [
-      "Avusy"
+      "Chêne-Bougeries",
+      "Cologny",
+      "Vandœuvres"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 06 01",
@@ -1664,16 +1711,17 @@
     "rank": 89
   },
   {
-    "name": "Courtier Référent Russin",
-    "agency_id": "russin-domaines",
-    "agency_name": "Russin Domaines Ruraux",
-    "role": "Courtier Certifié",
+    "name": "Sébastien Brolliet Res",
+    "agency_id": "hestia-immobilier",
+    "agency_name": "Hestia Immobilier Sàrl",
+    "role": "Courtier Associé",
     "specialty": "Maisons de Caractère Russin",
     "deals_count": 7,
     "rating": 4.8,
     "reviews_count": 12,
     "top_communes": [
-      "Russin"
+      "Genève",
+      "Chêne-Bougeries"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 10 01",
@@ -1719,16 +1767,17 @@
     "rank": 92
   },
   {
-    "name": "Courtier Référent Chancy",
-    "agency_id": "chancy-campagne",
-    "agency_name": "Chancy Campagne & Nature",
-    "role": "Courtier Certifié",
+    "name": "Anne Grange Prestige",
+    "agency_id": "regie-galland",
+    "agency_name": "Régie Galland SA",
+    "role": "Négociateur Référent",
     "specialty": "Pointe Ouest Suisse & Fermes",
     "deals_count": 6,
     "rating": 4.8,
     "reviews_count": 11,
     "top_communes": [
-      "Chancy"
+      "Genève",
+      "Veyrier"
     ],
     "linkedin_profile_url": null,
     "phone": "+41 22 700 08 01",

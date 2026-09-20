@@ -2266,10 +2266,21 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       </div>
 
       <!-- League Filter Bar -->
-      <div style="padding: 10px 24px; background: var(--color-ink-950); border-bottom: 1px solid var(--panel-border); display: flex; gap: 12px; align-items: center;">
-        <input type="text" id="leagueSearchInput" placeholder="Filtrer par nom d'agence, courtier, commune..." style="flex: 1; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
-        <select id="leagueCommuneSelect" style="width: 220px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
+      <div style="padding: 10px 24px; background: var(--color-ink-950); border-bottom: 1px solid var(--panel-border); display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="leagueSearchInput" placeholder="Filtrer par nom d'agence, courtier, commune..." style="flex: 1; min-width: 200px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
+        <select id="leagueCommuneSelect" style="width: 190px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
           <option value="ALL">Toutes communes genevoises</option>
+        </select>
+        <select id="leagueSortSelect" onchange="renderLeagueContent()" style="width: 235px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 12px; font-family: var(--font-brand); outline: none; cursor: pointer;">
+          <option value="RANK_ASC">Tri : Score Cytria (Haut ➔ Bas)</option>
+          <option value="RANK_DESC">Tri : Score Cytria (Bas ➔ Haut)</option>
+          <option value="NAME_ASC">Tri : Nom Alphabétique (A ➔ Z)</option>
+          <option value="NAME_DESC">Tri : Nom Alphabétique (Z ➔ A)</option>
+          <option value="VOLUME_DESC">Tri : Volume Vendu (Haut ➔ Bas)</option>
+          <option value="VOLUME_ASC">Tri : Volume Vendu (Bas ➔ Haut)</option>
+          <option value="DEALS_DESC">Tri : Ventes Conclues (Haut ➔ Bas)</option>
+          <option value="DEALS_ASC">Tri : Ventes Conclues (Bas ➔ Haut)</option>
+          <option value="RATING_DESC">Tri : Avis & Note (Haut ➔ Bas)</option>
         </select>
         <span id="leagueResultsCount" style="font-family: var(--font-mono); font-size: 11px; color: var(--color-sand-300); white-space: nowrap;"></span>
       </div>
@@ -2296,7 +2307,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       <!-- Filter bar -->
       <div style="padding: 10px 24px; background: var(--color-ink-950); border-bottom: 1px solid var(--panel-border); display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-        <input type="text" id="marketingSearchInput" placeholder="Rechercher une agence, mot-clé ou publication..." style="flex: 1; min-width: 200px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
+        <input type="text" id="marketingSearchInput" placeholder="Rechercher une agence, mot-clé ou publication..." style="flex: 1; min-width: 180px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
         
         <div class="marketing-channel-filters" style="display: flex; gap: 6px; flex-wrap: wrap;">
           <button type="button" class="btn-sm active" data-channel="ALL" onclick="filterMarketingChannel('ALL', this)" style="padding:4px 10px; cursor:pointer;">Tous canaux</button>
@@ -2307,6 +2318,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <button type="button" class="btn-sm" data-channel="TikTok" onclick="filterMarketingChannel('TikTok', this)" style="padding:4px 10px; cursor:pointer;">TikTok</button>
         </div>
 
+        <select id="marketingSortSelect" onchange="renderMarketingContent()" style="padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 12px; font-family: var(--font-brand); outline: none; cursor: pointer;">
+          <option value="DATE_DESC">Tri : Dernière Activité (Plus récente ➔ Ancienne)</option>
+          <option value="DATE_ASC">Tri : Dernière Activité (Plus ancienne ➔ Récente)</option>
+          <option value="NAME_ASC">Tri : Agence Alphabétique (A ➔ Z)</option>
+          <option value="NAME_DESC">Tri : Agence Alphabétique (Z ➔ A)</option>
+          <option value="RANK_ASC">Tri : Score / Rang (Haut ➔ Bas)</option>
+          <option value="RANK_DESC">Tri : Score / Rang (Bas ➔ Haut)</option>
+        </select>
+
         <span id="marketingCount" style="font-family: var(--font-mono); font-size: 11px; color: var(--color-sand-300); white-space: nowrap;"></span>
       </div>
 
@@ -2314,6 +2334,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <!-- Injected via JavaScript -->
       </div>
     </div>
+  </div>
+
   <!-- Cytria Micro-Location Valuation & Comparative Market Analysis (CMA) Modal -->
   <div class="modal-overlay" id="cmaModal">
     <div class="league-modal-window" style="max-width: 1120px; height: 88vh;">
@@ -3630,11 +3652,31 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       renderLeagueContent();
     }
 
+    function toggleLeagueSort(type) {
+      const sel = document.getElementById('leagueSortSelect');
+      if (!sel) return;
+      if (type === 'RANK') {
+        sel.value = sel.value === 'RANK_ASC' ? 'RANK_DESC' : 'RANK_ASC';
+      } else if (type === 'NAME') {
+        sel.value = sel.value === 'NAME_ASC' ? 'NAME_DESC' : 'NAME_ASC';
+      } else if (type === 'VOLUME') {
+        sel.value = sel.value === 'VOLUME_DESC' ? 'VOLUME_ASC' : 'VOLUME_DESC';
+      } else if (type === 'DEALS') {
+        sel.value = sel.value === 'DEALS_DESC' ? 'DEALS_ASC' : 'DEALS_DESC';
+      } else if (type === 'RATING') {
+        sel.value = sel.value === 'RATING_DESC' ? 'RANK_ASC' : 'RATING_DESC';
+      } else if (type === 'AGENCY') {
+        sel.value = sel.value === 'NAME_ASC' ? 'NAME_DESC' : 'NAME_ASC';
+      }
+      renderLeagueContent();
+    }
+
     function renderLeagueContent() {
       const container = document.getElementById('leagueBodyContent');
       const query = normStr(document.getElementById('leagueSearchInput').value);
       const selCommune = document.getElementById('leagueCommuneSelect').value;
       const normCommune = normStr(selCommune);
+      const sortVal = document.getElementById('leagueSortSelect') ? document.getElementById('leagueSortSelect').value : 'RANK_ASC';
 
       if (currentLeagueTab === 'AGENCIES') {
         const filtered = LEAGUE_DATA.agencies.filter(a => {
@@ -3649,6 +3691,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             if (!haystack.includes(query)) return false;
           }
           return true;
+        });
+
+        // Apply Multidirectional Sort
+        filtered.sort((a, b) => {
+          if (sortVal === 'NAME_ASC') return (a.name || '').localeCompare(b.name || '', 'fr');
+          if (sortVal === 'NAME_DESC') return (b.name || '').localeCompare(a.name || '', 'fr');
+          if (sortVal === 'VOLUME_DESC') return (b.sold_volume_chf_m || 0) - (a.sold_volume_chf_m || 0);
+          if (sortVal === 'VOLUME_ASC') return (a.sold_volume_chf_m || 0) - (b.sold_volume_chf_m || 0);
+          if (sortVal === 'DEALS_DESC') return (b.sold_24m_count || 0) - (a.sold_24m_count || 0);
+          if (sortVal === 'DEALS_ASC') return (a.sold_24m_count || 0) - (b.sold_24m_count || 0);
+          if (sortVal === 'RATING_DESC') return (b.rating || 0) - (a.rating || 0);
+          if (sortVal === 'RANK_DESC') return (b.rank || 0) - (a.rank || 0);
+          return (a.rank || 0) - (b.rank || 0);
         });
 
         document.getElementById('leagueResultsCount').textContent = `${filtered.length} agences affichées`;
@@ -3700,13 +3755,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <table class="league-table">
             <thead>
               <tr>
-                <th>Rang</th>
-                <th>Agence Immobilière</th>
-                <th>Score Cytria</th>
-                <th>Volume (24M)</th>
+                <th onclick="toggleLeagueSort('RANK')" style="cursor:pointer;" title="Trier par Rang / Score">Rang ⇅</th>
+                <th onclick="toggleLeagueSort('NAME')" style="cursor:pointer;" title="Trier par Nom d'Agence (A-Z / Z-A)">Agence Immobilière ⇅</th>
+                <th onclick="toggleLeagueSort('RANK')" style="cursor:pointer;" title="Trier par Score Cytria">Score Cytria ⇅</th>
+                <th onclick="toggleLeagueSort('VOLUME')" style="cursor:pointer;" title="Trier par Volume Vendu">Volume (24M) ⇅</th>
                 <th>Ticket Médian</th>
                 <th>Taux Décote</th>
-                <th>Avis & Note</th>
+                <th onclick="toggleLeagueSort('RATING')" style="cursor:pointer;" title="Trier par Avis & Note">Avis & Note ⇅</th>
                 <th>Territoire Leader</th>
                 <th>Action</th>
               </tr>
@@ -3727,6 +3782,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             if (!haystack.includes(query)) return false;
           }
           return true;
+        });
+
+        // Apply Multidirectional Sort for Brokers
+        filtered.sort((a, b) => {
+          if (sortVal === 'NAME_ASC') return (a.name || '').localeCompare(b.name || '', 'fr');
+          if (sortVal === 'NAME_DESC') return (b.name || '').localeCompare(a.name || '', 'fr');
+          if (sortVal === 'DEALS_DESC' || sortVal === 'VOLUME_DESC') return (b.deals_count || 0) - (a.deals_count || 0);
+          if (sortVal === 'DEALS_ASC' || sortVal === 'VOLUME_ASC') return (a.deals_count || 0) - (b.deals_count || 0);
+          if (sortVal === 'RATING_DESC') return (b.rating || 0) - (a.rating || 0);
+          if (sortVal === 'RANK_DESC') return (b.rank || 0) - (a.rank || 0);
+          return (a.rank || 0) - (b.rank || 0);
         });
 
         document.getElementById('leagueResultsCount').textContent = `${filtered.length} courtiers affichés`;
@@ -3768,12 +3834,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <table class="league-table">
             <thead>
               <tr>
-                <th>Rang</th>
-                <th>Courtier / Négociateur</th>
-                <th>Agence de Rattachement</th>
-                <th>Score Courtier</th>
-                <th>Ventes Vérifiées</th>
-                <th>Avis & Satisfaction</th>
+                <th onclick="toggleLeagueSort('RANK')" style="cursor:pointer;" title="Trier par Rang / Score">Rang ⇅</th>
+                <th onclick="toggleLeagueSort('NAME')" style="cursor:pointer;" title="Trier par Nom Courtier (A-Z / Z-A)">Courtier / Négociateur ⇅</th>
+                <th onclick="toggleLeagueSort('AGENCY')" style="cursor:pointer;" title="Trier par Agence">Agence de Rattachement ⇅</th>
+                <th onclick="toggleLeagueSort('RANK')" style="cursor:pointer;" title="Trier par Score">Score Courtier ⇅</th>
+                <th onclick="toggleLeagueSort('DEALS')" style="cursor:pointer;" title="Trier par Ventes Conclues">Ventes Vérifiées ⇅</th>
+                <th onclick="toggleLeagueSort('RATING')" style="cursor:pointer;" title="Trier par Avis & Note">Avis & Satisfaction ⇅</th>
                 <th>Secteurs d'Intervention</th>
                 <th>Action</th>
               </tr>
@@ -4161,7 +4227,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
         soldMarker.on('click', () => {
           map.setView([p.lat, p.lon], 16);
-          const foundRecord = RECORDS.find(r => r.id === p.fao_id);
+          const foundRecord = DATA.find(r => r.id === p.fao_id);
           if (foundRecord) {
             openDetail(foundRecord);
           }
@@ -4545,10 +4611,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       renderMarketingContent();
     }
 
+    function toggleMarketingSort(type) {
+      const sel = document.getElementById('marketingSortSelect');
+      if (!sel) return;
+      if (type === 'DATE') {
+        sel.value = sel.value === 'DATE_DESC' ? 'DATE_ASC' : 'DATE_DESC';
+      } else if (type === 'NAME') {
+        sel.value = sel.value === 'NAME_ASC' ? 'NAME_DESC' : 'NAME_ASC';
+      } else if (type === 'RANK') {
+        sel.value = sel.value === 'RANK_ASC' ? 'RANK_DESC' : 'RANK_ASC';
+      }
+      renderMarketingContent();
+    }
+
     function renderMarketingContent() {
       const container = document.getElementById('marketingBodyContent');
       if (!container) return;
       const query = normStr(document.getElementById('marketingSearchInput').value || '');
+      const sortVal = document.getElementById('marketingSortSelect') ? document.getElementById('marketingSortSelect').value : 'DATE_DESC';
       
       const filtered = MARKETING_DATA.filter(item => {
         if (currentMarketingChannel !== 'ALL') {
@@ -4561,6 +4641,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         return true;
       });
 
+      // Apply Multidirectional Sort
+      filtered.sort((a, b) => {
+        if (sortVal === 'DATE_ASC') return (a.latest_activity_date || '').localeCompare(b.latest_activity_date || '');
+        if (sortVal === 'DATE_DESC') return (b.latest_activity_date || '').localeCompare(a.latest_activity_date || '');
+        if (sortVal === 'NAME_ASC') return (a.agency_name || '').localeCompare(b.agency_name || '', 'fr');
+        if (sortVal === 'NAME_DESC') return (b.agency_name || '').localeCompare(a.agency_name || '', 'fr');
+        if (sortVal === 'RANK_DESC') return (b.rank || 0) - (a.rank || 0);
+        return (a.rank || 0) - (b.rank || 0);
+      });
+
       const countEl = document.getElementById('marketingCount');
       if (countEl) countEl.textContent = `${filtered.length} agences affichées`;
 
@@ -4568,12 +4658,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <table class="league-table" style="table-layout: fixed; width: 100%; border-collapse: collapse;">
           <thead>
             <tr>
-              <th style="width: 48px; text-align: center;">Rang</th>
-              <th style="width: 25%;">Agence Immobilière</th>
-              <th style="width: 25%;">Dernière Activité Marketing</th>
+              <th style="width: 55px; text-align: center; cursor: pointer;" onclick="toggleMarketingSort('RANK')" title="Trier par Rang">Rang ⇅</th>
+              <th style="width: 25%; cursor: pointer;" onclick="toggleMarketingSort('NAME')" title="Trier par Nom d'Agence (A-Z / Z-A)">Agence Immobilière ⇅</th>
+              <th style="width: 25%; cursor: pointer;" onclick="toggleMarketingSort('DATE')" title="Trier par Date Dernière Activité">Dernière Activité Marketing ⇅</th>
               <th style="width: 20%;">Canaux Actifs Détectés</th>
               <th style="width: 20%;">Comptes & Flux Officiels</th>
-              <th style="width: 10%; text-align: right;">Score</th>
+              <th style="width: 10%; text-align: right; cursor: pointer;" onclick="toggleMarketingSort('RANK')" title="Trier par Score">Score ⇅</th>
             </tr>
           </thead>
           <tbody>
