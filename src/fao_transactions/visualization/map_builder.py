@@ -1,4 +1,4 @@
-"""Standalone interactive HTML map generator for Geneva Property Transactions with Cytria Brand Design."""
+"""Standalone interactive HTML map generator for Geneva Property Transactions with Cytria Brand Design and 3-Phase Intelligence Enrichment."""
 
 import json
 import sqlite3
@@ -16,14 +16,30 @@ def build_interactive_map(
     db_path: Optional[str] = None,
     output_path: Optional[str] = None,
 ) -> Path:
-    """Build a standalone, single-file interactive Leaflet/Swiss map styled with the Cytria brand identity."""
+    """Build a standalone, single-file interactive Leaflet/Swiss map styled with Cytria branding and full planning/visual enrichment."""
     console.rule("[bold #C9A24D]Building Cytria Geneva Real Estate Intelligence Map[/bold #C9A24D]")
     
     db_file = Path(db_path or settings.storage.database_path)
     out_file = Path(output_path or (Path(settings.storage.exports_dir) / "geneva_transactions_map.html"))
     out_file.parent.mkdir(parents=True, exist_ok=True)
 
-    if db_file.exists():
+    csv_file = Path(settings.storage.exports_dir) / "geneva_property_transactions.csv"
+    if csv_file.exists():
+        import pandas as pd
+        console.print(f"[cyan]Loading fully enriched dataset from:[/cyan] {csv_file.name}")
+        df = pd.read_csv(csv_file)
+        df = df[df["centroid_wgs84_lon"].notna() & df["centroid_wgs84_lat"].notna()]
+        df = df.rename(columns={
+            "centroid_wgs84_lon": "lon",
+            "centroid_wgs84_lat": "lat",
+            "centroid_lv95_e": "lv95_e",
+            "centroid_lv95_n": "lv95_n",
+        })
+        rows = [
+            {k: (None if pd.isna(v) else v) for k, v in row.items()}
+            for row in df.to_dict(orient="records")
+        ]
+    elif db_file.exists():
         with sqlite3.connect(db_file) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
@@ -64,27 +80,9 @@ def build_interactive_map(
             """)
             rows = [dict(r) for r in cursor.fetchall()]
     else:
-        # Fallback to loading directly from CSV export
-        csv_file = Path(settings.storage.exports_dir) / "geneva_property_transactions.csv"
-        if csv_file.exists():
-            import pandas as pd
-            console.print(f"[cyan]SQLite database not found. Loading from CSV deliverable:[/cyan] {csv_file.name}")
-            df = pd.read_csv(csv_file)
-            df = df[df["centroid_wgs84_lon"].notna() & df["centroid_wgs84_lat"].notna()]
-            df = df.rename(columns={
-                "centroid_wgs84_lon": "lon",
-                "centroid_wgs84_lat": "lat",
-                "centroid_lv95_e": "lv95_e",
-                "centroid_lv95_n": "lv95_n",
-            })
-            rows = [
-                {k: (None if pd.isna(v) else v) for k, v in row.items()}
-                for row in df.to_dict(orient="records")
-            ]
-        else:
-            rows = []
+        rows = []
 
-    console.print(f"Loaded [bold]{len(rows)}[/bold] geocoded transactions.")
+    console.print(f"Loaded [bold]{len(rows)}[/bold] geocoded and enriched transactions.")
 
     # Distinct communes and zones for filters
     communes = sorted(list({r["commune"] for r in rows if r["commune"]}))
@@ -92,6 +90,9 @@ def build_interactive_map(
 
     total_volume = sum(r["price_chf"] or 0 for r in rows)
     priced_count = sum(1 for r in rows if r["price_chf"])
+    plq_count = sum(1 for r in rows if r.get("plq_number"))
+    dev_count = sum(1 for r in rows if r.get("zone_dev_name"))
+    permit_count = sum(1 for r in rows if r.get("permit_number"))
 
     records_json = json.dumps(rows, ensure_ascii=False)
     communes_json = json.dumps(communes, ensure_ascii=False)
@@ -144,6 +145,7 @@ def build_interactive_map(
       --color-warning: #A46D13;
       --color-error: #B33A33;
       --color-info: #315E78;
+      --color-purple: #8A4F7D;
 
       --panel-bg: rgba(16, 20, 27, 0.94);
       --panel-border: rgba(255, 255, 255, 0.12);
@@ -261,7 +263,7 @@ def build_interactive_map(
 
     .hud-stats {{
       display: flex;
-      gap: 24px;
+      gap: 22px;
       font-size: 12px;
       border-left: 1px solid rgba(255, 255, 255, 0.12);
       padding-left: 20px;
@@ -290,6 +292,7 @@ def build_interactive_map(
 
     .stat-value.gold {{ color: var(--color-brand-400); }}
     .stat-value.emerald {{ color: #10b981; }}
+    .stat-value.info {{ color: #38bdf8; }}
 
     /* Sidebar Controls */
     .sidebar {{
@@ -297,7 +300,7 @@ def build_interactive_map(
       top: 84px;
       left: 16px;
       bottom: 24px;
-      width: 370px;
+      width: 380px;
       z-index: 1000;
       background: var(--panel-bg);
       backdrop-filter: blur(24px);
@@ -308,7 +311,7 @@ def build_interactive_map(
       box-shadow: var(--shadow-elevation);
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
       overflow-y: auto;
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }}
@@ -391,7 +394,7 @@ def build_interactive_map(
       background: var(--color-ink-900);
       border: 1px solid var(--panel-border);
       border-radius: var(--radius-strict);
-      padding: 7px 12px;
+      padding: 6px 11px;
       color: var(--color-sand-300);
       font-family: var(--font-brand);
       font-size: 11px;
@@ -423,7 +426,8 @@ def build_interactive_map(
       cursor: pointer;
       background: var(--color-ink-900);
       border: 1px solid var(--panel-border);
-      padding: 10px 14px;
+      padding: 9px 12px;
+      margin-bottom: 4px;
     }}
 
     .toggle-row input {{
@@ -458,12 +462,12 @@ def build_interactive_map(
     /* Legend Box */
     .legend {{
       margin-top: auto;
-      padding-top: 14px;
+      padding-top: 12px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       font-size: 11px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }}
 
     .legend-item {{
@@ -485,7 +489,7 @@ def build_interactive_map(
       position: absolute;
       top: 84px;
       right: 16px;
-      width: 410px;
+      width: 440px;
       max-height: calc(100vh - 120px);
       z-index: 1000;
       background: var(--panel-bg);
@@ -566,25 +570,112 @@ def build_interactive_map(
       letter-spacing: 0.05em;
     }}
 
-    .badge-tag.zone {{
-      background: rgba(201, 162, 77, 0.15);
+    .badge-tag.plq {{
+      background: rgba(138, 79, 125, 0.25);
+      color: #d896c8;
+      border-color: rgba(138, 79, 125, 0.5);
+    }}
+
+    .badge-tag.zonedev {{
+      background: rgba(201, 162, 77, 0.2);
       color: var(--color-brand-300);
       border-color: var(--panel-border-gold);
     }}
 
-    .badge-tag.building {{
-      background: rgba(49, 94, 120, 0.25);
-      color: #8bbcd6;
-      border-color: rgba(49, 94, 120, 0.4);
+    .badge-tag.permit {{
+      background: rgba(47, 107, 87, 0.3);
+      color: #6ee7b7;
+      border-color: rgba(47, 107, 87, 0.6);
+    }}
+
+    .badge-tag.grandprojet {{
+      background: rgba(49, 94, 120, 0.3);
+      color: #7dd3fc;
+      border-color: rgba(49, 94, 120, 0.5);
+    }}
+
+    /* Action Toolbar (Street View & SITG) */
+    .action-toolbar {{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }}
+
+    .action-btn {{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 12px;
+      border-radius: var(--radius-strict);
+      font-family: var(--font-brand);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }}
+
+    .action-btn.streetview {{
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border-gold);
+      color: var(--color-brand-300);
+    }}
+    .action-btn.streetview:hover {{
+      background: rgba(201, 162, 77, 0.15);
+      border-color: var(--color-brand-500);
+      color: var(--color-paper);
+    }}
+
+    .action-btn.sitg {{
+      background: var(--color-brand-500);
+      border: 1px solid var(--color-brand-500);
+      color: var(--color-ink-950);
+      box-shadow: 0 4px 14px rgba(201, 162, 77, 0.25);
+    }}
+    .action-btn.sitg:hover {{
+      background: var(--color-brand-400);
+      box-shadow: 0 6px 20px rgba(201, 162, 77, 0.4);
+    }}
+
+    /* Intelligence Section */
+    .intel-section {{
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }}
+
+    .intel-title {{
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-brand-400);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }}
+
+    .intel-link {{
+      color: var(--color-brand-300);
+      text-decoration: underline;
+      font-size: 10px;
+      font-family: var(--font-brand);
+      font-weight: 600;
     }}
 
     .detail-grid {{
       display: grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 10px;
       background: var(--color-ink-900);
       border: 1px solid var(--panel-border);
-      padding: 16px;
+      padding: 14px;
     }}
 
     .detail-row {{
@@ -610,32 +701,6 @@ def build_interactive_map(
     .detail-row .row-value.mono {{
       font-family: var(--font-mono);
       color: var(--color-brand-200);
-    }}
-
-    .sitg-btn {{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--color-brand-500);
-      color: var(--color-ink-950);
-      padding: 14px 20px;
-      border-radius: var(--radius-strict);
-      font-family: var(--font-brand);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      margin-top: 6px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(201, 162, 77, 0.25);
-    }}
-
-    .sitg-btn:hover {{
-      background: var(--color-brand-400);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(201, 162, 77, 0.4);
     }}
 
     /* Custom Leaflet Cluster Styling */
@@ -706,8 +771,16 @@ def build_interactive_map(
           <span class="stat-value emerald">CHF {total_volume/1e9:.2f} Mrd</span>
         </div>
         <div class="stat-item">
-          <span class="stat-label">Transactions Publiées</span>
-          <span class="stat-value gold">{priced_count}</span>
+          <span class="stat-label">En Zone Dév.</span>
+          <span class="stat-value gold" id="stat-dev">{dev_count:,}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Avec PLQ</span>
+          <span class="stat-value info" id="stat-plq">{plq_count:,}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Permis (APA)</span>
+          <span class="stat-value emerald" id="stat-permit">{permit_count:,}</span>
         </div>
       </div>
     </div>
@@ -717,7 +790,7 @@ def build_interactive_map(
   <aside class="sidebar" id="sidebar">
     <div class="search-box">
       <div class="filter-section-title">Recherche instantanée</div>
-      <input type="text" id="searchInput" placeholder="Adresse, acheteur, vendeur, parcelle...">
+      <input type="text" id="searchInput" placeholder="Adresse, acheteur, vendeur, PLQ, permis...">
     </div>
 
     <div>
@@ -727,6 +800,22 @@ def build_interactive_map(
         <button class="pill-btn" data-source="LDTR_Appartement">LDTR Appartements</button>
         <button class="pill-btn" data-source="Registre_Foncier">Registre Foncier</button>
       </div>
+    </div>
+
+    <div>
+      <div class="filter-section-title">Filtres Urbanisme & Développement</div>
+      <label class="toggle-row">
+        <span>En Zone de Développement (LDTR/LGZD)</span>
+        <input type="checkbox" id="onlyDevCheckbox">
+      </label>
+      <label class="toggle-row">
+        <span>Avec Plan Localisé de Quartier (PLQ)</span>
+        <input type="checkbox" id="onlyPlqCheckbox">
+      </label>
+      <label class="toggle-row">
+        <span>Avec Permis de Construire (APA / Projet)</span>
+        <input type="checkbox" id="onlyPermitCheckbox">
+      </label>
     </div>
 
     <div>
@@ -775,6 +864,7 @@ def build_interactive_map(
       <div class="filter-section-title">Légende des marqueurs</div>
       <div class="legend-item"><div class="legend-dot" style="background:#C9A24D;"></div> Prix supérieur à CHF 3M (Gold)</div>
       <div class="legend-item"><div class="legend-dot" style="background:#315E78;"></div> LDTR Vente appartement</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8A4F7D;"></div> Avec PLQ ou Zone de Dév.</div>
       <div class="legend-item"><div class="legend-dot" style="background:#A46D13;"></div> Zone 5 Villas & Terrains</div>
       <div class="legend-item"><div class="legend-dot" style="background:#2F6B57;"></div> Autre mutation Registre Foncier</div>
     </div>
@@ -875,6 +965,7 @@ def build_interactive_map(
 
     function getMarkerColor(r) {{
       if (r.price_chf && r.price_chf >= 3000000) return '#C9A24D'; // Cytria Gold for >= 3M
+      if (r.plq_number || r.zone_dev_name) return '#8A4F7D'; // Purple for PLQ / Zone Dev
       if (r.source_category === 'LDTR_Appartement') return '#315E78'; // Cytria Slate Blue
       if (r.zone_code === '5') return '#A46D13'; // Cytria Warm Ochre
       return '#2F6B57'; // Cytria Forest Green
@@ -925,15 +1016,81 @@ def build_interactive_map(
         : '<span style="color:#A8A29A; font-size:15px; font-weight:500;">Prix non publié (Mutation RF)</span>';
 
       const sitgLink = (r.lv95_e && r.lv95_n) 
-        ? `https://map.sitg.ge.ch/?center=${{r.lv95_e}},${{r.lv95_n}}&scale=2500&mapresources=CADASTRE` 
+        ? (r.sitg_aerial_url || `https://map.sitg.ge.ch/?center=${{r.lv95_e}},${{r.lv95_n}}&scale=1000&mapresources=CADASTRE,ORTHOPHOTO_2023`)
+        : null;
+
+      const streetViewLink = (r.lat && r.lon)
+        ? (r.streetview_url || `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${{r.lat}},${{r.lon}}`)
         : null;
 
       detailContent.innerHTML = `
         <div class="detail-badges">
           <span class="badge-tag">${{r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier'}}</span>
           ${{r.zone_code ? `<span class="badge-tag zone">${{r.zone_name || ('Zone ' + r.zone_code)}}</span>` : ''}}
-          ${{r.building_period ? `<span class="badge-tag building">${{r.building_period}}</span>` : ''}}
+          ${{r.plq_number ? `<span class="badge-tag plq">PLQ #${{r.plq_number}}</span>` : ''}}
+          ${{r.zone_dev_name ? `<span class="badge-tag zonedev">${{r.zone_dev_code || 'Zone Dév.'}}</span>` : ''}}
+          ${{r.permit_number ? `<span class="badge-tag permit">${{r.permit_number}}</span>` : ''}}
+          ${{r.grand_projet_name ? `<span class="badge-tag grandprojet">${{r.grand_projet_name}}</span>` : ''}}
         </div>
+
+        <!-- Action Toolbar (Visual Inspection & GIS) -->
+        <div class="action-toolbar">
+          ${{streetViewLink ? `
+          <a href="${{streetViewLink}}" target="_blank" rel="noopener" class="action-btn streetview">
+            Street View 360° ↗
+          </a>` : ''}}
+          ${{sitgLink ? `
+          <a href="${{sitgLink}}" target="_blank" rel="noopener" class="action-btn sitg">
+            SITG 5cm Aérien ↗
+          </a>` : ''}}
+        </div>
+
+        <!-- Urban Planning & Development Intelligence -->
+        ${{(r.plq_number || r.zone_dev_name || r.permit_number || r.grand_projet_name) ? `
+        <div class="intel-section">
+          <div class="intel-title">
+            <span>Urbanisme & Projets Futurs</span>
+            <span style="color:var(--color-sand-300); font-size:9px;">SITG OPEN DATA</span>
+          </div>
+
+          ${{r.plq_number ? `
+          <div class="detail-row">
+            <span class="row-label">Plan Localisé de Quartier (PLQ)</span>
+            <span class="row-value">
+              PLQ N° <strong>${{r.plq_number}}</strong> (${{r.plq_name || 'Geneve'}}) — ${{r.plq_status || 'En vigueur'}}
+              ${{r.plq_plan_url ? `<br><a href="${{r.plq_plan_url}}" target="_blank" class="intel-link">Télécharger le Plan PLQ (PDF) ↗</a>` : ''}}
+              ${{r.plq_reglement_url ? ` &bull; <a href="${{r.plq_reglement_url}}" target="_blank" class="intel-link">Règlement (PDF) ↗</a>` : ''}}
+            </span>
+          </div>` : ''}}
+
+          ${{r.zone_dev_name ? `
+          <div class="detail-row">
+            <span class="row-label">Zone de Développement (LDTR/LGZD)</span>
+            <span class="row-value">
+              ${{r.zone_dev_name}} ${{r.zone_dev_restriction ? `— <em>${{r.zone_dev_restriction}}</em>` : ''}}
+              ${{r.zone_dev_url ? `<br><a href="${{r.zone_dev_url}}" target="_blank" class="intel-link">Plan de zone légale (PDF) ↗</a>` : ''}}
+            </span>
+          </div>` : ''}}
+
+          ${{r.permit_number ? `
+          <div class="detail-row">
+            <span class="row-label">Permis de Construire / Projet</span>
+            <span class="row-value">
+              <strong>${{r.permit_number}}</strong>: ${{r.permit_type || 'Projet'}} (${{r.permit_destination || 'Bâtiment'}})
+              ${{r.permit_floors ? ` &bull; ${{r.permit_floors}} étages` : ''}}
+              ${{r.permit_sad_url ? `<br><a href="${{r.permit_sad_url}}" target="_blank" class="intel-link">Consulter Dossier SAD Cantonal ↗</a>` : ''}}
+            </span>
+          </div>` : ''}}
+
+          ${{r.grand_projet_name ? `
+          <div class="detail-row">
+            <span class="row-label">Périmètre Grand Projet Cantonal</span>
+            <span class="row-value">
+              ${{r.grand_projet_name}} (${{r.grand_projet_type || 'PDCn'}})
+              ${{r.grand_projet_url ? `<br><a href="${{r.grand_projet_url}}" target="_blank" class="intel-link">Fiche Grand Projet (PDF) ↗</a>` : ''}}
+            </span>
+          </div>` : ''}}
+        </div>` : ''}}
 
         <div class="detail-grid">
           <div class="detail-row">
@@ -980,11 +1137,6 @@ def build_interactive_map(
             <span class="row-value mono">${{r.notice_date || 'N/A'}}</span>
           </div>
         </div>
-
-        ${{sitgLink ? `
-        <a href="${{sitgLink}}" target="_blank" rel="noopener" class="sitg-btn">
-          Voir sur le Géoportail SITG &rarr;
-        </a>` : ''}}
       `;
 
       detailDrawer.classList.add('visible');
@@ -1005,8 +1157,11 @@ def build_interactive_map(
     const searchInput = document.getElementById('searchInput');
     const buildingSelect = document.getElementById('buildingSelect');
     const onlyPricedCheckbox = document.getElementById('onlyPricedCheckbox');
+    const onlyDevCheckbox = document.getElementById('onlyDevCheckbox');
+    const onlyPlqCheckbox = document.getElementById('onlyPlqCheckbox');
+    const onlyPermitCheckbox = document.getElementById('onlyPermitCheckbox');
 
-    [searchInput, communeSelect, zoneSelect, buildingSelect, onlyPricedCheckbox].forEach(el => {{
+    [searchInput, communeSelect, zoneSelect, buildingSelect, onlyPricedCheckbox, onlyDevCheckbox, onlyPlqCheckbox, onlyPermitCheckbox].forEach(el => {{
       el.addEventListener('input', applyFilters);
       el.addEventListener('change', applyFilters);
     }});
@@ -1017,6 +1172,9 @@ def build_interactive_map(
       zoneSelect.value = 'ALL';
       buildingSelect.value = 'ALL';
       onlyPricedCheckbox.checked = false;
+      onlyDevCheckbox.checked = false;
+      onlyPlqCheckbox.checked = false;
+      onlyPermitCheckbox.checked = false;
       currentSource = 'ALL';
       document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
       document.querySelector('.pill-btn[data-source="ALL"]').classList.add('active');
@@ -1029,12 +1187,18 @@ def build_interactive_map(
       const selZone = zoneSelect.value;
       const selBuild = buildingSelect.value;
       const onlyPriced = onlyPricedCheckbox.checked;
+      const onlyDev = onlyDevCheckbox.checked;
+      const onlyPlq = onlyPlqCheckbox.checked;
+      const onlyPermit = onlyPermitCheckbox.checked;
 
       const filtered = DATA.filter(r => {{
         if (currentSource !== 'ALL' && r.source_category !== currentSource) return false;
         if (selComm !== 'ALL' && r.commune !== selComm) return false;
         if (selZone !== 'ALL' && r.zone_code !== selZone) return false;
         if (onlyPriced && (!r.price_chf || r.price_chf <= 0)) return false;
+        if (onlyDev && !r.zone_dev_name) return false;
+        if (onlyPlq && !r.plq_number) return false;
+        if (onlyPermit && !r.permit_number) return false;
 
         if (selBuild !== 'ALL') {{
           const bp = (r.building_period || '').toLowerCase();
@@ -1042,7 +1206,7 @@ def build_interactive_map(
         }}
 
         if (q) {{
-          const str = [(r.address||''), (r.commune||''), (r.buyer||''), (r.seller||''), (r.parcel_number||''), (r.egrid||'')].join(' ').toLowerCase();
+          const str = [(r.address||''), (r.commune||''), (r.buyer||''), (r.seller||''), (r.parcel_number||''), (r.egrid||''), (r.plq_name||''), (r.permit_number||''), (r.grand_projet_name||'')].join(' ').toLowerCase();
           if (!str.includes(q)) return false;
         }}
 
@@ -1056,5 +1220,5 @@ def build_interactive_map(
 </html>
 """
     out_file.write_text(html_content, encoding="utf-8")
-    console.print(f"[bold green][OK] Cytria Interactive Map Generated:[/bold green] {out_file.resolve()} ({len(html_content)/1024:.1f} KB)\n")
+    console.print(f"[bold green][OK] Cytria Multi-Layer Map Generated:[/bold green] {out_file.resolve()} ({len(html_content)/1024:.1f} KB)\n")
     return out_file

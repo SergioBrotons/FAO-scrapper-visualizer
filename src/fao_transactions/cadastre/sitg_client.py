@@ -233,3 +233,68 @@ class SitgClient:
             pass
         return None
 
+    def query_projected_building_by_point(self, x: float, y: float) -> Optional[Dict[str, Any]]:
+        """Query projected buildings and active construction permits (CAD_BATI_PROJET) by Swiss LV95 coordinates."""
+        try:
+            features = self._query_layer(
+                settings.sitg.layers.projected_buildings,
+                where_clause="1=1",
+                out_fields="NO_AUTOR,TYPE,DESTINATION,NIVEAUX_HORSOL,HAUTEUR,CATEGORIE_BATPRO,DATEDT",
+                return_geometry=False,
+                geometry=f"{x},{y}",
+            )
+            if features:
+                return features[0].get("properties", {})
+        except Exception:
+            pass
+        return None
+
+    def query_plq_by_point(self, x: float, y: float) -> Optional[Dict[str, Any]]:
+        """Query active Plan Localisé de Quartier (RDPPF_PLQ) by Swiss LV95 coordinates."""
+        try:
+            features = self._query_layer(
+                settings.sitg.layers.plq,
+                where_clause="1=1",
+                out_fields="NO_PLAN,LIEU,STATUT_JUR,LIEN_PLAN,LIEN_REGLEMENT,LIEN_SAD",
+                return_geometry=False,
+                geometry=f"{x},{y}",
+            )
+            if features:
+                return features[0].get("properties", {})
+        except Exception:
+            pass
+        return None
+
+    def query_zone_dev_by_point(self, x: float, y: float) -> Optional[Dict[str, Any]]:
+        """Query Zone de Développement (RDPPF_ZONES_DEV) by Swiss LV95 coordinates."""
+        try:
+            features = self._query_layer(
+                settings.sitg.layers.zones_dev,
+                where_clause="1=1",
+                out_fields="NOM_ZONE,ABRV_ZONE,DESC_ZONE,NO_LOI,RESTRIC,LIEN_PLAN,LIEN_SAD",
+                return_geometry=False,
+                geometry=f"{x},{y}",
+            )
+            if features:
+                return features[0].get("properties", {})
+        except Exception:
+            pass
+        return None
+
+    def query_grand_projet_by_point(self, x: float, y: float) -> Optional[Dict[str, Any]]:
+        """Query Grand Projet Urbain (PDCN_PROJET_URB) by Swiss LV95 coordinates."""
+        try:
+            features = self._query_layer(
+                settings.sitg.layers.grands_projets,
+                where_clause="1=1",
+                out_fields="NOM,TYPE,GP,LIEN_FICHE",
+                return_geometry=False,
+                geometry=f"{x},{y}",
+            )
+            if features:
+                return features[0].get("properties", {})
+        except Exception:
+            pass
+        return None
+
+

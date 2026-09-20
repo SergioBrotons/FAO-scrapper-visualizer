@@ -22,6 +22,10 @@ sitg:
     buildings: "CAD_BATIMENT_HORSOL/FeatureServer/0"
     addresses: "CAD_ADRESSE/FeatureServer/0"
     zoning: "SIT_ZONE_AMENAG/FeatureServer/0"
+    projected_buildings: "CAD_BATI_PROJET/FeatureServer/0"
+    plq: "RDPPF_PLQ/FeatureServer/0"
+    zones_dev: "RDPPF_ZONES_DEV/FeatureServer/0"
+    grands_projets: "PDCN_PROJET_URB/FeatureServer/0"
 
 storage:
   database_path: "data/state/state.sqlite"

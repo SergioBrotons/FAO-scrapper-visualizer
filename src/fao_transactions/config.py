@@ -29,6 +29,10 @@ class SitgLayers(BaseModel):
     buildings: str = "CAD_BATIMENT_HORSOL/FeatureServer/0"
     addresses: str = "CAD_ADRESSE/FeatureServer/0"
     zoning: str = "SIT_ZONE_AMENAG/FeatureServer/0"
+    projected_buildings: str = "CAD_BATI_PROJET/FeatureServer/0"
+    plq: str = "RDPPF_PLQ/FeatureServer/0"
+    zones_dev: str = "RDPPF_ZONES_DEV/FeatureServer/0"
+    grands_projets: str = "PDCN_PROJET_URB/FeatureServer/0"
 
 
 class SitgSettings(BaseModel):
