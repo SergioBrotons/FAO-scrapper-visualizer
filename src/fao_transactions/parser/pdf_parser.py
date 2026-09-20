@@ -206,19 +206,34 @@ class FaoPdfParser:
         elif re.search(r"\bCOP\b", text, re.IGNORECASE):
             prop_type = "Copropriété"
 
-        # Parcel number detection (e.g. "47/6928" or "parcelle 6928" or "B-F Versoix, 47/6928")
+        # Parcel number detection (prioritize parcel right after property designation, avoid 1/2 fractions and /1000 PPE shares)
         parcel_number = None
-        slash_parcel = re.search(r"\b[0-9]{1,2}/([0-9]+(?:\s*[-/]\s*[0-9]+)?)\b", text)
-        if slash_parcel:
-            parcel_number = slash_parcel.group(1).replace(" ", "")
+        prop_parcel_match = re.search(
+            r"(?:PPE|B-F|DDP|COP|parcelle(?:s)?)\s+[^,;]*?(?:,\s*)?(?:[0-9]{1,2}/)?([0-9]{1,6}(?:-[0-9]+)?)",
+            text,
+            re.IGNORECASE,
+        )
+        if prop_parcel_match:
+            parcel_number = prop_parcel_match.group(1).replace(" ", "")
         else:
-            parcel_match = re.search(
-                r"(?:parcelle(?:s)?|ddp|ppe|immeuble|b-f)?\s*(?:n[o°]\s*)?([0-9]+(?:\s*[-/]\s*[0-9]+)?)",
-                text,
-                re.IGNORECASE,
-            )
-            if parcel_match:
-                parcel_number = parcel_match.group(1).replace(" ", "")
+            # Fallback: scan slash parcel excluding coproperty fractions and thousandths
+            slash_matches = re.finditer(r"\b([0-9]{1,2})/([0-9]+(?:\s*[-/]\s*[0-9]+)?)\b", text)
+            for sm in slash_matches:
+                prefix = sm.group(1)
+                body = sm.group(2).replace(" ", "")
+                if prefix in ("1", "2", "3", "4") and body in ("2", "3", "4", "5", "6", "1000"):
+                    continue
+                parcel_number = body
+                break
+
+            if not parcel_number:
+                parcel_match = re.search(
+                    r"(?:parcelle(?:s)?|ddp|ppe|immeuble|b-f)?\s*(?:n[o°]\s*)?([0-9]+(?:\s*[-/]\s*[0-9]+)?)",
+                    text,
+                    re.IGNORECASE,
+                )
+                if parcel_match:
+                    parcel_number = parcel_match.group(1).replace(" ", "")
 
         if not parcel_number:
             return None
@@ -250,11 +265,11 @@ class FaoPdfParser:
         if buyer_match:
             buyer = clean_spaces(buyer_match.group(1))
 
-        # Price detection
+        # Price detection (support "Prix total de l'affaire: 1'620'000.-.", "Prix: ...", "Montant: ...", etc.)
         price_raw = None
         price_chf = None
         price_match = re.search(
-            r"(?:prix|montant|valeur|contreprestation)\s*:\s*([^.;]+)",
+            r"(?:Prix(?:\s+total(?:\s+de\s+l['’]affaire)?)?|Prix\s+de\s+vente|Montant(?:\s+de\s+l['’]affaire)?|Valeur(?:\s+totale)?|contreprestation)\s*:\s*([^.;]+)",
             text,
             re.IGNORECASE,
         )
