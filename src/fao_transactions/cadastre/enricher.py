@@ -88,7 +88,7 @@ class CadastralEnricher:
         return res
 
     def lookup_address(self, commune: str, address_str: str) -> Optional[Dict[str, Any]]:
-        """Query SITG CAD_ADRESSE with in-memory caching."""
+        """Query SITG CAD_ADRESSE with in-memory caching and intelligent French address matching."""
         if not address_str:
             return None
 
@@ -96,43 +96,80 @@ class CadastralEnricher:
         if cache_key in self.address_cache:
             return self.address_cache[cache_key]
 
-        street, num = parse_address_parts(address_str)
-        where_clauses = [f"(COMMUNE='{commune}' OR UPPER(COMMUNE)='{commune.upper()}')"]
-        if street and len(street) >= 3:
-            safe_st = street.replace("'", "''")
-            where_clauses.append(f"ADRESSE LIKE '%{safe_st}%'")
-        if num:
-            where_clauses.append(f"NO_ADRESSE LIKE '{num}%'")
+        comm_clean = (commune or "").strip().replace("'", "''")
+        if "gen" in comm_clean.lower():
+            comm_clause = "(COMMUNE LIKE 'Genève%' OR UPPER(COMMUNE) LIKE 'GENEVE%')"
+        else:
+            comm_clause = f"(COMMUNE='{comm_clean}' OR UPPER(COMMUNE)='{comm_clean.upper()}')"
 
-        where = " AND ".join(where_clauses)
-        features = self.sitg._query_layer(settings.sitg.layers.addresses, where, return_geometry=True)
-        if features:
-            f = features[0]
-            # Attributes from CAD_ADRESSE
-            attr = f.get("properties", {})
-            x = attr.get("Y")  # In SITG Y is Easting (2.5M)
-            y = attr.get("X")  # In SITG X is Northing (1.1M)
-            if x and y:
-                lon, lat = lv95_to_wgs84(float(x), float(y))
-                f["centroid_lv95"] = (float(x), float(y))
-                f["centroid_wgs84"] = (lon, lat)
-            self.address_cache[cache_key] = f
-            return f
+        # Extract street number
+        num_match = re.search(r"\b([0-9]{1,4}[A-Za-z]?)\b", address_str)
+        num = num_match.group(1) if num_match else None
+
+        # Clean address string to isolate core street name
+        cleaned = re.sub(r"^[0-9]+[a-zA-Z]?,?\s*", "", address_str).strip()
+        cleaned = re.sub(r"\b12[0-9]{2}\b.*$", "", cleaned).strip()
+        cleaned = re.sub(r"^(?:Avenue|Rue|Chemin|Boulevard|Place|Route|Quai|Cours|Allée|Esplanade|Promenade)\s+(?:de\s+la\s+|du\s+|de\s+|d['’]|des\s+)?", "", cleaned, flags=re.IGNORECASE).strip()
+
+        # Try multiple search patterns (from specific to broad)
+        search_terms: List[str] = []
+        if cleaned:
+            # 1. Full cleaned street name
+            search_terms.append(re.sub(r"[,0-9]+", "", cleaned).strip())
+            # 2. Key distinctive word (last word or first word if long)
+            words = [w for w in re.split(r"[\s\-]+", cleaned) if len(w) >= 3 and not w.isdigit()]
+            if words:
+                if len(words) > 1 and len(words[-1]) >= 4:
+                    search_terms.append(words[-1])
+                search_terms.append(words[0])
+
+        for term in search_terms:
+            safe_term = term.replace("'", "''")
+            where = f"{comm_clause} AND UPPER(ADRESSE) LIKE '%{safe_term.upper()}%'"
+            if num:
+                where += f" AND NO_ADRESSE LIKE '{num}%'"
+
+            try:
+                features = self.sitg._query_layer(settings.sitg.layers.addresses, where, return_geometry=True)
+                if features:
+                    f = features[0]
+                    attr = f.get("properties", {})
+                    x = attr.get("Y")  # In SITG Y is Easting (2.5M)
+                    y = attr.get("X")  # In SITG X is Northing (1.1M)
+                    if x and y:
+                        lon, lat = lv95_to_wgs84(float(x), float(y))
+                        f["centroid_lv95"] = (float(x), float(y))
+                        f["centroid_wgs84"] = (lon, lat)
+                    self.address_cache[cache_key] = f
+                    return f
+            except Exception:
+                continue
 
         self.address_cache[cache_key] = None
         return None
 
-    def enrich_all(self, workers: int = 8) -> Dict[str, Any]:
-        """Fetch all unenriched transactions from database and enrich concurrently."""
+    def enrich_all(self, workers: int = 8, retry_unmatched: bool = True) -> Dict[str, Any]:
+        """Fetch transactions from database and enrich concurrently with SITG."""
         console.rule("[bold cyan]SITG Cadastral Geocoding & Parcel Enrichment[/bold cyan]")
 
         with self.db.get_connection() as conn:
-            query = """
-                SELECT id, source_category, commune, commune_section, parcel_number, address 
-                FROM transactions
-                WHERE id NOT IN (SELECT transaction_id FROM enrichments)
-                ORDER BY id ASC;
-            """
+            if retry_unmatched:
+                query = """
+                    SELECT id, source_category, commune, commune_section, parcel_number, address 
+                    FROM transactions
+                    WHERE id NOT IN (
+                        SELECT transaction_id FROM enrichments 
+                        WHERE match_status IN ('matched_parcel', 'matched_address')
+                    )
+                    ORDER BY id ASC;
+                """
+            else:
+                query = """
+                    SELECT id, source_category, commune, commune_section, parcel_number, address 
+                    FROM transactions
+                    WHERE id NOT IN (SELECT transaction_id FROM enrichments)
+                    ORDER BY id ASC;
+                """
             rows = conn.execute(query).fetchall()
 
         console.print(f"Total transactions to enrich: [bold]{len(rows)}[/bold]")
