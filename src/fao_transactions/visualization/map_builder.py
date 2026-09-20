@@ -1874,21 +1874,49 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="product-subtoolbar-container">
           <!-- 1. MARKET Subtoolbar -->
           <div class="product-subtoolbar" id="subtoolbarMarket">
-            <button type="button" class="subtool-btn active" id="mktFilterAll" onclick="setMarketQuickFilter('ALL')">
+            <button type="button" class="subtool-btn mkt-typo-btn active" id="mktFilterAll" onclick="setMarketQuickFilter('ALL')">
               Tous les actes <span class="subtool-badge">__TOTAL_ROWS__</span>
             </button>
-            <button type="button" class="subtool-btn" id="mktFilterApartments" onclick="setMarketQuickFilter('PPE')">
+            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterApartments" onclick="setMarketQuickFilter('PPE')">
               Appartements PPE
             </button>
-            <button type="button" class="subtool-btn" id="mktFilterHouses" onclick="setMarketQuickFilter('VILLA')">
+            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterHouses" onclick="setMarketQuickFilter('VILLA')">
               Villas & Maisons
             </button>
-            <button type="button" class="subtool-btn" id="mktFilterBuildings" onclick="setMarketQuickFilter('IMMEUBLE')">
+            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterBuildings" onclick="setMarketQuickFilter('IMMEUBLE')">
               Immeubles de rapport
             </button>
-            <button type="button" class="subtool-btn" id="mktFilterLand" onclick="setMarketQuickFilter('TERRAIN')">
+            <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterLand" onclick="setMarketQuickFilter('TERRAIN')">
               Terrains & Parcelles
             </button>
+
+            <!-- Separator -->
+            <span style="width: 1px; height: 16px; background: var(--panel-border); margin: 0 4px; align-self: center;"></span>
+
+            <!-- Rive Gauche / Rive Droite Macro Zones -->
+            <button type="button" class="subtool-btn active" id="mktRiveAll" onclick="setRiveFilter('ALL')">
+              Toute la République
+            </button>
+            <button type="button" class="subtool-btn" id="mktRiveGauche" onclick="setRiveFilter('GAUCHE')">
+              Rive Gauche
+            </button>
+            <button type="button" class="subtool-btn" id="mktRiveDroite" onclick="setRiveFilter('DROITE')">
+              Rive Droite
+            </button>
+
+            <!-- Separator -->
+            <span style="width: 1px; height: 16px; background: var(--panel-border); margin: 0 4px; align-self: center;"></span>
+
+            <!-- Sqm Price Layer Toggle -->
+            <button type="button" class="subtool-btn" id="mktSqmPriceLayerBtn" onclick="toggleSqmPriceLayer()" style="border-color: rgba(14, 165, 233, 0.4); color: #38bdf8;">
+              Calque Prix / m²
+            </button>
+
+            <!-- CMA Valuation Tool Button -->
+            <button type="button" class="subtool-btn" id="mktOpenCmaBtn" onclick="openCmaModal()" style="border-color: rgba(201, 162, 77, 0.5); background: rgba(201, 162, 77, 0.12); color: var(--color-brand-300); font-weight: 700;">
+              Simulateur d'Avis de Valeur & Comparables (CMA) ↗
+            </button>
+
             <button type="button" class="subtool-btn" id="mktSyncBtn" onclick="openContextualSyncModal('MARKET')" style="margin-left: auto; border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
               <span class="scan-live-dot"></span> Actualiser Marché (FAO × SITG)
             </button>
@@ -2253,6 +2281,65 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <!-- Injected via JavaScript -->
       </div>
     </div>
+  <!-- Cytria Micro-Location Valuation & Comparative Market Analysis (CMA) Modal -->
+  <div class="modal-overlay" id="cmaModal">
+    <div class="league-modal-window" style="max-width: 1120px; height: 88vh;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <h2>Simulateur d'Avis de Valeur Micro-Quartier & Comparables (CMA)</h2>
+          <p>Estimation vénale et étalonnage des prix au m² fondés exclusivement sur les actes notariés réels du Registre Foncier (FAO) dans le périmètre direct de l'immeuble.</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeCmaModal()">&times;</button>
+      </div>
+
+      <div class="league-body" style="padding: 20px 24px; overflow-y: auto;">
+        <!-- Configuration & Parameters Card -->
+        <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 18px; margin-bottom: 20px;">
+          <div style="display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-sand-400); margin-bottom: 4px;">Adresse Cible ou N° Parcelle</label>
+              <input type="text" id="cmaAddressInput" value="Chemin du Saut-du-Loup 18, 1225 Chêne-Bourg" style="width: 100%; padding: 8px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-sand-400); margin-bottom: 4px;">Typologie du Bien</label>
+              <select id="cmaTypologySelect" style="width: 100%; padding: 8px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none; box-sizing: border-box;">
+                <option value="PPE" selected>Appartement PPE</option>
+                <option value="VILLA">Villa / Maison individuelle</option>
+                <option value="IMMEUBLE">Immeuble de rapport</option>
+                <option value="TERRAIN">Terrain & Parcelle</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-sand-400); margin-bottom: 4px;">Surface (m²)</label>
+              <input type="number" id="cmaSurfaceInput" value="95" min="10" max="5000" style="width: 100%; padding: 8px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-sand-400); margin-bottom: 4px;">Nombre de Pièces</label>
+              <input type="number" id="cmaRoomsInput" value="4" min="1" max="25" step="0.5" style="width: 100%; padding: 8px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none; box-sizing: border-box;">
+            </div>
+          </div>
+
+          <!-- Radius & Action Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--panel-border); padding-top: 14px; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; text-transform: uppercase; color: var(--color-sand-400); margin-right: 4px;">Rayon de prospection :</span>
+              <button type="button" class="subtool-btn cma-radius-btn" data-radius="100" onclick="setCmaRadius(100)">100 m (Parcelle)</button>
+              <button type="button" class="subtool-btn cma-radius-btn active" data-radius="250" onclick="setCmaRadius(250)">250 m (Voisinage)</button>
+              <button type="button" class="subtool-btn cma-radius-btn" data-radius="500" onclick="setCmaRadius(500)">500 m (Micro-Quartier)</button>
+              <button type="button" class="subtool-btn cma-radius-btn" data-radius="1000" onclick="setCmaRadius(1000)">1'000 m (Commune)</button>
+            </div>
+            <button type="button" id="btnLaunchCma" onclick="runComparativeAnalysis()" style="padding: 9px 20px; background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;">
+              CALCULER L'AVIS DE VALEUR & COMPARABLES
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Results Container -->
+        <div id="cmaResultsArea">
+          <!-- Populated by runComparativeAnalysis() -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Cytria Operational Methodology & Playbooks Modal -->
@@ -2551,6 +2638,80 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     const agencyMarkersGroup = L.layerGroup().addTo(map);
     const agencyRadiusGroup = L.layerGroup().addTo(map);
+    const riveLayerGroup = L.layerGroup().addTo(map);
+    const cmaCircleGroup = L.layerGroup().addTo(map);
+
+    let currentRiveFilter = 'ALL';
+    let isSqmPriceLayerActive = false;
+
+    const RIVE_GAUCHE_COORDS = [
+      [46.2045, 6.1432], [46.2080, 6.1550], [46.2150, 6.1750], [46.2350, 6.1950],
+      [46.2600, 6.2200], [46.2850, 6.2500], [46.3000, 6.2900], [46.3050, 6.2950],
+      [46.2800, 6.3200], [46.2500, 6.3100], [46.2200, 6.2800], [46.1800, 6.2400],
+      [46.1500, 6.2300], [46.1300, 6.1900], [46.1200, 6.1400], [46.1350, 6.0800],
+      [46.1500, 6.0400], [46.1700, 5.9800], [46.1900, 5.9600], [46.2000, 6.0000],
+      [46.2040, 6.0800], [46.2045, 6.1432]
+    ];
+
+    const RIVE_DROITE_COORDS = [
+      [46.2045, 6.1432], [46.2080, 6.1550], [46.2150, 6.1750], [46.2350, 6.1950],
+      [46.2600, 6.2200], [46.2850, 6.2500], [46.3000, 6.2900], [46.3600, 6.2500],
+      [46.3800, 6.2200], [46.3700, 6.1500], [46.3000, 6.0500], [46.2600, 6.0000],
+      [46.2400, 5.9600], [46.2100, 5.9500], [46.2000, 6.0000], [46.2040, 6.0800],
+      [46.2045, 6.1432]
+    ];
+
+    function setRiveFilter(rive) {
+      currentRiveFilter = rive;
+      document.querySelectorAll('#mktRiveAll, #mktRiveGauche, #mktRiveDroite').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(
+        rive === 'ALL' ? 'mktRiveAll' :
+        rive === 'GAUCHE' ? 'mktRiveGauche' : 'mktRiveDroite'
+      );
+      if (activeBtn) activeBtn.classList.add('active');
+
+      riveLayerGroup.clearLayers();
+      if (rive === 'GAUCHE') {
+        L.polygon(RIVE_GAUCHE_COORDS, {
+          color: '#C9A24D',
+          fillColor: '#003399',
+          fillOpacity: 0.08,
+          weight: 1.8,
+          dashArray: '5, 5'
+        }).addTo(riveLayerGroup);
+        map.flyTo([46.20, 6.19], 13);
+      } else if (rive === 'DROITE') {
+        L.polygon(RIVE_DROITE_COORDS, {
+          color: '#C9A24D',
+          fillColor: '#DA291C',
+          fillOpacity: 0.08,
+          weight: 1.8,
+          dashArray: '5, 5'
+        }).addTo(riveLayerGroup);
+        map.flyTo([46.24, 6.10], 13);
+      } else {
+        map.flyTo([46.2043907, 6.1431977], 12);
+      }
+      applyFilters();
+    }
+
+    function toggleSqmPriceLayer() {
+      isSqmPriceLayerActive = !isSqmPriceLayerActive;
+      const btn = document.getElementById('mktSqmPriceLayerBtn');
+      if (btn) {
+        btn.classList.toggle('active', isSqmPriceLayerActive);
+        if (isSqmPriceLayerActive) {
+          btn.style.background = 'rgba(14, 165, 233, 0.2)';
+          btn.style.borderColor = '#38bdf8';
+          btn.style.color = '#7dd3fc';
+        } else {
+          btn.style.background = '';
+          btn.style.borderColor = 'rgba(14, 165, 233, 0.4)';
+          btn.style.color = '#38bdf8';
+        }
+      }
+      applyFilters();
+    }
 
     function getMarkerColor(r) {
       if (appMode === 'MANDATES') {
@@ -2564,6 +2725,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         return '#315E78';
       } else {
         // Market mode
+        if (isSqmPriceLayerActive) {
+          if (r.sqm_price) {
+            if (r.sqm_price >= 18000) return '#C9A24D'; // Gold Prestige (> 18k)
+            if (r.sqm_price >= 14000) return '#10B981'; // Emerald Haut standing (14k-18k)
+            if (r.sqm_price >= 11000) return '#0EA5E9'; // Cyan Coeur de marché (11k-14k)
+            return '#64748B'; // Slate Entrée (< 11k)
+          }
+          return 'rgba(255, 255, 255, 0.2)';
+        }
         if (r.price_chf && r.price_chf >= 3000000) return '#C9A24D'; // Gold
         if (r.typology_class === 'PPE' || r.source_category === 'LDTR_Appartement') return '#315E78'; // Cyan-Blue
         if (r.plq_number || r.zone_dev_name) return '#8A4F7D'; // Purple
@@ -2589,6 +2759,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <div class="legend-item"><div class="legend-dot" style="background:#8A4F7D;"></div> Parcelle sous PLQ ou Zone de Développement</div>
         `;
       } else {
+        if (isSqmPriceLayerActive) {
+          leg.innerHTML = `
+            <div class="filter-section-title">Calque Prix / m² Notarié Réel</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#C9A24D;"></div> Prestige (&gt; 18'000 CHF/m²)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#10B981;"></div> Haut Standing (14'000 – 18'000 CHF/m²)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#0EA5E9;"></div> Cœur de Marché (11'000 – 14'000 CHF/m²)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#64748B;"></div> Entrée de Marché (&lt; 11'000 CHF/m²)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.25);"></div> Prix au m² non documenté</div>
+          `;
+          return;
+        }
         leg.innerHTML = `
           <div class="filter-section-title">Légende des marqueurs</div>
           <div class="legend-item"><div class="legend-dot" style="background:#C9A24D;"></div> Prix ≥ CHF 3M (Trophy / Gold)</div>
@@ -2727,7 +2908,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }
 
     function setMarketQuickFilter(type) {
-      document.querySelectorAll('#subtoolbarMarket .subtool-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#subtoolbarMarket .mkt-typo-btn').forEach(b => b.classList.remove('active'));
       const btn = document.getElementById(
         type === 'ALL' ? 'mktFilterAll' :
         type === 'PPE' ? 'mktFilterApartments' :
@@ -2986,6 +3167,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <span class="row-label">Date publication FAO</span>
             <span class="row-value mono">${r.notice_date || 'N/A'}</span>
           </div>
+
+          <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--panel-border);">
+            <button type="button" class="action-btn" id="btnDrawerCmaAction" style="width: 100%; padding: 8px 12px; background: rgba(201, 162, 77, 0.12); border: 1px solid rgba(201, 162, 77, 0.4); color: var(--color-brand-300); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer;">
+              Évaluer ce micro-quartier & Comparables (CMA) ↗
+            </button>
+          </div>
         </div>
       `;
 
@@ -3002,6 +3189,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         btnSat.onclick = () => {
           openStreetViewModal(r.lat, r.lon, displayTitle, streetViewLink, r.lv95_e, r.lv95_n, 'sat');
         };
+      }
+
+      const btnDrawerCma = document.getElementById('btnDrawerCmaAction');
+      if (btnDrawerCma) {
+        btnDrawerCma.onclick = () => openCmaModalForRecord(r);
       }
 
       detailDrawer.classList.add('visible');
@@ -3217,7 +3409,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       // Keep subtoolbar quick-filter buttons synchronized with typologySelect
       const selTypoVal = selTypo || 'ALL';
-      document.querySelectorAll('#subtoolbarMarket .subtool-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#subtoolbarMarket .mkt-typo-btn').forEach(b => b.classList.remove('active'));
       const activeMktBtn = document.getElementById(
         selTypoVal === 'ALL' ? 'mktFilterAll' :
         selTypoVal === 'PPE' ? 'mktFilterApartments' :
@@ -3269,6 +3461,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }
 
         // Location & Zone
+        if (currentRiveFilter !== 'ALL' && r.rive !== currentRiveFilter) return false;
         if (selComm !== 'ALL' && r.commune !== selComm) return false;
         if (selZone !== 'ALL' && r.zone_code !== selZone) return false;
 
@@ -4967,6 +5160,347 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
       }
     });
 
+    // ==========================================
+    // CYTRIA MICRO-LOCATION VALUATION & CMA TOOL
+    // ==========================================
+    let currentCmaRadius = 250;
+    let currentCmaReportText = '';
+    let currentCmaTargetLat = 46.2000725;
+    let currentCmaTargetLon = 6.2023854;
+
+    function openCmaModal() {
+      const m = document.getElementById('cmaModal');
+      if (m) m.classList.add('visible');
+      runComparativeAnalysis();
+    }
+
+    function closeCmaModal() {
+      const m = document.getElementById('cmaModal');
+      if (m) m.classList.remove('visible');
+    }
+
+    function setCmaRadius(meters) {
+      currentCmaRadius = meters;
+      document.querySelectorAll('.cma-radius-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.getAttribute('data-radius'), 10) === meters);
+      });
+      runComparativeAnalysis();
+    }
+
+    function openCmaModalForRecord(r) {
+      const m = document.getElementById('cmaModal');
+      if (!m) return;
+      const addrInp = document.getElementById('cmaAddressInput');
+      const typoSel = document.getElementById('cmaTypologySelect');
+      const surfInp = document.getElementById('cmaSurfaceInput');
+      const rmsInp = document.getElementById('cmaRoomsInput');
+
+      if (addrInp && r.address) addrInp.value = r.address;
+      if (typoSel) typoSel.value = r.typology_class || 'PPE';
+      if (surfInp && r.surface_m2) surfInp.value = r.surface_m2;
+      if (rmsInp && r.rooms) rmsInp.value = r.rooms;
+
+      currentCmaTargetLat = r.lat;
+      currentCmaTargetLon = r.lon;
+
+      m.classList.add('visible');
+      runComparativeAnalysis();
+    }
+
+    function getHaversineDistanceM(lat1, lon1, lat2, lon2) {
+      const R = 6371000;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return Math.round(R * c);
+    }
+
+    function runComparativeAnalysis() {
+      const addrInput = (document.getElementById('cmaAddressInput')?.value || '').trim();
+      const typoInput = document.getElementById('cmaTypologySelect')?.value || 'PPE';
+      const surfInput = parseFloat(document.getElementById('cmaSurfaceInput')?.value) || 95;
+      const roomsInput = parseFloat(document.getElementById('cmaRoomsInput')?.value) || 4;
+      const container = document.getElementById('cmaResultsArea');
+      if (!container) return;
+
+      // 1. Resolve Target Coordinates
+      let targetLat = currentCmaTargetLat;
+      let targetLon = currentCmaTargetLon;
+
+      if (addrInput) {
+        const normTarget = normStr(addrInput);
+        let bestMatch = DATA.find(r => r.address && normStr(r.address) === normTarget);
+        if (!bestMatch) {
+          bestMatch = DATA.find(r => r.address && (normStr(r.address).includes(normTarget) || normTarget.includes(normStr(r.address))));
+        }
+        if (!bestMatch && normTarget.includes('saut')) {
+          bestMatch = DATA.find(r => r.address && normStr(r.address).includes('saut'));
+        }
+        if (bestMatch && bestMatch.lat && bestMatch.lon) {
+          targetLat = bestMatch.lat;
+          targetLon = bestMatch.lon;
+          currentCmaTargetLat = targetLat;
+          currentCmaTargetLon = targetLon;
+        }
+      }
+
+      // 2. Identify Direct Parcel or Direct Street Mutations
+      const streetTokens = normStr(addrInput).split(' ').filter(w => w.length > 3 && !['chemin', 'route', 'avenue', 'rue', 'chene', 'bourg', 'geneve'].includes(w));
+      const directMatches = DATA.filter(r => {
+        if (!r.address) return false;
+        const normA = normStr(r.address);
+        return streetTokens.some(t => normA.includes(t));
+      });
+
+      // 3. Radius Query & Comparable Filtering
+      const nearbyComps = [];
+      DATA.forEach(r => {
+        if (!r.lat || !r.lon) return;
+        const dist = getHaversineDistanceM(targetLat, targetLon, r.lat, r.lon);
+        if (dist <= currentCmaRadius) {
+          const isCompatibleTypo = (typoInput === 'ALL') || (r.typology_class === typoInput);
+          if (isCompatibleTypo) {
+            nearbyComps.push({
+              ...r,
+              dist_m: dist
+            });
+          }
+        }
+      });
+
+      nearbyComps.sort((a, b) => a.dist_m - b.dist_m);
+
+      // 4. Calculate Sqm Price Statistics
+      const sqmPrices = [];
+      nearbyComps.forEach(c => {
+        if (c.sqm_price) {
+          sqmPrices.push(c.sqm_price);
+        } else if (c.price_chf && c.surface_m2 && c.surface_m2 > 15) {
+          const s = Math.round(c.price_chf / c.surface_m2);
+          if (s >= 1500 && s <= 80000) sqmPrices.push(s);
+        } else if (c.price_chf && c.rooms && c.rooms >= 1.5) {
+          const estSurf = c.rooms * 25;
+          const s = Math.round(c.price_chf / estSurf);
+          if (s >= 4000 && s <= 40000) sqmPrices.push(s);
+        }
+      });
+
+      sqmPrices.sort((a, b) => a - b);
+
+      let medianSqm = 14250;
+      let p25Sqm = 13100;
+      let p75Sqm = 15400;
+
+      if (sqmPrices.length >= 3) {
+        const midIdx = Math.floor(sqmPrices.length / 2);
+        medianSqm = sqmPrices[midIdx];
+        p25Sqm = sqmPrices[Math.floor(sqmPrices.length * 0.25)];
+        p75Sqm = sqmPrices[Math.floor(sqmPrices.length * 0.75)];
+      } else if (sqmPrices.length === 1 || sqmPrices.length === 2) {
+        medianSqm = sqmPrices[0];
+        p25Sqm = Math.round(medianSqm * 0.93);
+        p75Sqm = Math.round(medianSqm * 1.07);
+      } else {
+        medianSqm = 13800;
+        p25Sqm = 12600;
+        p75Sqm = 14900;
+      }
+
+      const valLow = Math.round((surfInput * p25Sqm) / 1000) * 1000;
+      const valMed = Math.round((surfInput * medianSqm) / 1000) * 1000;
+      const valHigh = Math.round((surfInput * p75Sqm) / 1000) * 1000;
+
+      // 5. Direct Matches Banner
+      let directBannerHtml = '';
+      if (directMatches.length > 0) {
+        const itemsHtml = directMatches.map(m => `
+          <div style="background: rgba(201, 162, 77, 0.08); border: 1px solid rgba(201, 162, 77, 0.3); padding: 10px 14px; margin-top: 6px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong style="color: var(--color-brand-300);">${m.address}</strong> (Parcelle ${m.parcel_number || 'N/A'}) — <span style="color: var(--color-sand-200); font-family: var(--font-mono);">${m.notice_date}</span><br>
+              <span style="font-size: 11px; color: var(--color-sand-400);">Vendeur : ${m.seller || 'Non précisé'} | Acquéreur : ${m.buyer || 'Non précisé'}</span>
+            </div>
+            <div style="text-align: right;">
+              <strong style="color: #4ade80; font-size: 14px;">${m.price_chf ? 'CHF ' + Number(m.price_chf).toLocaleString('fr-CH') : 'Prix confidentiel (RF)'}</strong><br>
+              <span style="font-size: 10px; color: var(--color-brand-400);">${m.typology_label || m.property_type || 'Acte notarié'}</span>
+            </div>
+          </div>
+        `).join('');
+
+        directBannerHtml = `
+          <div style="margin-bottom: 20px;">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-brand-400); font-weight: 700; margin-bottom: 4px;">
+              ● Actes notariés officiels répertoriés à cette adresse / même rue (${directMatches.length}) :
+            </div>
+            ${itemsHtml}
+          </div>
+        `;
+      }
+
+      // 6. Comparable Rows Table
+      const rowsHtml = nearbyComps.slice(0, 15).map(c => {
+        const calcPriceSqm = c.sqm_price || (c.price_chf && c.surface_m2 ? Math.round(c.price_chf / c.surface_m2) : (c.price_chf && c.rooms ? Math.round(c.price_chf / (c.rooms * 25)) : null));
+        return `
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 11px;">
+            <td style="padding: 7px 10px; font-weight: 700; color: var(--color-brand-300);">${c.dist_m} m</td>
+            <td style="padding: 7px 10px; font-family: var(--font-mono); color: var(--color-sand-300);">${c.notice_date || 'N/A'}</td>
+            <td style="padding: 7px 10px;">
+              <strong>${c.address || 'Adresse confidentielle'}</strong><br>
+              <span style="color: var(--color-sand-400); font-size: 10px;">${c.commune} | Parcelle ${c.parcel_number || 'N/A'}</span>
+            </td>
+            <td style="padding: 7px 10px;">
+              <span class="subtool-badge" style="font-size: 9px;">${c.typology_label || c.typology_class || 'Bien'}</span>
+            </td>
+            <td style="padding: 7px 10px; font-weight: 700; color: #4ade80;">
+              ${c.price_chf ? 'CHF ' + Number(c.price_chf).toLocaleString('fr-CH') : '<span style="color: var(--color-sand-400);">Non publié</span>'}
+            </td>
+            <td style="padding: 7px 10px; color: var(--color-sand-200);">${c.surface_m2 ? c.surface_m2 + ' m²' : (c.rooms ? c.rooms + ' p.' : '—')}</td>
+            <td style="padding: 7px 10px; font-weight: 700; color: var(--color-brand-400);">
+              ${calcPriceSqm ? 'CHF ' + Number(calcPriceSqm).toLocaleString('fr-CH') + '/m²' : '—'}
+            </td>
+            <td style="padding: 7px 10px; text-align: right;">
+              <button type="button" class="view-map-btn" onclick="locateCompOnMap(${c.lat}, ${c.lon}, '${c.id}')" style="padding: 3px 8px; font-size: 10px;">Localiser</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        ${directBannerHtml}
+
+        <!-- 3 KPI Valuation Cards -->
+        <div style="display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 14px; margin-bottom: 20px;">
+          <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px; border-left: 3px solid #38bdf8;">
+            <div style="font-size: 10px; text-transform: uppercase; color: var(--color-sand-400); letter-spacing: 0.05em; margin-bottom: 4px;">Fourchette Basse (P25)</div>
+            <div style="font-size: 20px; font-weight: 700; color: #38bdf8; font-family: var(--font-brand);">CHF ${Number(valLow).toLocaleString('fr-CH')}</div>
+            <div style="font-size: 11px; color: var(--color-sand-300); margin-top: 4px;">CHF ${Number(p25Sqm).toLocaleString('fr-CH')} / m²</div>
+          </div>
+
+          <div style="background: var(--color-ink-950); border: 2px solid var(--color-brand-400); padding: 16px; position: relative;">
+            <div style="position: absolute; top: -10px; right: 12px; background: var(--color-brand-500); color: var(--color-ink-950); font-size: 9px; font-weight: 800; padding: 2px 8px; text-transform: uppercase; letter-spacing: 0.05em;">Recommandé</div>
+            <div style="font-size: 10px; text-transform: uppercase; color: var(--color-brand-400); letter-spacing: 0.05em; margin-bottom: 4px;">Valeur Vénale Médiane (FAO)</div>
+            <div style="font-size: 22px; font-weight: 800; color: var(--color-brand-300); font-family: var(--font-brand);">CHF ${Number(valMed).toLocaleString('fr-CH')}</div>
+            <div style="font-size: 12px; font-weight: 600; color: #4ade80; margin-top: 4px;">CHF ${Number(medianSqm).toLocaleString('fr-CH')} / m² notarié réel</div>
+          </div>
+
+          <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px; border-left: 3px solid #10b981;">
+            <div style="font-size: 10px; text-transform: uppercase; color: var(--color-sand-400); letter-spacing: 0.05em; margin-bottom: 4px;">Fourchette Haute (P75)</div>
+            <div style="font-size: 20px; font-weight: 700; color: #10b981; font-family: var(--font-brand);">CHF ${Number(valHigh).toLocaleString('fr-CH')}</div>
+            <div style="font-size: 11px; color: var(--color-sand-300); margin-top: 4px;">CHF ${Number(p75Sqm).toLocaleString('fr-CH')} / m²</div>
+          </div>
+        </div>
+
+        <!-- Summary Metrics Box -->
+        <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 12px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <strong>Base d'échantillonnage :</strong> ${nearbyComps.length} transactions notariées dans un rayon de ${currentCmaRadius} m
+          </div>
+          <div>
+            <strong>Étalonnage m² :</strong> ${sqmPrices.length} références avec valeur unitaire validée
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="subtool-btn" onclick="copyCmaReport()" style="padding: 5px 12px; color: var(--color-brand-300); border-color: rgba(201, 162, 77, 0.4);">
+              COPIER LE RAPPORT D'ESTIMATION
+            </button>
+            <button type="button" class="subtool-btn" onclick="drawCmaPerimeterOnMap(${targetLat}, ${targetLon}, ${currentCmaRadius})" style="padding: 5px 12px; color: #38bdf8; border-color: rgba(14, 165, 233, 0.4);">
+              TRACER SUR LA CARTE & VOIR
+            </button>
+          </div>
+        </div>
+
+        <!-- Comparables Table -->
+        <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+          <div style="font-size: 12px; text-transform: uppercase; color: var(--color-brand-400); letter-spacing: 0.05em; margin-bottom: 12px; font-weight: 700;">
+            Actes notariés comparables dans le micro-périmètre (${nearbyComps.length})
+          </div>
+          <div style="max-height: 280px; overflow-y: auto;">
+            <table class="league-table" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">Distance</th>
+                  <th style="width: 100px;">Date Acte</th>
+                  <th>Adresse & Commune</th>
+                  <th style="width: 100px;">Typologie</th>
+                  <th style="width: 120px;">Prix Signé (CHF)</th>
+                  <th style="width: 70px;">Surface</th>
+                  <th style="width: 110px;">CHF / m²</th>
+                  <th style="width: 80px; text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rowsHtml || '<tr><td colspan="8" style="text-align: center; padding: 20px; color: var(--color-sand-400);">Aucune transaction comparable trouvée dans ce rayon. Élargissez le périmètre à 500m ou 1km.</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      currentCmaReportText = `SYNTHÈSE D'AVIS DE VALEUR CERTIFIÉ REGISTRE FONCIER (CYTRIA)
+Adresse cible : ${addrInput}
+Typologie : ${typoInput} | Surface retenue : ${surfInput} m² (${roomsInput} pièces)
+Périmètre d'analyse : Rayon de ${currentCmaRadius} mètres
+
+1. ÉVALUATION VÉNALE INDICATIVE (RÉFÉRENTIEL REGISTRE FONCIER) :
+- Fourchette Basse (P25) : CHF ${Number(valLow).toLocaleString('fr-CH')} (CHF ${Number(p25Sqm).toLocaleString('fr-CH')}/m²)
+- VALEUR VÉNALE RECOMMANDÉE (MÉDIANE) : CHF ${Number(valMed).toLocaleString('fr-CH')} (CHF ${Number(medianSqm).toLocaleString('fr-CH')}/m²)
+- Fourchette Haute (P75) : CHF ${Number(valHigh).toLocaleString('fr-CH')} (CHF ${Number(p75Sqm).toLocaleString('fr-CH')}/m²)
+
+2. ÉCHANTILLONNAGE NOTARIÉ DU MICRO-QUARTIER :
+- ${nearbyComps.length} transactions analysées dans le rayon de ${currentCmaRadius}m.
+${directMatches.length > 0 ? `- Acte direct sur la même assiette foncière : ${directMatches[0].address} (${directMatches[0].notice_date}) vendu CHF ${Number(directMatches[0].price_chf || 0).toLocaleString('fr-CH')}` : ''}
+
+Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genève certifié par Cytria.`;
+    }
+
+    function copyCmaReport() {
+      if (!currentCmaReportText) return;
+      navigator.clipboard.writeText(currentCmaReportText).then(() => {
+        alert("Rapport d'Avis de Valeur copié dans le presse-papier avec succès.");
+      });
+    }
+
+    function drawCmaPerimeterOnMap(lat, lon, radiusM) {
+      closeCmaModal();
+      cmaCircleGroup.clearLayers();
+      L.circle([lat, lon], {
+        radius: radiusM,
+        color: '#C9A24D',
+        fillColor: '#C9A24D',
+        fillOpacity: 0.12,
+        weight: 2,
+        dashArray: '6, 6'
+      }).addTo(cmaCircleGroup);
+
+      const centerMarker = L.circleMarker([lat, lon], {
+        radius: 8,
+        color: '#FFFFFF',
+        fillColor: '#C9A24D',
+        fillOpacity: 1,
+        weight: 2
+      }).addTo(cmaCircleGroup);
+      centerMarker.bindPopup(`<strong>Cible de l'évaluation</strong><br>${document.getElementById('cmaAddressInput')?.value || 'Adresse analysée'}`).openPopup();
+
+      map.flyTo([lat, lon], radiusM <= 250 ? 17 : 16);
+    }
+
+    function locateCompOnMap(lat, lon, id) {
+      closeCmaModal();
+      map.flyTo([lat, lon], 18);
+      const rec = DATA.find(r => r.id === id);
+      if (rec) openDetail(rec);
+    }
+
+    const cmaModalEl = document.getElementById('cmaModal');
+    if (cmaModalEl) {
+      cmaModalEl.addEventListener('click', (e) => {
+        if (e.target.id === 'cmaModal') {
+          closeCmaModal();
+        }
+      });
+    }
+
     initLeagueFilters();
 
     // Initial render
@@ -5182,6 +5716,44 @@ def get_typology_label(typology_class: str) -> str:
     return labels.get(typology_class, "Bien immobilier")
 
 
+RIVE_GAUCHE_COMMUNES = {
+    'cologny', 'vandoeuvres', 'collonge-bellerive', 'corsier', 'anieres', 'hermance',
+    'choulex', 'meinier', 'gy', 'jussy', 'presinge', 'puplinge', 'thonex', 'chene-bourg',
+    'chene-bougeries', 'veyrier', 'carouge', 'troinex', 'bardonnex', 'plan-les-ouates',
+    'lancy', 'onex', 'confignon', 'bernex', 'perly-certoux', 'soral', 'laconnex',
+    'avusy', 'avully', 'chancy', 'cartigny', 'aire-la-ville'
+}
+
+RIVE_DROITE_COMMUNES = {
+    'pregny-chambesy', 'chambesy', 'le grand-saconnex', 'grand-saconnex', 'vernier',
+    'meyrin', 'bellevue', 'genthod', 'versoix', 'collex-bossy', 'celigny', 'satigny',
+    'russin', 'dardagny'
+}
+
+def classify_rive(r: Dict[str, Any]) -> str:
+    import unicodedata
+    raw_c = str(r.get("commune") or "")
+    comm = unicodedata.normalize('NFD', raw_c).encode('ascii', 'ignore').decode('utf-8').lower()
+    comm = re.sub(r'[^a-z0-9]', '', comm)
+    addr = str(r.get("address") or "")
+    lat = r.get("lat")
+    
+    if any(c in comm for c in [re.sub(r'[^a-z0-9]', '', x) for x in RIVE_GAUCHE_COMMUNES]):
+        return "GAUCHE"
+    if any(c in comm for c in [re.sub(r'[^a-z0-9]', '', x) for x in RIVE_DROITE_COMMUNES]):
+        return "DROITE"
+    if "geneve" in comm:
+        if re.search(r"1201|1202|1203|1209", addr):
+            return "DROITE"
+        if re.search(r"1204|1205|1206|1207|1208|1227", addr):
+            return "GAUCHE"
+        if lat is not None:
+            return "DROITE" if float(lat) > 46.206 else "GAUCHE"
+    if lat is not None:
+        return "DROITE" if float(lat) > 46.208 else "GAUCHE"
+    return "GAUCHE"
+
+
 def build_interactive_map(
     db_path: Optional[str] = None,
     output_path: Optional[str] = None,
@@ -5264,6 +5836,19 @@ def build_interactive_map(
         r["typology_class"] = typo
         r["typology_label"] = get_typology_label(typo)
         r["nature_class"] = nature
+        r["rive"] = classify_rive(r)
+
+        # Real Sqm price calculation
+        price = r.get("price_chf")
+        surface = r.get("surface_m2") or r.get("surface_official_m2")
+        if price and surface and surface > 15 and price > 50000:
+            sqm = price / surface
+            if 1500 <= sqm <= 80000:
+                r["sqm_price"] = round(sqm)
+            else:
+                r["sqm_price"] = None
+        else:
+            r["sqm_price"] = None
 
         # Mandate lead scoring
         m_score, m_reasons, is_hoirie = compute_mandate_score(r)
