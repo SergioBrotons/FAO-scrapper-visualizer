@@ -1462,12 +1462,22 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
         <div style="display:flex; align-items:center; gap: 14px;">
           <div class="league-tabs">
-            <button type="button" class="league-tab-btn active" id="leagueTabAgencies" onclick="setLeagueTab('AGENCIES')">Classement Agences</button>
-            <button type="button" class="league-tab-btn" id="leagueTabBrokers" onclick="setLeagueTab('BROKERS')">Top Courtiers Individuels</button>
+            <button type="button" class="league-tab-btn active" id="leagueTabAgencies" onclick="setLeagueTab('AGENCIES')">Classement Agences (<span id="countAgencies">0</span>)</button>
+            <button type="button" class="league-tab-btn" id="leagueTabBrokers" onclick="setLeagueTab('BROKERS')">Top Courtiers Individuels (<span id="countBrokers">0</span>)</button>
           </div>
           <button class="modal-close-btn" id="leagueModalCloseBtn" onclick="closeLeagueModal()">&times;</button>
         </div>
       </div>
+
+      <!-- League Filter Bar -->
+      <div style="padding: 10px 24px; background: var(--color-ink-950); border-bottom: 1px solid var(--panel-border); display: flex; gap: 12px; align-items: center;">
+        <input type="text" id="leagueSearchInput" placeholder="Filtrer par nom d'agence, courtier, commune..." style="flex: 1; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
+        <select id="leagueCommuneSelect" style="width: 220px; padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; font-family: var(--font-brand); outline: none;">
+          <option value="ALL">Toutes communes genevoises</option>
+        </select>
+        <span id="leagueResultsCount" style="font-family: var(--font-mono); font-size: 11px; color: var(--color-sand-300); white-space: nowrap;"></span>
+      </div>
+
       <div class="league-body" id="leagueBodyContent">
         <!-- Injected via JavaScript -->
       </div>
@@ -2223,6 +2233,31 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     const LEAGUE_DATA = __LEAGUE_JSON__;
     let currentLeagueTab = 'AGENCIES';
 
+    function initLeagueFilters() {
+      // Populate Commune Select in League Modal
+      const communeSelect = document.getElementById('leagueCommuneSelect');
+      const communes = new Set();
+      LEAGUE_DATA.agencies.forEach(a => {
+        if (a.headquarters_commune) communes.add(a.headquarters_commune);
+      });
+      LEAGUE_DATA.brokers.forEach(b => {
+        (b.top_communes || []).forEach(c => communes.add(c));
+      });
+      
+      Array.from(communes).sort().forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        communeSelect.appendChild(opt);
+      });
+
+      document.getElementById('countAgencies').textContent = LEAGUE_DATA.agencies.length;
+      document.getElementById('countBrokers').textContent = LEAGUE_DATA.brokers.length;
+
+      document.getElementById('leagueSearchInput').addEventListener('input', renderLeagueContent);
+      document.getElementById('leagueCommuneSelect').addEventListener('change', renderLeagueContent);
+    }
+
     function openLeagueModal() {
       renderLeagueContent();
       document.getElementById('leagueTableModal').classList.add('visible');
@@ -2245,8 +2280,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function renderLeagueContent() {
       const container = document.getElementById('leagueBodyContent');
+      const query = (document.getElementById('leagueSearchInput').value || '').toLowerCase().trim();
+      const selCommune = document.getElementById('leagueCommuneSelect').value;
+
       if (currentLeagueTab === 'AGENCIES') {
-        const rows = LEAGUE_DATA.agencies.map(a => {
+        const filtered = LEAGUE_DATA.agencies.filter(a => {
+          if (selCommune !== 'ALL' && a.headquarters_commune !== selCommune && !a.primary_territory.toLowerCase().includes(selCommune.toLowerCase())) {
+            return false;
+          }
+          if (query) {
+            const haystack = [a.name, a.address, a.primary_territory, (a.specialties||[]).join(' ')].join(' ').toLowerCase();
+            if (!haystack.includes(query)) return false;
+          }
+          return true;
+        });
+
+        document.getElementById('leagueResultsCount').textContent = `${filtered.length} agences affichées`;
+
+        const rows = filtered.map(a => {
           const rankClass = a.rank === 1 ? 'top-1' : a.rank === 2 ? 'top-2' : a.rank === 3 ? 'top-3' : '';
           return `
             <tr>
@@ -2295,12 +2346,25 @@ HTML_TEMPLATE = """<!DOCTYPE html>
               </tr>
             </thead>
             <tbody>
-              ${rows}
+              ${rows.length ? rows : '<tr><td colspan="8" style="text-align:center; padding: 40px; color: var(--color-sand-300);">Aucune agence ne correspond aux critères de recherche.</td></tr>'}
             </tbody>
           </table>
         `;
       } else {
-        const rows = LEAGUE_DATA.brokers.map(b => {
+        const filtered = LEAGUE_DATA.brokers.filter(b => {
+          if (selCommune !== 'ALL' && !(b.top_communes || []).includes(selCommune)) {
+            return false;
+          }
+          if (query) {
+            const haystack = [b.name, b.role, b.agency_name, b.specialty, (b.top_communes||[]).join(' ')].join(' ').toLowerCase();
+            if (!haystack.includes(query)) return false;
+          }
+          return true;
+        });
+
+        document.getElementById('leagueResultsCount').textContent = `${filtered.length} courtiers affichés`;
+
+        const rows = filtered.map(b => {
           const rankClass = b.rank === 1 ? 'top-1' : b.rank === 2 ? 'top-2' : b.rank === 3 ? 'top-3' : '';
           return `
             <tr>
@@ -2342,7 +2406,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
               </tr>
             </thead>
             <tbody>
-              ${rows}
+              ${rows.length ? rows : '<tr><td colspan="7" style="text-align:center; padding: 40px; color: var(--color-sand-300);">Aucun courtier ne correspond aux critères de recherche.</td></tr>'}
             </tbody>
           </table>
         `;
@@ -2354,6 +2418,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         closeLeagueModal();
       }
     });
+
+    initLeagueFilters();
 
     // Initial render
     setAppMode('MARKET');
