@@ -95,15 +95,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* Top Bar HUD */
     .top-bar {
       position: absolute;
-      top: 16px;
-      left: 16px;
-      right: 16px;
+      top: 14px;
+      left: 14px;
+      right: 14px;
       z-index: 1000;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       pointer-events: none;
-      gap: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .hud-card {
@@ -111,12 +112,33 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--panel-border);
-      padding: 10px 18px;
+      padding: 8px 14px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       pointer-events: auto;
       box-shadow: var(--shadow-elevation);
+    }
+
+    .hud-card.main-nav-card {
+      flex: 1 1 auto;
+      max-width: fit-content;
+    }
+
+    .hud-card.hud-stats-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    .hud-quick-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-left: 1px solid var(--panel-border);
+      padding-left: 12px;
     }
 
     .brand-group {
@@ -233,6 +255,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       display: flex;
       align-items: center;
       gap: 6px;
+      flex-wrap: wrap;
     }
 
     .subtool-btn {
@@ -1836,7 +1859,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
   <!-- Top Bar HUD & Mode Switcher -->
   <div class="top-bar">
-    <div class="hud-card">
+    <div class="hud-card main-nav-card">
       <div class="brand-group">
         <!-- Official Cytria Vector Logo -->
         <svg class="cytria-logo-svg" viewBox="606 188 836 309" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1952,8 +1975,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="hud-stats">
+    <!-- HUD Stats & Direct Tool Actions Card -->
+    <div class="hud-card hud-stats-card">
+      <div class="hud-stats" style="border-left: none; padding-left: 0;">
         <div class="stat-item">
           <span class="stat-label" id="statLabelPrimary">Transactions</span>
           <span class="stat-value" id="stat-count">__TOTAL_ROWS__</span>
@@ -1970,11 +1996,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <span class="stat-label" id="statLabel4">Opportunités</span>
           <span class="stat-value purple" id="stat-4">__HOT_MANDATES_COUNT__</span>
         </div>
-        <div class="stat-item" style="border-right: none; padding-right: 0;">
-          <button type="button" class="subtool-btn" onclick="openMethodologyModal()" style="padding: 7px 14px; font-size: 11px; font-weight: 700; color: var(--color-brand-300); border: 1px solid rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;">
-            Guide Métier & Playbooks ↗
-          </button>
-        </div>
+      </div>
+
+      <div class="hud-quick-actions">
+        <button type="button" class="subtool-btn" id="hudOpenCmaBtn" onclick="openCmaModal()" style="border-color: rgba(201, 162, 77, 0.5); background: rgba(201, 162, 77, 0.12); color: var(--color-brand-300); font-weight: 700;">
+          Avis de Valeur (CMA)
+        </button>
+        <button type="button" class="subtool-btn" id="hudSyncBtn" onclick="openContextualSyncModal(typeof currentAppMode !== 'undefined' ? currentAppMode : 'MARKET')" style="border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
+          <span class="scan-live-dot"></span> Actualiser
+        </button>
+        <button type="button" class="subtool-btn" id="hudGuideBtn" onclick="openMethodologyModal()" style="border-color: rgba(201, 162, 77, 0.4); background: rgba(201, 162, 77, 0.08); color: var(--color-brand-300);">
+          Guide Métier & Playbooks
+        </button>
       </div>
     </div>
   </div>
@@ -4821,9 +4854,14 @@ Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées
       } else if (tabId === 'CMA') {
         container.innerHTML = `
           <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
-              <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">SIMULATEUR D'AVIS DE VALEUR MICRO-QUARTIER (CMA) & CIBLAGE TERRITORIAL</h3>
-              <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Méthodologie d'estimation vénale comparative fondée sur les mutations notariées contiguës, l'échantillonnage par quartier SITG et les tranches iso-valeur.</p>
+            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+              <div>
+                <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">SIMULATEUR D'AVIS DE VALEUR MICRO-QUARTIER (CMA) & CIBLAGE TERRITORIAL</h3>
+                <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Méthodologie d'estimation vénale comparative fondée sur les mutations notariées contiguës, l'échantillonnage par quartier SITG et les tranches iso-valeur.</p>
+              </div>
+              <button type="button" onclick="closeMethodologyModal(); openCmaModal();" style="flex-shrink: 0; padding: 8px 16px; font-size: 12px; font-weight: 700; background: rgba(201, 162, 77, 0.2); border: 1px solid var(--color-brand-400); color: var(--color-brand-300); cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;">
+                Ouvrir le Simulateur CMA
+              </button>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
@@ -5677,6 +5715,49 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
 
     // Initial render
     setAppMode('MARKET');
+
+    // ==========================================
+    // DEEP-LINKING & EXTERNAL URL ROUTER
+    // Supports:
+    //   #cma or ?tool=cma or ?modal=cma (&address=...)
+    //   #sync or ?tool=sync or ?modal=sync (&suite=MARKET|SOURCING|AGENCY_BI)
+    //   #guide or ?tool=guide or ?modal=guide or #playbooks or #methodologie (&tab=HOIRIES|FONCIER|PRIX|CMA|AGENCES)
+    //   #sourcing, #agencies
+    // ==========================================
+    function handleExternalRouting() {
+      const hash = (window.location.hash || '').toLowerCase().replace('#', '');
+      const params = new URLSearchParams(window.location.search);
+      const toolParam = (params.get('tool') || params.get('modal') || params.get('view') || '').toLowerCase();
+      const target = hash || toolParam;
+
+      if (!target) return;
+
+      if (target === 'cma' || target === 'simulateur' || target === 'avis-de-valeur' || target.includes('cma') || target.includes('valeur')) {
+        const addr = params.get('address') || params.get('adresse');
+        const surf = params.get('surface');
+        const typo = params.get('typology') || params.get('type');
+        if (addr && document.getElementById('cmaAddressInput')) document.getElementById('cmaAddressInput').value = addr;
+        if (surf && document.getElementById('cmaSurfaceInput')) document.getElementById('cmaSurfaceInput').value = surf;
+        if (typo && document.getElementById('cmaTypologySelect')) document.getElementById('cmaTypologySelect').value = typo.toUpperCase();
+        openCmaModal();
+      } else if (target === 'sync' || target === 'actualiser' || target === 'scanner' || target.includes('sync') || target.includes('actualis')) {
+        const suite = (params.get('suite') || 'MARKET').toUpperCase();
+        openContextualSyncModal(suite);
+      } else if (target === 'guide' || target === 'playbook' || target === 'playbooks' || target === 'methodologie' || target === 'metier' || target.includes('guide')) {
+        const tab = (params.get('tab') || 'HOIRIES').toUpperCase();
+        openMethodologyModal(tab);
+      } else if (target === 'marketing' || target === 'veille') {
+        openMarketingModal();
+      } else if (target === 'agences' || target === 'benchmark' || target === 'parts-de-marche' || target === 'bi') {
+        switchProductSuite('AGENCY_BI');
+        openLeagueModal();
+      } else if (target === 'sourcing') {
+        switchProductSuite('SOURCING');
+      }
+    }
+
+    window.addEventListener('hashchange', handleExternalRouting);
+    handleExternalRouting();
   </script>
 </body>
 </html>

@@ -99,6 +99,8 @@ Activez le calque pour visualiser instantanément la segmentation officielle en 
 - **Entrée / Accessible (< 11'000 CHF/m²)** : Vernier, Meyrin, Onex, Lancy, Thônex périphérique.
 
 #### C. Simulateur d'Avis de Valeur & Comparables (CMA)
+> **Accès Direct Applicatif** : [Lancer le Simulateur CMA dans l'application Web](http://localhost:8080/index.html#cma) (ou `index.html?tool=cma&address=Chemin+du+Saut-du-Loup+18&surface=95&typology=PPE`)
+
 Le moteur CMA permet d'évaluer n'importe quel immeuble ou appartement en croisant les actes notariés réels :
 1. **Saisie du Bien Cible** : Entrez l'adresse (ex: *Chemin du Saut-du-Loup 18, 1225 Chêne-Bourg*), la surface habitable (ex: 95 m²) et la typologie.
 2. **Détection des Ventes Directes & Contiguës** :

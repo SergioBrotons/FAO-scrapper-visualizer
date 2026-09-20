@@ -19,7 +19,19 @@ Le système **CYTRIA (FAO × SITG)** renverse cette asymétrie d'information :
 
 ---
 
-## 2. Sommaire de la Suite Documentaire
+## 2. Accès Direct aux Outils & Deep-Links Applicatifs
+
+Vous pouvez ouvrir directement l'application cartographique et déclencher les fenêtres opérationnelles via les URL directes :
+
+- **[Simulateur d'Avis de Valeur & Comparables (CMA)](http://localhost:8080/index.html#cma)** : Ouvre le calculateur d'estimation vénale et la recherche de comparables notariés contigus. Paramètres URL supportés : `?tool=cma&address=Chemin+du+Saut-du-Loup+18&surface=95&typology=PPE`.
+- **[Actualiser Marché & Données (FAO × SITG)](http://localhost:8080/index.html#sync)** : Déclenche le panneau de synchronisation contextuelle (hebdomadaire pour FAO/SITG, quotidienne pour veille concurrentielle).
+- **[Guide Métier & Playbooks Interactifs](http://localhost:8080/index.html#guide)** : Ouvre la base de connaissances métier intégrée (onglets HOIRIES, FONCIER, PRIX, CMA, AGENCES).
+- **[Benchmark & Parts de Marché Agences](http://localhost:8080/index.html#agencies)** : Affiche la répartition des parts de marché et l'emprise territoriale des 55 agences officielles du canton de Genève.
+- **[Radar Sourcing & Hoiries](http://localhost:8080/index.html#sourcing)** : Active directement le radar foncier et les mandats successoraux à forte propension de vente.
+
+---
+
+## 3. Sommaire de la Suite Documentaire
 
 Cette documentation est organisée en 5 modules stratégiques et opérationnels, conçus pour servir de manuel d'utilisation, de base de connaissances métier et de cadre d'architecture logicielle :
 
@@ -35,7 +47,7 @@ docs/
 
 ---
 
-## 3. Résumé des 5 Modules
+## 4. Résumé des 5 Modules
 
 ### 1. [01_HOW_TO_AGENCY_BI_MANUAL.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/01_HOW_TO_AGENCY_BI_MANUAL.md)
 *Le manuel opérationnel du courtier.*
