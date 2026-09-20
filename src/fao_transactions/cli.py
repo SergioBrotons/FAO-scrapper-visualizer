@@ -131,6 +131,23 @@ def enrich_all(
 
     enricher = CadastralEnricher()
     enricher.enrich_all(workers=workers)
+    enricher.enrich_zoning_and_buildings(workers=workers * 2)
+    if export_deliverables:
+        proc = UnifiedBatchProcessor()
+        proc.export_data()
+
+
+@app.command()
+def enrich_zones(
+    workers: int = typer.Option(16, "--workers", "-w", help="Number of concurrent worker threads for SITG REST queries"),
+    export_deliverables: bool = typer.Option(True, "--export/--no-export", help="Automatically regenerate CSV/Excel/GeoJSON exports after enrichment"),
+):
+    """Enrich all geocoded transactions with Geneva zoning (SIT_ZONE_AMENAG) and building attributes (CAD_BATIMENT_HORSOL)."""
+    from fao_transactions.cadastre.enricher import CadastralEnricher
+    from fao_transactions.processor import UnifiedBatchProcessor
+
+    enricher = CadastralEnricher()
+    enricher.enrich_zoning_and_buildings(workers=workers)
     if export_deliverables:
         proc = UnifiedBatchProcessor()
         proc.export_data()
@@ -153,12 +170,28 @@ def process_all(
 
 
 @app.command()
-def export():
-    """Export current SQLite database records to CSV, Excel, and GeoJSON deliverables."""
+def generate_map(
+    output_path: Optional[str] = typer.Option(None, "--output", "-o", help="Custom output path for the HTML map"),
+):
+    """Generate a standalone interactive HTML map with Swisstopo layers, SITG zoning, and transaction cards."""
+    from fao_transactions.visualization.map_builder import build_interactive_map
+
+    map_path = build_interactive_map(output_path=output_path)
+    console.print(f"[bold green][OK] Interactive map generated:[/bold green] {map_path}")
+
+
+@app.command()
+def export(
+    with_map: bool = typer.Option(True, "--map/--no-map", help="Also generate the interactive HTML map"),
+):
+    """Export current SQLite database records to CSV, Excel, GeoJSON, and interactive HTML map."""
     from fao_transactions.processor import UnifiedBatchProcessor
+    from fao_transactions.visualization.map_builder import build_interactive_map
 
     proc = UnifiedBatchProcessor()
     proc.export_data()
+    if with_map:
+        build_interactive_map()
 
 
 def main():

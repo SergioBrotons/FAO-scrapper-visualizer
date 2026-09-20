@@ -312,3 +312,100 @@ class CadastralEnricher:
             "geocoded_total": matched_parcels + matched_addresses,
             "not_found": not_found,
         }
+
+    def enrich_zoning_and_buildings(self, workers: int = 16) -> Dict[str, Any]:
+        """Query official SITG zoning (SIT_ZONE_AMENAG) and buildings (CAD_BATIMENT_HORSOL) for all geocoded coordinates."""
+        console.rule("[bold cyan]SITG Zoning & Building Age Enrichment[/bold cyan]")
+
+        with self.db.get_connection() as conn:
+            rows = conn.execute("""
+                SELECT DISTINCT round(centroid_lv95_e, 2) as e, round(centroid_lv95_n, 2) as n
+                FROM enrichments
+                WHERE centroid_lv95_e IS NOT NULL AND (zone_code IS NULL OR zone_name IS NULL)
+            """).fetchall()
+
+        console.print(f"Total unique coordinates to query: [bold]{len(rows)}[/bold]")
+        if not rows:
+            console.print("[green]All coordinates are already enriched with zoning and building data![/green]")
+            return {"total": 0, "enriched": 0}
+
+        start_time = time.time()
+        coord_cache: Dict[Tuple[float, float], Dict[str, Any]] = {}
+
+        def process_coord(r: Any) -> Tuple[float, float, Dict[str, Any]]:
+            e, n = float(r["e"]), float(r["n"])
+            zone_info = self.sitg.query_zone_by_point(e, n) or {}
+            bat_info = self.sitg.query_building_by_point(e, n) or {}
+
+            period = bat_info.get("EPOQUE_CONSTRUCTION")
+            year_val = bat_info.get("ANNEE_CONSTRUCTION")
+            if not year_val and period:
+                m = re.search(r"\b(18[0-9]{2}|19[0-9]{2}|20[0-9]{2})\b", period)
+                if m:
+                    year_val = int(m.group(1))
+
+            floors_val = bat_info.get("NIVEAUX_HORSOL")
+            if floors_val is not None:
+                try:
+                    floors_val = int(floors_val)
+                except (ValueError, TypeError):
+                    floors_val = None
+
+            data = {
+                "zone_code": zone_info.get("ZONE"),
+                "zone_name": zone_info.get("NOM_ZONE"),
+                "building_destination": bat_info.get("DESTINATION"),
+                "building_period": period,
+                "building_year": year_val,
+                "building_floors": floors_val,
+            }
+            return (e, n, data)
+
+        console.print(f"Querying SITG REST with [bold]{workers}[/bold] concurrent workers...")
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            future_to_coord = {executor.submit(process_coord, r): r for r in rows}
+            done_count = 0
+            for future in as_completed(future_to_coord):
+                done_count += 1
+                e, n, data = future.result()
+                coord_cache[(e, n)] = data
+                if done_count % 500 == 0 or done_count == len(rows):
+                    elapsed = time.time() - start_time
+                    rate = done_count / elapsed if elapsed > 0 else 0
+                    console.print(f"  Processed {done_count}/{len(rows)} coords ({rate:.0f} req/sec)...")
+
+        console.print("\n[cyan]Updating SQLite enrichments table with zoning & building records...[/cyan]")
+        update_records = []
+        for (e, n), d in coord_cache.items():
+            update_records.append({
+                "zone_code": d["zone_code"],
+                "zone_name": d["zone_name"],
+                "building_destination": d["building_destination"],
+                "building_period": d["building_period"],
+                "building_year": d["building_year"],
+                "building_floors": d["building_floors"],
+                "e_min": e - 0.05,
+                "e_max": e + 0.05,
+                "n_min": n - 0.05,
+                "n_max": n + 0.05,
+            })
+
+        with self.db.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.executemany("""
+                UPDATE enrichments SET
+                    zone_code = :zone_code,
+                    zone_name = :zone_name,
+                    building_destination = :building_destination,
+                    building_period = :building_period,
+                    building_year = :building_year,
+                    building_floors = :building_floors
+                WHERE centroid_lv95_e BETWEEN :e_min AND :e_max
+                  AND centroid_lv95_n BETWEEN :n_min AND :n_max;
+            """, update_records)
+            conn.commit()
+
+        elapsed = time.time() - start_time
+        console.print(f"[bold green][OK] Zoning and building age enrichment complete in {elapsed:.1f}s![/bold green]")
+        return {"total_coords": len(rows), "elapsed_seconds": elapsed}
+

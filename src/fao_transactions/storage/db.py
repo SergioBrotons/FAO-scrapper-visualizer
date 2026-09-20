@@ -119,6 +119,21 @@ class Database:
                 );
             """)
 
+            # Automated migration for enrichments table
+            cursor.execute("PRAGMA table_info(enrichments);")
+            existing_enrich_cols = {row["name"] for row in cursor.fetchall()}
+            new_enrich_cols = {
+                "zone_code": "TEXT",
+                "zone_name": "TEXT",
+                "building_destination": "TEXT",
+                "building_period": "TEXT",
+                "building_year": "INTEGER",
+                "building_floors": "INTEGER",
+            }
+            for col, col_type in new_enrich_cols.items():
+                if col not in existing_enrich_cols:
+                    cursor.execute(f"ALTER TABLE enrichments ADD COLUMN {col} {col_type};")
+
             # Useful indexes
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_trans_commune ON transactions(commune);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_trans_parcel ON transactions(parcel_number);")

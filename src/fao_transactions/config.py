@@ -28,6 +28,7 @@ class SitgLayers(BaseModel):
     ppe: str = "CAD_PPE/FeatureServer/0"
     buildings: str = "CAD_BATIMENT_HORSOL/FeatureServer/0"
     addresses: str = "CAD_ADRESSE/FeatureServer/0"
+    zoning: str = "SIT_ZONE_AMENAG/FeatureServer/0"
 
 
 class SitgSettings(BaseModel):

@@ -40,10 +40,13 @@ class SitgClient:
     def _query_layer(
         self,
         layer_subpath: str,
-        where_clause: str,
+        where_clause: str = "1=1",
         out_fields: str = "*",
         return_geometry: bool = True,
         out_sr: int = 2056,
+        geometry: Optional[str] = None,
+        geometry_type: Optional[str] = None,
+        spatial_rel: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
         """Query a SITG FeatureServer layer using ArcGIS REST standard."""
         url = f"{self.base_url}/{layer_subpath}/query"
@@ -54,6 +57,11 @@ class SitgClient:
             "returnGeometry": "true" if return_geometry else "false",
             "outSR": out_sr,
         }
+        if geometry:
+            params["geometry"] = geometry
+            params["geometryType"] = geometry_type or "esriGeometryPoint"
+            params["spatialRel"] = spatial_rel or "esriSpatialRelIntersects"
+            params["inSR"] = 2056
 
         try:
             response = self.client.get(url, params=params)
@@ -192,4 +200,36 @@ class SitgClient:
         where = " AND ".join(clauses)
         features = self._query_layer(settings.sitg.layers.addresses, where)
         return [self._process_feature(feat) for feat in features]
+
+    def query_zone_by_point(self, x: float, y: float) -> Optional[Dict[str, Any]]:
+        """Query official urban planning zone (SIT_ZONE_AMENAG) by Swiss LV95 coordinates."""
+        try:
+            features = self._query_layer(
+                settings.sitg.layers.zoning,
+                where_clause="1=1",
+                out_fields="ZONE,NOM_ZONE,DESCRIPTION",
+                return_geometry=False,
+                geometry=f"{x},{y}",
+            )
+            if features:
+                return features[0].get("properties", {})
+        except Exception:
+            pass
+        return None
+
+    def query_building_by_point(self, x: float, y: float) -> Optional[Dict[str, Any]]:
+        """Query above-ground building attributes (CAD_BATIMENT_HORSOL) by Swiss LV95 coordinates."""
+        try:
+            features = self._query_layer(
+                settings.sitg.layers.buildings,
+                where_clause="1=1",
+                out_fields="DESTINATION,EPOQUE_CONSTRUCTION,ANNEE_CONSTRUCTION,NIVEAUX_HORSOL,HAUTEUR,SURFACE",
+                return_geometry=False,
+                geometry=f"{x},{y}",
+            )
+            if features:
+                return features[0].get("properties", {})
+        except Exception:
+            pass
+        return None
 
