@@ -2451,6 +2451,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 
+  <!-- Cytria EarlySignals: Opportunity Card & Advisory Briefing Modal -->
+  <div class="modal-overlay" id="opportunityModal">
+    <div class="league-modal-window" style="max-width: 1120px; height: 90vh;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="scan-live-dot" style="background:#f59e0b; box-shadow:0 0 10px rgba(245,158,11,0.5);"></span>
+            <h2 id="oppModalTitle">FICHE D'OPPORTUNITÉ CONSEIL & SIGNAL PRÉ-MARCHÉ</h2>
+          </div>
+          <p id="oppModalSubtitle">Aide à la décision consultative, étalonnage contigu et qualification patrimoniale avant mise en vente.</p>
+        </div>
+        <div style="display:flex; align-items:center; gap: 14px;">
+          <div class="league-tabs">
+            <button type="button" class="league-tab-btn active" id="tabOppBriefing" onclick="setOpportunityTab('BRIEFING')">Briefing & Script Conseil</button>
+            <button type="button" class="league-tab-btn" id="tabOppLetter" onclick="setOpportunityTab('LETTER')">Courrier Conseil Riverain</button>
+            <button type="button" class="league-tab-btn" id="tabOppCrm" onclick="setOpportunityTab('CRM')">Export Tâche CRM</button>
+          </div>
+          <button class="modal-close-btn" onclick="closeOpportunityModal()">&times;</button>
+        </div>
+      </div>
+      <div class="league-body" id="opportunityBodyContent" style="padding: 24px 28px; line-height: 1.6; color: var(--color-paper); font-size: 13px; overflow-y: auto;">
+        <!-- Injected dynamically via JavaScript based on selected opportunity record -->
+      </div>
+    </div>
+  </div>
+
   <!-- Cytria Multi-Portal Synchronization & Incremental Scanner Modal -->
   <div class="modal-overlay" id="scanModal">
     <div class="scan-modal-window">
@@ -3152,38 +3178,63 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </a>` : ''}
         </div>
 
-        <!-- Mandate Radar Box (If active or mandate lead) -->
-        ${r.mandate_score > 0 ? `
-        <div class="radar-box mandate">
-          <div class="radar-box-title">
-            <span>Fiche Opportunité Mandat Vendeur</span>
-            <span style="font-family:var(--font-mono); font-size:12px;">Score : ${r.mandate_score}/100</span>
+        <!-- Cytria EarlySignals: Fiche d'Opportunité Conseil & Événement Pré-Marché -->
+        ${(r.mandate_score > 0 || r.dev_score >= 20 || (r.transaction_type && r.transaction_type.includes('Succession'))) ? `
+        <div class="radar-box mandate" style="border-left: 3px solid var(--color-brand-400); background: rgba(201, 162, 77, 0.06); padding: 14px 16px; margin-bottom: 14px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 8px;">
+            <div>
+              <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-brand-400); margin-bottom: 2px;">
+                CYTRIA EARLYSIGNALS • AIDE À LA DÉCISION
+              </div>
+              <div style="font-size: 13px; font-weight: 700; color: var(--color-paper); font-family: var(--font-brand);">
+                Fiche d'Opportunité Conseil & Signal Pré-Marché
+              </div>
+            </div>
+            <span class="score-badge" style="font-size: 11px; padding: 2px 8px;">Indice ${Math.max(r.mandate_score || 0, r.dev_score || 0)}/100</span>
           </div>
-          <div class="score-meter">
-            <div class="score-meter-fill" style="width: ${r.mandate_score}%;"></div>
-          </div>
-          <ul class="signal-list">
-            ${(r.mandate_reasons || []).map(s => `<li>${s}</li>`).join('')}
-          </ul>
-          <div style="font-size:10px; color:#fca5a5; margin-top:2px;">
-            <strong>Acquéreur / Hoirs :</strong> ${r.buyer || 'Non précisé'}
-          </div>
-        </div>` : ''}
 
-        <!-- Developer Opportunity Radar Box -->
-        ${r.dev_score >= 20 ? `
-        <div class="radar-box developer">
-          <div class="radar-box-title">
-            <span>Potentiel de Développement & Densification</span>
-            <span style="font-family:var(--font-mono); font-size:12px;">Score : ${r.dev_score}/100</span>
+          <!-- 3-Tier Data Lineage Classification -->
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px;">
+            <span style="font-size: 9px; font-weight: 700; background: rgba(16,185,129,0.15); color: #4ade80; border: 1px solid rgba(16,185,129,0.3); padding: 2px 5px;">
+              Fait Public Officiel (RF / SITG)
+            </span>
+            <span style="font-size: 9px; font-weight: 700; background: rgba(96,165,250,0.15); color: #93c5fd; border: 1px solid rgba(96,165,250,0.3); padding: 2px 5px;">
+              Indice Dérivé Calculé
+            </span>
+            <span style="font-size: 9px; font-weight: 700; background: rgba(201,162,77,0.15); color: var(--color-brand-300); border: 1px solid rgba(201,162,77,0.3); padding: 2px 5px;">
+              Signal Décisionnel
+            </span>
           </div>
-          <ul class="signal-list">
-            ${(r.dev_reasons || []).map(s => `<li>${s}</li>`).join('')}
+
+          <!-- Timing & Reserve Period Guidance -->
+          <div style="font-size: 11px; margin-bottom: 10px; padding: 8px 10px; background: var(--color-ink-950); border: 1px solid var(--panel-border);">
+            <div style="color: var(--color-brand-300); font-weight: 600; margin-bottom: 2px;">
+              Recommandation Déontologique Suisse :
+            </div>
+            <div style="color: var(--color-sand-300); font-size: 11px; line-height: 1.4;">
+              ${r.transaction_type && r.transaction_type.includes('Succession') ? 'Période de réserve recommandée. Ne pas solliciter de mandat de vente immédiat. Approche préconisée : mise à disposition de l&apos;avis de valeur contigu et conseil fiscal.' : 'Signal d&apos;arbitrage identifié. Étalonnage sur les dernières ventes notariées de la rue fortement conseillé.'}
+            </div>
+          </div>
+
+          <!-- Signals List -->
+          <ul class="signal-list" style="margin: 0 0 12px 0; padding-left: 16px; font-size: 11px; line-height: 1.5; color: var(--color-sand-200);">
+            ${(r.mandate_reasons || []).concat(r.dev_reasons || []).map(s => `<li>${s}</li>`).join('')}
           </ul>
-          ${r.est_apartments > 0 ? `
-          <div style="background:rgba(16,185,129,0.15); padding:6px 10px; border:1px solid #10b981; font-size:11px; color:#6ee7b7; font-weight:700;">
-            Potentiel estimé : ~${r.est_apartments} appartements neufs (~${Math.round(r.est_apartments * 85)} m² SBP)
-          </div>` : ''}
+
+          <!-- Action CTA Toolbar -->
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <button type="button" class="action-btn" id="btnOpenOppCard" style="width: 100%; background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 800; font-size: 11px; padding: 8px 10px; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer;">
+              Ouvrir Fiche Conseil, Script & Courrier ↗
+            </button>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn-sm" id="btnCopyLetterDirect" style="flex: 1; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 10px; padding: 5px 8px; cursor: pointer; text-align: center;">
+                Copier Courrier Conseil
+              </button>
+              <button type="button" class="btn-sm" id="btnExportCrmDirect" style="flex: 1; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: #93c5fd; font-size: 10px; padding: 5px 8px; cursor: pointer; text-align: center;">
+                Exporter vers CRM
+              </button>
+            </div>
+          </div>
         </div>` : ''}
 
         <!-- Urban Planning & Development Intelligence -->
@@ -3313,6 +3364,20 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const btnDrawerCma = document.getElementById('btnDrawerCmaAction');
       if (btnDrawerCma) {
         btnDrawerCma.onclick = () => openCmaModalForRecord(r);
+      }
+
+      // Cytria EarlySignals Action Buttons
+      const btnOpenOpp = document.getElementById('btnOpenOppCard');
+      if (btnOpenOpp) {
+        btnOpenOpp.onclick = () => openOpportunityModalForRecord(r, 'BRIEFING');
+      }
+      const btnCopyLtr = document.getElementById('btnCopyLetterDirect');
+      if (btnCopyLtr) {
+        btnCopyLtr.onclick = () => copyNeighborLetterDirect(r);
+      }
+      const btnExpCrm = document.getElementById('btnExportCrmDirect');
+      if (btnExpCrm) {
+        btnExpCrm.onclick = () => openOpportunityModalForRecord(r, 'CRM');
       }
 
       detailDrawer.classList.add('visible');
@@ -5522,6 +5587,532 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
     document.getElementById('scanModal').addEventListener('click', (e) => {
       if (e.target.id === 'scanModal') {
         closeScanModal();
+      }
+    });
+
+    // ==========================================
+    // CYTRIA EARLYSIGNALS: ADVISORY & DECISION-SUPPORT MODULE
+    // ==========================================
+    let currentOpportunityRecord = null;
+    let currentOpportunityTab = 'BRIEFING';
+
+    function findClosestContiguousSale(r) {
+      if (!r || !r.lat || !r.lon || !window.DATA || window.DATA.length === 0) return null;
+      let closest = null;
+      let minDistance = Infinity;
+
+      for (let i = 0; i < DATA.length; i++) {
+        const d = DATA[i];
+        if (!d.lat || !d.lon) continue;
+        if (d.id === r.id) continue;
+        if (!d.price_chf || d.price_chf < 100000) continue;
+
+        const dist = getHaversineDistanceM(r.lat, r.lon, d.lat, d.lon);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closest = d;
+        }
+      }
+
+      if (closest && minDistance <= 3000) {
+        return {
+          record: closest,
+          distanceM: minDistance
+        };
+      }
+      return null;
+    }
+
+    function openOpportunityModalForRecord(r, tabId) {
+      currentOpportunityRecord = r;
+      setOpportunityTab(tabId || 'BRIEFING');
+      const modal = document.getElementById('opportunityModal');
+      if (modal) modal.classList.add('visible');
+    }
+
+    function closeOpportunityModal() {
+      const modal = document.getElementById('opportunityModal');
+      if (modal) modal.classList.remove('visible');
+    }
+
+    function setOpportunityTab(tabId) {
+      currentOpportunityTab = tabId;
+      const tBriefing = document.getElementById('tabOppBriefing');
+      const tLetter = document.getElementById('tabOppLetter');
+      const tCrm = document.getElementById('tabOppCrm');
+
+      if (tBriefing) tBriefing.classList.toggle('active', tabId === 'BRIEFING');
+      if (tLetter) tLetter.classList.toggle('active', tabId === 'LETTER');
+      if (tCrm) tCrm.classList.toggle('active', tabId === 'CRM');
+
+      renderOpportunityContent(currentOpportunityRecord, tabId);
+    }
+
+    function renderOpportunityContent(r, tabId) {
+      const container = document.getElementById('opportunityBodyContent');
+      if (!container) return;
+      if (!r) {
+        container.innerHTML = '<div style="padding:40px; text-align:center; color:var(--color-sand-400);">Aucun enregistrement sélectionné.</div>';
+        return;
+      }
+
+      const contiguous = findClosestContiguousSale(r);
+      const isSuccession = r.transaction_type && r.transaction_type.includes('Succession');
+      const score = Math.max(r.mandate_score || 0, r.dev_score || 0);
+
+      let contiguousText = 'Étalonnage sur médiane communale';
+      let contiguousPriceM2 = null;
+      if (contiguous && contiguous.record) {
+        const cRec = contiguous.record;
+        if (cRec.surface_m2 && cRec.surface_m2 > 0) {
+          contiguousPriceM2 = Math.round(cRec.price_chf / cRec.surface_m2);
+        }
+        contiguousText = `${cRec.address || (cRec.commune + ' Parcelle ' + cRec.parcel_number)} (${contiguous.distanceM} m) — CHF ${Math.round(cRec.price_chf).toLocaleString('fr-CH')}${contiguousPriceM2 ? ' (' + contiguousPriceM2.toLocaleString('fr-CH') + ' CHF/m²)' : ''}`;
+      }
+
+      if (tabId === 'BRIEFING') {
+        container.innerHTML = `
+          <!-- Header Identity Box -->
+          <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px 20px; margin-bottom: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 10px;">
+              <div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
+                  CYTRIA EARLYSIGNALS • FICHE STRATÉGIQUE D'AIDE À LA DÉCISION
+                </div>
+                <div style="font-size: 18px; font-weight: 800; color: var(--color-paper); font-family: var(--font-brand);">
+                  ${r.address || (r.commune + ' — Parcelle n° ' + (r.parcel_number || 'N/A'))}
+                </div>
+                <div style="font-size: 12px; color: var(--color-sand-300); margin-top: 2px;">
+                  Commune : ${r.commune || 'Genève'} | Zone : ${r.zone_code || 'N/A'} (${r.zone_name || 'Standard'}) | Typologie : ${r.typology_label || r.typology_class || 'Standard'}
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div style="display: inline-block; padding: 4px 10px; background: rgba(201, 162, 77, 0.15); border: 1px solid rgba(201, 162, 77, 0.4); font-size: 12px; font-weight: 700; color: var(--color-brand-300); font-family: var(--font-mono);">
+                  INDICE DÉCISIONNEL : ${score}/100
+                </div>
+                <div style="font-size: 10px; color: var(--color-sand-400); margin-top: 4px;">Date FAO : ${r.notice_date || 'N/A'}</div>
+              </div>
+            </div>
+
+            <!-- 3-Tier Data Lineage Breakdown -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--panel-border);">
+              <div style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.25); padding: 8px 12px;">
+                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #4ade80; margin-bottom: 2px;">
+                  1. Fait Public Officiel
+                </div>
+                <div style="font-size: 11px; color: var(--color-sand-200);">
+                  Mutation RF / FAO du ${r.notice_date || 'N/A'}. Parcelle n° ${r.parcel_number || 'N/A'}.
+                </div>
+              </div>
+              <div style="background: rgba(96, 165, 250, 0.06); border: 1px solid rgba(96, 165, 250, 0.25); padding: 8px 12px;">
+                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #93c5fd; margin-bottom: 2px;">
+                  2. Indice Dérivé Calculé
+                </div>
+                <div style="font-size: 11px; color: var(--color-sand-200);">
+                  Score Mandat ${r.mandate_score || 0}/100. Score Dev ${r.dev_score || 0}/100.
+                </div>
+              </div>
+              <div style="background: rgba(201, 162, 77, 0.06); border: 1px solid rgba(201, 162, 77, 0.25); padding: 8px 12px;">
+                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--color-brand-300); margin-bottom: 2px;">
+                  3. Signal Décisionnel
+                </div>
+                <div style="font-size: 11px; color: var(--color-sand-200);">
+                  ${isSuccession ? 'Ouverture de succession (Hoirie CC 602). Phase d&apos;arbitrage patrimonial.' : 'Opportunité d&apos;arbitrage patrimonial ou densification.'}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Cadre Juridique & Déontologique Suisse -->
+          <div style="background: var(--color-ink-900); border: 1px solid var(--panel-border); padding: 18px 22px; margin-bottom: 18px;">
+            <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-brand-300); margin-bottom: 8px;">
+              I. Cadre Juridique & Déontologie Professionnelle Suisse
+            </div>
+            <div style="font-size: 12px; line-height: 1.6; color: var(--color-sand-200);">
+              ${isSuccession ? `
+              <div style="margin-bottom: 10px; padding: 10px 14px; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b;">
+                <strong style="color: #fbbf24;">Règle déontologique impérative (Successions / Hoiries CC 602 & 604) :</strong><br/>
+                Les héritiers légaux se trouvent en communauté héréditaire indivise. Le mandat de vente immédiat ne doit jamais être sollicité de manière frontale. 
+                La posture professionnelle requise consiste à offrir un <strong>avis de valeur patrimonial contradictoire et gratuit</strong> pour éclairer le partage successoral, 
+                le calcul de la réserve héréditaire, et l'évaluation de l'impôt sur les gains immobiliers (LGI).
+              </div>` : `
+              <div style="margin-bottom: 10px; padding: 10px 14px; background: rgba(96, 165, 250, 0.08); border-left: 3px solid #60a5fa;">
+                <strong style="color: #93c5fd;">Arbitrage Patrimonial & Droit Foncier :</strong><br/>
+                La consultation auprès du propriétaire doit porter sur l'étalonnage des valorisations récentes du quartier et les opportunités d'optimisation fiscale (remploi, différé LGI).
+              </div>`}
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px;">
+                <div style="background: var(--color-ink-950); padding: 10px 12px; border: 1px solid var(--panel-border);">
+                  <div style="font-size: 11px; font-weight: 700; color: var(--color-paper); margin-bottom: 4px;">Droit de bâtir & Densification (LCI Art. 59)</div>
+                  <div style="font-size: 11px; color: var(--color-sand-300);">
+                    Zone : ${r.zone_code || 'Standard'} (${r.zone_name || 'Affectation standard'}). 
+                    ${r.zone_dev_name ? 'Parcelle comprise en ' + r.zone_dev_name + ' (gabarit renforcé).' : 'Hors zone de développement formelle.'}
+                    ${r.plq_number ? 'Périmètre soumis au PLQ n° ' + r.plq_number + '.' : ''}
+                  </div>
+                </div>
+                <div style="background: var(--color-ink-950); padding: 10px 12px; border: 1px solid var(--panel-border);">
+                  <div style="font-size: 11px; font-weight: 700; color: var(--color-paper); margin-bottom: 4px;">Réglementation LDTR / LPP</div>
+                  <div style="font-size: 11px; color: var(--color-sand-300);">
+                    ${r.typology_class === 'PPE' ? 'Lot PPE individualisé. Aliénation libre sous réserve de non-soumission au blocage LDTR.' : 'Propriété individuelle ou parcelle foncière. Analyse de l&apos;état locatif recommandée.'}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Preuve Notariée Contiguë (Étalonnage Incontestable) -->
+          <div style="background: var(--color-ink-900); border: 1px solid var(--panel-border); padding: 18px 22px; margin-bottom: 18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+              <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-brand-300);">
+                II. Preuve Notariée Contiguë (Étalonnage Incontestable)
+              </div>
+              <span style="font-size: 10px; color: #4ade80; font-weight: 700; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 2px 6px;">
+                FAIT HISTORIQUE ACTÉ
+              </span>
+            </div>
+            <div style="font-size: 12px; line-height: 1.6; color: var(--color-sand-200);">
+              ${contiguous && contiguous.record ? `
+              <div style="display: flex; gap: 16px; align-items: center; background: var(--color-ink-950); padding: 12px 16px; border: 1px solid var(--panel-border);">
+                <div style="flex: 1;">
+                  <div style="font-size: 11px; color: var(--color-sand-400); text-transform: uppercase; font-weight: 600;">Transaction notariée de référence la plus proche :</div>
+                  <div style="font-size: 14px; font-weight: 700; color: var(--color-paper); font-family: var(--font-brand); margin-top: 2px;">
+                    ${contiguous.record.address || (contiguous.record.commune + ' Parcelle ' + contiguous.record.parcel_number)}
+                  </div>
+                  <div style="font-size: 11px; color: var(--color-sand-300); margin-top: 3px;">
+                    Distance : <strong>${contiguous.distanceM} m</strong> | Date inscription : <strong>${contiguous.record.notice_date || 'N/A'}</strong> | Typologie : ${contiguous.record.typology_label || contiguous.record.typology_class || 'Standard'}
+                  </div>
+                </div>
+                <div style="text-align: right; border-left: 1px solid var(--panel-border); padding-left: 18px;">
+                  <div style="font-size: 11px; color: var(--color-sand-400); text-transform: uppercase; font-weight: 600;">Prix Notarié Certifié</div>
+                  <div style="font-size: 18px; font-weight: 800; color: var(--color-brand-400); font-family: var(--font-mono); margin-top: 2px;">
+                    CHF ${Math.round(contiguous.record.price_chf).toLocaleString('fr-CH')}
+                  </div>
+                  ${contiguousPriceM2 ? `
+                  <div style="font-size: 11px; color: #93c5fd; font-family: var(--font-mono); margin-top: 2px;">
+                    ${contiguousPriceM2.toLocaleString('fr-CH')} CHF/m²
+                  </div>` : ''}
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--color-sand-300); margin-top: 8px;">
+                <em>Avantage stratégique courtier :</em> L'existence de cet acte notarié incontestable à ${contiguous.distanceM} mètres désamorce tout débat subjectif sur la valeur du secteur et crédibilise immédiatement votre prise de contact.
+              </div>` : `
+              <div style="padding: 12px 16px; background: var(--color-ink-950); border: 1px solid var(--panel-border); color: var(--color-sand-300);">
+                Aucun acte notarié publié à moins de 3 000 m. L'étalonnage repose sur la médiane officielle de la commune de ${r.commune || 'Genève'}.
+              </div>`}
+            </div>
+          </div>
+
+          <!-- Section: Script Téléphonique & Rendez-vous Conseil -->
+          <div style="background: var(--color-ink-900); border: 1px solid var(--panel-border); padding: 18px 22px; margin-bottom: 18px;">
+            <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-brand-300); margin-bottom: 8px;">
+              III. Script d'Approche & Posture Conseil (Téléphone ou Rendez-vous)
+            </div>
+            <div style="font-size: 12px; line-height: 1.6; color: var(--color-sand-200);">
+              <div style="padding: 12px 16px; background: var(--color-ink-950); border-left: 3px solid var(--color-brand-400); margin-bottom: 12px;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-brand-300); margin-bottom: 4px;">1. Accroche d'ouverture consultative :</div>
+                <div style="font-style: italic; color: var(--color-paper); font-size: 12px;">
+                  « Bonjour [Monsieur / Madame / Maître], je suis [Nom du Courtier], du département d'analyse foncière de [Nom de l'Agence]. Je me permets de vous contacter car notre cabinet vient de finaliser l'étude des dernières transactions notariées publiées sur le secteur de ${r.address ? r.address.split(',')[0] : (r.commune + ' Parcelle ' + (r.parcel_number || ''))}. »
+                </div>
+              </div>
+
+              <div style="padding: 12px 16px; background: var(--color-ink-950); border-left: 3px solid #60a5fa; margin-bottom: 12px;">
+                <div style="font-size: 11px; font-weight: 700; color: #93c5fd; margin-bottom: 4px;">2. Justification factuelle (Preuve contiguë) :</div>
+                <div style="font-style: italic; color: var(--color-paper); font-size: 12px;">
+                  ${contiguous && contiguous.record ? `
+                  « Une mutation officielle est intervenue tout récemment à ${contiguous.distanceM} mètres de votre bien (${contiguous.record.address || 'sur la même voie'}), pour un montant notarié de CHF ${Math.round(contiguous.record.price_chf).toLocaleString('fr-CH')}. Cette référence établit un nouveau repère d'estimation pour votre propre parcelle. »
+                  ` : `
+                  « Les dernières publications officielles du Registre Foncier sur la commune de ${r.commune || 'Genève'} indiquent un repositionnement sensible des valorisations du micro-secteur. »
+                  `}
+                </div>
+              </div>
+
+              <div style="padding: 12px 16px; background: var(--color-ink-950); border-left: 3px solid #4ade80; margin-bottom: 12px;">
+                <div style="font-size: 11px; font-weight: 700; color: #4ade80; margin-bottom: 4px;">3. Proposition de valeur non-engagée :</div>
+                <div style="font-style: italic; color: var(--color-paper); font-size: 12px;">
+                  « Dans le cadre de vos arbitrages patrimoniaux, fiscaux ou familiaux, nous serions ravis de mettre gracieusement à votre disposition notre dossier complet d'évaluation micro-locale et la situation cadastrale SITG actualisée, sans aucune démarche de vente sollicitée à ce stade. »
+                </div>
+              </div>
+
+              <div style="background: var(--color-ink-950); padding: 10px 14px; border: 1px solid var(--panel-border);">
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-sand-300); margin-bottom: 4px;">Réponse calibrée à l'objection : <em>« Nous ne souhaitons pas vendre »</em></div>
+                <div style="font-size: 11px; color: var(--color-sand-200);">
+                  « C'est parfaitement normal et notre démarche ne vise en aucun cas à précipiter une vente. Notre rôle est simplement de veiller à ce que vous disposiez d'un étalon patrimonial rigoureux et vérifié face aux estimations déclaratives des assurances ou du fisc cantonal. »
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Bar -->
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:14px;">
+            <button type="button" class="action-btn" onclick="setOpportunityTab('LETTER')" style="background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); padding: 8px 16px; font-size: 11px; cursor: pointer;">
+              Basculer sur le Courrier Conseil ➔
+            </button>
+            <button type="button" class="action-btn" onclick="setOpportunityTab('CRM')" style="background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 800; padding: 8px 16px; font-size: 11px; cursor: pointer;">
+              Exporter la Tâche CRM ➔
+            </button>
+          </div>
+        `;
+      } else if (tabId === 'LETTER') {
+        const todayStr = new Intl.DateTimeFormat('fr-CH', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+        const contiguousSnippet = (contiguous && contiguous.record)
+          ? `intervenue à proximité immédiate (à ${contiguous.distanceM} mètres, au ${contiguous.record.address || contiguous.record.commune}, pour un montant acté de CHF ${Math.round(contiguous.record.price_chf).toLocaleString('fr-CH')})`
+          : `intervenue récemment dans votre commune`;
+
+        const letterHtml = `
+          <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 20px 24px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <div>
+                <div style="font-size: 10px; font-weight: 700; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">
+                  MODÈLE DE COURRIER CONSEIL PATRIMONIAL (DÉONTOLOGIE SUISSE)
+                </div>
+                <div style="font-size: 13px; font-weight: 700; color: var(--color-paper); margin-top: 2px;">
+                  Courrier d'accompagnement et avis de valeur contigu pour les propriétaires riverains
+                </div>
+              </div>
+              <button type="button" class="action-btn" id="btnCopyLetterModal" onclick="copyNeighborLetterDirect(currentOpportunityRecord)" style="background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 800; font-size: 11px; padding: 8px 16px; cursor: pointer;">
+                Copier le Texte du Courrier
+              </button>
+            </div>
+
+            <!-- Letter Paper Preview -->
+            <div id="letterPaperPreview" style="background: #ffffff; color: #1c1917; font-family: 'Times New Roman', Times, serif; font-size: 14px; line-height: 1.7; padding: 36px 40px; border: 1px solid #d6d3d1; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border-radius: 0;">
+              <div style="display:flex; justify-content:space-between; margin-bottom: 30px;">
+                <div>
+                  <strong>CABINET IMMOBILIER CONSEIL</strong><br/>
+                  Département d'Analyse Foncière & Patrimoniale<br/>
+                  Rue du Rhône / Boulevard des Tranchées<br/>
+                  1204 Genève
+                </div>
+                <div style="text-align: right;">
+                  Genève, le ${todayStr}
+                </div>
+              </div>
+
+              <div style="margin-bottom: 24px;">
+                <strong>Aux propriétaires et ayants droit de la parcelle n° ${r.parcel_number || 'N/A'}</strong><br/>
+                ${r.address || (r.commune + ' (Genève)')}
+              </div>
+
+              <div style="margin-bottom: 20px; font-weight: bold; border-bottom: 1px solid #1c1917; padding-bottom: 4px;">
+                Objet : Évolution des valorisations notariales dans votre voisinage immédiat – Bilan patrimonial de votre parcelle
+              </div>
+
+              <p style="margin-bottom: 14px;">
+                Madame, Monsieur,
+              </p>
+
+              <p style="margin-bottom: 14px;">
+                Dans le cadre de notre veille continue sur le marché immobilier et foncier du canton de Genève, notre cabinet réalise régulièrement la synthèse cartographique des transactions authentifiées inscrites au Registre Foncier.
+              </p>
+
+              <p style="margin-bottom: 14px;">
+                Une mutation notariée récente a été officialisée sur votre secteur direct : il s'agit d'une transaction ${contiguousSnippet}.
+              </p>
+
+              <p style="margin-bottom: 14px;">
+                Cet acte notarié modifie substantiellement les références de prix au mètre carré applicables aux parcelles contiguës et renforce la valeur patrimoniale des propriétés de votre rue.
+              </p>
+
+              <p style="margin-bottom: 14px;">
+                Dans l'éventualité où vous souhaiteriez disposer d'un éclairage actualisé, objectif et confidentiel sur la valeur vénale de votre bien — que ce soit pour vos arbitrages patrimoniaux, vos déclarations fiscales ou une simple veille successorale —, nous mettons gracieusement à votre disposition notre <strong>Dossier d'Évaluation Micro-Locale & Fiche Cadastrale SITG</strong>.
+              </p>
+
+              <p style="margin-bottom: 14px;">
+                Cette démarche d'information s'inscrit dans le strict respect des règles déontologiques suisses et ne comporte aucun engagement de votre part.
+              </p>
+
+              <p style="margin-bottom: 28px;">
+                Nous nous tenons à votre entière disposition pour vous remettre ce dossier en mains propres ou lors d'un entretien téléphonique préalable.
+              </p>
+
+              <div>
+                Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.<br/><br/>
+                <strong>La Direction des Expertises Foncières</strong><br/>
+                Cabinet Immobilier Conseil Genève
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML = letterHtml;
+      } else if (tabId === 'CRM') {
+        const crmPayload = {
+          lead_id: 'CYTRIA-' + (r.id || Date.now()),
+          export_timestamp: new Date().toISOString(),
+          opportunity_type: isSuccession ? 'SUCCESSION_HOIRIE_ADVISORY' : 'PATRIMONIAL_ARBITRAGE',
+          confidence_score: score,
+          data_lineage: {
+            tier1_official_public_fact: `Publication FAO / Registre Foncier du ${r.notice_date || 'N/A'}, Parcelle n° ${r.parcel_number || 'N/A'}`,
+            tier2_derived_index: `Mandat Score: ${r.mandate_score || 0}/100, Dev Score: ${r.dev_score || 0}/100`,
+            tier3_decision_signal: isSuccession ? 'Indivision successorale CC 602' : 'Arbitrage de quartier'
+          },
+          target_property: {
+            address: r.address || '',
+            commune: r.commune || 'Genève',
+            parcel_number: r.parcel_number || '',
+            zone_code: r.zone_code || '',
+            zone_name: r.zone_name || '',
+            typology: r.typology_label || r.typology_class || 'Standard',
+            surface_m2: r.surface_m2 || 0,
+            rooms: r.rooms || null,
+            buyer_or_heirs: r.buyer || 'Non précisé',
+            seller_or_deceased: r.seller || 'Non précisé',
+            lat: r.lat || null,
+            lon: r.lon || null
+          },
+          contiguous_proof: contiguous && contiguous.record ? {
+            address: contiguous.record.address || '',
+            commune: contiguous.record.commune || '',
+            parcel_number: contiguous.record.parcel_number || '',
+            deed_price_chf: contiguous.record.price_chf || 0,
+            deed_surface_m2: contiguous.record.surface_m2 || 0,
+            deed_sqm_price_chf: contiguousPriceM2 || 0,
+            distance_meters: contiguous.distanceM,
+            notice_date: contiguous.record.notice_date || ''
+          } : null,
+          action_recommended: {
+            phase: isSuccession ? 'RESERVE_PERIOD_ADVISORY' : 'CONTIGUOUS_MARKET_UPDATE',
+            task: 'Remise gracieuse avis de valeur contigu et fiche cadastrale SITG',
+            timing: isSuccession ? 'J+30 à J+60 post-avis officiel' : 'J+7 à J+14',
+            crm_status: 'OPEN_QUALIFICATION'
+          }
+        };
+
+        const jsonStr = JSON.stringify(crmPayload, null, 2);
+
+        container.innerHTML = `
+          <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 20px 24px; margin-bottom: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
+              <div>
+                <div style="font-size: 10px; font-weight: 700; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">
+                  EXPORT TÂCHE CRM STRUCTURÉ (PROPERTI / HUBSPOT / APIMO / WHISE)
+                </div>
+                <div style="font-size: 13px; font-weight: 700; color: var(--color-paper); margin-top: 2px;">
+                  Payload standardisé avec lignage de données, preuve contiguë et consigne de réserve
+                </div>
+              </div>
+              <div style="display:flex; gap: 8px;">
+                <button type="button" class="action-btn" onclick="copyCrmJsonToClipboard()" style="background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 11px; padding: 7px 12px; cursor: pointer;">
+                  Copier le JSON
+                </button>
+                <button type="button" class="action-btn" onclick="downloadCrmJson()" style="background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 800; font-size: 11px; padding: 7px 14px; cursor: pointer;">
+                  Télécharger .json
+                </button>
+              </div>
+            </div>
+
+            <!-- Visual Lead Summary -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px;">
+              <div style="background: var(--color-ink-900); padding: 10px 12px; border: 1px solid var(--panel-border);">
+                <div style="font-size: 10px; color: var(--color-sand-400); text-transform: uppercase;">ID Opportunité</div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--color-paper); font-family: var(--font-mono); margin-top: 2px;">${crmPayload.lead_id}</div>
+              </div>
+              <div style="background: var(--color-ink-900); padding: 10px 12px; border: 1px solid var(--panel-border);">
+                <div style="font-size: 10px; color: var(--color-sand-400); text-transform: uppercase;">Type Opportunité</div>
+                <div style="font-size: 12px; font-weight: 700; color: #93c5fd; margin-top: 2px;">${crmPayload.opportunity_type}</div>
+              </div>
+              <div style="background: var(--color-ink-900); padding: 10px 12px; border: 1px solid var(--panel-border);">
+                <div style="font-size: 10px; color: var(--color-sand-400); text-transform: uppercase;">Preuve Contiguë</div>
+                <div style="font-size: 12px; font-weight: 700; color: #4ade80; font-family: var(--font-mono); margin-top: 2px;">
+                  ${contiguous && contiguous.record ? contiguous.distanceM + ' m (' + Math.round(contiguous.record.price_chf / 1000) + ' kCHF)' : 'Médiane Secteur'}
+                </div>
+              </div>
+              <div style="background: var(--color-ink-900); padding: 10px 12px; border: 1px solid var(--panel-border);">
+                <div style="font-size: 10px; color: var(--color-sand-400); text-transform: uppercase;">Échéance Conseillée</div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--color-brand-300); margin-top: 2px;">${crmPayload.action_recommended.timing}</div>
+              </div>
+            </div>
+
+            <!-- JSON Preview Box -->
+            <pre id="crmJsonCodeBlock" style="background: #090d16; border: 1px solid #1e293b; color: #38bdf8; font-family: var(--font-mono); font-size: 11px; padding: 16px; max-height: 380px; overflow: auto; line-height: 1.5; white-space: pre-wrap;">${escapeHtml(jsonStr)}</pre>
+          </div>
+        `;
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function copyNeighborLetterDirect(r) {
+      if (!r) r = currentOpportunityRecord;
+      if (!r) return;
+
+      const contiguous = findClosestContiguousSale(r);
+      const todayStr = new Intl.DateTimeFormat('fr-CH', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+      const contiguousSnippet = (contiguous && contiguous.record)
+        ? `intervenue à proximité immédiate (à ${contiguous.distanceM} mètres, au ${contiguous.record.address || contiguous.record.commune}, pour un montant acté de CHF ${Math.round(contiguous.record.price_chf).toLocaleString('fr-CH')})`
+        : `intervenue récemment dans votre commune`;
+
+      const letterText = `CABINET IMMOBILIER CONSEIL
+Département d'Analyse Foncière & Patrimoniale
+Genève
+
+Genève, le ${todayStr}
+
+Aux propriétaires et ayants droit de la parcelle n° ${r.parcel_number || 'N/A'}
+${r.address || (r.commune + ' (Genève)')}
+
+Objet : Évolution des valorisations notariales dans votre voisinage immédiat – Bilan patrimonial de votre parcelle
+
+Madame, Monsieur,
+
+Dans le cadre de notre veille continue sur le marché immobilier et foncier du canton de Genève, notre cabinet réalise régulièrement la synthèse cartographique des transactions authentifiées inscrites au Registre Foncier.
+
+Une mutation notariée récente a été officialisée sur votre secteur direct : il s'agit d'une transaction ${contiguousSnippet}.
+
+Cet acte notarié modifie substantiellement les références de prix au mètre carré applicables aux parcelles contiguës et renforce la valeur patrimoniale des propriétés de votre rue.
+
+Dans l'éventualité où vous souhaiteriez disposer d'un éclairage actualisé, objectif et confidentiel sur la valeur vénale de votre bien — que ce soit pour vos arbitrages patrimoniaux, vos déclarations fiscales ou une simple veille successorale —, nous mettons gracieusement à votre disposition notre Dossier d'Évaluation Micro-Locale & Fiche Cadastrale SITG.
+
+Cette démarche d'information s'inscrit dans le strict respect des règles déontologiques suisses et ne comporte aucun engagement de votre part.
+
+Nous nous tenons à votre entière disposition pour vous remettre ce dossier en mains propres ou lors d'un entretien téléphonique préalable.
+
+Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.
+
+La Direction des Expertises Foncières
+Cabinet Immobilier Conseil Genève`;
+
+      navigator.clipboard.writeText(letterText).then(() => {
+        alert("Courrier conseil copié dans le presse-papiers avec succès.");
+      }).catch(() => {
+        prompt("Copiez le texte du courrier :", letterText);
+      });
+    }
+
+    function copyCrmJsonToClipboard() {
+      const el = document.getElementById('crmJsonCodeBlock');
+      if (el) {
+        navigator.clipboard.writeText(el.innerText || el.textContent).then(() => {
+          alert("Payload CRM JSON copié dans le presse-papiers.");
+        });
+      }
+    }
+
+    function downloadCrmJson() {
+      if (!currentOpportunityRecord) return;
+      const r = currentOpportunityRecord;
+      const el = document.getElementById('crmJsonCodeBlock');
+      const text = el ? (el.innerText || el.textContent) : JSON.stringify(r);
+      const blob = new Blob([text], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `cytria_lead_${r.id || 'export'}_${r.parcel_number || 'parcelle'}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('opportunityModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'opportunityModal') {
+        closeOpportunityModal();
       }
     });
 
