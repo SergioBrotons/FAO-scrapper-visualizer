@@ -15,7 +15,7 @@ Le système **CYTRIA (FAO × SITG)** renverse cette asymétrie d'information :
 3. **Vérité des Prix Notariés & Calque Iso-Valeur** : S'appuie sur les prix déclarés au Registre Foncier (art. 157 LaCC) et sous LDTR (art. 39) plutôt que sur les prix d'affichage surévalués des portails.
 4. **Simulateur d'Avis de Valeur Micro-Quartier (CMA)** : Évalue n'importe quel immeuble ou lot PPE par détection de ventes contiguës et échantillonnage pondéré au m².
 5. **Macro-Zonage Rive Gauche / Rive Droite** : Filtre d'un clic les 70.8% d'actes Rive Gauche des 29.2% d'actes Rive Droite pour adapter la prospection au profil de la clientèle.
-6. **Benchmark Concurrentiel Certifié** : Mesure l'emprise territoriale des 55 agences officielles du canton de Genève sans données synthétiques.
+6. **Benchmark Concurrentiel Certifié** : Mesure l'emprise territoriale des 83 agences officielles du canton de Genève sans données synthétiques.
 
 ---
 
@@ -26,7 +26,7 @@ Vous pouvez ouvrir directement l'application cartographique et déclencher les f
 - **[Simulateur d'Avis de Valeur & Comparables (CMA)](http://localhost:8080/index.html#cma)** : Ouvre le calculateur d'estimation vénale et la recherche de comparables notariés contigus. Paramètres URL supportés : `?tool=cma&address=Chemin+du+Saut-du-Loup+18&surface=95&typology=PPE`.
 - **[Actualiser Marché & Données (FAO × SITG)](http://localhost:8080/index.html#sync)** : Déclenche le panneau de synchronisation contextuelle (hebdomadaire pour FAO/SITG, quotidienne pour veille concurrentielle).
 - **[Guide Métier & Playbooks Interactifs](http://localhost:8080/index.html#guide)** : Ouvre la base de connaissances métier intégrée (onglets HOIRIES, FONCIER, PRIX, CMA, AGENCES, EARLYSIGNALS).
-- **[Benchmark & Parts de Marché Agences](http://localhost:8080/index.html#agencies)** : Affiche la répartition des parts de marché et l'emprise territoriale des 55 agences officielles du canton de Genève.
+- **[Benchmark & Parts de Marché Agences](http://localhost:8080/index.html#agencies)** : Affiche la répartition des parts de marché et l'emprise territoriale des 83 agences officielles du canton de Genève.
 - **[Radar Sourcing & Hoiries](http://localhost:8080/index.html#sourcing)** : Active directement le radar foncier et les mandats successoraux à forte propension de vente.
 - **[Cytria EarlySignals • Pré-Marché](http://localhost:8080/index.html#earlysignals)** : Active le 4e onglet maître EarlySignals, le Macro Radar cantonal, la Campagne Riverains en lot et le Connecteur CRM Webhook.
 
@@ -57,7 +57,7 @@ docs/
 - **Workflow 2 : L'Assemblage Foncier & Surcharge Promoteur (Radar Zone 5 & PLQ)** : Calculer la valeur résiduelle du sol et monter des tours de table promoteurs.
 - **Workflow 3 : L'Avis de Valeur Imparable & Moteur CMA** : Désarmer les prétentions irréalistes des vendeurs grâce aux statistiques officielles du Registre Foncier, au calque prix/m² et au simulateur micro-quartier.
 - **Workflow 4 : Le Farming Territorial Intelligent** : Quadriller un quartier (Cologny, Conches, Florissant) et anticiper les rotations de propriétaires.
-- **Workflow 5 : Veille Concurrentielle & Benchmark de Parts de Marché** : Analyser les 55 agences genevoises et identifier les faiblesses des concurrents.
+- **Workflow 5 : Veille Concurrentielle & Benchmark de Parts de Marché** : Analyser les 83 agences genevoises et identifier les faiblesses des concurrents.
 - **Workflow 6 : CYTRIA EARLYSIGNALS — Détection Pré-Marché, Campagne Riverains & Connexion CRM** : Exploitation du 4e onglet maître, du Radar Macro, du générateur de campagne et du connecteur direct CRM Webhook.
 
 ### 2. [02_GENEVA_CADASTRE_LEGAL_GLOSSARY.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/02_GENEVA_CADASTRE_LEGAL_GLOSSARY.md)

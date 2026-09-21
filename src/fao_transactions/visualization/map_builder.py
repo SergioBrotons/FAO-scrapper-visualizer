@@ -5562,6 +5562,7 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
           </div>
         `;
       } else if (tabId === 'AGENCES') {
+        const agencyCount = (typeof LEAGUE_DATA !== 'undefined' && LEAGUE_DATA.agencies) ? LEAGUE_DATA.agencies.length : 83;
         container.innerHTML = `
           <div style="display: flex; flex-direction: column; gap: 20px;">
             <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
@@ -5583,9 +5584,9 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
               </div>
 
               <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
-                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Indice de Marché Cytria & 55 Agences</h4>
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Indice de Marché Cytria & ${agencyCount} Agences</h4>
                 <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
-                  La ligue Cytria suit en continu les <strong>55 agences immobilières certifiées du canton de Genève</strong> (Zefix / Registre du Commerce) :
+                  La ligue Cytria suit en continu les <strong>${agencyCount} agences immobilières certifiées du canton de Genève</strong> (Zefix / Registre du Commerce) :
                 </p>
                 <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
                   <li><strong>Taux de conciliation :</strong> Pourcentage des mandats délistés validés par un acte notarié ultérieur.</li>
@@ -6019,8 +6020,8 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
           { pct: 15, msg: "1/5 — Interrogation des portails immobiliers (ImmoScout24, Realforce)...", log: "Relevé des portails : Analyse des stocks actifs et des jours en ligne (DOM)..." },
           { pct: 35, msg: "2/5 — Détection des délistages et retraits de mandats...", log: "Analyse différentielle : Identification des annonces retirées ou sous offre..." },
           { pct: 60, msg: "3/5 — Rapprochement notarié et calcul du taux de conciliation...", log: "Croisement des délistages avec les actes FAO récents..." },
-          { pct: 80, msg: "4/5 — Veille marketing & réseaux sociaux des 55 agences certifiées...", log: "Relevé des campagnes digitales, flux sociaux et recrutements de courtiers..." },
-          { pct: 100, msg: "5/5 — Benchmarking agences terminé. Rapport d'intelligence prêt.", log: `Succès : Matrice concurrentielle des 55 agences certifiées actualisée. Cadence recommandée : Hebdomadaire (ou Daily Pulse).` }
+          { pct: 80, msg: `4/5 — Veille marketing & réseaux sociaux des ${(typeof LEAGUE_DATA !== 'undefined' && LEAGUE_DATA.agencies) ? LEAGUE_DATA.agencies.length : 83} agences certifiées...`, log: "Relevé des campagnes digitales, flux sociaux et recrutements de courtiers..." },
+          { pct: 100, msg: "5/5 — Benchmarking agences terminé. Rapport d'intelligence prêt.", log: `Succès : Matrice concurrentielle des ${(typeof LEAGUE_DATA !== 'undefined' && LEAGUE_DATA.agencies) ? LEAGUE_DATA.agencies.length : 83} agences certifiées actualisée. Cadence recommandée : Hebdomadaire (ou Daily Pulse).` }
         ];
       }
 

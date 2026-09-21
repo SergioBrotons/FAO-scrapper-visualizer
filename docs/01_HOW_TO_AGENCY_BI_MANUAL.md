@@ -145,7 +145,7 @@ Pour dominer un secteur, il doit connaître :
 
 ### Comment utiliser l'outil :
 1. Ouvrez le module **CYTRIA AGENCY BI** puis cliquez sur **Benchmark & Parts de Marché**.
-2. Consultez la cartographie certifiée des **55 agences officielles du canton de Genève** (données Zefix / RC Genève).
+2. Consultez la cartographie certifiée des **83 agences officielles du canton de Genève** (données Zefix / RC Genève, connectées dynamiquement à la base d'intelligence).
 3. Analysez le portefeuille sous mandat et le **taux de conciliation notarié** (mandats délistés confirmés par une publication FAO ultérieure).
 4. Croisez avec les données de délais de parution :
    - Repérez les biens en mandat depuis plus de 90 jours sans offre.
