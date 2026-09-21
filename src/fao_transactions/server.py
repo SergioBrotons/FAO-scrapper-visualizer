@@ -46,7 +46,14 @@ class CytriaApiHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         """Route GET requests between REST API and static files."""
-        if self.path == "/api/status" or self.path == "/api/status/":
+        if self.path == "/api/health" or self.path == "/api/health/":
+            self._send_json_response({
+                "status": "online",
+                "service": "Cytria Geneva Real Estate Intelligence Engine",
+            })
+            return
+
+        elif self.path == "/api/status" or self.path == "/api/status/":
             status = sync_manager.get_status()
             self._send_json_response({
                 "status": "online",
@@ -74,7 +81,16 @@ class CytriaApiHandler(SimpleHTTPRequestHandler):
                 body = {}
 
             mode = body.get("mode", "quick")
+            suite = body.get("suite", "MARKET")
+            source = body.get("source", "ALL")
+            headed = body.get("headed", False)
             options = body.get("options", {})
+            options["suite"] = suite
+            options["source"] = source
+            options["headed"] = headed
+            options["fao"] = body.get("fao", source in ["FAO", "ALL"] or suite in ["MARKET", "SOURCING"])
+            options["sitg"] = body.get("sitg", source in ["CADASTRE", "ALL"] or suite in ["MARKET", "SOURCING"])
+            options["agencies"] = body.get("agencies", source in ["AGENCY_BI", "ALL"] or suite == "AGENCY_BI")
 
             success = sync_manager.start_scan(mode=mode, options=options)
             if success:

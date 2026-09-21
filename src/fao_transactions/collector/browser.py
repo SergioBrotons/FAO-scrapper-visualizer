@@ -89,13 +89,17 @@ class BrowserManager:
             console.print("Please switch to the open Chromium window and complete the challenge manually.")
             console.print("=" * 70 + "\n", style="bold yellow")
 
-            # Wait for user input in terminal
-            try:
-                input(">>> Press [ENTER] in this terminal AFTER you have solved the CAPTCHA in the browser... ")
-            except EOFError:
-                # If non-interactive stdin, loop wait until challenge is gone
-                console.print("[yellow]Non-interactive input detected; polling until page leaves challenge state...[/yellow]")
+            # Wait for user input or poll if non-interactive daemon
+            import sys
+            if not sys.stdin or not hasattr(sys.stdin, "isatty") or not sys.stdin.isatty():
+                console.print("[yellow]Non-interactive/Server mode: Polling until Cloudflare/CAPTCHA challenge is solved in Chromium window...[/yellow]")
                 self.wait_until_unblocked()
+            else:
+                try:
+                    input(">>> Press [ENTER] in this terminal AFTER you have solved the CAPTCHA in the browser... ")
+                except EOFError:
+                    console.print("[yellow]Non-interactive input detected; polling until page leaves challenge state...[/yellow]")
+                    self.wait_until_unblocked()
 
             # Confirm page has transitioned
             self.page.wait_for_timeout(3000)

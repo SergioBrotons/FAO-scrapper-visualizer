@@ -2486,61 +2486,95 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- Scan Configuration Grid -->
-        <div class="scan-config-grid">
-          <!-- Target Portals Checklist -->
-          <div class="scan-config-box">
-            <div class="scan-box-title">1. Flux & Portails Ciblés</div>
-            <div class="portal-check-list">
-              <label class="portal-check-item">
-                <input type="checkbox" id="portalCheckFao" checked>
-                <div class="portal-check-info">
-                  <span class="portal-name">FAO Genève (Rubrique 133 & Quotidiennes)</span>
-                  <span class="portal-detail">Derniers avis de ventes, successions, cessions et LDTR</span>
+        <!-- Isolated Sources Section with Dedicated Actions -->
+        <div style="margin-bottom: 20px;">
+          <div class="scan-box-title" style="margin-bottom: 12px;">1. Sources de Données & Actions Dédiées par Catégorie</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+            
+            <!-- Source 1: FAO Genève -->
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                  <span style="font-weight: 700; color: var(--color-brand-300); font-size: 13px;">1. FAO Genève (Rubrique 133)</span>
+                  <input type="checkbox" id="portalCheckFao" checked style="accent-color: var(--color-brand-400); cursor: pointer;" title="Inclure dans la synchro globale">
                 </div>
-              </label>
-              <label class="portal-check-item">
-                <input type="checkbox" id="portalCheckSitg" checked>
-                <div class="portal-check-info">
-                  <span class="portal-name">SITG Open Data (Cadastre & Permis APA)</span>
-                  <span class="portal-detail">Autorisations de construire actives, PLQ, géométrie parcelles</span>
+                <div style="font-size: 11px; color: var(--color-sand-300); line-height: 1.45; margin-bottom: 8px;">
+                  Mutations notariées officielles, ventes immobilières, dévolutions successorales (hoiries) et servitudes LDTR publiées au Registre Foncier.
                 </div>
-              </label>
-              <label class="portal-check-item">
-                <input type="checkbox" id="portalCheckAgencies" checked>
-                <div class="portal-check-info">
-                  <span class="portal-name">Portails Immobiliers & Agences (RealAdvisor)</span>
-                  <span class="portal-detail">Suivi des mandats, volume vendu par courtier et ratings</span>
+                <div style="font-size: 10px; color: #4ade80; background: rgba(74, 222, 128, 0.1); border-left: 2px solid #4ade80; padding: 4px 8px; margin-bottom: 6px;">
+                  Mode Visible : Ouvre Chromium pour validation humaine Cloudflare / CAPTCHA si requis.
                 </div>
-              </label>
+              </div>
+              <button type="button" class="btn-sm" id="btnSourceFao" onclick="triggerSourceScan('FAO')" style="width: 100%; background: rgba(201, 162, 77, 0.15); border: 1px solid var(--color-brand-400); color: var(--color-brand-300); font-weight: 700; font-size: 11px; padding: 8px 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
+                Ouvrir Scraper FAO (Visible)
+              </button>
             </div>
-          </div>
 
-          <!-- Scan Modes -->
-          <div class="scan-config-box">
-            <div class="scan-box-title">2. Mode d'Exécution</div>
-            <div class="scan-modes-list">
-              <div class="scan-mode-card active" id="scanModeCard_quick" onclick="selectScanMode('quick')">
-                <div class="scan-mode-header">
-                  <span class="mode-name">Scan Rapide (Quotidien)</span>
-                  <span class="mode-badge">25 avis récents</span>
+            <!-- Source 2: Cadastre SITG -->
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                  <span style="font-weight: 700; color: var(--color-brand-300); font-size: 13px;">2. Cadastre SITG Open Data</span>
+                  <input type="checkbox" id="portalCheckSitg" checked style="accent-color: var(--color-brand-400); cursor: pointer;" title="Inclure dans la synchro globale">
                 </div>
-                <div class="mode-desc">Idéal pour relever les mutations et autorisations parues cette semaine.</div>
-              </div>
-              <div class="scan-mode-card" id="scanModeCard_standard" onclick="selectScanMode('standard')">
-                <div class="scan-mode-header">
-                  <span class="mode-name">Scan Approfondi (Mensuel)</span>
-                  <span class="mode-badge">100 avis récents</span>
+                <div style="font-size: 11px; color: var(--color-sand-300); line-height: 1.45; margin-bottom: 8px;">
+                  Interrogation du FeatureServer officiel (vector.sitg.ge.ch) : parcelles mensurées, EGRID fédéraux, gabarits bâtis et permis de construire (APA / SAD).
                 </div>
-                <div class="mode-desc">Scrute en profondeur les dernières semaines d'avis officiels.</div>
-              </div>
-              <div class="scan-mode-card" id="scanModeCard_audit" onclick="selectScanMode('audit')">
-                <div class="scan-mode-header">
-                  <span class="mode-name">Contrôle d'Intégrité & Doublons</span>
-                  <span class="mode-badge">Base locale</span>
+                <div style="font-size: 10px; color: #60a5fa; background: rgba(96, 165, 250, 0.1); border-left: 2px solid #60a5fa; padding: 4px 8px; margin-bottom: 6px;">
+                  API Directe : Requêtes REST JSON sur les couches géospatiales de l'État.
                 </div>
-                <div class="mode-desc">Audit SHA-256 sans requêtes réseau externes pour valider l'intégrité.</div>
               </div>
+              <button type="button" class="btn-sm" id="btnSourceSitg" onclick="triggerSourceScan('SITG')" style="width: 100%; background: rgba(96, 165, 250, 0.15); border: 1px solid #60a5fa; color: #93c5fd; font-weight: 700; font-size: 11px; padding: 8px 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
+                Interroger Cadastre SITG (API)
+              </button>
+            </div>
+
+            <!-- Source 3: Agency BI & Portails -->
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                  <span style="font-weight: 700; color: var(--color-brand-300); font-size: 13px;">3. Agency BI & Courtiers</span>
+                  <input type="checkbox" id="portalCheckAgencies" checked style="accent-color: var(--color-brand-400); cursor: pointer;" title="Inclure dans la synchro globale">
+                </div>
+                <div style="font-size: 11px; color: var(--color-sand-300); line-height: 1.45; margin-bottom: 8px;">
+                  Veille concurrentielle sur 83 agences et 93 courtiers : mandats délistés, volumes vendus, avis clients certifiés et réconciliation FAO.
+                </div>
+                <div style="font-size: 10px; color: #c084fc; background: rgba(192, 132, 252, 0.1); border-left: 2px solid #c084fc; padding: 4px 8px; margin-bottom: 6px;">
+                  Pipeline BI : Synchronisation de 2'183 biens et parts de marché.
+                </div>
+              </div>
+              <button type="button" class="btn-sm" id="btnSourceAgencies" onclick="triggerSourceScan('AGENCIES')" style="width: 100%; background: rgba(192, 132, 252, 0.15); border: 1px solid #c084fc; color: #e9d5ff; font-weight: 700; font-size: 11px; padding: 8px 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
+                Actualiser Agency BI (83 Agences)
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Scan Modes & Combined Launch -->
+        <div class="scan-config-box" style="margin-bottom: 16px;">
+          <div class="scan-box-title">2. Mode d'Exécution & Synchronisation Globale</div>
+          <div class="scan-modes-list">
+            <div class="scan-mode-card active" id="scanModeCard_quick" onclick="selectScanMode('quick')">
+              <div class="scan-mode-header">
+                <span class="mode-name">Scan Rapide (Quotidien)</span>
+                <span class="mode-badge">25 avis récents</span>
+              </div>
+              <div class="mode-desc">Idéal pour relever les mutations et autorisations parues cette semaine.</div>
+            </div>
+            <div class="scan-mode-card" id="scanModeCard_standard" onclick="selectScanMode('standard')">
+              <div class="scan-mode-header">
+                <span class="mode-name">Scan Approfondi (Mensuel)</span>
+                <span class="mode-badge">100 avis récents</span>
+              </div>
+              <div class="mode-desc">Scrute en profondeur les dernières semaines d'avis officiels.</div>
+            </div>
+            <div class="scan-mode-card" id="scanModeCard_audit" onclick="selectScanMode('audit')">
+              <div class="scan-mode-header">
+                <span class="mode-name">Contrôle d'Intégrité & Doublons</span>
+                <span class="mode-badge">Base locale</span>
+              </div>
+              <div class="mode-desc">Audit SHA-256 sans requêtes réseau externes pour valider l'intégrité.</div>
             </div>
           </div>
         </div>
@@ -2551,7 +2585,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             Statut du moteur : <span id="syncServerBadge" style="font-family:var(--font-mono); color:#4ade80;">API Connectée (localhost:8080)</span>
           </div>
           <button type="button" class="action-btn sitg" id="btnLaunchScan" onclick="triggerScanExecution()" style="padding:10px 24px; font-size:12px; font-weight:800; letter-spacing:0.06em;">
-            LANCER LA SYNCHRONISATION EN DIRECT
+            EXÉCUTER LA SYNCHRONISATION COMBINÉE (SOURCES COCHÉES)
           </button>
         </div>
 
@@ -5184,7 +5218,8 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
     }
 
     function openScanModal() {
-      openContextualSyncModal(currentAppMode || 'MARKET');
+      const mode = (typeof appMode !== 'undefined') ? appMode : (typeof currentSyncSuite !== 'undefined' ? currentSyncSuite : 'MARKET');
+      openContextualSyncModal(mode);
     }
 
     function closeScanModal() {
@@ -5238,26 +5273,96 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
       return false;
     }
 
-    async function startPortalScan() {
+    function triggerScanExecution() {
+      const chkFao = document.getElementById('portalCheckFao');
+      const chkSitg = document.getElementById('portalCheckSitg');
+      const chkAgencies = document.getElementById('portalCheckAgencies');
+      startPortalScan({
+        source: 'ALL',
+        fao: chkFao ? chkFao.checked : true,
+        sitg: chkSitg ? chkSitg.checked : true,
+        agencies: chkAgencies ? chkAgencies.checked : true,
+        headed: chkFao ? chkFao.checked : true
+      });
+    }
+
+    function triggerSourceScan(sourceKey) {
+      if (sourceKey === 'FAO') {
+        startPortalScan({
+          source: 'FAO',
+          fao: true,
+          sitg: false,
+          agencies: false,
+          headed: true
+        });
+      } else if (sourceKey === 'SITG') {
+        startPortalScan({
+          source: 'SITG',
+          fao: false,
+          sitg: true,
+          agencies: false,
+          headed: false
+        });
+      } else if (sourceKey === 'AGENCIES') {
+        startPortalScan({
+          source: 'AGENCIES',
+          fao: false,
+          sitg: false,
+          agencies: true,
+          headed: false
+        });
+      }
+    }
+
+    async function startPortalScan(customOptions = {}) {
       if (isScanRunning) return;
       isScanRunning = true;
 
+      const chkFao = document.getElementById('portalCheckFao');
+      const chkSitg = document.getElementById('portalCheckSitg');
+      const chkAgencies = document.getElementById('portalCheckAgencies');
+
+      const payload = {
+        mode: currentScanMode,
+        suite: currentSyncSuite,
+        source: customOptions.source || 'ALL',
+        fao: customOptions.fao !== undefined ? customOptions.fao : (chkFao ? chkFao.checked : true),
+        sitg: customOptions.sitg !== undefined ? customOptions.sitg : (chkSitg ? chkSitg.checked : true),
+        agencies: customOptions.agencies !== undefined ? customOptions.agencies : (chkAgencies ? chkAgencies.checked : true),
+        headed: customOptions.headed !== undefined ? customOptions.headed : true
+      };
+
       const btn = document.getElementById('btnLaunchScan');
+      const btnFao = document.getElementById('btnSourceFao');
+      const btnSitg = document.getElementById('btnSourceSitg');
+      const btnAg = document.getElementById('btnSourceAgencies');
       const liveBadge = document.getElementById('terminalLiveBadge');
       const compBanner = document.getElementById('scanCompletionBanner');
-      if (btn) {
-        btn.disabled = true;
-        btn.style.opacity = '0.6';
-        btn.textContent = 'SYNCHRONISATION EN COURS...';
-      }
+
+      [btn, btnFao, btnSitg, btnAg].forEach(b => {
+        if (b) {
+          b.disabled = true;
+          b.style.opacity = '0.6';
+        }
+      });
+      if (btn) btn.textContent = 'SYNCHRONISATION EN COURS...';
+
       if (liveBadge) {
         liveBadge.textContent = '● SCAN ACTIF';
         liveBadge.style.color = '#C9A24D';
       }
       if (compBanner) compBanner.style.display = 'none';
 
-      logToTerminal(`=== DÉMARRAGE DU SCAN [${currentSyncSuite}] CYTRIA ===`, 'info');
-      logToTerminal(`Paramètres: Mode=${currentScanMode} | Dédoublonnage SHA-256=ACTIF | Sanctuarisation Historique=100%`);
+      logToTerminal(`=== DÉMARRAGE DU SCAN [${payload.source}] CYTRIA ===`, 'info');
+      if (payload.fao) {
+        logToTerminal(`[FAO] Scraper Playwright visible activé : ouverture de Chromium sur votre bureau pour validation humaine si nécessaire.`, 'info');
+      }
+      if (payload.sitg) {
+        logToTerminal(`[SITG] Requête API REST en cours sur le FeatureServer vector.sitg.ge.ch...`, 'info');
+      }
+      if (payload.agencies) {
+        logToTerminal(`[AGENCY BI] Veille concurrentielle active sur les 83 agences genevoises et 93 courtiers...`, 'info');
+      }
 
       // Attempt to invoke the Python REST server first
       let serverHandled = false;
@@ -5265,18 +5370,22 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
         const postResp = await fetch('/api/scan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mode: currentScanMode, suite: currentSyncSuite })
+          body: JSON.stringify(payload)
         });
         if (postResp.ok) {
           serverHandled = true;
-          logToTerminal('[API] Session de scan initialisée avec succès sur le serveur local.', 'success');
+          logToTerminal('[API] Session de scan initialisée avec succès sur le serveur Python (port 8080).', 'success');
           pollServerProgress();
+        } else {
+          const errData = await postResp.json().catch(() => ({}));
+          logToTerminal(`[ERREUR] ${errData.message || 'Le serveur a rejeté la requête de scan.'}`, 'error');
         }
       } catch (err) {
         serverHandled = false;
       }
 
       if (!serverHandled) {
+        logToTerminal(`[AVERTISSEMENT] Serveur local non joignable. Exécution en mode client interactif.`, 'warning');
         runClientSideInteractiveScan();
       }
     }
@@ -5386,14 +5495,20 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
     function finishScanUI(newCount, dupCount) {
       isScanRunning = false;
       const btn = document.getElementById('btnLaunchScan');
+      const btnFao = document.getElementById('btnSourceFao');
+      const btnSitg = document.getElementById('btnSourceSitg');
+      const btnAg = document.getElementById('btnSourceAgencies');
       const liveBadge = document.getElementById('terminalLiveBadge');
       const compBanner = document.getElementById('scanCompletionBanner');
 
-      if (btn) {
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.textContent = 'RELANCER UNE SYNCHRONISATION';
-      }
+      [btn, btnFao, btnSitg, btnAg].forEach(b => {
+        if (b) {
+          b.disabled = false;
+          b.style.opacity = '1';
+        }
+      });
+      if (btn) btn.textContent = 'EXÉCUTER LA SYNCHRONISATION COMBINÉE (SOURCES COCHÉES)';
+
       if (liveBadge) {
         liveBadge.textContent = '● SYNCHRONISÉ';
         liveBadge.style.color = '#4ade80';
