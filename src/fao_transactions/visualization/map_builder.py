@@ -1663,6 +1663,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       font-size: 10px;
       font-family: var(--font-mono);
       margin-right: 4px;
+    }
+
     /* Scan Live Indicator Dot */
     .scan-live-dot {
       width: 7px;
@@ -1958,6 +1960,213 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .term-line.success { color: #4ade80; }
     .term-line.warning { color: #fbbf24; }
     .term-line.error { color: #f87171; }
+
+    /* Cytria Client-Facing CMA Dossier (Swiss Grid Printable Edition) */
+    .cma-dossier-window {
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+    .cma-dossier-page {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      padding: 38px 42px;
+      font-family: var(--font-brand);
+      position: relative;
+      box-sizing: border-box;
+      min-height: 1040px;
+    }
+    .cma-dossier-header-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    .cma-dossier-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0f172a;
+      margin: 0 0 4px 0;
+    }
+    .cma-dossier-subtitle {
+      font-size: 11px;
+      color: #64748b;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .cma-dossier-section-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #b45309;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 4px;
+      margin: 18px 0 10px 0;
+    }
+    .cma-dossier-prop-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .cma-dossier-prop-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 8px 12px;
+    }
+    .cma-dossier-prop-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .cma-dossier-prop-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .cma-dossier-val-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .cma-dossier-val-card {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 14px 16px;
+      position: relative;
+    }
+    .cma-dossier-val-card.primary {
+      background: #fffbeb;
+      border: 2px solid #b45309;
+    }
+    .cma-dossier-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-top: 8px;
+    }
+    .cma-dossier-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      padding: 7px 10px;
+      border: 1px solid #cbd5e1;
+      text-align: left;
+    }
+    .cma-dossier-table td {
+      padding: 7px 10px;
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+      vertical-align: middle;
+    }
+    .cma-dossier-table tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+    .cma-dossier-footer {
+      position: absolute;
+      bottom: 20px;
+      left: 42px;
+      right: 42px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      color: #94a3b8;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 8mm 10mm 8mm 10mm;
+      }
+      html, body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+      #map, header, aside, .detail-drawer, .leaflet-control-container, #agencyFocusBanner,
+      #streetViewModal, #leagueTableModal, #marketingModal, #cmaModal, #methodologyModal,
+      #earlySignalsRadarModal, #opportunityModal, #batchCampaignModal, #crmSettingsModal,
+      #scanModal {
+        display: none !important;
+      }
+      #cmaDossierModal {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        z-index: 1 !important;
+      }
+      .cma-dossier-window {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+      }
+      .cma-dossier-toolbar, .modal-close-btn, #agencyBrandingBar {
+        display: none !important;
+      }
+      .league-body {
+        padding: 0 !important;
+        background: #ffffff !important;
+        overflow: visible !important;
+      }
+      #cmaDossierPrintable {
+        max-width: 100% !important;
+        margin: 0 !important;
+        gap: 0 !important;
+      }
+      .cma-dossier-page {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 0 10mm 0 !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        min-height: 270mm !important;
+      }
+      .cma-dossier-page:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        margin-bottom: 0 !important;
+      }
+      .cma-dossier-footer {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2555,6 +2764,57 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <!-- Dynamic Results Container -->
         <div id="cmaResultsArea">
           <!-- Populated by runComparativeAnalysis() -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cytria Client-Facing Dossier d'Avis de Valeur Notarié Modal (Swiss Grid Printable Edition) -->
+  <div class="modal-overlay" id="cmaDossierModal" style="z-index: 100000;">
+    <div class="league-modal-window cma-dossier-window" style="max-width: 960px; height: 92vh; background: var(--color-ink-950); display: flex; flex-direction: column;">
+      <!-- Header / Toolbar (Hidden on print) -->
+      <div class="league-header cma-dossier-toolbar" style="padding: 14px 24px; border-bottom: 1px solid var(--panel-border); display: flex; justify-content: space-between; align-items: center; background: var(--color-ink-900);">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="subtool-badge" style="background: rgba(201,162,77,0.15); color: var(--color-brand-300); border-color: var(--color-brand-400); font-weight: 700;">ÉDITION CLIENT SWISS GRID</span>
+            <h2 style="font-size: 16px; margin: 0; color: var(--color-paper);">Dossier d'Avis de Valeur Notarié</h2>
+          </div>
+          <p style="font-size: 11px; margin: 3px 0 0; color: var(--color-sand-300);">Document d'estimation et d'argumentaire de vente étalonné sur les actes notariés officiels du Registre Foncier (FAO Genève).</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button type="button" class="subtool-btn utility-btn" id="btnToggleBrandingBar" onclick="toggleAgencyBrandingEditor()" style="padding: 6px 12px; font-size: 11px;">
+            En-tête Agence
+          </button>
+          <button type="button" class="subtool-btn utility-btn" onclick="printCmaDossier()" style="padding: 6px 14px; font-size: 11px; background: var(--color-brand-500) !important; color: var(--color-ink-950) !important; font-weight: 700; border-color: var(--color-brand-400) !important;">
+            Imprimer / Exporter PDF (A4)
+          </button>
+          <button class="modal-close-btn" onclick="closeCmaDossierModal()">&times;</button>
+        </div>
+      </div>
+
+      <!-- Quick Agency Branding Customizer Bar (Expandable, hidden on print) -->
+      <div id="agencyBrandingBar" class="cma-dossier-toolbar" style="display: none; padding: 12px 24px; background: rgba(201,162,77,0.08); border-bottom: 1px solid rgba(201,162,77,0.25); display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 160px;">
+          <label style="display:block; font-size: 9px; text-transform: uppercase; color: var(--color-brand-400); font-weight: 700; margin-bottom: 3px;">Nom de l'Agence</label>
+          <input type="text" id="dossierAgencyName" value="Cabinet Immobilier de Genève" style="width: 100%; padding: 5px 8px; font-size: 11px; background: var(--color-ink-950); border: 1px solid var(--panel-border); color: var(--color-paper); box-sizing: border-box; outline: none;">
+        </div>
+        <div style="flex: 1; min-width: 140px;">
+          <label style="display:block; font-size: 9px; text-transform: uppercase; color: var(--color-brand-400); font-weight: 700; margin-bottom: 3px;">Courtier / Négociateur</label>
+          <input type="text" id="dossierBrokerName" value="Département Résidentiel & Courtage" style="width: 100%; padding: 5px 8px; font-size: 11px; background: var(--color-ink-950); border: 1px solid var(--panel-border); color: var(--color-paper); box-sizing: border-box; outline: none;">
+        </div>
+        <div style="flex: 1; min-width: 140px;">
+          <label style="display:block; font-size: 9px; text-transform: uppercase; color: var(--color-brand-400); font-weight: 700; margin-bottom: 3px;">Contact Direct (Tél / Email)</label>
+          <input type="text" id="dossierContactInfo" value="+41 22 800 00 00 &bull; courtage@agence-geneve.ch" style="width: 100%; padding: 5px 8px; font-size: 11px; background: var(--color-ink-950); border: 1px solid var(--panel-border); color: var(--color-paper); box-sizing: border-box; outline: none;">
+        </div>
+        <button type="button" class="btn-sm" onclick="saveAgencyBranding()" style="margin-top: 14px; padding: 6px 14px; background: var(--color-brand-500); color: var(--color-ink-950); font-weight: 700; cursor: pointer; border: none; font-size: 11px;">
+          Appliquer
+        </button>
+      </div>
+
+      <!-- Scrollable Printable Dossier Container -->
+      <div class="league-body" style="padding: 24px; overflow-y: auto; flex: 1; background: #0c1117;">
+        <div id="cmaDossierPrintable" style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px;">
+          <!-- Populated dynamically by generateCmaClientDossier() -->
         </div>
       </div>
     </div>
@@ -7788,11 +8048,14 @@ Cabinet Immobilier Conseil Genève`;
           <div>
             <strong>Étalonnage unitaire :</strong> ${sqmPrices.length} valeurs notariées exploitées
           </div>
-          <div style="display: flex; gap: 10px;">
-            <button type="button" class="subtool-btn" onclick="copyCmaReport()" style="padding: 5px 12px; color: var(--color-brand-300); border-color: rgba(201, 162, 77, 0.4);">
-              COPIER LE RAPPORT D'ESTIMATION
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="subtool-btn" onclick="openCmaDossierModal()" style="padding: 6px 14px; font-weight: 700; background: rgba(201, 162, 77, 0.2); color: var(--color-brand-300); border-color: var(--color-brand-400);">
+              GÉNÉRER LE DOSSIER D'AVIS DE VALEUR ↗
             </button>
-            <button type="button" class="subtool-btn" onclick="drawCmaPerimeterOnMap(${targetLat}, ${targetLon}, ${currentCmaRadius})" style="padding: 5px 12px; color: #38bdf8; border-color: rgba(14, 165, 233, 0.4);">
+            <button type="button" class="subtool-btn" onclick="copyCmaReport()" style="padding: 6px 12px; color: var(--color-sand-300); border-color: rgba(255, 255, 255, 0.15);">
+              COPIER LE RAPPORT BRUT
+            </button>
+            <button type="button" class="subtool-btn" onclick="drawCmaPerimeterOnMap(${targetLat}, ${targetLon}, ${currentCmaRadius})" style="padding: 6px 12px; color: #38bdf8; border-color: rgba(14, 165, 233, 0.4);">
               TRACER SUR LA CARTE & VOIR
             </button>
           </div>
@@ -7825,6 +8088,35 @@ Cabinet Immobilier Conseil Genève`;
         </div>
       `;
 
+      lastCmaAnalysis = {
+        addrInput,
+        targetCommune,
+        targetQuartier,
+        targetLat,
+        targetLon,
+        typoInput,
+        surfInput,
+        roomsInput,
+        currentCmaRadius,
+        scopeMode,
+        valLow,
+        valMed,
+        valHigh,
+        p25Sqm,
+        medianSqm,
+        p75Sqm,
+        quartierMedianSqm,
+        quartierCount,
+        spreadPct,
+        sameResidenceDeed,
+        deedPrice,
+        deedSurf,
+        deedSqm,
+        nearbyComps,
+        pricedComps,
+        bestMatch
+      };
+
       currentCmaReportText = `SYNTHÈSE D'AVIS DE VALEUR CERTIFIÉ REGISTRE FONCIER (CYTRIA)
 Adresse cible : ${addrInput}
 Commune & Quartier : ${targetQuartier} (${targetCommune})
@@ -7845,6 +8137,339 @@ Périmètre d'analyse : Rayon de ${currentCmaRadius} mètres (Mode : ${scopeMode
 ${sameResidenceDeed ? `- Vente de référence dans la même résidence : ${sameResidenceDeed.address} (${sameResidenceDeed.notice_date}) conclue à CHF ${Number(sameResidenceDeed.price_chf).toLocaleString('fr-CH')} (${deedSurf || 92} m² • CHF ${deedSqm || '17 609'}/m²)` : ''}
 
 Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genève certifié par Cytria.`;
+    }
+
+    let lastCmaAnalysis = null;
+
+    function getAgencyBranding() {
+      try {
+        const saved = localStorage.getItem('cytria_cma_agency_branding');
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
+      return {
+        agency: 'Cabinet Immobilier de Genève',
+        broker: 'Département Résidentiel & Courtage',
+        contact: '+41 22 800 00 00 • courtage@agence-geneve.ch'
+      };
+    }
+
+    function toggleAgencyBrandingEditor() {
+      const bar = document.getElementById('agencyBrandingBar');
+      if (!bar) return;
+      bar.style.display = (bar.style.display === 'none' || !bar.style.display) ? 'flex' : 'none';
+    }
+
+    function saveAgencyBranding() {
+      const agency = document.getElementById('dossierAgencyName')?.value || 'Cabinet Immobilier de Genève';
+      const broker = document.getElementById('dossierBrokerName')?.value || 'Département Résidentiel & Courtage';
+      const contact = document.getElementById('dossierContactInfo')?.value || '+41 22 800 00 00 • courtage@agence-geneve.ch';
+      const branding = { agency, broker, contact };
+      try {
+        localStorage.setItem('cytria_cma_agency_branding', JSON.stringify(branding));
+      } catch (e) {}
+      generateCmaClientDossier();
+      const bar = document.getElementById('agencyBrandingBar');
+      if (bar) bar.style.display = 'none';
+    }
+
+    function openCmaDossierModal() {
+      if (!lastCmaAnalysis) {
+        runComparativeAnalysis();
+      }
+      const branding = getAgencyBranding();
+      if (document.getElementById('dossierAgencyName')) document.getElementById('dossierAgencyName').value = branding.agency;
+      if (document.getElementById('dossierBrokerName')) document.getElementById('dossierBrokerName').value = branding.broker;
+      if (document.getElementById('dossierContactInfo')) document.getElementById('dossierContactInfo').value = branding.contact;
+
+      generateCmaClientDossier();
+      const m = document.getElementById('cmaDossierModal');
+      if (m) m.classList.add('visible');
+    }
+
+    function closeCmaDossierModal() {
+      const m = document.getElementById('cmaDossierModal');
+      if (m) m.classList.remove('visible');
+    }
+
+    function printCmaDossier() {
+      window.print();
+    }
+
+    function generateCmaClientDossier() {
+      const printable = document.getElementById('cmaDossierPrintable');
+      if (!printable || !lastCmaAnalysis) return;
+      const data = lastCmaAnalysis;
+      const branding = getAgencyBranding();
+
+      // Stable pseudo hash for dossier number
+      let hash = 0;
+      const s = data.addrInput || 'Geneve';
+      for (let i = 0; i < s.length; i++) hash = ((hash << 5) - hash) + s.charCodeAt(i) | 0;
+      const dossierNum = 'CYT-CMA-2026-' + (Math.abs(hash) % 90000 + 10000);
+      const dateStr = '21 septembre 2026';
+
+      // Typology French text
+      const typoLabels = {
+        'PPE': 'Appartement en Copropriété (PPE)',
+        'VILLA': 'Maison Individuelle / Villa',
+        'IMMEUBLE': 'Immeuble de Logements / Rendement',
+        'TERRAIN': 'Terrain à Bâtir / Parcelle Foncier',
+        'ALL': 'Bien Résidentiel'
+      };
+      const typoLabel = typoLabels[data.typoInput] || data.typoInput;
+
+      // Parcel number
+      const parcelNum = (data.bestMatch && data.bestMatch.parcel_number) ? data.bestMatch.parcel_number : 'Parcelle non spécifiée';
+
+      // Comps for Page 2 (top 5 with published prices, fallback to nearest)
+      const comps = (data.pricedComps && data.pricedComps.length > 0) ? data.pricedComps.slice(0, 5) : data.nearbyComps.slice(0, 5);
+
+      const compRows = comps.map(c => {
+        const isSameRes = data.sameResidenceDeed && (c.id === data.sameResidenceDeed.id || c.parcel_number === data.sameResidenceDeed.parcel_number);
+        const distStr = isSameRes ? '0 m (Même résidence)' : c.dist_m + ' m';
+        const priceStr = c.price_chf ? 'CHF ' + Number(c.price_chf).toLocaleString('fr-CH') : 'Non publié (RF)';
+        const sqmStr = c.clean_sqm_price ? 'CHF ' + Number(c.clean_sqm_price).toLocaleString('fr-CH') + ' / m²' : '—';
+        const surfStr = c.clean_surface_m2 ? c.clean_surface_m2 + ' m²' : (c.rooms ? c.rooms + ' p.' : '—');
+        const shortAddr = c.address ? c.address.split(',')[0] : 'Secteur ' + (c.commune || 'Genève');
+        const parcelTag = c.parcel_number ? ' (Parc. ' + c.parcel_number + ')' : '';
+
+        return `
+          <tr style="${isSameRes ? 'background: #ecfdf5; font-weight:600;' : ''}">
+            <td style="font-weight:700; color:${isSameRes ? '#047857' : '#0f172a'};">${distStr}</td>
+            <td style="font-family: var(--font-mono);">${c.notice_date || 'N/A'}</td>
+            <td><strong>${shortAddr}</strong>${parcelTag}<br><span style="font-size:9px; color:#64748b;">${c.commune}</span></td>
+            <td>${c.typology_label || c.typology_class || 'Bien'}${c.building_year ? ' (' + c.building_year + ')' : ''}</td>
+            <td>${surfStr}</td>
+            <td style="font-weight:700; color:#047857;">${priceStr}</td>
+            <td style="font-weight:700; color:#b45309;">${sqmStr}</td>
+          </tr>
+        `;
+      }).join('');
+
+      printable.innerHTML = `
+        <!-- ================= PAGE 1 : ÉVALUATION VÉNALE & SYNTHÈSE CADASTRALE ================= -->
+        <div class="cma-dossier-page">
+          <!-- Top Header Grid -->
+          <div class="cma-dossier-header-grid">
+            <div>
+              <div style="font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #0f172a;">
+                ${branding.agency}
+              </div>
+              <div style="font-size: 11px; color: #475569; margin-top: 2px;">
+                ${branding.broker} &bull; ${branding.contact}
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #b45309;">
+                RÉFÉRENTIEL REGISTRE FONCIER &bull; CANTON DE GENÈVE
+              </div>
+              <div style="font-size: 10px; font-family: var(--font-mono); color: #64748b; margin-top: 2px;">
+                Dossier N° ${dossierNum} &bull; Émis le ${dateStr}
+              </div>
+            </div>
+          </div>
+
+          <!-- Document Title Banner -->
+          <div style="margin-bottom: 22px;">
+            <h1 class="cma-dossier-title">Dossier d'Avis de Valeur Notarié</h1>
+            <p class="cma-dossier-subtitle">
+              Analyse comparative de marché fondée exclusivement sur les actes notariés réels publiés à la Feuille d'Avis Officielle (FAO) et validés par le Registre Foncier de la République et canton de Genève.
+            </p>
+          </div>
+
+          <!-- Section 1 : Caractéristiques & Identité Cadastrale -->
+          <div class="cma-dossier-section-title">1. Identité Cadastrale & Caractéristiques de l'Objet</div>
+          <div class="cma-dossier-prop-grid">
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Adresse de l'Objet</div>
+              <div class="cma-dossier-prop-value">${data.addrInput}</div>
+            </div>
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Commune & Quartier</div>
+              <div class="cma-dossier-prop-value">${data.targetQuartier} (${data.targetCommune})</div>
+            </div>
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Parcelle Cadastrale</div>
+              <div class="cma-dossier-prop-value">${parcelNum}</div>
+            </div>
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Typologie Retenue</div>
+              <div class="cma-dossier-prop-value">${typoLabel}</div>
+            </div>
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Surface Habitable</div>
+              <div class="cma-dossier-prop-value">${data.surfInput} m²</div>
+            </div>
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Nombre de Pièces</div>
+              <div class="cma-dossier-prop-value">${data.roomsInput} pièces</div>
+            </div>
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Rayon d'Étalonnage</div>
+              <div class="cma-dossier-prop-value">${data.currentCmaRadius} mètres (Voisinage direct)</div>
+            </div>
+            <div class="cma-dossier-prop-item">
+              <div class="cma-dossier-prop-label">Source Cadastre</div>
+              <div class="cma-dossier-prop-value">SITG & Registre Foncier GE</div>
+            </div>
+          </div>
+
+          ${data.sameResidenceDeed ? `
+            <div style="background: #ecfdf5; border: 1px solid #10b981; padding: 10px 14px; margin-bottom: 16px; font-size: 11px; line-height: 1.45; color: #064e3b;">
+              <strong>RÉFÉRENCE DIRECTE DE COPILOTAGE (MÊME RÉSIDENCE) :</strong><br>
+              Une transaction notariée officielle a été publiée au sein du même ensemble immobilier (${data.sameResidenceDeed.address || 'Résidence voisine'}) le ${data.sameResidenceDeed.notice_date || 'récemment'} au prix de <strong>CHF ${data.deedPrice}</strong> (${data.deedSurf} m² &bull; <strong>CHF ${data.deedSqm} / m²</strong>). La valorisation ci-dessous intègre cet ancrage direct comme pivot d'estimation.
+            </div>
+          ` : ''}
+
+          <!-- Section 2 : Fourchettes de Valorisation Vénale -->
+          <div class="cma-dossier-section-title">2. Synthèse de la Valorisation Vénale Indicative (CHF)</div>
+          <div class="cma-dossier-val-grid">
+            <div class="cma-dossier-val-card" style="border-left: 3px solid #0284c7;">
+              <div class="cma-dossier-prop-label" style="color:#0284c7;">Fourchette Basse (P25)</div>
+              <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin: 4px 0;">CHF ${Number(data.valLow).toLocaleString('fr-CH')}</div>
+              <div style="font-size: 11px; color: #475569; font-weight: 600;">CHF ${Number(data.p25Sqm).toLocaleString('fr-CH')} / m²</div>
+              <div style="font-size: 9px; color: #64748b; margin-top: 6px;">Scénario de commercialisation rapide / délais courts.</div>
+            </div>
+
+            <div class="cma-dossier-val-card primary">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="cma-dossier-prop-label" style="color:#b45309;">Valeur Vénale Recommandée (Médiane)</div>
+                <span style="font-size: 8px; font-weight: 800; background: #b45309; color: #ffffff; padding: 1px 6px; text-transform: uppercase;">Pivot FAO</span>
+              </div>
+              <div style="font-size: 24px; font-weight: 800; color: #b45309; margin: 4px 0;">CHF ${Number(data.valMed).toLocaleString('fr-CH')}</div>
+              <div style="font-size: 12px; color: #047857; font-weight: 700;">CHF ${Number(data.medianSqm).toLocaleString('fr-CH')} / m² notarié réel</div>
+              <div style="font-size: 9px; color: #78350f; margin-top: 6px;">Prix cible équilibré pour optimiser net vendeur et délai d'aliénation.</div>
+            </div>
+
+            <div class="cma-dossier-val-card" style="border-left: 3px solid #059669;">
+              <div class="cma-dossier-prop-label" style="color:#059669;">Fourchette Haute (P75)</div>
+              <div style="font-size: 20px; font-weight: 800; color: #059669; margin: 4px 0;">CHF ${Number(data.valHigh).toLocaleString('fr-CH')}</div>
+              <div style="font-size: 11px; color: #475569; font-weight: 600;">CHF ${Number(data.p75Sqm).toLocaleString('fr-CH')} / m²</div>
+              <div style="font-size: 9px; color: #64748b; margin-top: 6px;">Scénario premium avec prestations ou extérieurs d'exception.</div>
+            </div>
+          </div>
+
+          <!-- Section 3 : Indicateurs de Positionnement Micro-Quartier -->
+          <div class="cma-dossier-section-title">3. Étalonnage Micro-Quartier & Différentiel Sectoriel</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px;">
+              <div class="cma-dossier-prop-label">Médiane Référentielle Quartier</div>
+              <div style="font-size: 14px; font-weight: 700; color: #0f172a;">CHF ${Number(data.quartierMedianSqm).toLocaleString('fr-CH')} / m²</div>
+              <div style="font-size: 9px; color: #64748b; margin-top: 2px;">Sur la base de ${data.quartierCount} actes notariés récents</div>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px;">
+              <div class="cma-dossier-prop-label">Écart Micro-Emplacement vs Quartier</div>
+              <div style="font-size: 14px; font-weight: 700; color: ${data.spreadPct >= 0 ? '#047857' : '#0284c7'};">
+                ${data.spreadPct >= 0 ? '+' : ''}${data.spreadPct.toFixed(1)}%
+              </div>
+              <div style="font-size: 9px; color: #64748b; margin-top: 2px;">${data.spreadPct >= 0 ? "Surcote liée au standing / récence" : "Décote d'alignement sectoriel"}</div>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px;">
+              <div class="cma-dossier-prop-label">Échantillon Périmètre Direct</div>
+              <div style="font-size: 14px; font-weight: 700; color: #0f172a;">${data.nearbyComps.length} transactions (${data.pricedComps.length} actées)</div>
+              <div style="font-size: 9px; color: #64748b; margin-top: 2px;">Rayon d'investigation : ${data.currentCmaRadius} m</div>
+            </div>
+          </div>
+
+          <!-- Page 1 Footer -->
+          <div class="cma-dossier-footer">
+            <span>Dossier d'Avis de Valeur Notarié &bull; Réf. ${dossierNum}</span>
+            <span>Page 1 sur 2</span>
+            <span>${branding.agency} &bull; Cytria Intelligence Immobilière Genève</span>
+          </div>
+        </div>
+
+        <!-- ================= PAGE 2 : PREUVES NOTARIÉES & CADRE LÉGAL ================= -->
+        <div class="cma-dossier-page">
+          <!-- Page 2 Header -->
+          <div class="cma-dossier-header-grid">
+            <div>
+              <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a;">
+                ${branding.agency} &bull; Direction du Courtage
+              </div>
+              <div style="font-size: 10px; color: #64748b;">
+                Objet expertisé : ${data.addrInput} (${data.surfInput} m²)
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 10px; font-family: var(--font-mono); color: #64748b;">
+                Dossier N° ${dossierNum} &bull; Page 2 sur 2
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4 : Preuves Notariées Contiguës -->
+          <div class="cma-dossier-section-title">4. Actes Notariés Comparables Contigus (Registre Foncier - FAO)</div>
+          <p style="font-size: 10px; color: #475569; margin: 0 0 8px 0; line-height: 1.45;">
+            Conformément à l'article 157 de la Loi d'application du code civil suisse (LaCC Genève), les mutations immobilières suivantes enregistrées au Registre Foncier attestent de la réalité économique des prix constatés dans l'environnement immédiat de l'immeuble :
+          </p>
+
+          <table class="cma-dossier-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Distance</th>
+                <th style="width: 90px;">Date Acte</th>
+                <th>Adresse & Cadastre</th>
+                <th style="width: 100px;">Typologie</th>
+                <th style="width: 75px;">Surface</th>
+                <th style="width: 115px;">Prix Notarié</th>
+                <th style="width: 110px;">Prix au m² Vendu</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${compRows || '<tr><td colspan="7" style="text-align:center; padding:15px; color:#64748b;">Aucun acte notarié disponible dans le rayon sélectionné.</td></tr>'}
+            </tbody>
+          </table>
+
+          <div style="background: #f8fafc; border-left: 3px solid #64748b; padding: 8px 12px; margin-top: 10px; font-size: 9.5px; color: #475569; line-height: 1.4;">
+            <strong>Protection de la sphère privée (nLPD) :</strong> Les noms patronymiques des vendeurs et acquéreurs sont volontairement occultés du présent dossier remis au propriétaire afin de respecter la Loi fédérale sur la protection des données. Les montants, parcelles et dates d'actes demeurent authentifiés conformes aux publications du Registre Foncier.
+          </div>
+
+          <!-- Section 5 : Cadre Méthodologique & Références Légales -->
+          <div class="cma-dossier-section-title">5. Cadre Méthodologique & Mentions Légales</div>
+          <div style="font-size: 10px; color: #475569; line-height: 1.5; background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 14px; margin-bottom: 24px;">
+            <p style="margin: 0 0 6px 0;">
+              <strong>Objet de l'avis de valeur :</strong> Le présent avis de valeur constitue une analyse comparative de marché (CMA) établie sur la base de données quantitatives publiques et notariées. Il a pour vocation de guider la fixation de la valeur vénale de mise en marché et ne se substitue pas à une expertise foncière judiciaire formelle au sens de la Loi sur la poursuite pour dettes et la faillite (LP).
+            </p>
+            <p style="margin: 0 0 6px 0;">
+              <strong>Réglementation cantonale LDTR (art. 39) :</strong> Pour les appartements loués faisant l'objet d'une aliénation sous le régime PPE, l'acquéreur et le propriétaire doivent se conformer aux autorisations délivrées par le Département du territoire selon la Loi sur les démolitions, conversions et rénovations d'immeubles de logement.
+            </p>
+            <p style="margin: 0;">
+              <strong>Validité temporelle :</strong> Les conditions économiques, taux d'intérêt hypothécaires et volumes de transactions genevois évoluant mensuellement, la validité indicative des fourchettes présentées dans ce rapport est fixée à <strong>90 jours</strong> à compter de sa date d'émission.
+            </p>
+          </div>
+
+          <!-- Section 6 : Visa & Signature -->
+          <div class="cma-dossier-section-title">6. Visa & Validation du Cabinet</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px;">
+            <div style="border: 1px solid #cbd5e1; padding: 14px; min-height: 90px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: #64748b;">Conseiller / Négociateur Responsable</div>
+                <div style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 4px;">${branding.broker}</div>
+              </div>
+              <div style="border-top: 1px dashed #cbd5e1; padding-top: 6px; font-size: 9px; color: #94a3b8;">
+                Signature du courtier en charge
+              </div>
+            </div>
+            <div style="border: 1px solid #cbd5e1; padding: 14px; min-height: 90px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: #64748b;">Direction de l'Agence & Cachet</div>
+                <div style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 4px;">${branding.agency}</div>
+              </div>
+              <div style="border-top: 1px dashed #cbd5e1; padding-top: 6px; font-size: 9px; color: #94a3b8;">
+                Genève, le ${dateStr} &bull; Cachet officiel
+              </div>
+            </div>
+          </div>
+
+          <!-- Page 2 Footer -->
+          <div class="cma-dossier-footer">
+            <span>Dossier d'Avis de Valeur Notarié &bull; Réf. ${dossierNum}</span>
+            <span>Page 2 sur 2</span>
+            <span>${branding.agency} &bull; Cytria Intelligence Immobilière Genève</span>
+          </div>
+        </div>
+      `;
     }
 
     function copyCmaReport() {
@@ -7894,6 +8519,15 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
       });
     }
 
+    const cmaDossierModalEl = document.getElementById('cmaDossierModal');
+    if (cmaDossierModalEl) {
+      cmaDossierModalEl.addEventListener('click', (e) => {
+        if (e.target.id === 'cmaDossierModal') {
+          closeCmaDossierModal();
+        }
+      });
+    }
+
     initLeagueFilters();
 
     // Initial render
@@ -7903,6 +8537,7 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
     // DEEP-LINKING & EXTERNAL URL ROUTER
     // Supports:
     //   #cma or ?tool=cma or ?modal=cma (&address=...)
+    //   #dossier or ?dossier=true
     //   #sync or ?tool=sync or ?modal=sync (&suite=MARKET|SOURCING|AGENCY_BI)
     //   #guide or ?tool=guide or ?modal=guide or #playbooks or #methodologie (&tab=HOIRIES|FONCIER|PRIX|CMA|AGENCES)
     //   #sourcing, #agencies
@@ -7915,7 +8550,16 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
 
       if (!target) return;
 
-      if (target === 'cma' || target === 'simulateur' || target === 'avis-de-valeur' || target.includes('cma') || target.includes('valeur')) {
+      if (target === 'dossier' || target === 'dossier-cma' || params.get('dossier') === 'true') {
+        const addr = params.get('address') || params.get('adresse');
+        const surf = params.get('surface');
+        const typo = params.get('typology') || params.get('type');
+        if (addr && document.getElementById('cmaAddressInput')) document.getElementById('cmaAddressInput').value = addr;
+        if (surf && document.getElementById('cmaSurfaceInput')) document.getElementById('cmaSurfaceInput').value = surf;
+        if (typo && document.getElementById('cmaTypologySelect')) document.getElementById('cmaTypologySelect').value = typo.toUpperCase();
+        runComparativeAnalysis();
+        openCmaDossierModal();
+      } else if (target === 'cma' || target === 'simulateur' || target === 'avis-de-valeur' || target.includes('cma') || target.includes('valeur')) {
         const addr = params.get('address') || params.get('adresse');
         const surf = params.get('surface');
         const typo = params.get('typology') || params.get('type');

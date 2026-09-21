@@ -24,6 +24,7 @@ Le système **CYTRIA (FAO × SITG)** renverse cette asymétrie d'information :
 Vous pouvez ouvrir directement l'application cartographique et déclencher les fenêtres opérationnelles via les URL directes :
 
 - **[Simulateur d'Avis de Valeur & Comparables (CMA)](http://localhost:8080/index.html#cma)** : Ouvre le calculateur d'estimation vénale et la recherche de comparables notariés contigus. Paramètres URL supportés : `?tool=cma&address=Chemin+du+Saut-du-Loup+18&surface=95&typology=PPE`.
+- **[Dossier d'Avis de Valeur Notarié (Swiss Grid PDF)](http://localhost:8080/index.html#dossier)** : Ouvre directement le dossier client d'argumentaire de vente prêt à imprimer (A4) avec personnalisation d'agence, fourchettes FAO et preuves notariées contiguës anonymisées (nLPD).
 - **[Actualiser Marché & Données (FAO × SITG)](http://localhost:8080/index.html#sync)** : Déclenche le panneau de synchronisation contextuelle (hebdomadaire pour FAO/SITG, quotidienne pour veille concurrentielle).
 - **[Guide Métier & Playbooks Interactifs](http://localhost:8080/index.html#guide)** : Ouvre la base de connaissances métier intégrée (onglets HOIRIES, FONCIER, PRIX, CMA, AGENCES, EARLYSIGNALS).
 - **[Benchmark & Parts de Marché Agences](http://localhost:8080/index.html#agencies)** : Affiche la répartition des parts de marché et l'emprise territoriale des 83 agences officielles du canton de Genève.

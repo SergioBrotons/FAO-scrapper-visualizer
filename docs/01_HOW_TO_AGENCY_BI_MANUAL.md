@@ -114,9 +114,14 @@ Le moteur CMA permet d'évaluer n'importe quel immeuble ou appartement en croisa
    - Fourchette Basse (25e percentile).
    - Valeur Vénale Médiane Recommandée (médiane notariée FAO).
    - Fourchette Haute (75e percentile).
-5. **Restitution Client** :
-   - Bouton **Copier le Rapport d'Estimation** : Génère un mémo textuel prêt à insérer dans le dossier d'estimation.
-   - Bouton **Tracer sur la Carte & Voir** : Dessine le cercle de prospection et met en lumière les transactions comparables.
+5. **Restitution Client & Générateur de Dossier d'Avis de Valeur** :
+   - Bouton **Générer le Dossier d'Avis de Valeur ↗** : Ouvre un dossier de présentation client haut de gamme de 2 pages au format Swiss Grid (`#cmaDossierModal`).
+     - **Page 1** : Identité cadastrale complète (SITG / Registre Foncier), fourchettes de valorisation (Basse P25, Pivot Médian FAO, Haute P75), étalonnage micro-quartier et référence directe même résidence le cas échéant.
+     - **Page 2** : Tableau des preuves notariées contiguës officielles (art. 157 LaCC), anonymisation conforme à la protection des données (nLPD), cadre légal LDTR (art. 39), validité 90 jours et visa/signature du courtier.
+     - **Personnalisation White-Label** : Bouton `En-tête Agence` permettant d'adapter le nom du cabinet, du courtier et ses coordonnées directes (sauvegardé en mémoire locale).
+     - **Export PDF / Impression A4** : Bouton `Imprimer / Exporter PDF (A4)` déclenchant un gabarit d'impression épuré sans chrome d'application.
+   - Bouton **Copier le Rapport Brut** : Copie la synthèse textuelle brute dans le presse-papier pour vos notes internes.
+   - Bouton **Tracer sur la Carte & Voir** : Dessine le cercle métrique sur la carte et centre la caméra sur les transactions contiguës.
 
 ---
 

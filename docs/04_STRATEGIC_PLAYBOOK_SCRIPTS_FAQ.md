@@ -210,6 +210,34 @@ Le connecteur Webhook permet de synchroniser directement les opportunités quali
 
 ---
 
+### Playbook 4.4 : Le Rendez-vous d'Estimation & Remise du Dossier d'Avis de Valeur Notarié
+
+Le **Dossier d'Avis de Valeur Notarié** transforme les données brutes de la FAO et du Registre Foncier en un document d'argumentaire de vente haut de gamme à remettre en main propre ou par email au propriétaire.
+
+#### Objectif Commercial :
+Désarmer les prétentions de prix irréalistes des vendeurs (souvent nourries par les prix d'affichage surévalués des portails immobiliers) en substituant aux estimations spéculatives la réalité contractuelle des actes notariés récents dans le voisinage immédiat.
+
+#### Protocole d'Entretien Vendeur en 4 Temps :
+
+1. **Introduction & Neutralité Institutionnelle (Page 1 - Section 1)** :
+   - Présentez l'identité cadastrale complète du bien (parcelle, section, typologie, surface habitable qualifiée).
+   - *"Monsieur/Madame, notre cabinet ne fonde pas son estimation sur des annonces Internet où n'importe qui peut afficher le prix qu'il souhaite. Nous travaillons exclusivement sur la base des mutations officielles enregistrées au Registre Foncier de Genève et publiées à la Feuille d'Avis Officielle."*
+
+2. **Présentation de la Fourchette Vénale Recommandée (Page 1 - Section 2)** :
+   - Déroulez la fourchette à trois niveaux (Basse P25, Pivot Médian Recommandé, Haute P75).
+   - *"Voici la réalité économique de votre secteur : le prix médian effectif se situe à CHF X'XXX'000 (CHF XX'XXX / m²). C'est le pivot autour duquel se concluent les ventes authentiques dans votre micro-quartier."*
+
+3. **L'Ancrage Indiscutable par les Preuves Contiguës (Page 2 - Section 4)** :
+   - Passez à la Page 2 présentant les 3 à 5 transactions notariées les plus proches avec leurs dates et montants réels.
+   - Si une vente au sein de la même résidence ou copropriété existe (ex: Saut-du-Loup 16 à CHF 1'620'000 pour 92 m²), pointez-la directement :
+   - *"Regardez la parcelle voisine au n° 16 : l'acte notarié signé le 26 février 2026 s'est conclu à CHF 1'620'000, soit CHF 17'609 / m². Les acheteurs de notre base comparent votre bien à cette référence directe. Tout prix supérieur à CHF 18'000 / m² bloquera la commercialisation au-delà de 120 jours."*
+
+4. **Clôture du Mandat & Signature (Page 2 - Section 6)** :
+   - Mettez en avant le respect strict de la sphère privée (anonymisation nLPD) et la validité temporelle de 90 jours.
+   - Proposez la signature du mandat exclusif au prix pivot médian en garantissant une commercialisation active auprès du fichier acquéreurs qualifiés du cabinet.
+
+---
+
 ## 5. FAQ Déontologique & Opérationnelle EarlySignals (Suisse & nLPD)
 
 ### Q6 : Quelle est la durée de réserve déontologique recommandée suite à une succession ?
