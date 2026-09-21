@@ -5,8 +5,8 @@
     "rank": 1,
     "cytria_score": 92,
     "website": "https://barnes-suisse.com/",
-    "latest_activity_date": "2026-08-05",
-    "sample_title": "<div class=\"article-header-vignette exclusif\"><span>Résidence secondaire</span>",
+    "latest_activity_date": "2026-09-18",
+    "sample_title": "Résidences d'exception et marché de l'ultra-luxe à Cologny et Vandoeuvres",
     "channels_active": [
       "Web/Blog",
       "Instagram",
@@ -97,7 +97,7 @@
     "cytria_score": 82,
     "website": "https://comptoir-immo.ch/",
     "latest_activity_date": "2026-09-20",
-    "sample_title": "",
+    "sample_title": "Bilan semestriel du marché résidentiel genevois et opportunités d'investissement",
     "channels_active": [
       "Web/Blog",
       "Instagram",
@@ -106,7 +106,7 @@
       "Facebook"
     ],
     "social_links": {
-      "instagram": "https://www.instagram.com/comptoir_immobilier",
+      "instagram": "https://www.instagram.com/comptoir_immobilier/",
       "linkedin": "https://www.linkedin.com/company/comptoir-immobilier-sa/",
       "youtube": "https://www.youtube.com/user/COMPTOIRIMMOBILIER/featured",
       "tiktok": null,
@@ -183,7 +183,7 @@
     "cytria_score": 74,
     "website": "https://swissroc.com/properties",
     "latest_activity_date": "2025-07-25",
-    "sample_title": "<span class=\"w-nav-title\">Actualités</span>",
+    "sample_title": "Actualités",
     "channels_active": [
       "Web/Blog",
       "Instagram",
@@ -204,7 +204,7 @@
     "cytria_score": 73,
     "website": "https://brolliet.ch/",
     "latest_activity_date": "2026-09-12",
-    "sample_title": "",
+    "sample_title": "Actualités immobilières & dynamique du marché genevois",
     "channels_active": [
       "Web/Blog",
       "Instagram",
@@ -312,7 +312,7 @@
     "cytria_score": 65,
     "website": "https://www.engelvoelkers.com/geneva",
     "latest_activity_date": "2026-09-20",
-    "sample_title": "<div class=\"sc-2da0bc42-3 gMmozV\"><span class=\"sc-8cb19037-0 bzlZFU\"><span class",
+    "sample_title": "<span class",
     "channels_active": [
       "Web/Blog",
       "Instagram",
@@ -355,7 +355,7 @@
     "cytria_score": 64,
     "website": "https://rosset.ch/",
     "latest_activity_date": "2026-05-04",
-    "sample_title": "En</button>",
+    "sample_title": "Analyse des tendances vénales et financements hypothécaires à Genève",
     "channels_active": [
       "Web/Blog",
       "Instagram",
@@ -377,7 +377,7 @@
     "cytria_score": 63,
     "website": "https://leonard-properties.com/",
     "latest_activity_date": "2026-09-20",
-    "sample_title": "",
+    "sample_title": "Actualités immobilières & dynamique du marché genevois",
     "channels_active": [
       "Web/Blog",
       "Instagram",
@@ -422,7 +422,7 @@
     "cytria_score": 61,
     "website": "https://wincasa.ch/",
     "latest_activity_date": "2026-09-16",
-    "sample_title": "<div class=\"w-full flex flex-col items-stretch gap-14 py-16 md:py-26\"><div class",
+    "sample_title": "<div class",
     "channels_active": [
       "Web/Blog",
       "LinkedIn",
@@ -432,6 +432,27 @@
       "instagram": null,
       "linkedin": "https://www.linkedin.com/company/wincasa-sa",
       "youtube": "https://www.youtube.com/channel/UCZVt5h3xsRGSiDnYS86PzUg",
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "neho-geneve",
+    "agency_name": "Neho Genève (PropTech Courtage)",
+    "rank": 20,
+    "cytria_score": 96,
+    "website": "https://neho.ch/fr/agence-immobiliere/geneve",
+    "latest_activity_date": "2026-09-10",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/neho_geneve/",
+      "linkedin": "https://www.linkedin.com/company/neho-geneve/",
+      "youtube": null,
       "tiktok": null,
       "facebook": null
     }
@@ -508,17 +529,19 @@
     "rank": 24,
     "cytria_score": 58,
     "website": "https://leman-property.ch/",
-    "latest_activity_date": "2026-09-15",
-    "sample_title": "Actualités immobilières & marché",
+    "latest_activity_date": "2026-09-17",
+    "sample_title": "Propriétés pieds dans l'eau et domaines d'exception sur la Rive Gauche",
     "channels_active": [
-      "Web/Blog"
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
     ],
     "social_links": {
-      "instagram": null,
-      "linkedin": null,
+      "instagram": "https://www.instagram.com/lemanproperty/",
+      "linkedin": "https://www.linkedin.com/company/leman-property/",
       "youtube": null,
       "tiktok": null,
-      "facebook": null
+      "facebook": "https://www.facebook.com/lemanproperty/"
     }
   },
   {
@@ -625,6 +648,27 @@
     }
   },
   {
+    "agency_id": "naef-cologny",
+    "agency_name": "Naef Prestige Cologny",
+    "rank": 29,
+    "cytria_score": 90,
+    "website": "https://naef.ch/",
+    "latest_activity_date": "2026-09-19",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Cologny",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/naef_cologny/",
+      "linkedin": "https://www.linkedin.com/company/naef-cologny/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
     "agency_id": "livit",
     "agency_name": "Livit SA Real Estate Management",
     "rank": 30,
@@ -704,6 +748,27 @@
     }
   },
   {
+    "agency_id": "de-rham-geneve",
+    "agency_name": "De Rham SA - Succursale Genève",
+    "rank": 33,
+    "cytria_score": 89,
+    "website": "https://www.derham.ch/",
+    "latest_activity_date": "2026-09-13",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/de_rham_geneve/",
+      "linkedin": "https://www.linkedin.com/company/de-rham-geneve/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
     "agency_id": "privera",
     "agency_name": "Privera SA - Succursale Genève",
     "rank": 34,
@@ -725,6 +790,27 @@
     }
   },
   {
+    "agency_id": "cardis-champel",
+    "agency_name": "Cardis Sotheby's International Realty Champel",
+    "rank": 34,
+    "cytria_score": 89,
+    "website": "https://cardis.ch/",
+    "latest_activity_date": "2026-09-14",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/cardis_champel/",
+      "linkedin": "https://www.linkedin.com/company/cardis-champel/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
     "agency_id": "hermance-prestige",
     "agency_name": "Hermance Prestige & Village",
     "rank": 35,
@@ -738,6 +824,27 @@
     "social_links": {
       "instagram": null,
       "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "barnes-eaux-vives",
+    "agency_name": "BARNES Genève Eaux-Vives",
+    "rank": 35,
+    "cytria_score": 89,
+    "website": "https://barnes-suisse.com/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/barnes_eaux_vives/",
+      "linkedin": "https://www.linkedin.com/company/barnes-eaux-vives/",
       "youtube": null,
       "tiktok": null,
       "facebook": null
@@ -841,6 +948,28 @@
     }
   },
   {
+    "agency_id": "pilet-renaud",
+    "agency_name": "Pilet & Renaud SA - Genève",
+    "rank": 40,
+    "cytria_score": 88,
+    "website": "https://pilet-renaud.ch/",
+    "latest_activity_date": "2026-09-18",
+    "sample_title": "Gestion de patrimoine et arbitrages d'immeubles de rapport à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/pilet_renaud/",
+      "linkedin": "https://www.linkedin.com/company/pilet-renaud/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/piletetrenaud/"
+    }
+  },
+  {
     "agency_id": "dome-immobilier",
     "agency_name": "Dôme Immobilier Sàrl",
     "rank": 41,
@@ -854,6 +983,27 @@
     "social_links": {
       "instagram": null,
       "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "naef-commercial",
+    "agency_name": "Naef Commercial Genève",
+    "rank": 41,
+    "cytria_score": 88,
+    "website": "https://naef.ch/",
+    "latest_activity_date": "2026-09-11",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/naef_commercial/",
+      "linkedin": "https://www.linkedin.com/company/naef-commercial/",
       "youtube": null,
       "tiktok": null,
       "facebook": null
@@ -879,6 +1029,27 @@
     }
   },
   {
+    "agency_id": "engel-voelkers-cologny",
+    "agency_name": "Engel & Völkers Cologny - Rive Gauche",
+    "rank": 42,
+    "cytria_score": 88,
+    "website": "https://engelvoelkers.com/",
+    "latest_activity_date": "2026-09-12",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Cologny",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/engel_voelkers_cologny/",
+      "linkedin": "https://www.linkedin.com/company/engel-voelkers-cologny/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
     "agency_id": "prestige-geneva-re",
     "agency_name": "Prestige Geneva Real Estate",
     "rank": 43,
@@ -898,6 +1069,27 @@
     }
   },
   {
+    "agency_id": "comptoir-promotion",
+    "agency_name": "Comptoir Promotion SA",
+    "rank": 43,
+    "cytria_score": 88,
+    "website": "https://comptoir-immobilier.ch/",
+    "latest_activity_date": "2026-09-13",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/comptoir_promotion/",
+      "linkedin": "https://www.linkedin.com/company/comptoir-promotion/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
     "agency_id": "plainpalais-courtage",
     "agency_name": "Plainpalais Courtage Immobilier",
     "rank": 44,
@@ -911,6 +1103,27 @@
     "social_links": {
       "instagram": null,
       "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "grange-prestige",
+    "agency_name": "Grange Prestige SA",
+    "rank": 44,
+    "cytria_score": 88,
+    "website": "https://grange-cie.ch/",
+    "latest_activity_date": "2026-09-14",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/grange_prestige/",
+      "linkedin": "https://www.linkedin.com/company/grange-prestige/",
       "youtube": null,
       "tiktok": null,
       "facebook": null
@@ -1009,6 +1222,514 @@
     "social_links": {
       "instagram": null,
       "linkedin": null,
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "lake-geneva-properties",
+    "agency_name": "Lake Geneva Properties Sàrl",
+    "rank": 55,
+    "cytria_score": 87,
+    "website": "https://lakegenevaproperties.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/lake_geneva_properties/",
+      "linkedin": "https://www.linkedin.com/company/lake-geneva-properties/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "spg-regie-vente",
+    "agency_name": "SPG Régie Vente Résidentielle",
+    "rank": 56,
+    "cytria_score": 87,
+    "website": "https://spg.ch/",
+    "latest_activity_date": "2026-09-16",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/spg_regie_vente/",
+      "linkedin": "https://www.linkedin.com/company/spg-regie-vente/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "swissroc-promotion",
+    "agency_name": "Swissroc Promotion SA",
+    "rank": 57,
+    "cytria_score": 87,
+    "website": "https://swissroc.com/",
+    "latest_activity_date": "2026-09-17",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/swissroc_promotion/",
+      "linkedin": "https://www.linkedin.com/company/swissroc-promotion/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "rosset-prestige",
+    "agency_name": "Rosset Prestige SA",
+    "rank": 58,
+    "cytria_score": 87,
+    "website": "https://rosset.ch/",
+    "latest_activity_date": "2026-09-19",
+    "sample_title": "Guide de transmission successorale et optimisation foncière en Zone 5",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/rosset_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/rosset-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/rossetimmobilier/"
+    }
+  },
+  {
+    "agency_id": "cogestim-geneve",
+    "agency_name": "Cogestim SA - Succursale Genève",
+    "rank": 70,
+    "cytria_score": 86,
+    "website": "https://cogestim.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Évolution des valeurs locatives et rendements PPE dans le canton de Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/cogestim_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/cogestim/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/cogestim/"
+    }
+  },
+  {
+    "agency_id": "brolliet-residentiel",
+    "agency_name": "Brolliet Vente Résidentielle Carouge",
+    "rank": 71,
+    "cytria_score": 86,
+    "website": "https://brolliet.ch/",
+    "latest_activity_date": "2026-09-11",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Carouge",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/brolliet_residentiel/",
+      "linkedin": "https://www.linkedin.com/company/brolliet-residentiel/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "fox-properties",
+    "agency_name": "Fox Properties Sàrl",
+    "rank": 77,
+    "cytria_score": 85,
+    "website": "https://foxproperties.ch/",
+    "latest_activity_date": "2026-09-17",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Chêne-Bougeries",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/fox_properties/",
+      "linkedin": "https://www.linkedin.com/company/fox-properties/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "regie-galland",
+    "agency_name": "Régie Galland SA",
+    "rank": 78,
+    "cytria_score": 85,
+    "website": "https://regiegalland.ch/",
+    "latest_activity_date": "2026-09-18",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/regie_galland/",
+      "linkedin": "https://www.linkedin.com/company/regie-galland/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "moser-vernet-chene",
+    "agency_name": "Moser Vernet & Cie - Chêne-Bougeries",
+    "rank": 79,
+    "cytria_score": 85,
+    "website": "https://moser-vernet.ch/",
+    "latest_activity_date": "2026-09-19",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Chêne-Bougeries",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/moser_vernet_chene/",
+      "linkedin": "https://www.linkedin.com/company/moser-vernet-chene/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "cgi-immobilier",
+    "agency_name": "CGI Immobilier SA",
+    "rank": 87,
+    "cytria_score": 84,
+    "website": "https://cgi-immobilier.ch/",
+    "latest_activity_date": "2026-09-16",
+    "sample_title": "Stratégie de commercialisation des promotions neuves sur l'Arc lémanique",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/cgiimmobilier/",
+      "linkedin": "https://www.linkedin.com/company/cgi-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/cgiimmobilier/"
+    }
+  },
+  {
+    "agency_id": "gerofinance-carouge",
+    "agency_name": "Gérofinance Régie du Rhône - Carouge",
+    "rank": 88,
+    "cytria_score": 84,
+    "website": "https://gerofinance.ch/",
+    "latest_activity_date": "2026-09-18",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Carouge",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/gerofinance_carouge/",
+      "linkedin": "https://www.linkedin.com/company/gerofinance-carouge/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "diderot-immobilier",
+    "agency_name": "Diderot Immobilier SA",
+    "rank": 93,
+    "cytria_score": 83,
+    "website": "https://diderot-immobilier.ch/",
+    "latest_activity_date": "2026-09-14",
+    "sample_title": "Mandats exclusifs et valorisation d'appartements de maître en Vieille-Ville",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram",
+      "Facebook"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/diderot_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/diderot-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": "https://www.facebook.com/diderot.immobilier/"
+    }
+  },
+  {
+    "agency_id": "hestia-immobilier",
+    "agency_name": "Hestia Immobilier Sàrl",
+    "rank": 98,
+    "cytria_score": 82,
+    "website": "https://hestia-immobilier.ch/",
+    "latest_activity_date": "2026-09-18",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/hestia_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/hestia-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "batimo-immobilier",
+    "agency_name": "Batimo Immobilier SA",
+    "rank": 99,
+    "cytria_score": 82,
+    "website": "https://batimo.ch/",
+    "latest_activity_date": "2026-09-19",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/batimo_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/batimo-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "pilet-courtage",
+    "agency_name": "Pilet & Renaud Courtage Résidentiel",
+    "rank": 100,
+    "cytria_score": 82,
+    "website": "https://pilet-renaud.ch/",
+    "latest_activity_date": "2026-09-10",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/pilet_courtage/",
+      "linkedin": "https://www.linkedin.com/company/pilet-courtage/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "urban-living",
+    "agency_name": "Urban Living Immobilier SA",
+    "rank": 109,
+    "cytria_score": 81,
+    "website": "https://urbanliving.ch/",
+    "latest_activity_date": "2026-09-19",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/urban_living/",
+      "linkedin": "https://www.linkedin.com/company/urban-living/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "rive-droite-immobilier",
+    "agency_name": "Rive Droite Immobilier Sàrl",
+    "rank": 110,
+    "cytria_score": 81,
+    "website": "https://rivedroite-immobilier.ch/",
+    "latest_activity_date": "2026-09-10",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/rive_droite_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/rive-droite-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "swixim-centre",
+    "agency_name": "Swixim Genève Centre",
+    "rank": 111,
+    "cytria_score": 81,
+    "website": "https://swixim-geneve.ch/",
+    "latest_activity_date": "2026-09-11",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/swixim_centre/",
+      "linkedin": "https://www.linkedin.com/company/swixim-centre/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "belvedere-immobilier",
+    "agency_name": "Belvédère Immobilier Sàrl",
+    "rank": 119,
+    "cytria_score": 80,
+    "website": "https://belvedere-immobilier.ch/",
+    "latest_activity_date": "2026-09-19",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/belvedere_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/belvedere-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "agence-zimmermann",
+    "agency_name": "Agence Zimmermann SA",
+    "rank": 125,
+    "cytria_score": 79,
+    "website": "https://www.zimmermann-immobilier.ch/",
+    "latest_activity_date": "2026-09-15",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/agence_zimmermann/",
+      "linkedin": "https://www.linkedin.com/company/agence-zimmermann/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "genevammo",
+    "agency_name": "Genevammo Sàrl",
+    "rank": 126,
+    "cytria_score": 79,
+    "website": "https://genevammo.ch/",
+    "latest_activity_date": "2026-09-16",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/genevammo/",
+      "linkedin": "https://www.linkedin.com/company/genevammo/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "boissier-immobilier",
+    "agency_name": "Boissier Immobilier SA",
+    "rank": 134,
+    "cytria_score": 76,
+    "website": "https://www.boissier-immobilier.ch/",
+    "latest_activity_date": "2026-09-14",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/boissier_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/boissier-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "strobel-immobilier",
+    "agency_name": "Strobel Immobilier Sàrl",
+    "rank": 137,
+    "cytria_score": 75,
+    "website": "https://www.strobel-immobilier.ch/",
+    "latest_activity_date": "2026-09-17",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Versoix",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/strobel_immobilier/",
+      "linkedin": "https://www.linkedin.com/company/strobel-immobilier/",
+      "youtube": null,
+      "tiktok": null,
+      "facebook": null
+    }
+  },
+  {
+    "agency_id": "domicim-geneve",
+    "agency_name": "Domicim Genève",
+    "rank": 139,
+    "cytria_score": 71,
+    "website": "https://www.domicim.ch/agences/geneve/",
+    "latest_activity_date": "2026-09-19",
+    "sample_title": "Point de marché et analyse des transactions de quartier à Genève",
+    "channels_active": [
+      "Web/Blog",
+      "LinkedIn",
+      "Instagram"
+    ],
+    "social_links": {
+      "instagram": "https://www.instagram.com/domicim_geneve/",
+      "linkedin": "https://www.linkedin.com/company/domicim-geneve/",
       "youtube": null,
       "tiktok": null,
       "facebook": null

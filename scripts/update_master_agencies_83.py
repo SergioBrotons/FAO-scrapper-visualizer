@@ -1034,10 +1034,21 @@ for ag in new_agencies_data:
     ag["fao_confirmation_rate_pct"] = round((ag["fao_confirmed_count"] / len(sold_props)) * 100)
     ag["avg_publishing_delay_days"] = 43
 
-all_agencies = agencies_55 + new_agencies_data
-print(f"Total Combined Agencies: {len(all_agencies)}")
+# Deduplicate strictly by agency id to keep exact 83 agencies
+existing_ids = {a["id"] for a in new_agencies_data}
+filtered_existing = [a for a in agencies_55 if a.get("id") not in existing_ids]
+combined_raw = filtered_existing + new_agencies_data
 
-# Sort agencies descending by cytria_score and re-rank 1..83
+seen_ids = set()
+all_agencies = []
+for a in combined_raw:
+    if a.get("id") and a["id"] not in seen_ids:
+        seen_ids.add(a["id"])
+        all_agencies.append(a)
+
+print(f"Total Unique Licensed Agencies: {len(all_agencies)}")
+
+# Sort agencies descending by cytria_score and re-rank 1..N
 all_agencies.sort(key=lambda x: x.get("cytria_score", 0), reverse=True)
 for i, a in enumerate(all_agencies, 1):
     a["rank"] = i
@@ -1116,3 +1127,15 @@ with open("data/exports/geneva_brokers_master.json", "w", encoding="utf-8") as f
     json.dump(brokers_93, f, indent=2, ensure_ascii=False)
 
 print(f"SUCCESS: Saved {len(all_agencies)} agencies and {len(brokers_93)} brokers.")
+
+# Chain marketing benchmark and LinkedIn enrichment
+try:
+    import subprocess
+    import sys
+    enrich_script = Path("scripts/enrich_agency_bi_complete.py")
+    if enrich_script.exists():
+        subprocess.run([sys.executable, str(enrich_script)], check=True)
+        print("[OK] Marketing benchmark & broker LinkedIn profiles synchronized.")
+except Exception as e:
+    print(f"[Warning] Post-enrichment failed: {e}")
+

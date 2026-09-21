@@ -17,7 +17,8 @@
     "phone": "+41 22 518 01 05",
     "email": "a.guignet@neho.ch",
     "cytria_score": 91,
-    "rank": 1
+    "rank": 1,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Jérôme Félicité",
@@ -37,7 +38,8 @@
     "phone": "+41 22 849 88 80",
     "email": "j.felicite@barnes-suisse.com",
     "cytria_score": 85,
-    "rank": 2
+    "rank": 2,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Julie Reymond",
@@ -57,7 +59,8 @@
     "phone": "+41 22 518 01 12",
     "email": "j.reymond@neho.ch",
     "cytria_score": 85,
-    "rank": 3
+    "rank": 3,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Daniela Dhotel",
@@ -77,7 +80,8 @@
     "phone": "+41 22 751 05 07",
     "email": "d.dhotel@105immo.ch",
     "cytria_score": 81,
-    "rank": 4
+    "rank": 4,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Sébastien Rohner",
@@ -97,7 +101,8 @@
     "phone": "+41 22 789 20 02",
     "email": "s.rohner@cardis.ch",
     "cytria_score": 78,
-    "rank": 5
+    "rank": 5,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Quentin Epiney",
@@ -117,7 +122,8 @@
     "phone": "+41 22 319 88 02",
     "email": "q.epiney@comptoir-immo.ch",
     "cytria_score": 77,
-    "rank": 6
+    "rank": 6,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Thierry Barbier-Mueller",
@@ -137,7 +143,8 @@
     "phone": "+41 22 707 46 62",
     "email": "tbm@spgone.ch",
     "cytria_score": 76,
-    "rank": 7
+    "rank": 7,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Marie-Christine de Saint-Affrique",
@@ -157,7 +164,8 @@
     "phone": "+41 22 849 88 82",
     "email": "mc.saintaffrique@barnes-suisse.com",
     "cytria_score": 74,
-    "rank": 8
+    "rank": 8,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Jean-Marc Pilet",
@@ -173,11 +181,12 @@
       "Carouge",
       "Lancy"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/jean-marc-pilet-pilet/",
     "phone": "+41 22 700 16 01",
     "email": "courtier@vernier-courtage.ch",
     "cytria_score": 74,
-    "rank": 9
+    "rank": 9,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Nicolas Galland",
@@ -193,11 +202,12 @@
       "Cologny",
       "Chêne-Bougeries"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/nicolas-galland-cogestim/",
     "phone": "+41 22 700 24 01",
     "email": "courtier@servette-ppe.ch",
     "cytria_score": 74,
-    "rank": 10
+    "rank": 10,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Marc-Antoine Diderot",
@@ -212,11 +222,12 @@
       "Genève",
       "Carouge"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/marc-antoine-diderot-cgi/",
     "phone": "+41 22 700 28 01",
     "email": "courtier@paquis-investissement.ch",
     "cytria_score": 72,
-    "rank": 11
+    "rank": 11,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Jérôme Félicité Jr",
@@ -236,7 +247,8 @@
     "phone": "+41 22 809 07 20",
     "email": "j.felicite@gerofinance.ch",
     "cytria_score": 71,
-    "rank": 12
+    "rank": 12,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Cyril de Bavier",
@@ -255,7 +267,8 @@
     "phone": "+41 22 552 30 02",
     "email": "c.debavier@swissroc.com",
     "cytria_score": 71,
-    "rank": 13
+    "rank": 13,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Michel Da Silva",
@@ -274,7 +287,8 @@
     "phone": "+41 22 347 44 50",
     "email": "m.dasilva@swixim.ch",
     "cytria_score": 71,
-    "rank": 14
+    "rank": 14,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Étienne Nagy",
@@ -293,7 +307,8 @@
     "phone": "+41 22 839 39 01",
     "email": "e.nagy@naef.ch",
     "cytria_score": 70,
-    "rank": 15
+    "rank": 15,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Sophie Martin-Pache",
@@ -313,7 +328,8 @@
     "phone": "+41 22 319 88 15",
     "email": "s.martin-pache@comptoir-immo.ch",
     "cytria_score": 70,
-    "rank": 16
+    "rank": 16,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "François de Haller",
@@ -327,11 +343,12 @@
     "top_communes": [
       "Collonge-Bellerive"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/fran-ois-de-haller-l/",
     "phone": null,
     "email": null,
     "cytria_score": 69,
-    "rank": 17
+    "rank": 17,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Audrey Zimmermann",
@@ -345,11 +362,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/audrey-zimmermann-diderot/",
     "phone": "+41 22 700 23 01",
     "email": "courtier@eaux-vives-quais.ch",
     "cytria_score": 69,
-    "rank": 18
+    "rank": 18,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Arnaud Boissier",
@@ -369,7 +387,8 @@
     "phone": "+41 22 789 20 05",
     "email": "a.boissier@cardis.ch",
     "cytria_score": 68,
-    "rank": 19
+    "rank": 19,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Isabelle Fiaux",
@@ -389,7 +408,8 @@
     "phone": "+41 22 839 39 45",
     "email": "i.fiaux@naef.ch",
     "cytria_score": 68,
-    "rank": 20
+    "rank": 20,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Philippe Calame",
@@ -409,7 +429,8 @@
     "phone": "+41 22 809 98 02",
     "email": "p.calame@john-taylor.com",
     "cytria_score": 68,
-    "rank": 21
+    "rank": 21,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Christian Fox",
@@ -425,11 +446,12 @@
       "Cologny",
       "Vandœuvres"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/christian-fox-fox/",
     "phone": "+41 22 700 17 01",
     "email": "courtier@meyrin-aeroport.ch",
     "cytria_score": 68,
-    "rank": 22
+    "rank": 22,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Caroline Boissier",
@@ -444,11 +466,12 @@
       "Genève",
       "Chêne-Bougeries"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/caroline-boissier-hestia/",
     "phone": "+41 22 700 27 01",
     "email": "courtier@jonction-rhone.ch",
     "cytria_score": 68,
-    "rank": 23
+    "rank": 23,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Béatrice de Riedmatten",
@@ -468,7 +491,8 @@
     "phone": "+41 22 707 46 65",
     "email": "b.riedmatten@spgone.ch",
     "cytria_score": 66,
-    "rank": 24
+    "rank": 24,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Léonard Cohen",
@@ -487,7 +511,8 @@
     "phone": "+41 22 735 55 56",
     "email": "l.cohen@leonard-properties.com",
     "cytria_score": 66,
-    "rank": 25
+    "rank": 25,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Marc Grange",
@@ -507,7 +532,8 @@
     "phone": "+41 22 707 10 15",
     "email": "m.grange@grange.ch",
     "cytria_score": 66,
-    "rank": 26
+    "rank": 26,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Fabrice Koch",
@@ -526,7 +552,8 @@
     "phone": "+41 22 809 09 25",
     "email": "f.koch@m3immobilier.ch",
     "cytria_score": 66,
-    "rank": 27
+    "rank": 27,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Léonard de Rham",
@@ -546,7 +573,8 @@
     "phone": "+41 22 310 00 22",
     "email": "l.derham@jouan-derham.ch",
     "cytria_score": 65,
-    "rank": 28
+    "rank": 28,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Nicolas Teissier",
@@ -565,7 +593,8 @@
     "phone": "+41 22 839 00 25",
     "email": "n.teissier@moservernet.ch",
     "cytria_score": 65,
-    "rank": 29
+    "rank": 29,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Thierry Strobel",
@@ -580,11 +609,12 @@
       "Genève",
       "Veyrier"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/thierry-strobel-r/",
     "phone": "+41 22 700 15 01",
     "email": "courtier@grand-saconnex-immo.ch",
     "cytria_score": 65,
-    "rank": 30
+    "rank": 30,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Béatrice de Rham",
@@ -598,11 +628,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/b-atrice-de-rham-belv/",
     "phone": "+41 22 700 18 01",
     "email": "courtier@onex-villas.ch",
     "cytria_score": 65,
-    "rank": 31
+    "rank": 31,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Delphine de Rham",
@@ -622,7 +653,8 @@
     "phone": "+41 22 849 88 89",
     "email": "d.derham@barnes-suisse.com",
     "cytria_score": 64,
-    "rank": 32
+    "rank": 32,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Guillaume Nobili",
@@ -641,7 +673,8 @@
     "phone": "+41 22 552 30 15",
     "email": "g.nobili@swissroc.com",
     "cytria_score": 64,
-    "rank": 33
+    "rank": 33,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Alexandre de Senarclens",
@@ -661,7 +694,8 @@
     "phone": "+41 22 849 88 85",
     "email": "a.senarclens@barnes-suisse.com",
     "cytria_score": 63,
-    "rank": 34
+    "rank": 34,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Grégory Marchand",
@@ -680,7 +714,8 @@
     "phone": "+41 22 319 89 22",
     "email": "g.marchand@fgp-swissandalps.com",
     "cytria_score": 63,
-    "rank": 35
+    "rank": 35,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Olivier Galland",
@@ -695,11 +730,12 @@
       "Genève",
       "Carouge"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/olivier-galland-urban/",
     "phone": "+41 22 700 20 01",
     "email": "courtier@bernex-terroirs.ch",
     "cytria_score": 63,
-    "rank": 36
+    "rank": 36,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Camille Dutoit",
@@ -719,7 +755,8 @@
     "phone": "+41 22 789 20 08",
     "email": "c.dutoit@cardis.ch",
     "cytria_score": 62,
-    "rank": 37
+    "rank": 37,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Stéphane Cogestim",
@@ -734,11 +771,12 @@
       "Genève",
       "Chêne-Bougeries"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/st-phane-cogestim-batimo/",
     "phone": "+41 22 700 22 01",
     "email": "courtier@carouge-lofts.ch",
     "cytria_score": 62,
-    "rank": 38
+    "rank": 38,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Marc Deillon",
@@ -757,7 +795,8 @@
     "phone": "+41 22 552 40 05",
     "email": "m.deillon@omnia.ch",
     "cytria_score": 61,
-    "rank": 39
+    "rank": 39,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Christian Meyer",
@@ -776,7 +815,8 @@
     "phone": "+41 22 731 80 15",
     "email": "c.meyer@remax.ch",
     "cytria_score": 61,
-    "rank": 40
+    "rank": 40,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Jean-Marc Favre",
@@ -795,7 +835,8 @@
     "phone": "+41 22 755 40 42",
     "email": "jm.favre@versoix-immobilier.ch",
     "cytria_score": 60,
-    "rank": 41
+    "rank": 41,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Laura Fontana",
@@ -813,7 +854,8 @@
     "phone": "+41 22 301 20 22",
     "email": "l.fontana@carouge-transactions.ch",
     "cytria_score": 60,
-    "rank": 42
+    "rank": 42,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "David Zbinden",
@@ -827,11 +869,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/david-zbinden-d/",
     "phone": null,
     "email": null,
     "cytria_score": 60,
-    "rank": 43
+    "rank": 43,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Sacha Al-Khatib",
@@ -845,11 +888,12 @@
     "top_communes": [
       "Cologny"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/sacha-al-khatib-geneva/",
     "phone": null,
     "email": null,
     "cytria_score": 60,
-    "rank": 44
+    "rank": 44,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Christophe Bovet",
@@ -863,11 +907,12 @@
     "top_communes": [
       "Satigny"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/christophe-bovet-r/",
     "phone": null,
     "email": null,
     "cytria_score": 60,
-    "rank": 45
+    "rank": 45,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Marc Jacquet",
@@ -881,11 +926,12 @@
     "top_communes": [
       "Veyrier"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/marc-jacquet-veyrier/",
     "phone": null,
     "email": null,
     "cytria_score": 60,
-    "rank": 46
+    "rank": 46,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Alexandre CGI",
@@ -900,11 +946,12 @@
       "Genève",
       "Vernier"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/alexandre-cgi-genevammo/",
     "phone": "+41 22 700 02 01",
     "email": "courtier@puplinge-demeures.ch",
     "cytria_score": 60,
-    "rank": 47
+    "rank": 47,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Valérie Diderot",
@@ -920,11 +967,12 @@
       "Cologny",
       "Collonge-Bellerive"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/val-rie-diderot-lake/",
     "phone": "+41 22 700 12 01",
     "email": "courtier@bellevue-prestige.ch",
     "cytria_score": 60,
-    "rank": 48
+    "rank": 48,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Patrick Fox",
@@ -940,11 +988,12 @@
       "Grand-Saconnex",
       "Pregny-Chambésy"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/patrick-fox-rive/",
     "phone": "+41 22 700 21 01",
     "email": "courtier@troinex-campagne.ch",
     "cytria_score": 60,
-    "rank": 49
+    "rank": 49,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Nathalie Hestia",
@@ -960,11 +1009,12 @@
       "Lancy",
       "Meyrin"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/nathalie-hestia-naef/",
     "phone": "+41 22 700 25 01",
     "email": "courtier@champel-attiques.ch",
     "cytria_score": 60,
-    "rank": 50
+    "rank": 50,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Matteo Riva",
@@ -983,7 +1033,8 @@
     "phone": "+41 22 736 10 12",
     "email": "m.riva@rivaimmo.ch",
     "cytria_score": 59,
-    "rank": 51
+    "rank": 51,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Bernard Mottier",
@@ -1002,7 +1053,8 @@
     "phone": "+41 22 782 50 52",
     "email": "b.mottier@meyrin-immo.ch",
     "cytria_score": 59,
-    "rank": 52
+    "rank": 52,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Marc-Olivier Favrod",
@@ -1016,11 +1068,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/marc-olivier-favrod-r/",
     "phone": null,
     "email": null,
     "cytria_score": 59,
-    "rank": 53
+    "rank": 53,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Laurent Galland",
@@ -1036,11 +1089,12 @@
       "Lancy",
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/laurent-galland-g/",
     "phone": "+41 22 700 04 01",
     "email": "courtier@perly-certoux-habitat.ch",
     "cytria_score": 59,
-    "rank": 54
+    "rank": 54,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Thomas Aebischer",
@@ -1060,7 +1114,8 @@
     "phone": "+41 22 552 29 30",
     "email": "t.aebischer@engelvoelkers.com",
     "cytria_score": 58,
-    "rank": 55
+    "rank": 55,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Laurent Rosset",
@@ -1079,7 +1134,8 @@
     "phone": "+41 22 317 77 20",
     "email": "l.rosset@rosset.ch",
     "cytria_score": 58,
-    "rank": 56
+    "rank": 56,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Sami Kanaan",
@@ -1098,7 +1154,8 @@
     "phone": "+41 22 900 00 15",
     "email": "s.kanaan@capvest.ch",
     "cytria_score": 58,
-    "rank": 57
+    "rank": 57,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Valérie Berthoud",
@@ -1116,7 +1173,8 @@
     "phone": "+41 22 311 44 02",
     "email": "v.berthoud@immocharme-geneve.ch",
     "cytria_score": 58,
-    "rank": 58
+    "rank": 58,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Gilles Morel",
@@ -1130,11 +1188,12 @@
     "top_communes": [
       "Lancy"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/gilles-morel-optimum/",
     "phone": null,
     "email": null,
     "cytria_score": 58,
-    "rank": 59
+    "rank": 59,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Marc-Henri Châtelain",
@@ -1153,7 +1212,8 @@
     "phone": "+41 22 819 02 10",
     "email": "mh.chatelain@stonehagefleming.com",
     "cytria_score": 57,
-    "rank": 60
+    "rank": 60,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Philippe Brolliet",
@@ -1172,7 +1232,8 @@
     "phone": "+41 22 593 88 10",
     "email": "p.brolliet@brolliet.ch",
     "cytria_score": 57,
-    "rank": 61
+    "rank": 61,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Pierre Vaudaux",
@@ -1186,11 +1247,12 @@
     "top_communes": [
       "Chêne-Bourg"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/pierre-vaudaux-vaudaux/",
     "phone": null,
     "email": null,
     "cytria_score": 57,
-    "rank": 62
+    "rank": 62,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Éric Belvédère",
@@ -1206,11 +1268,12 @@
       "Chêne-Bougeries",
       "Chêne-Bourg"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/ric-belv-d-re-spg/",
     "phone": null,
     "email": null,
     "cytria_score": 57,
-    "rank": 63
+    "rank": 63,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Serge Paccard",
@@ -1224,11 +1287,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/serge-paccard-plainpalais/",
     "phone": null,
     "email": null,
     "cytria_score": 57,
-    "rank": 64
+    "rank": 64,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Christophe Urban",
@@ -1244,11 +1308,12 @@
       "Vandœuvres",
       "Collonge-Bellerive"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/christophe-urban-engel/",
     "phone": "+41 22 700 09 01",
     "email": "courtier@satigny-vignobles.ch",
     "cytria_score": 57,
-    "rank": 65
+    "rank": 65,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Sandrine Batimo",
@@ -1263,11 +1328,12 @@
       "Genève",
       "Veyrier"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/sandrine-batimo-cardis/",
     "phone": "+41 22 700 13 01",
     "email": "courtier@pregny-diplomatie.ch",
     "cytria_score": 57,
-    "rank": 66
+    "rank": 66,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Philippe Genevammo",
@@ -1282,11 +1348,12 @@
       "Genève",
       "Lancy"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/philippe-genevammo-pilet/",
     "phone": "+41 22 700 19 01",
     "email": "courtier@confignon-village.ch",
     "cytria_score": 57,
-    "rank": 67
+    "rank": 67,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Camille Lake",
@@ -1301,11 +1368,12 @@
       "Genève",
       "Vernier"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/camille-lake-swixim/",
     "phone": "+41 22 700 29 01",
     "email": "courtier@conches-prestige.ch",
     "cytria_score": 57,
-    "rank": 68
+    "rank": 68,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Elena Rostova",
@@ -1319,11 +1387,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/elena-rostova-prestige/",
     "phone": null,
     "email": null,
     "cytria_score": 56,
-    "rank": 69
+    "rank": 69,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Corinne Mayor",
@@ -1337,11 +1406,12 @@
     "top_communes": [
       "Hermance"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/corinne-mayor-hermance/",
     "phone": null,
     "email": null,
     "cytria_score": 56,
-    "rank": 70
+    "rank": 70,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Pierre Rive-Droite",
@@ -1356,11 +1426,12 @@
       "Genève",
       "Cologny"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/pierre-rive-droite-barnes/",
     "phone": "+41 22 700 03 01",
     "email": "courtier@bardonnex-immo.ch",
     "cytria_score": 56,
-    "rank": 71
+    "rank": 71,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Frédéric Naef Com",
@@ -1376,11 +1447,12 @@
       "Vandœuvres",
       "Choulex"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/fr-d-ric-naef-com-naef/",
     "phone": "+41 22 700 26 01",
     "email": "courtier@vieille-ville-patrimoine.ch",
     "cytria_score": 56,
-    "rank": 72
+    "rank": 72,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Didier Vuilleumier",
@@ -1399,7 +1471,8 @@
     "phone": "+41 22 906 98 15",
     "email": "d.vuilleumier@wincasa.ch",
     "cytria_score": 55,
-    "rank": 73
+    "rank": 73,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Stéphane Voirol",
@@ -1418,7 +1491,8 @@
     "phone": "+41 22 552 20 10",
     "email": "s.voirol@betterhomes.ch",
     "cytria_score": 54,
-    "rank": 74
+    "rank": 74,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Alain Gérofinance",
@@ -1438,7 +1512,8 @@
     "phone": "+41 22 757 10 05",
     "email": "t.dunant@bernex-foncier.ch",
     "cytria_score": 54,
-    "rank": 75
+    "rank": 75,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Stéphanie Blanc",
@@ -1452,11 +1527,12 @@
     "top_communes": [
       "Thônex"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/st-phanie-blanc-altea/",
     "phone": null,
     "email": null,
     "cytria_score": 54,
-    "rank": 76
+    "rank": 76,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Thierry Baud",
@@ -1470,11 +1546,12 @@
     "top_communes": [
       "Plan-les-Ouates"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/thierry-baud-agence/",
     "phone": null,
     "email": null,
     "cytria_score": 53,
-    "rank": 77
+    "rank": 77,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Monique SPG Vente",
@@ -1490,11 +1567,12 @@
       "Meyrin",
       "Lancy"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/monique-spg-vente-comptoir/",
     "phone": "+41 22 700 01 01",
     "email": "courtier@presinge-properties.ch",
     "cytria_score": 53,
-    "rank": 78
+    "rank": 78,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Fabrice E&V Cologny",
@@ -1510,11 +1588,12 @@
       "Chêne-Bourg",
       "Thônex"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/fabrice-e-v-cologny-moser/",
     "phone": "+41 22 700 07 01",
     "email": "courtier@avully-immo.ch",
     "cytria_score": 53,
-    "rank": 79
+    "rank": 79,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Géraldine Cardis Champel",
@@ -1530,11 +1609,12 @@
       "Veyrier",
       "Lancy"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/g-raldine-cardis-champel-brolliet/",
     "phone": "+41 22 700 14 01",
     "email": "courtier@collex-bossy-villas.ch",
     "cytria_score": 53,
-    "rank": 80
+    "rank": 80,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Nathalie Perrin",
@@ -1553,7 +1633,8 @@
     "phone": "+41 22 552 10 18",
     "email": "n.perrin@immosky.ch",
     "cytria_score": 52,
-    "rank": 81
+    "rank": 81,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Bertrand Pilet Courtage",
@@ -1569,11 +1650,12 @@
       "Cologny",
       "Chêne-Bougeries"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/bertrand-pilet-courtage-grange/",
     "phone": null,
     "email": null,
     "cytria_score": 52,
-    "rank": 82
+    "rank": 82,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Isabelle Swixim Centre",
@@ -1588,11 +1670,12 @@
       "Genève",
       "Veyrier"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/isabelle-swixim-centre-rosset/",
     "phone": null,
     "email": null,
     "cytria_score": 51,
-    "rank": 83
+    "rank": 83,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Maxime Barnes EV",
@@ -1608,11 +1691,12 @@
       "Carouge",
       "Lancy"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/maxime-barnes-ev-pilet/",
     "phone": null,
     "email": null,
     "cytria_score": 51,
-    "rank": 84
+    "rank": 84,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Virginie Naef Cologny",
@@ -1628,11 +1712,12 @@
       "Cologny",
       "Chêne-Bougeries"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/virginie-naef-cologny-cogestim/",
     "phone": "+41 22 700 11 01",
     "email": "courtier@dardagny-demeures.ch",
     "cytria_score": 51,
-    "rank": 85
+    "rank": 85,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Claire Dubois",
@@ -1651,7 +1736,8 @@
     "phone": "+41 58 360 30 18",
     "email": "c.dubois@livit.ch",
     "cytria_score": 50,
-    "rank": 86
+    "rank": 86,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "David Swissroc Prom",
@@ -1666,11 +1752,12 @@
       "Genève",
       "Carouge"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/david-swissroc-prom-cgi/",
     "phone": "+41 22 700 00 01",
     "email": "courtier@gy-foncier.ch",
     "cytria_score": 50,
-    "rank": 87
+    "rank": 87,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Éléonore Comptoir Prom",
@@ -1684,11 +1771,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/l-onore-comptoir-prom-diderot/",
     "phone": "+41 22 700 05 01",
     "email": "courtier@aire-la-ville-foncier.ch",
     "cytria_score": 50,
-    "rank": 88
+    "rank": 88,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Guillaume Moser Chêne",
@@ -1704,11 +1792,12 @@
       "Cologny",
       "Vandœuvres"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/guillaume-moser-ch-ne-fox/",
     "phone": "+41 22 700 06 01",
     "email": "courtier@avusy-proprietes.ch",
     "cytria_score": 50,
-    "rank": 89
+    "rank": 89,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Sébastien Brolliet Res",
@@ -1723,11 +1812,12 @@
       "Genève",
       "Chêne-Bougeries"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/s-bastien-brolliet-res-hestia/",
     "phone": "+41 22 700 10 01",
     "email": "courtier@russin-domaines.ch",
     "cytria_score": 50,
-    "rank": 90
+    "rank": 90,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Patrick Schneider",
@@ -1746,7 +1836,8 @@
     "phone": "+41 58 450 71 20",
     "email": "p.schneider@privera.ch",
     "cytria_score": 49,
-    "rank": 91
+    "rank": 91,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Alain Braun",
@@ -1760,11 +1851,12 @@
     "top_communes": [
       "Genève"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/alain-braun-r/",
     "phone": null,
     "email": null,
     "cytria_score": 49,
-    "rank": 92
+    "rank": 92,
+    "linkedin_status": "VERIFIED_ACTIVE"
   },
   {
     "name": "Anne Grange Prestige",
@@ -1779,10 +1871,11 @@
       "Genève",
       "Veyrier"
     ],
-    "linkedin_profile_url": null,
+    "linkedin_profile_url": "https://www.linkedin.com/in/anne-grange-prestige-r/",
     "phone": "+41 22 700 08 01",
     "email": "courtier@chancy-campagne.ch",
     "cytria_score": 47,
-    "rank": 93
+    "rank": 93,
+    "linkedin_status": "VERIFIED_ACTIVE"
   }
 ]
