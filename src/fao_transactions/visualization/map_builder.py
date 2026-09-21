@@ -1961,26 +1961,26 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             Tous les actes <span class="subtool-badge">__TOTAL_ROWS__</span>
           </button>
           <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterApartments" onclick="setMarketQuickFilter('PPE')">
-            Appartements PPE
+            Appartements PPE <span class="subtool-badge">__PPE_COUNT__</span>
           </button>
           <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterHouses" onclick="setMarketQuickFilter('VILLA')">
-            Villas & Maisons
+            Villas & Maisons <span class="subtool-badge">__VILLA_COUNT__</span>
           </button>
           <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterBuildings" onclick="setMarketQuickFilter('IMMEUBLE')">
-            Immeubles de rapport
+            Immeubles de rapport <span class="subtool-badge">__IMMEUBLE_COUNT__</span>
           </button>
           <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterLand" onclick="setMarketQuickFilter('TERRAIN')">
-            Terrains & Parcelles
+            Terrains & Parcelles <span class="subtool-badge">__TERRAIN_COUNT__</span>
           </button>
           <span class="subtool-divider"></span>
           <button type="button" class="subtool-btn active" id="mktRiveAll" onclick="setRiveFilter('ALL')">
             Toute la République
           </button>
           <button type="button" class="subtool-btn" id="mktRiveGauche" onclick="setRiveFilter('GAUCHE')">
-            Rive Gauche
+            Rive Gauche <span class="subtool-badge">__RG_COUNT__</span>
           </button>
           <button type="button" class="subtool-btn" id="mktRiveDroite" onclick="setRiveFilter('DROITE')">
-            Rive Droite
+            Rive Droite <span class="subtool-badge">__RD_COUNT__</span>
           </button>
           <span class="subtool-divider"></span>
           <button type="button" class="subtool-btn" id="mktSqmPriceLayerBtn" onclick="toggleSqmPriceLayer()">
@@ -6432,6 +6432,13 @@ def build_interactive_map(
         marketing_data = []
     marketing_json = json.dumps(marketing_data, ensure_ascii=False)
 
+    ppe_count = sum(1 for r in rows if r.get("typology_class") == "PPE")
+    villa_count = sum(1 for r in rows if r.get("typology_class") == "VILLA")
+    immeuble_count = sum(1 for r in rows if r.get("typology_class") == "IMMEUBLE")
+    terrain_count = sum(1 for r in rows if r.get("typology_class") == "TERRAIN")
+    rg_count = sum(1 for r in rows if r.get("rive") == "GAUCHE")
+    rd_count = sum(1 for r in rows if r.get("rive") == "DROITE")
+
     html_content = (
         HTML_TEMPLATE
         .replace("__RECORDS_JSON__", records_json)
@@ -6442,6 +6449,12 @@ def build_interactive_map(
         .replace("__TOTAL_ROWS__", f"{len(rows):,}")
         .replace("__TOTAL_VOLUME__", f"{total_volume/1e9:.2f}")
         .replace("__PRICED_COUNT__", f"{priced_count:,}")
+        .replace("__PPE_COUNT__", f"{ppe_count:,}")
+        .replace("__VILLA_COUNT__", f"{villa_count:,}")
+        .replace("__IMMEUBLE_COUNT__", f"{immeuble_count:,}")
+        .replace("__TERRAIN_COUNT__", f"{terrain_count:,}")
+        .replace("__RG_COUNT__", f"{rg_count:,}")
+        .replace("__RD_COUNT__", f"{rd_count:,}")
         .replace("__MANDATES_COUNT__", f"{mandates_count:,}")
         .replace("__HOT_MANDATES_COUNT__", f"{hot_mandates_count:,}")
         .replace("__DEV_COUNT__", f"{dev_opportunities_count:,}")
