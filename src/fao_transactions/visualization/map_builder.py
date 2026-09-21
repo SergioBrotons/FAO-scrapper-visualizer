@@ -1992,7 +1992,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- 3 Master Product Tabs -->
+      <!-- 4 Master Product Tabs -->
       <nav class="product-master-tabs">
         <button type="button" class="product-tab active" id="tabProductMarket" onclick="switchProductSuite('MARKET')">
           <span class="product-tab-title">CYTRIA MARKET</span>
@@ -2005,6 +2005,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <button type="button" class="product-tab" id="tabProductAgencyBI" onclick="switchProductSuite('AGENCY_BI')">
           <span class="product-tab-title">CYTRIA AGENCY BI</span>
           <span class="product-tab-sub">__AGENCIES_COUNT__ Agences & Veille</span>
+        </button>
+        <button type="button" class="product-tab" id="tabProductEarlySignals" onclick="switchProductSuite('EARLYSIGNALS')">
+          <span class="product-tab-title" style="color:var(--color-brand-300);">EARLYSIGNALS</span>
+          <span class="product-tab-sub">Pré-Marché & Conseil <strong class="subtool-badge" id="navBadgeEarlySignals">__EARLY_SIGNALS_COUNT__</strong></span>
         </button>
       </nav>
 
@@ -2078,6 +2082,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </button>
           <button type="button" class="subtool-btn" id="btnOpenMarketingModal" onclick="openMarketingModal()">
             Veille Marketing
+          </button>
+        </div>
+
+        <!-- 4. EARLYSIGNALS Subtoolbar -->
+        <div class="product-subtoolbar" id="subtoolbarEarlySignals" style="display: none; align-items: center; gap: 8px;">
+          <button type="button" class="subtool-btn active early-signal-filter-btn" id="earlySignalFilterAll" onclick="setEarlySignalQuickFilter('ALL')">
+            Tous les signaux
+          </button>
+          <button type="button" class="subtool-btn early-signal-filter-btn" id="earlySignalFilterHoiries" onclick="setEarlySignalQuickFilter('SUCCESSION')">
+            Hoiries & Successions (CC 602)
+          </button>
+          <button type="button" class="subtool-btn early-signal-filter-btn" id="earlySignalFilterDensif" onclick="setEarlySignalQuickFilter('DENSIFICATION')">
+            Densification & PLQ (Art. 59)
+          </button>
+          <button type="button" class="subtool-btn early-signal-filter-btn" id="earlySignalFilterArbitrage" onclick="setEarlySignalQuickFilter('ARBITRAGE')">
+            Arbitrage Foncier
+          </button>
+          <span class="subtool-divider"></span>
+          <button type="button" class="subtool-btn utility-btn" id="btnOpenEarlySignalsRadar" onclick="openEarlySignalsRadarModal()" style="background: rgba(201, 162, 77, 0.18) !important; color: #fff !important; font-weight: 700; border-color: var(--color-brand-400) !important;">
+            Radar Pré-Marché (Table) ↗
+          </button>
+          <button type="button" class="subtool-btn utility-btn" id="btnOpenBatchCampaign" onclick="openBatchCampaignModal()" style="background: rgba(96, 165, 250, 0.15) !important; border-color: rgba(96, 165, 250, 0.4) !important; color: #93c5fd !important;">
+            Campagne Riverains en Lot ↗
+          </button>
+          <button type="button" class="subtool-btn utility-btn" id="btnOpenCrmSettings" onclick="openCrmSettingsModal()" style="background: rgba(16, 185, 129, 0.15) !important; border-color: rgba(16, 185, 129, 0.4) !important; color: #6ee7b7 !important;">
+            Connecteur CRM Webhook ⚙
           </button>
         </div>
       </div>
@@ -2196,6 +2226,40 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <div style="margin-top: 8px;">
         <button type="button" class="view-map-btn" style="width:100%; padding: 7px; text-align:center;" onclick="openLeagueModal()">
           Consulter l'Analyse Concurrentielle & Parts de Marché ↗
+        </button>
+      </div>
+    </div>
+
+    <!-- Mode-Specific Filters: EarlySignals Pre-Market Filters -->
+    <div id="filterGroupEarlySignals" style="display:none;">
+      <div>
+        <div class="filter-section-title">Nature du Signal Pré-Marché</div>
+        <div class="pills-row grid-4">
+          <button class="pill-btn active early-signal-pill" data-early-signal="ALL" onclick="setEarlySignalQuickFilter('ALL')">Tous</button>
+          <button class="pill-btn early-signal-pill" data-early-signal="SUCCESSION" onclick="setEarlySignalQuickFilter('SUCCESSION')">Hoiries CC 602</button>
+          <button class="pill-btn early-signal-pill" data-early-signal="DENSIFICATION" onclick="setEarlySignalQuickFilter('DENSIFICATION')">Densif. Art. 59</button>
+          <button class="pill-btn early-signal-pill" data-early-signal="ARBITRAGE" onclick="setEarlySignalQuickFilter('ARBITRAGE')">Arbitrages</button>
+        </div>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <div class="filter-section-title">Indice de Confiance Décisionnelle</div>
+        <div class="pills-row grid-3">
+          <button class="pill-btn active early-thresh-pill" data-early-thresh="0" onclick="setEarlyThreshFilter(0, this)">Tous (≥ 0)</button>
+          <button class="pill-btn early-thresh-pill" data-early-thresh="50" onclick="setEarlyThreshFilter(50, this)">Qualifiés ≥ 50</button>
+          <button class="pill-btn early-thresh-pill" data-early-thresh="75" onclick="setEarlyThreshFilter(75, this)">Forte Prob. ≥ 75</button>
+        </div>
+      </div>
+
+      <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" class="view-map-btn" style="width:100%; padding: 8px; text-align:center; background: rgba(201, 162, 77, 0.16); border-color: var(--color-brand-400); color: var(--color-brand-300); font-weight: 700;" onclick="openEarlySignalsRadarModal()">
+          Ouvrir le Radar Pré-Marché Complet ↗
+        </button>
+        <button type="button" class="view-map-btn" style="width:100%; padding: 7px; text-align:center; background: rgba(96, 165, 250, 0.14); border-color: rgba(96, 165, 250, 0.4); color: #93c5fd;" onclick="openBatchCampaignModal()">
+          Lancer une Campagne Riverains ↗
+        </button>
+        <button type="button" class="view-map-btn" style="width:100%; padding: 6px; text-align:center; background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.4); color: #6ee7b7;" onclick="openCrmSettingsModal()">
+          Configurer le Webhook CRM ⚙
         </button>
       </div>
     </div>
@@ -2517,6 +2581,175 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       </div>
       <div class="league-body" id="methodologyBodyContent" style="padding: 24px 28px; line-height: 1.6; color: var(--color-paper); font-size: 13px; overflow-y: auto;">
         <!-- Injected via JavaScript based on active tab -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2: Macro Radar Dashboard Modal -->
+  <div class="modal-overlay" id="earlySignalsRadarModal">
+    <div class="league-modal-window" style="max-width: 1340px; height: 92vh;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="scan-live-dot" style="background:#f59e0b; box-shadow:0 0 10px rgba(245,158,11,0.5);"></span>
+            <h2>CYTRIA EARLYSIGNALS • RADAR PRÉ-MARCHÉ CANTON DE GENÈVE</h2>
+          </div>
+          <p>Tableau de bord exhaustif des opportunités qualifiées, lignage de données et preuves notariées contiguës.</p>
+        </div>
+        <div style="display:flex; align-items:center; gap: 12px;">
+          <button type="button" class="subtool-btn utility-btn" onclick="openBatchCampaignModal()" style="background: rgba(96,165,250,0.15) !important; color:#93c5fd !important; border-color: rgba(96,165,250,0.4) !important;">
+            Campagne Riverains en Lot ↗
+          </button>
+          <button type="button" class="subtool-btn utility-btn" onclick="openCrmSettingsModal()" style="background: rgba(16,185,129,0.15) !important; color:#6ee7b7 !important; border-color: rgba(16,185,129,0.4) !important;">
+            Connecteur CRM ⚙
+          </button>
+          <button class="modal-close-btn" onclick="closeEarlySignalsRadarModal()">&times;</button>
+        </div>
+      </div>
+
+      <!-- Controls & Filter Toolbar -->
+      <div style="display: flex; gap: 12px; padding: 12px 24px; background: var(--color-ink-950); border-bottom: 1px solid var(--panel-border); align-items: center; flex-wrap: wrap;">
+        <input type="text" id="radarSearchInput" oninput="renderEarlySignalsRadarTable()" placeholder="Rechercher rue, commune, parcelle, nom..." style="padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; width: 280px; outline: none;">
+        
+        <select id="radarSignalTypeSelect" onchange="renderEarlySignalsRadarTable()" style="padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 12px; outline: none; cursor: pointer;">
+          <option value="ALL">Tous les types de signaux</option>
+          <option value="SUCCESSION">Hoiries & Successions (CC 602)</option>
+          <option value="DENSIFICATION">Densification & PLQ (Art. 59)</option>
+          <option value="ARBITRAGE">Arbitrage & Mandats Vendeurs</option>
+        </select>
+
+        <select id="radarCommuneSelect" onchange="renderEarlySignalsRadarTable()" style="padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; outline: none; cursor: pointer;">
+          <option value="ALL">Toutes les communes</option>
+        </select>
+
+        <select id="radarSortSelect" onchange="renderEarlySignalsRadarTable()" style="padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 12px; outline: none; cursor: pointer;">
+          <option value="SCORE_DESC">Tri : Indice de Confiance (Haut ➔ Bas)</option>
+          <option value="DATE_DESC">Tri : Date publication FAO (Récente ➔ Ancienne)</option>
+          <option value="DIST_ASC">Tri : Distance Preuve Contiguë (Proche ➔ Lointaine)</option>
+          <option value="PRICE_DESC">Tri : Prix Notarié Preuve (Haut ➔ Bas)</option>
+        </select>
+
+        <span id="radarCountBadge" style="margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--color-sand-300); font-weight: 700;"></span>
+      </div>
+
+      <div class="league-body" id="earlySignalsRadarTableContainer" style="padding: 0; overflow-y: auto;">
+        <!-- Table populated via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3: Batch Neighbor Campaign Generator Modal -->
+  <div class="modal-overlay" id="batchCampaignModal">
+    <div class="league-modal-window" style="max-width: 1240px; height: 90vh;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="scan-live-dot" style="background:#38bdf8; box-shadow:0 0 10px rgba(56,189,248,0.5);"></span>
+            <h2>GÉNÉRATEUR DE CAMPAGNE RIVERAINS EN LOT (PUBLIPOSTAGE)</h2>
+          </div>
+          <p>Génération groupée de lettres d'avis de valeur patrimoniale pour les propriétaires voisins d'un acte notarié de référence.</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeBatchCampaignModal()">&times;</button>
+      </div>
+
+      <div style="display: flex; gap: 14px; padding: 12px 24px; background: var(--color-ink-950); border-bottom: 1px solid var(--panel-border); align-items: center; flex-wrap: wrap;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:11px; text-transform:uppercase; color:var(--color-sand-400);">Vente Notariée Pilote :</span>
+          <select id="batchAnchorSaleSelect" onchange="runBatchNeighborScan()" style="padding: 7px 12px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 12px; outline: none; cursor: pointer; max-width: 440px;">
+            <!-- Populated via JS with top significant deeds -->
+          </select>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:11px; text-transform:uppercase; color:var(--color-sand-400);">Rayon Riverains :</span>
+          <button type="button" class="subtool-btn batch-radius-btn" data-radius="150" onclick="setBatchRadius(150)">150 m</button>
+          <button type="button" class="subtool-btn batch-radius-btn active" data-radius="300" onclick="setBatchRadius(300)">300 m</button>
+          <button type="button" class="subtool-btn batch-radius-btn" data-radius="600" onclick="setBatchRadius(600)">600 m</button>
+        </div>
+
+        <div style="margin-left: auto; display: flex; gap: 8px;">
+          <button type="button" class="action-btn" onclick="copyAllBatchLetters()" style="background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-brand-300); font-size: 11px; padding: 7px 12px; cursor: pointer;">
+            Copier Tous les Courriers (Pack)
+          </button>
+          <button type="button" class="action-btn" onclick="downloadBatchPackJson()" style="background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 800; font-size: 11px; padding: 7px 14px; cursor: pointer;">
+            Télécharger Pack Campagne (.json)
+          </button>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 460px 1fr; height: calc(100% - 130px);">
+        <!-- Left: Neighbor Checklist & Selection -->
+        <div id="batchNeighborListContainer" style="border-right: 1px solid var(--panel-border); overflow-y: auto; padding: 14px 18px; background: var(--color-ink-950);">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Right: Real-time Live Letter Preview for Selected Neighbor -->
+        <div id="batchLetterPreviewContainer" style="overflow-y: auto; padding: 20px 28px; background: var(--panel-bg);">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4: Direct CRM Webhook Connector Modal -->
+  <div class="modal-overlay" id="crmSettingsModal">
+    <div class="league-modal-window" style="max-width: 760px; height: auto; max-height: 85vh;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="scan-live-dot" style="background:#10b981; box-shadow:0 0 10px rgba(16,185,129,0.5);"></span>
+            <h2>CONFIGURATION DU CONNECTEUR CRM WEBHOOK</h2>
+          </div>
+          <p>Synchronisation instantanée des opportunités qualifiées vers votre CRM (HubSpot, Salesforce, Whise, Apimo, Zapier, Make).</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeCrmSettingsModal()">&times;</button>
+      </div>
+
+      <div style="padding: 24px 28px; line-height: 1.6; color: var(--color-paper); font-size: 13px; overflow-y: auto;">
+        <div style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25); padding: 12px 16px; margin-bottom: 20px;">
+          <div style="font-weight: 700; color: #4ade80; margin-bottom: 2px;">Intégration d'Agence Déontologique</div>
+          <div style="font-size: 11px; color: var(--color-sand-300);">
+            Cytria pousse les opportunités en temps réel via requête HTTP POST avec payload JSON standardisé (lignage 3 tiers, preuve notariée contiguë et consigne de réserve).
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+          <div>
+            <label style="display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--color-brand-300); margin-bottom: 4px;">URL du Endpoint Webhook CRM *</label>
+            <input type="url" id="crmWebhookUrlInput" placeholder="https://api.votre-agence.ch/webhooks/cytria ou https://hooks.zapier.com/hooks/catch/..." style="width: 100%; padding: 10px 14px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-family: var(--font-mono); font-size: 12px; outline: none; box-sizing: border-box;">
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--color-brand-300); margin-bottom: 4px;">Header d'Autorisation (Optionnel)</label>
+            <input type="text" id="crmAuthHeaderInput" placeholder="Bearer sk_live_... ou API-Key abc123" style="width: 100%; padding: 10px 14px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-family: var(--font-mono); font-size: 12px; outline: none; box-sizing: border-box;">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div>
+              <label style="display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--color-brand-300); margin-bottom: 4px;">Nom de l'Agence</label>
+              <input type="text" id="crmAgencyNameInput" placeholder="Ex: Naef Immobilier" style="width: 100%; padding: 10px 14px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; outline: none; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--color-brand-300); margin-bottom: 4px;">Courtier / Assignataire par Défaut</label>
+              <input type="text" id="crmAgentNameInput" placeholder="Ex: Sophie Martin" style="width: 100%; padding: 10px 14px; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-paper); font-size: 12px; outline: none; box-sizing: border-box;">
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--panel-border); padding-top: 18px;">
+          <button type="button" class="action-btn" onclick="testCrmWebhookConnection()" style="background: var(--color-ink-900); border: 1px solid var(--panel-border); color: #38bdf8; font-size: 11px; padding: 9px 16px; cursor: pointer;">
+            Tester la Connexion (Test Ping)
+          </button>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="action-btn" onclick="closeCrmSettingsModal()" style="background: transparent; border: 1px solid var(--panel-border); color: var(--color-sand-300); font-size: 11px; padding: 9px 16px; cursor: pointer;">
+              Annuler
+            </button>
+            <button type="button" class="action-btn" onclick="saveCrmSettings()" style="background: var(--color-brand-500); border: 1px solid var(--color-brand-400); color: var(--color-ink-950); font-weight: 800; font-size: 11px; padding: 9px 20px; cursor: pointer;">
+              Enregistrer la Configuration
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2929,7 +3162,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }
 
     function getMarkerColor(r) {
-      if (appMode === 'MANDATES') {
+      if (appMode === 'EARLYSIGNALS') {
+        if (r.is_hoirie || (r.transaction_type && r.transaction_type.includes('Succession'))) return '#F59E0B'; // Amber (Hoiries CC 602)
+        if (r.dev_type === 'ZONE_5_DENSIFICATION' || r.plq_number || r.zone_dev_name || r.permit_number) return '#38BDF8'; // Sky Blue (Densification Art. 59)
+        const s = Math.max(r.mandate_score || 0, r.dev_score || 0);
+        if (s >= 70) return '#C9A24D'; // Gold (Score Elevé)
+        return '#64748B'; // Slate (Arbitrage / Autre)
+      } else if (appMode === 'MANDATES') {
         if (r.mandate_score >= 85) return '#EF4444'; // Ultra Hot Lead (Red)
         if (r.mandate_score >= 70) return '#F59E0B'; // Hot Lead (Amber)
         return '#315E78'; // Moderate lead (Slate blue)
@@ -2959,7 +3198,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function updateLegend() {
       const leg = document.getElementById('mapLegend');
-      if (appMode === 'MANDATES') {
+      if (appMode === 'EARLYSIGNALS') {
+        leg.innerHTML = `
+          <div class="filter-section-title">Légende Signaux Pré-Marché</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#F59E0B;"></div> Hoiries & Successions (CC 602)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#38BDF8;"></div> Densification (Art. 59 LCI) & PLQ</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#C9A24D;"></div> Forte Probabilité Décisionnelle (Score ≥ 70)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#64748B;"></div> Arbitrage Foncier & Autre Mutation</div>
+        `;
+      } else if (appMode === 'MANDATES') {
         leg.innerHTML = `
           <div class="filter-section-title">Légende Scanner Mandats</div>
           <div class="legend-item"><div class="legend-dot" style="background:#EF4444;"></div> Score Mandat ≥ 85 (Hoirie Multi-Héritiers)</div>
@@ -3036,7 +3283,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       // Update HUD stats dynamically based on active mode
       document.getElementById('stat-count').textContent = records.length.toLocaleString('fr-CH');
       
-      if (appMode === 'MANDATES') {
+      if (appMode === 'EARLYSIGNALS') {
+        document.getElementById('statLabelPrimary').textContent = 'Signaux Pré-Marché';
+        document.getElementById('statLabelSecondary').textContent = 'Hoiries CC 602';
+        document.getElementById('stat-vol').textContent = records.filter(r => r.is_hoirie || (r.transaction_type && r.transaction_type.includes('Succession'))).length.toLocaleString('fr-CH');
+        document.getElementById('statLabel3').textContent = 'Densif. Art. 59';
+        document.getElementById('stat-3').textContent = records.filter(r => r.dev_type === 'ZONE_5_DENSIFICATION' || r.plq_number || r.zone_dev_name || r.permit_number).length.toLocaleString('fr-CH');
+        document.getElementById('statLabel4').textContent = 'Score ≥ 70';
+        document.getElementById('stat-4').textContent = records.filter(r => Math.max(r.mandate_score || 0, r.dev_score || 0) >= 70).length.toLocaleString('fr-CH');
+      } else if (appMode === 'MANDATES') {
         document.getElementById('statLabelPrimary').textContent = 'Pistes Vendeurs';
         document.getElementById('statLabelSecondary').textContent = 'Hoiries Détectées';
         document.getElementById('stat-vol').textContent = records.filter(r => r.is_hoirie).length.toLocaleString('fr-CH');
@@ -3068,7 +3323,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     // ==========================================
     // PRODUCT SUITE SUITE ROUTING & APP MODE
     // ==========================================
-    let currentProductSuite = 'MARKET'; // 'MARKET' | 'SOURCING' | 'AGENCY_BI'
+    let currentProductSuite = 'MARKET'; // 'MARKET' | 'SOURCING' | 'AGENCY_BI' | 'EARLYSIGNALS'
 
     function switchProductSuite(suite) {
       currentProductSuite = suite;
@@ -3077,10 +3332,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const subMarket = document.getElementById('subtoolbarMarket');
       const subSourcing = document.getElementById('subtoolbarSourcing');
       const subAgency = document.getElementById('subtoolbarAgencyBI');
+      const subEarly = document.getElementById('subtoolbarEarlySignals');
 
       if (subMarket) subMarket.style.display = 'none';
       if (subSourcing) subSourcing.style.display = 'none';
       if (subAgency) subAgency.style.display = 'none';
+      if (subEarly) subEarly.style.display = 'none';
 
       if (suite === 'MARKET') {
         const tab = document.getElementById('tabProductMarket');
@@ -3097,6 +3354,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         if (tab) tab.classList.add('active');
         if (subAgency) subAgency.style.display = 'flex';
         setAppMode('AGENCIES_MAP');
+      } else if (suite === 'EARLYSIGNALS') {
+        const tab = document.getElementById('tabProductEarlySignals');
+        if (tab) tab.classList.add('active');
+        if (subEarly) subEarly.style.display = 'flex';
+        setAppMode('EARLYSIGNALS');
       }
     }
 
@@ -3148,6 +3410,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const filterMandates = document.getElementById('filterGroupMandates');
       const filterDev = document.getElementById('filterGroupDev');
       const filterAgencies = document.getElementById('filterGroupAgencies');
+      const filterEarlySignals = document.getElementById('filterGroupEarlySignals');
       const bannerTitle = document.getElementById('sidebarBannerTitle');
       const bannerSub = document.getElementById('sidebarBannerSub');
 
@@ -3156,6 +3419,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       const focusBanner = document.getElementById('agencyFocusBanner');
       if (focusBanner && mode !== 'AGENCIES_MAP') focusBanner.style.display = 'none';
+
+      if (filterEarlySignals) filterEarlySignals.style.display = (mode === 'EARLYSIGNALS') ? 'block' : 'none';
 
       if (mode === 'AGENCIES_MAP') {
         filterMarket.style.display = 'none';
@@ -3170,7 +3435,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         filterAgencies.style.display = 'none';
       }
 
-      if (mode === 'MANDATES') {
+      if (mode === 'EARLYSIGNALS') {
+        filterMarket.style.display = 'none';
+        filterMandates.style.display = 'none';
+        filterDev.style.display = 'none';
+        bannerTitle.textContent = "Signaux Pré-Marché & Conseil Immédiat";
+        bannerSub.textContent = "Anticipation des successions, démembrements et mutations riveraines";
+      } else if (mode === 'MANDATES') {
         filterMarket.style.display = 'none';
         filterMandates.style.display = 'block';
         filterDev.style.display = 'none';
@@ -3302,9 +3573,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 Copier Courrier Conseil
               </button>
               <button type="button" class="btn-sm" id="btnExportCrmDirect" style="flex: 1; background: var(--color-ink-900); border: 1px solid var(--panel-border); color: #93c5fd; font-size: 10px; padding: 5px 8px; cursor: pointer; text-align: center;">
-                Exporter vers CRM
+                Fiche Tâche CRM
               </button>
             </div>
+            <button type="button" class="btn-sm" id="btnPushWebhookDirect" style="width: 100%; background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.4); color: #4ade80; font-size: 10px; font-weight: 700; padding: 6px 8px; cursor: pointer; text-align: center;">
+              Transmettre au CRM (Webhook Direct ➔)
+            </button>
           </div>
         </div>` : ''}
 
@@ -3450,6 +3724,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (btnExpCrm) {
         btnExpCrm.onclick = () => openOpportunityModalForRecord(r, 'CRM');
       }
+      const btnPushDirect = document.getElementById('btnPushWebhookDirect');
+      if (btnPushDirect) {
+        btnPushDirect.onclick = () => pushRecordToCrmWebhook(r);
+      }
 
       detailDrawer.classList.add('visible');
       document.body.classList.add('drawer-open');
@@ -3530,6 +3808,35 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     let currentPricePreset = 'ALL';
     let currentMandateScoreFilter = 'ALL';
     let currentDevTypeFilter = 'ALL';
+    let currentEarlySignalFilter = 'ALL';
+    let currentEarlyThreshFilter = 0;
+
+    function setEarlySignalQuickFilter(type) {
+      currentEarlySignalFilter = type;
+      document.querySelectorAll('.early-signal-filter-btn').forEach(b => {
+        b.classList.remove('active');
+      });
+      const topBtn = document.getElementById(
+        type === 'ALL' ? 'earlySignalFilterAll' :
+        type === 'SUCCESSION' ? 'earlySignalFilterHoiries' :
+        type === 'DENSIFICATION' ? 'earlySignalFilterDensif' :
+        type === 'ARBITRAGE' ? 'earlySignalFilterArbitrage' : 'earlySignalFilterAll'
+      );
+      if (topBtn) topBtn.classList.add('active');
+
+      document.querySelectorAll('.early-signal-pill').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-early-signal') === type);
+      });
+
+      applyFilters();
+    }
+
+    function setEarlyThreshFilter(thresh, btn) {
+      currentEarlyThreshFilter = parseInt(thresh, 10) || 0;
+      document.querySelectorAll('.early-thresh-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      applyFilters();
+    }
 
     // Nature Pill Buttons (Market mode)
     document.querySelectorAll('.pill-btn[data-nature]').forEach(btn => {
@@ -3645,6 +3952,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const defDev = document.querySelector('.pill-btn[data-dev-type="ALL"]');
       if (defDev) defDev.classList.add('active');
 
+      currentEarlySignalFilter = 'ALL';
+      currentEarlyThreshFilter = 0;
+      document.querySelectorAll('.early-signal-filter-btn').forEach(b => b.classList.remove('active'));
+      const defEarlyBtn = document.getElementById('earlySignalFilterAll');
+      if (defEarlyBtn) defEarlyBtn.classList.add('active');
+      document.querySelectorAll('.early-signal-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-early-signal') === 'ALL'));
+      document.querySelectorAll('.early-thresh-pill').forEach(b => b.classList.toggle('active', b.getAttribute('data-early-thresh') === '0'));
+
       applyFilters();
     });
 
@@ -3677,7 +3992,21 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       const filtered = DATA.filter(r => {
         // App Mode Global Pre-Filters
-        if (appMode === 'MANDATES') {
+        if (appMode === 'EARLYSIGNALS') {
+          const isOpp = (r.mandate_score && r.mandate_score > 0) || (r.dev_score && r.dev_score >= 20) || (r.transaction_type && r.transaction_type.includes('Succession')) || r.is_hoirie;
+          if (!isOpp) return false;
+
+          if (currentEarlySignalFilter === 'SUCCESSION') {
+            if (!r.is_hoirie && !(r.transaction_type && r.transaction_type.includes('Succession'))) return false;
+          } else if (currentEarlySignalFilter === 'DENSIFICATION') {
+            if (r.dev_type !== 'ZONE_5_DENSIFICATION' && !r.plq_number && !r.zone_dev_name && !r.permit_number) return false;
+          } else if (currentEarlySignalFilter === 'ARBITRAGE') {
+            if (r.typology_class !== 'TERRAIN' && r.typology_class !== 'IMMEUBLE' && (!r.price_chf || r.price_chf < 2000000)) return false;
+          }
+
+          const maxScore = Math.max(r.mandate_score || 0, r.dev_score || 0);
+          if (currentEarlyThreshFilter > 0 && maxScore < currentEarlyThreshFilter) return false;
+        } else if (appMode === 'MANDATES') {
           if (!r.mandate_score || r.mandate_score <= 0) return false;
           if (currentMandateScoreFilter === 'HOT' && r.mandate_score < 70) return false;
           if (currentMandateScoreFilter === 'ULTRA' && r.mandate_score < 85) return false;
@@ -6189,6 +6518,722 @@ Cabinet Immobilier Conseil Genève`;
     });
 
     // ==========================================
+    // CYTRIA EARLYSIGNALS: PHASE 2 - MACRO RADAR DASHBOARD
+    // ==========================================
+    function openEarlySignalsRadarModal() {
+      const modal = document.getElementById('earlySignalsRadarModal');
+      if (!modal) return;
+      modal.classList.add('visible');
+      const searchInp = document.getElementById('radarSearchInput');
+      if (searchInp) searchInp.value = '';
+      const typeSel = document.getElementById('radarSignalTypeSelect');
+      if (typeSel) typeSel.value = 'ALL';
+      renderEarlySignalsRadarTable();
+    }
+
+    function closeEarlySignalsRadarModal() {
+      const modal = document.getElementById('earlySignalsRadarModal');
+      if (modal) modal.classList.remove('visible');
+    }
+
+    document.getElementById('earlySignalsRadarModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'earlySignalsRadarModal') {
+        closeEarlySignalsRadarModal();
+      }
+    });
+
+    document.getElementById('radarSearchInput')?.addEventListener('input', () => {
+      renderEarlySignalsRadarTable();
+    });
+
+    document.getElementById('radarSignalTypeSelect')?.addEventListener('change', () => {
+      renderEarlySignalsRadarTable();
+    });
+
+    function renderEarlySignalsRadarTable() {
+      const tbody = document.getElementById('earlySignalsRadarTableBody');
+      const countEl = document.getElementById('radarTotalCount');
+      if (!tbody) return;
+
+      const q = normStr(document.getElementById('radarSearchInput')?.value || '');
+      const typeFilter = document.getElementById('radarSignalTypeSelect')?.value || 'ALL';
+
+      const opportunities = DATA.filter(r => {
+        const isOpp = (r.mandate_score && r.mandate_score > 0) || (r.dev_score && r.dev_score >= 20) || (r.transaction_type && r.transaction_type.includes('Succession')) || r.is_hoirie;
+        if (!isOpp) return false;
+
+        if (typeFilter === 'SUCCESSION') {
+          if (!r.is_hoirie && !(r.transaction_type && r.transaction_type.includes('Succession'))) return false;
+        } else if (typeFilter === 'DENSIFICATION') {
+          if (r.dev_type !== 'ZONE_5_DENSIFICATION' && !r.plq_number && !r.zone_dev_name && !r.permit_number) return false;
+        } else if (typeFilter === 'ARBITRAGE') {
+          if (r.typology_class !== 'TERRAIN' && r.typology_class !== 'IMMEUBLE' && (!r.price_chf || r.price_chf < 2000000)) return false;
+        }
+
+        if (q) {
+          const matchStr = normStr(`${r.address || ''} ${r.commune || ''} ${r.parcel_number || ''}`);
+          if (!matchStr.includes(q)) return false;
+        }
+
+        return true;
+      });
+
+      // Sort descending by highest score
+      opportunities.sort((a, b) => {
+        const scoreA = Math.max(a.mandate_score || 0, a.dev_score || 0);
+        const scoreB = Math.max(b.mandate_score || 0, b.dev_score || 0);
+        return scoreB - scoreA;
+      });
+
+      if (countEl) {
+        countEl.textContent = `${opportunities.length} Opportunités Qualifiées`;
+      }
+
+      if (opportunities.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="padding: 40px; text-align: center; color: var(--color-sand-400);">
+              Aucun signal pré-marché ne correspond aux critères de recherche actuels.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      let html = '';
+      opportunities.forEach((r, idx) => {
+        const maxScore = Math.max(r.mandate_score || 0, r.dev_score || 0);
+        const isSuccession = r.is_hoirie || (r.transaction_type && r.transaction_type.includes('Succession'));
+        const isDensif = r.dev_type === 'ZONE_5_DENSIFICATION' || r.plq_number || r.zone_dev_name || r.permit_number;
+
+        let badgeStyle = 'background: rgba(100, 116, 139, 0.15); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3);';
+        let badgeLabel = 'Arbitrage Foncier';
+        if (isSuccession) {
+          badgeStyle = 'background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);';
+          badgeLabel = 'Hoirie CC 602';
+        } else if (isDensif) {
+          badgeStyle = 'background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);';
+          badgeLabel = 'Densif. Art. 59';
+        }
+
+        const contiguous = findClosestContiguousSale(r);
+        let contiguousLabel = 'Médiane communale';
+        if (contiguous && contiguous.record) {
+          const cRec = contiguous.record;
+          contiguousLabel = `${Math.round(contiguous.distanceM)} m (CHF ${Math.round(cRec.price_chf).toLocaleString('fr-CH')})`;
+        }
+
+        const recordId = r.id || `${r.commune}_${r.parcel_number}_${idx}`;
+
+        html += `
+          <tr style="border-bottom: 1px solid var(--panel-border); transition: background 0.15s ease;">
+            <td style="padding: 10px 12px; font-family: var(--font-mono); font-size: 11px; color: var(--color-sand-400);">#${idx + 1}</td>
+            <td style="padding: 10px 12px;">
+              <div style="font-weight: 700; color: var(--color-paper); font-size: 12px;">${r.address || (r.commune + ' Parcelle ' + (r.parcel_number || 'N/A'))}</div>
+              <div style="font-size: 10px; color: var(--color-sand-400); margin-top: 1px;">
+                ${r.commune || 'Genève'} • Parcelle ${r.parcel_number || 'N/A'} • Zone ${r.zone_code || 'N/A'}
+              </div>
+            </td>
+            <td style="padding: 10px 12px;">
+              <span style="display: inline-block; padding: 2px 7px; font-size: 10px; font-weight: 700; ${badgeStyle}">
+                ${badgeLabel}
+              </span>
+            </td>
+            <td style="padding: 10px 12px;">
+              <span style="display: inline-block; padding: 2px 7px; font-size: 11px; font-weight: 800; font-family: var(--font-mono); background: ${maxScore >= 70 ? 'rgba(201, 162, 77, 0.2)' : 'rgba(255, 255, 255, 0.06)'}; color: ${maxScore >= 70 ? 'var(--color-brand-300)' : 'var(--color-sand-200)'}; border: 1px solid ${maxScore >= 70 ? 'var(--color-brand-400)' : 'rgba(255, 255, 255, 0.12)'};">
+                ${maxScore}/100
+              </span>
+            </td>
+            <td style="padding: 10px 12px; font-size: 11px; color: var(--color-sand-300);">
+              <div>${r.notice_date || 'N/A'}</div>
+              <div style="font-size: 10px; color: #4ade80;">${r.transaction_type || 'Mutation RF'}</div>
+            </td>
+            <td style="padding: 10px 12px; font-size: 11px; color: #93c5fd;">
+              <div>${contiguousLabel}</div>
+              <div style="font-size: 10px; color: var(--color-sand-400);">${r.surface_m2 ? Math.round(r.surface_m2) + ' m² cadastre' : 'Parcelle standard'}</div>
+            </td>
+            <td style="padding: 10px 12px; text-align: right;">
+              <div style="display: inline-flex; gap: 4px;">
+                <button type="button" class="btn-sm" onclick="locateOpportunityOnMapById('${recordId}')" style="background: var(--color-ink-900); border: 1px solid var(--panel-border); color: var(--color-sand-200); font-size: 10px; padding: 4px 7px; cursor: pointer;" title="Centrer la carte et ouvrir la fiche">
+                  Carte
+                </button>
+                <button type="button" class="btn-sm" onclick="openOpportunityModalById('${recordId}', 'BRIEFING')" style="background: rgba(201, 162, 77, 0.15); border: 1px solid var(--color-brand-400); color: var(--color-brand-300); font-size: 10px; padding: 4px 7px; cursor: pointer;" title="Ouvrir le dossier stratégique 3-tiers">
+                  Fiche
+                </button>
+                <button type="button" class="btn-sm" onclick="openBatchCampaignForId('${recordId}')" style="background: rgba(96, 165, 250, 0.15); border: 1px solid rgba(96, 165, 250, 0.4); color: #93c5fd; font-size: 10px; padding: 4px 7px; cursor: pointer;" title="Lancer une campagne riverains en lot autour de cette parcelle">
+                  Campagne
+                </button>
+                <button type="button" class="btn-sm" onclick="pushOpportunityToCrmById('${recordId}')" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #4ade80; font-size: 10px; padding: 4px 7px; cursor: pointer;" title="Pousser instantanément vers le CRM Webhook">
+                  ➔ CRM
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function findRecordById(recordId) {
+      return DATA.find((r, idx) => {
+        const id = r.id || `${r.commune}_${r.parcel_number}_${idx}`;
+        return id === recordId || r.id === recordId || (r.parcel_number && r.parcel_number.toString() === recordId);
+      });
+    }
+
+    function locateOpportunityOnMapById(recordId) {
+      const r = findRecordById(recordId);
+      if (!r) return;
+      closeEarlySignalsRadarModal();
+      if (r.lat && r.lon) {
+        map.flyTo([r.lat, r.lon], 16);
+      }
+      openDetail(r);
+    }
+
+    function openOpportunityModalById(recordId, tabId) {
+      const r = findRecordById(recordId);
+      if (!r) return;
+      openOpportunityModalForRecord(r, tabId || 'BRIEFING');
+    }
+
+    function openBatchCampaignForId(recordId) {
+      const r = findRecordById(recordId);
+      if (!r) return;
+      openBatchCampaignModal(r);
+    }
+
+    function pushOpportunityToCrmById(recordId) {
+      const r = findRecordById(recordId);
+      if (!r) return;
+      pushRecordToCrmWebhook(r);
+    }
+
+    // ==========================================
+    // CYTRIA EARLYSIGNALS: PHASE 3 - BATCH NEIGHBOR CAMPAIGN GENERATOR
+    // ==========================================
+    let currentBatchRadius = 250;
+    let currentBatchTargetRecord = null;
+    let currentBatchNeighborsList = [];
+    let currentBatchSelectedIndices = new Set();
+    let currentBatchActivePreviewIndex = 0;
+
+    function openBatchCampaignModal(record) {
+      if (record) {
+        currentBatchTargetRecord = record;
+      } else if (currentOpportunityRecord) {
+        currentBatchTargetRecord = currentOpportunityRecord;
+      } else {
+        const firstOpp = DATA.find(r => (r.mandate_score && r.mandate_score > 0) || (r.dev_score && r.dev_score >= 20) || (r.transaction_type && r.transaction_type.includes('Succession')) || r.is_hoirie);
+        currentBatchTargetRecord = firstOpp || DATA[0];
+      }
+
+      const modal = document.getElementById('batchCampaignModal');
+      if (!modal) return;
+
+      const r = currentBatchTargetRecord;
+      const addrEl = document.getElementById('batchModalTargetAddress');
+      const dateEl = document.getElementById('batchModalTargetDate');
+      const refEl = document.getElementById('batchModalContiguousRef');
+
+      if (addrEl) addrEl.textContent = r ? (r.address || (r.commune + ' Parcelle ' + (r.parcel_number || 'N/A'))) : 'Parcelle Cible';
+      if (dateEl) dateEl.textContent = r ? (r.notice_date || 'Actuel') : 'Actuel';
+      if (refEl) {
+        if (r && r.price_chf) {
+          refEl.textContent = `CHF ${Math.round(r.price_chf).toLocaleString('fr-CH')}${r.sqm_price ? ' (' + Math.round(r.sqm_price).toLocaleString('fr-CH') + ' CHF/m²)' : ''}`;
+        } else {
+          refEl.textContent = 'Mutation Registre Foncier (FAO)';
+        }
+      }
+
+      setBatchRadius(currentBatchRadius || 250);
+      modal.classList.add('visible');
+    }
+
+    function closeBatchCampaignModal() {
+      const modal = document.getElementById('batchCampaignModal');
+      if (modal) modal.classList.remove('visible');
+    }
+
+    document.getElementById('batchCampaignModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'batchCampaignModal') {
+        closeBatchCampaignModal();
+      }
+    });
+
+    function setBatchRadius(radiusM) {
+      currentBatchRadius = radiusM;
+      document.querySelectorAll('.batch-radius-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.getAttribute('data-radius'), 10) === radiusM);
+      });
+      runBatchNeighborScan();
+    }
+
+    function runBatchNeighborScan() {
+      const listContainer = document.getElementById('batchNeighborListContainer');
+      const previewContainer = document.getElementById('batchLetterPreviewContainer');
+      const countEl = document.getElementById('batchNeighborCount');
+      if (!listContainer || !previewContainer) return;
+
+      const target = currentBatchTargetRecord;
+      if (!target || !target.lat || !target.lon) {
+        listContainer.innerHTML = '<div style="padding: 20px; color: var(--color-sand-400);">Aucune coordonnée disponible pour cette parcelle.</div>';
+        previewContainer.innerHTML = '';
+        return;
+      }
+
+      const neighbors = [];
+      const seenParcels = new Set();
+      if (target.parcel_number) seenParcels.add(target.parcel_number.toString());
+
+      DATA.forEach(r => {
+        if (!r.lat || !r.lon) return;
+        if (r.id === target.id) return;
+        if (r.parcel_number && seenParcels.has(r.parcel_number.toString())) return;
+
+        const dist = getHaversineDistanceM(target.lat, target.lon, r.lat, r.lon);
+        if (dist <= currentBatchRadius) {
+          if (r.parcel_number) seenParcels.add(r.parcel_number.toString());
+          neighbors.push({ record: r, distanceM: Math.round(dist) });
+        }
+      });
+
+      neighbors.sort((a, b) => a.distanceM - b.distanceM);
+      currentBatchNeighborsList = neighbors;
+      currentBatchSelectedIndices = new Set(neighbors.map((_, i) => i));
+      currentBatchActivePreviewIndex = 0;
+
+      if (countEl) {
+        countEl.textContent = `${neighbors.length} Riverains Détectés`;
+      }
+
+      if (neighbors.length === 0) {
+        listContainer.innerHTML = `
+          <div style="padding: 24px 10px; text-align: center; color: var(--color-sand-400); font-size: 12px;">
+            Aucune parcelle voisine répertoriée dans un rayon de ${currentBatchRadius} m.
+            <div style="margin-top: 8px; font-size: 11px; color: var(--color-sand-500);">
+              Augmentez le rayon à 400 m ou 600 m pour étendre la détection.
+            </div>
+          </div>
+        `;
+        previewContainer.innerHTML = `
+          <div style="padding: 40px; text-align: center; color: var(--color-sand-400); font-size: 13px;">
+            Sélectionnez un rayon plus large pour générer les courriers de campagne.
+          </div>
+        `;
+        return;
+      }
+
+      let listHtml = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--panel-border);">
+          <label style="font-size: 11px; font-weight: 700; color: var(--color-sand-300); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="checkbox" id="chkBatchSelectAll" checked onchange="toggleBatchSelectAll(this.checked)" style="accent-color: var(--color-brand-400);">
+            Tout sélectionner (${neighbors.length})
+          </label>
+          <span style="font-size: 10px; color: var(--color-sand-400);">Cliquer pour prévisualiser</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+      `;
+
+      neighbors.forEach((item, idx) => {
+        const nr = item.record;
+        const isChecked = currentBatchSelectedIndices.has(idx);
+        const isActive = idx === currentBatchActivePreviewIndex;
+
+        listHtml += `
+          <div class="batch-neighbor-row" onclick="selectBatchNeighbor(${idx})" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: ${isActive ? 'rgba(201, 162, 77, 0.12)' : 'var(--color-ink-900)'}; border: 1px solid ${isActive ? 'var(--color-brand-400)' : 'var(--panel-border)'}; cursor: pointer; transition: all 0.15s ease;">
+            <input type="checkbox" ${isChecked ? 'checked' : ''} onclick="toggleBatchNeighborCheck(${idx}, event)" style="accent-color: var(--color-brand-400); cursor: pointer;">
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-weight: 700; font-size: 11px; color: ${isActive ? 'var(--color-brand-300)' : 'var(--color-paper)'}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${nr.address || (nr.commune + ' Parcelle ' + (nr.parcel_number || 'N/A'))}
+              </div>
+              <div style="font-size: 10px; color: var(--color-sand-400); margin-top: 1px;">
+                Parcelle n° ${nr.parcel_number || 'N/A'} • ${nr.typology_label || nr.typology_class || 'Cadastre'}
+              </div>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 2px 6px; border: 1px solid rgba(56, 189, 248, 0.25);">
+              ${item.distanceM} m
+            </div>
+          </div>
+        `;
+      });
+
+      listHtml += '</div>';
+      listContainer.innerHTML = listHtml;
+
+      renderBatchLetterPreview(0);
+    }
+
+    function selectBatchNeighbor(index) {
+      currentBatchActivePreviewIndex = index;
+      document.querySelectorAll('.batch-neighbor-row').forEach((row, idx) => {
+        const isActive = idx === index;
+        row.style.background = isActive ? 'rgba(201, 162, 77, 0.12)' : 'var(--color-ink-900)';
+        row.style.borderColor = isActive ? 'var(--color-brand-400)' : 'var(--panel-border)';
+      });
+      renderBatchLetterPreview(index);
+    }
+
+    function toggleBatchNeighborCheck(index, event) {
+      if (event) event.stopPropagation();
+      if (currentBatchSelectedIndices.has(index)) {
+        currentBatchSelectedIndices.delete(index);
+      } else {
+        currentBatchSelectedIndices.add(index);
+      }
+      const selectAllChk = document.getElementById('chkBatchSelectAll');
+      if (selectAllChk) {
+        selectAllChk.checked = currentBatchSelectedIndices.size === currentBatchNeighborsList.length;
+      }
+    }
+
+    function toggleBatchSelectAll(isChecked) {
+      if (isChecked) {
+        currentBatchSelectedIndices = new Set(currentBatchNeighborsList.map((_, i) => i));
+      } else {
+        currentBatchSelectedIndices.clear();
+      }
+      document.querySelectorAll('#batchNeighborListContainer input[type="checkbox"]').forEach(chk => {
+        chk.checked = isChecked;
+      });
+    }
+
+    function generateNeighborLetterText(neighbor, target) {
+      const todayStr = new Date().toLocaleDateString('fr-CH', { year: 'numeric', month: 'long', day: 'numeric' });
+      const targetSnippet = target && target.price_chf
+        ? `notariée intervenue le ${target.notice_date || 'récemment'} (${target.address || (target.commune + ' Parcelle ' + target.parcel_number)}) au prix authentifié de CHF ${Math.round(target.price_chf).toLocaleString('fr-CH')}${target.sqm_price ? ' (soit environ ' + Math.round(target.sqm_price).toLocaleString('fr-CH') + ' CHF/m²)' : ''}`
+        : `foncière officielle inscrite au Registre Foncier (${target ? (target.address || (target.commune + ' Parcelle ' + target.parcel_number)) : 'dans votre périmètre immédiat'})`;
+
+      return `CABINET IMMOBILIER CONSEIL
+Département d'Analyse Foncière & Patrimoniale
+Genève
+
+Genève, le ${todayStr}
+
+Aux propriétaires et ayants droit de la parcelle n° ${neighbor.parcel_number || 'N/A'}
+${neighbor.address || (neighbor.commune + ' (Genève)')}
+
+Objet : Évolution des références notariales dans votre voisinage direct – Synthèse patrimoniale
+
+Madame, Monsieur,
+
+Dans le cadre de notre suivi méthodique des mutations immobilières et foncières du canton de Genève, notre cabinet établit régulièrement les bilans comparatifs micro-locaux des actes notariés inscrits au Registre Foncier cantonal.
+
+Une mutation notariée déterminante vient d'être officialisée dans le voisinage immédiat de votre parcelle : il s'agit de la transaction ${targetSnippet}.
+
+Cet acte constitue un nouvel étalon de valeur vénale pour l'ensemble des propriétés et parcelles contiguës de votre secteur. Il modifie sensiblement l'appréciation foncière applicable aux estimations bancaires, fiscales et successorales de votre adresse.
+
+Afin de vous permettre de mesurer l'impact précis de cette transaction sur votre propre patrimoine, nous tenons à votre disposition un Dossier d'Évaluation Micro-Locale & Extrait Cadastral SITG confidentiel.
+
+Cette transmission d'information relève de notre devoir de diligence et de transparence professionnelle. Elle s'effectue dans le strict respect de la réglementation suisse sur la protection des données (nLPD) et ne comporte aucun engagement de votre part.
+
+Nous nous tenons à votre disposition pour tout échange informatif ou pour vous faire parvenir votre dossier par pli confidentiel.
+
+Veuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.
+
+La Direction des Expertises Foncières
+Cabinet Immobilier Conseil Genève`;
+    }
+
+    function renderBatchLetterPreview(index) {
+      const container = document.getElementById('batchLetterPreviewContainer');
+      if (!container) return;
+
+      const item = currentBatchNeighborsList[index];
+      if (!item) {
+        container.innerHTML = '<div style="color: var(--color-sand-400); padding: 20px;">Sélectionnez un voisin dans la liste.</div>';
+        return;
+      }
+
+      const nr = item.record;
+      const target = currentBatchTargetRecord;
+      const letter = generateNeighborLetterText(nr, target);
+
+      container.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--panel-border);">
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--color-brand-400); text-transform: uppercase;">
+              Aperçu Courrier Conseil • Parcelle n° ${nr.parcel_number || 'N/A'} (${item.distanceM} m de la cible)
+            </div>
+            <div style="font-size: 13px; font-weight: 800; color: var(--color-paper); margin-top: 2px;">
+              ${nr.address || (nr.commune + ' Parcelle ' + (nr.parcel_number || 'N/A'))}
+            </div>
+          </div>
+          <button type="button" class="action-btn" onclick="copySingleBatchLetter(${index})" style="background: var(--color-ink-900); border: 1px solid var(--color-brand-400); color: var(--color-brand-300); font-size: 11px; padding: 6px 12px; cursor: pointer;">
+            Copier ce Courrier
+          </button>
+        </div>
+
+        <pre id="batchPreviewLetterText" style="white-space: pre-wrap; font-family: var(--font-brand); font-size: 12px; line-height: 1.6; color: var(--color-sand-200); background: var(--color-ink-950); padding: 18px 22px; border: 1px solid var(--panel-border); user-select: text; max-height: calc(85vh - 240px); overflow-y: auto;">${letter}</pre>
+      `;
+    }
+
+    function copySingleBatchLetter(index) {
+      const item = currentBatchNeighborsList[index];
+      if (!item) return;
+      const letter = generateNeighborLetterText(item.record, currentBatchTargetRecord);
+      navigator.clipboard.writeText(letter).then(() => {
+        alert("Courrier conseil copié dans le presse-papiers avec succès.");
+      }).catch(() => {
+        prompt("Copiez le texte :", letter);
+      });
+    }
+
+    function copyAllBatchLetters() {
+      if (currentBatchSelectedIndices.size === 0) {
+        alert("Veuillez sélectionner au moins un riverain dans la liste.");
+        return;
+      }
+
+      const separator = "\\n\\n" + "=".repeat(70) + "\\n\\n";
+      const letters = [];
+
+      currentBatchNeighborsList.forEach((item, idx) => {
+        if (currentBatchSelectedIndices.has(idx)) {
+          letters.push(generateNeighborLetterText(item.record, currentBatchTargetRecord));
+        }
+      });
+
+      const combined = letters.join(separator);
+      navigator.clipboard.writeText(combined).then(() => {
+        alert(`Pack complet copié avec succès : ${letters.length} courriers conseils prêts à l'envoi.`);
+      }).catch(() => {
+        prompt("Copiez l'ensemble des courriers :", combined);
+      });
+    }
+
+    function downloadBatchPackJson() {
+      if (currentBatchSelectedIndices.size === 0) {
+        alert("Veuillez sélectionner au moins un riverain dans la liste.");
+        return;
+      }
+
+      const target = currentBatchTargetRecord;
+      const selectedNeighbors = [];
+
+      currentBatchNeighborsList.forEach((item, idx) => {
+        if (currentBatchSelectedIndices.has(idx)) {
+          const nr = item.record;
+          selectedNeighbors.push({
+            recipient_address: nr.address || `${nr.commune} Parcelle ${nr.parcel_number}`,
+            commune: nr.commune,
+            parcel_number: nr.parcel_number,
+            distance_from_target_meters: item.distanceM,
+            typology: nr.typology_label || nr.typology_class,
+            letter_body: generateNeighborLetterText(nr, target)
+          });
+        }
+      });
+
+      const pack = {
+        campaign_type: "CYTRIA_BATCH_NEIGHBOR_ADVISORY",
+        created_at: new Date().toISOString(),
+        target_reference_deed: {
+          address: target.address,
+          commune: target.commune,
+          parcel_number: target.parcel_number,
+          notice_date: target.notice_date,
+          price_chf: target.price_chf,
+          sqm_price: target.sqm_price
+        },
+        radius_meters: currentBatchRadius,
+        total_recipients: selectedNeighbors.length,
+        recipients: selectedNeighbors
+      };
+
+      const blob = new Blob([JSON.stringify(pack, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `cytria_campagne_riverains_${target.parcel_number || 'parcelle'}_${currentBatchRadius}m.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // ==========================================
+    // CYTRIA EARLYSIGNALS: PHASE 4 - DIRECT CRM WEBHOOK CONNECTOR
+    // ==========================================
+    const DEFAULT_CRM_SETTINGS = {
+      url: '',
+      authHeader: '',
+      agencyName: 'Cabinet Immobilier Conseil Genève',
+      agentName: 'Direction des Mandats'
+    };
+
+    function loadCrmSettings() {
+      try {
+        const saved = localStorage.getItem('cytria_crm_settings');
+        if (saved) return JSON.parse(saved);
+      } catch (e) {
+        console.warn('Erreur lecture localStorage CRM:', e);
+      }
+      return DEFAULT_CRM_SETTINGS;
+    }
+
+    function openCrmSettingsModal() {
+      const modal = document.getElementById('crmSettingsModal');
+      if (!modal) return;
+
+      const settings = loadCrmSettings();
+      const urlInp = document.getElementById('crmWebhookUrlInput');
+      const authInp = document.getElementById('crmAuthHeaderInput');
+      const agencyInp = document.getElementById('crmAgencyNameInput');
+      const agentInp = document.getElementById('crmAgentNameInput');
+
+      if (urlInp) urlInp.value = settings.url || '';
+      if (authInp) authInp.value = settings.authHeader || '';
+      if (agencyInp) agencyInp.value = settings.agencyName || '';
+      if (agentInp) agentInp.value = settings.agentName || '';
+
+      modal.classList.add('visible');
+    }
+
+    function closeCrmSettingsModal() {
+      const modal = document.getElementById('crmSettingsModal');
+      if (modal) modal.classList.remove('visible');
+    }
+
+    document.getElementById('crmSettingsModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'crmSettingsModal') {
+        closeCrmSettingsModal();
+      }
+    });
+
+    function saveCrmSettings() {
+      const url = document.getElementById('crmWebhookUrlInput')?.value.trim() || '';
+      const authHeader = document.getElementById('crmAuthHeaderInput')?.value.trim() || '';
+      const agencyName = document.getElementById('crmAgencyNameInput')?.value.trim() || 'Cabinet Immobilier Conseil Genève';
+      const agentName = document.getElementById('crmAgentNameInput')?.value.trim() || 'Direction des Mandats';
+
+      const settings = { url, authHeader, agencyName, agentName };
+      try {
+        localStorage.setItem('cytria_crm_settings', JSON.stringify(settings));
+        alert("Configuration CRM enregistrée avec succès.");
+        closeCrmSettingsModal();
+      } catch (e) {
+        alert("Erreur lors de l'enregistrement local : " + e.message);
+      }
+    }
+
+    function testCrmWebhookConnection() {
+      const url = document.getElementById('crmWebhookUrlInput')?.value.trim() || '';
+      const authHeader = document.getElementById('crmAuthHeaderInput')?.value.trim() || '';
+
+      if (!url) {
+        alert("Veuillez saisir une URL de webhook valide avant de tester la connexion.");
+        return;
+      }
+
+      const headers = { 'Content-Type': 'application/json' };
+      if (authHeader) headers['Authorization'] = authHeader;
+
+      const pingPayload = {
+        event: 'PING',
+        timestamp: new Date().toISOString(),
+        source: 'CYTRIA_EARLYSIGNALS_CONNECTOR',
+        test_message: 'Connexion de test réussie depuis la plateforme Cytria Genève'
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(pingPayload),
+        mode: 'no-cors'
+      }).then(() => {
+        alert("Requête de test transmise avec succès vers l'endpoint CRM.");
+      }).catch(err => {
+        alert("Échec de la communication avec le Webhook : " + err.message);
+      });
+    }
+
+    function pushRecordToCrmWebhook(r) {
+      if (!r) r = currentOpportunityRecord;
+      if (!r) {
+        alert("Aucun enregistrement sélectionné pour l'exportation CRM.");
+        return;
+      }
+
+      const settings = loadCrmSettings();
+      if (!settings.url) {
+        if (confirm("Aucune URL de Webhook CRM n'est configurée. Souhaitez-vous ouvrir les paramètres du connecteur CRM maintenant ?")) {
+          openCrmSettingsModal();
+        }
+        return;
+      }
+
+      const contiguous = findClosestContiguousSale(r);
+      const isSuccession = r.is_hoirie || (r.transaction_type && r.transaction_type.includes('Succession'));
+      const score = Math.max(r.mandate_score || 0, r.dev_score || 0);
+
+      let contiguousProof = 'Étalonnage sur médiane communale';
+      if (contiguous && contiguous.record) {
+        const c = contiguous.record;
+        contiguousProof = `${c.address || (c.commune + ' Parcelle ' + c.parcel_number)} (${contiguous.distanceM} m) — CHF ${Math.round(c.price_chf).toLocaleString('fr-CH')}`;
+      }
+
+      const leadPayload = {
+        event: 'CYTRIA_OPPORTUNITY_QUALIFIED',
+        timestamp: new Date().toISOString(),
+        lead_id: `CYTRIA_${r.commune || 'GE'}_${r.parcel_number || 'RF'}_${r.id || Date.now()}`,
+        property: {
+          address: r.address || `${r.commune} (Parcelle ${r.parcel_number})`,
+          commune: r.commune,
+          parcel_number: r.parcel_number,
+          zone_code: r.zone_code,
+          zone_name: r.zone_name,
+          typology: r.typology_label || r.typology_class,
+          surface_cadastre_m2: r.surface_m2 || r.surface_official_m2 || null,
+          sqm_price_authenticated: r.sqm_price || null,
+          coordinates: { lat: r.lat, lon: r.lon, lv95_e: r.lv95_e, lv95_n: r.lv95_n }
+        },
+        data_lineage: {
+          tier1_official_public_fact: {
+            notice_date: r.notice_date,
+            transaction_type: r.transaction_type,
+            official_source: "FAO / Registre Foncier Genève"
+          },
+          tier2_derived_index: {
+            calculated_sqm_price: r.sqm_price,
+            closest_notarial_proof: contiguousProof
+          },
+          tier3_decision_signal: {
+            decision_confidence_score: score,
+            is_hoirie_cc602: isSuccession,
+            is_densification_art59: !!(r.dev_type === 'ZONE_5_DENSIFICATION' || r.plq_number),
+            reserve_compliance_notice: isSuccession
+              ? "Respect de la réserve successorale CC 602 : approche patrimoniale et fiscale discrète recommandée."
+              : "Audit foncier comparatif et mise à disposition d'une fiche cadastrale SITG recommandée."
+          }
+        },
+        advisory_letter: generateNeighborLetterText(r, contiguous ? contiguous.record : r),
+        agency_routing: {
+          agency_name: settings.agencyName,
+          assigned_agent: settings.agentName
+        }
+      };
+
+      const headers = { 'Content-Type': 'application/json' };
+      if (settings.authHeader) headers['Authorization'] = settings.authHeader;
+
+      fetch(settings.url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(leadPayload),
+        mode: 'no-cors'
+      }).then(() => {
+        alert(`Opportunité transmise avec succès au Webhook CRM pour la parcelle n° ${r.parcel_number || 'N/A'}.`);
+      }).catch(err => {
+        console.warn('Erreur transmission direct CRM:', err);
+        navigator.clipboard.writeText(JSON.stringify(leadPayload, null, 2)).then(() => {
+          alert(`Transmission Webhook bloquée par la politique de sécurité locale. Le payload JSON complet de l'opportunité a été copié dans votre presse-papiers pour importation manuelle.`);
+        });
+      });
+    }
+
+    // ==========================================
     // CYTRIA MICRO-LOCATION VALUATION & CMA TOOL
     // ==========================================
     let currentCmaRadius = 250;
@@ -7216,6 +8261,7 @@ def build_interactive_map(
     terrain_count = sum(1 for r in rows if r.get("typology_class") == "TERRAIN")
     rg_count = sum(1 for r in rows if r.get("rive") == "GAUCHE")
     rd_count = sum(1 for r in rows if r.get("rive") == "DROITE")
+    early_signals_count = sum(1 for r in rows if (r.get("mandate_score", 0) > 0 or r.get("dev_score", 0) >= 20 or "Succession" in (r.get("transaction_type") or "") or r.get("is_hoirie")))
 
     html_content = (
         HTML_TEMPLATE
@@ -7237,6 +8283,7 @@ def build_interactive_map(
         .replace("__HOT_MANDATES_COUNT__", f"{hot_mandates_count:,}")
         .replace("__DEV_COUNT__", f"{dev_opportunities_count:,}")
         .replace("__AGENCIES_COUNT__", f"{len(league_data['agencies']):,}")
+        .replace("__EARLY_SIGNALS_COUNT__", f"{early_signals_count:,}")
     )
 
     out_file.write_text(html_content, encoding="utf-8")
