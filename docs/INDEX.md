@@ -25,29 +25,31 @@ Vous pouvez ouvrir directement l'application cartographique et déclencher les f
 
 - **[Simulateur d'Avis de Valeur & Comparables (CMA)](http://localhost:8080/index.html#cma)** : Ouvre le calculateur d'estimation vénale et la recherche de comparables notariés contigus. Paramètres URL supportés : `?tool=cma&address=Chemin+du+Saut-du-Loup+18&surface=95&typology=PPE`.
 - **[Actualiser Marché & Données (FAO × SITG)](http://localhost:8080/index.html#sync)** : Déclenche le panneau de synchronisation contextuelle (hebdomadaire pour FAO/SITG, quotidienne pour veille concurrentielle).
-- **[Guide Métier & Playbooks Interactifs](http://localhost:8080/index.html#guide)** : Ouvre la base de connaissances métier intégrée (onglets HOIRIES, FONCIER, PRIX, CMA, AGENCES).
+- **[Guide Métier & Playbooks Interactifs](http://localhost:8080/index.html#guide)** : Ouvre la base de connaissances métier intégrée (onglets HOIRIES, FONCIER, PRIX, CMA, AGENCES, EARLYSIGNALS).
 - **[Benchmark & Parts de Marché Agences](http://localhost:8080/index.html#agencies)** : Affiche la répartition des parts de marché et l'emprise territoriale des 55 agences officielles du canton de Genève.
 - **[Radar Sourcing & Hoiries](http://localhost:8080/index.html#sourcing)** : Active directement le radar foncier et les mandats successoraux à forte propension de vente.
+- **[Cytria EarlySignals • Pré-Marché](http://localhost:8080/index.html#earlysignals)** : Active le 4e onglet maître EarlySignals, le Macro Radar cantonal, la Campagne Riverains en lot et le Connecteur CRM Webhook.
 
 ---
 
 ## 3. Sommaire de la Suite Documentaire
 
-Cette documentation est organisée en 5 modules stratégiques et opérationnels, conçus pour servir de manuel d'utilisation, de base de connaissances métier et de cadre d'architecture logicielle :
+Cette documentation est organisée en modules stratégiques et opérationnels, conçus pour servir de manuel d'utilisation, de base de connaissances métier et de cadre d'architecture logicielle :
 
 ```
 docs/
 ├── INDEX.md                                  # Le présent document d'orientation
+├── CYTRIA_EARLY_SIGNALS_PRD.md               # Spécifications de produit pour Cytria EarlySignals
 ├── 01_HOW_TO_AGENCY_BI_MANUAL.md             # Guide pratique des workflows de prospection et de courtage
 ├── 02_GENEVA_CADASTRE_LEGAL_GLOSSARY.md      # Dictionnaire exhaustif juridique, cadastral & foncier genevois
-├── 03_FACTORS_AND_METRICS_ANALYSIS_GUIDE.md  # Analyse détaillée de chaque facteur de donnée et son impact métier
-├── 04_STRATEGIC_PLAYBOOK_SCRIPTS_FAQ.md      # Scripts de prise de contact, conformité suisse LPD et FAQ
+├── 03_FACTORS_AND_METRICS_ANALYSIS_GUIDE.md  # Analyse détaillée de chaque facteur de donnée et impact métier
+├── 04_STRATEGIC_PLAYBOOK_SCRIPTS_FAQ.md      # Scripts de contact, conformité suisse nLPD, playbooks et FAQ
 └── 05_INFORMATION_ARCHITECTURE_ROADMAP.md    # Architecture d'information, schéma de données et roadmap produit
 ```
 
 ---
 
-## 4. Résumé des 5 Modules
+## 4. Résumé des Modules
 
 ### 1. [01_HOW_TO_AGENCY_BI_MANUAL.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/01_HOW_TO_AGENCY_BI_MANUAL.md)
 *Le manuel opérationnel du courtier.*
@@ -56,6 +58,7 @@ docs/
 - **Workflow 3 : L'Avis de Valeur Imparable & Moteur CMA** : Désarmer les prétentions irréalistes des vendeurs grâce aux statistiques officielles du Registre Foncier, au calque prix/m² et au simulateur micro-quartier.
 - **Workflow 4 : Le Farming Territorial Intelligent** : Quadriller un quartier (Cologny, Conches, Florissant) et anticiper les rotations de propriétaires.
 - **Workflow 5 : Veille Concurrentielle & Benchmark de Parts de Marché** : Analyser les 55 agences genevoises et identifier les faiblesses des concurrents.
+- **Workflow 6 : CYTRIA EARLYSIGNALS — Détection Pré-Marché, Campagne Riverains & Connexion CRM** : Exploitation du 4e onglet maître, du Radar Macro, du générateur de campagne et du connecteur direct CRM Webhook.
 
 ### 2. [02_GENEVA_CADASTRE_LEGAL_GLOSSARY.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/02_GENEVA_CADASTRE_LEGAL_GLOSSARY.md)
 *Le glossaire de référence du droit et du cadastre genevois.*
@@ -67,14 +70,20 @@ docs/
 ### 3. [03_FACTORS_AND_METRICS_ANALYSIS_GUIDE.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/03_FACTORS_AND_METRICS_ANALYSIS_GUIDE.md)
 *Le décryptage de chaque facteur de donnée et sa rentabilité pour l'agence.*
 - Analyse systématique des colonnes de données (Avis FAO, Registre foncier, Enrichissement cadastral SITG, Overlays d'urbanisme, Algorithmes de scoring, Tranches Iso-valeur, Macro-zonage des Rives).
-- Pour chaque donnée : Origine technique, méthode d'extraction, et signification commerciale pour l'agence.
+- **Architecture EarlySignals** : Lignage 3 tiers (Fait Public, Indice Dérivé, Signal Décisionnel), indice décisionnel (seuils 50/75), détection par contiguïté notariale, scan radial riverains et payload CRM Webhook normalisé.
 
 ### 4. [04_STRATEGIC_PLAYBOOK_SCRIPTS_FAQ.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/04_STRATEGIC_PLAYBOOK_SCRIPTS_FAQ.md)
 *Boîte à outils de conversion, conformité juridique et FAQ.*
 - **Scripts d'approche** : Courriers sur-mesure pour hoiries, propriétaires en zone de densification et copropriétaires recevant des ventes contiguës (CMA).
-- **Cadre Légal Suisse** : Respect de la nouvelle Loi fédérale sur la protection des données (nLPD), légitimité de consultation du Registre Foncier public.
-- **FAQ Métier** : Questions/réponses concrètes sur les limites, les pièges à éviter, le calcul CMA et l'exploitation quotidienne de l'outil.
+- **Playbooks EarlySignals** : Macro Radar cantonal, Campagne Riverains en lot (Batch Neighbor Campaign), intégration et routage CRM Webhook.
+- **Cadre Légal Suisse & Déontologie** : Respect de la nLPD, période de réserve successorale CC 602/604, citation légale des actes notariés contigus.
+- **FAQ Métier & EarlySignals** : Questions/réponses concrètes sur l'exploitation quotidienne des signaux pré-marché.
 
-### 5. [05_INFORMATION_ARCHITECTURE_ROADMAP.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/05_INFORMATION_ARCHITECTURE_ROADMAP.md)
+### 5. [CYTRIA_EARLY_SIGNALS_PRD.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/CYTRIA_EARLY_SIGNALS_PRD.md)
+*Document de référence des spécifications produit (PRD).*
+- Définition des modules de pré-marché, cartographie des flux d'aide à la décision et architecture de conversion en mandats.
+
+### 6. [05_INFORMATION_ARCHITECTURE_ROADMAP.md](file:///c:/Users/AI-Mini-PC/DEV/FAO-Scrapper-Visualizer/docs/05_INFORMATION_ARCHITECTURE_ROADMAP.md)
 *Cadre d'évolution logicielle et architecture d'information.*
-- Schéma de données maître unifié, synchronisation multi-portails, UX mobile pour courtiers en déplacement et intégration CRM (OnOffice, Fluxaro, Hubspot).
+- Schéma de données maître unifié, synchronisation multi-portails, UX mobile pour courtiers en déplacement et intégration CRM (HubSpot, Salesforce, Whise, Apimo).
+

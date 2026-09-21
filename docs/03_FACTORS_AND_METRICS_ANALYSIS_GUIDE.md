@@ -134,3 +134,113 @@
 - **Signification Métier pour l'Agence** :
   - **Veille Concurrentielle Amont** : Détecte si un propriétaire a déjà mandaté un architecte pour valoriser sa parcelle.
   - **Détection des Ventes sous Condition de Permis** : Les promoteurs signent souvent une promesse de vente sous condition suspensive de l'obtention du permis de construire.
+
+---
+
+## 3. Architecture & Facteurs Spécifiques de Cytria EarlySignals
+
+Le module **Cytria EarlySignals** introduit une couche d'analyse pré-marché dédiée à l'anticipation des arbitrages patrimoniaux et fonciers avant toute parution sur les portails publics.
+
+### 1. Le Lignage de Données 3 Tiers (Architecture de Confiance)
+
+Afin de garantir une conformité déontologique totale avec le droit suisse (art. 970 CC, LaCC, nLPD) et de protéger la réputation de l'agence, chaque enregistrement EarlySignals est segmenté selon un lignage strict en trois niveaux de véracité :
+
+| Niveau de Lignage | Nature de la Donnée | Source & Mécanisme | Règle d'Utilisation Commerciale |
+| :--- | :--- | :--- | :--- |
+| **Tier 1 : Fait Public Officiel** | Donnée brute incontestable | FAO, Registre Foncier (LaCC art. 157, LDTR art. 39), Cadastre officiel SITG | Mentionnable texto au client : date de publication FAO, numéro de parcelle, nature juridique de la mutation. |
+| **Tier 2 : Indice Dérivé Calculé** | Métrique statistique calculée | Modèle algorithmique Cytria, extraction de ventes contiguës, ratio CHF/m² | Présenté comme une analyse de marché indicative : distance métrique de l'acte contigu, estimation de surface brute. |
+| **Tier 3 : Signal Décisionnel** | Qualification stratégique | Score de propension de vente (0 à 100), détection d'hoirie CC 602, potentiel LCI Art. 59 | **Usage strictement interne à l'agence** : guide le timing de prospection et la consigne de période de réserve. |
+
+---
+
+### 2. Indice de Confiance Décisionnelle EarlySignals (`decision_score`)
+
+L'indice décisionnel agrège la plus forte composante entre le potentiel de mandat vendeur (`mandate_score`) et le potentiel de développement foncier (`dev_score`) pour hiérarchiser les opportunités du canton :
+
+$$\text{Decision Score} = \max(\text{mandate\_score}, \text{dev\_score})$$
+
+#### Grille d'Interprétation Métier des Seuils :
+- **Score >= 75 (Forte Probabilité / Priorité 1)** :
+  - *Cas Hoirie* : Indivision successorale confirmée (mention expresse d'hoirie ou multi-héritiers) portant sur une villa individuelle construite avant 1980 sans régie mandataire désignée. Action recommandée : Mise sous surveillance et préparation du dossier d'évaluation micro-locale.
+  - *Cas Foncier* : Parcelle en Zone 5 supérieure à 1'200 m² ou couverte par un PLQ avec potentiel de scission immédiate. Action recommandée : Approche développeur et étude de capacité volumétrique.
+- **Score 50 – 74 (Opportunité Qualifiée / Priorité 2)** :
+  - Mutations avec cession partielle de droits, partages familiaux de PPE ou parcelles péri-urbaines présentant une réserve constructible modérée. Action recommandée : Veille trimestrielle et publipostage ciblé.
+- **Score < 50 (Signal Secondaire / Veille Foncier)** :
+  - Mutations ordinaires sans déclencheur d'urgence patrimoniale immédiate.
+
+---
+
+### 3. Algorithme de Détection Spatiale par Contiguïté Notariée
+
+Pour chaque parcelle cible, Cytria EarlySignals localise en temps réel la transaction notariée authentifiée avec prix déclaré la plus proche géométriquement grâce à la formule de Haversine :
+
+$$d = 2 R \arcsin \left( \sqrt{\sin^2\left(\frac{\Delta \varphi}{2}\right) + \cos(\varphi_1) \cos(\varphi_2) \sin^2\left(\frac{\Delta \lambda}{2}\right)} \right)$$
+
+- **Critères d'Appariement** :
+  - Même typologie de bien ou typologie compatible (ex: Villa contiguë pour Villa, PPE pour PPE).
+  - Élimination des mutations non tarifées (successions pures sans prix publié).
+  - Calcul de la distance réelle au mètre près et extraction du prix au m² officiel certifié par notaire.
+- **Valeur Ajoutée Négociation** :
+  - Permet d'opposer au propriétaire non pas une moyenne abstraite de commune, mais le prix exact de l'acte notarié signé à 45 mètres de chez lui.
+
+---
+
+### 4. Scan Radial de Campagne Riverains (150 m – 600 m)
+
+Le générateur de campagne de sensibilisation riveraine scanne l'ensemble des parcelles du Registre Foncier dans un rayon paramétrable autour de l'acte de référence :
+- **Rayon 150 m (Voisinage Immédiat)** : Riverains directs de la même rue. Taux de pertinence maximal, courrier très personnalisé mentionnant l'acte intervenu sur leur voie.
+- **Rayon 250 m (Périmètre Micro-Quartier standard)** : Compromis optimal entre volume de prospects et proximité perçue (généralement 15 à 45 parcelles identifiées).
+- **Rayon 400 m à 600 m (Bassin Résidentiel Élargi)** : Adapté aux zones périurbaines ou rurales de villas (Vandœuvres, Jussy, Meinier, Satigny) pour générer des lots de publipostage de 60 à 150 courriers.
+
+---
+
+### 5. Schéma de Données du Payload CRM Webhook
+
+Lors du déclenchement du bouton de transmission directe (`pushRecordToCrmWebhook`), Cytria transmet un objet JSON standardisé conçu pour s'intégrer instantanément dans les entités *Deal*, *Lead* ou *Task* de votre CRM :
+
+```json
+{
+  "event": "CYTRIA_OPPORTUNITY_QUALIFIED",
+  "timestamp": "2026-09-21T18:45:00.000Z",
+  "lead_id": "CYTRIA_COLLONGE-BELLERIVE_1482_1789945",
+  "property": {
+    "address": "Route de Thonon 142, 1222 Collonge-Bellerive",
+    "commune": "Collonge-Bellerive",
+    "parcel_number": "1482",
+    "zone_code": "5",
+    "zone_name": "Zone 5 (Villas)",
+    "typology": "VILLA",
+    "surface_cadastre_m2": 1450,
+    "sqm_price_authenticated": 14850,
+    "coordinates": {
+      "lat": 46.2512,
+      "lon": 6.2015,
+      "lv95_e": 2504210,
+      "lv95_n": 1121450
+    }
+  },
+  "data_lineage": {
+    "tier1_official_public_fact": {
+      "notice_date": "2026-09-15",
+      "transaction_type": "Succession",
+      "official_source": "FAO / Registre Foncier Genève"
+    },
+    "tier2_derived_index": {
+      "calculated_sqm_price": 14850,
+      "closest_notarial_proof": "Route de Thonon 138 (42 m) — CHF 3'850'000 (15'100 CHF/m²)"
+    },
+    "tier3_decision_signal": {
+      "decision_confidence_score": 88,
+      "is_hoirie_cc602": true,
+      "is_densification_art59": true,
+      "reserve_compliance_notice": "Respect de la réserve successorale CC 602 : approche patrimoniale et fiscale discrète recommandée."
+    }
+  },
+  "advisory_letter": "CABINET IMMOBILIER CONSEIL...\nAux propriétaires de la parcelle n° 1482...",
+  "agency_routing": {
+    "agency_name": "Naef Immobilier",
+    "assigned_agent": "Direction des Mandats"
+  }
+}
+```
+

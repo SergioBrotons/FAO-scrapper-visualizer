@@ -138,3 +138,91 @@ L'outil permet de vérifier instantanément sur le module de veille concurrentie
 - Si oui, notez le nombre de jours en ligne (`DOM - Days on market`).
 - Un mandat de courtage suisse a généralement une durée ferme de 3 ou 6 mois.
 - À J+90, si le bien n'est toujours pas vendu et a subi une baisse de prix, préparez votre dossier CMA : à l'échéance du mandat concurrent, le propriétaire déçu sera immédiatement réceptif à une nouvelle approche avec une stratégie de commercialisation alternative et un prix réaligné sur la réalité du Registre Foncier.
+
+---
+
+## 4. Playbooks Stratégiques Cytria EarlySignals
+
+### Playbook 4.1 : Détection Macro & Qualification au Radar Pré-Marché
+
+```mermaid
+graph TD
+    A["Avis FAO / Mutation RF"] --> B["Score Décisionnel EarlySignals >= 75"]
+    B --> C{"Typologie du Signal"}
+    C -->|"Hoirie CC 602"| D["Période de Réserve Déontologique (30-60 jours)"]
+    C -->|"Densification Art. 59"| E["Analyse Volumétrique SITG & Droit à Bâtir"]
+    C -->|"Arbitrage Foncier"| F["Étude de Valorisation Comparative Micro-Locale"]
+    D --> G["Activation de la Fiche Décision & Script Conseil"]
+    E --> G
+    F --> G
+    G --> H["Pousser au CRM Webhook pour Assignation Courtier"]
+```
+
+#### Protocole d'Exécution :
+1. **Filtrage Matinal** : Ouvrez le 4e onglet `EARLYSIGNALS` ou lancez le `Radar Pré-Marché (Table) ↗`.
+2. **Tri par Score Décroissant** : Isolez les dossiers ayant un score >= 75.
+3. **Contrôle du Lignage 3 Tiers** :
+   - Vérifiez le *Fait Public Officiel* (date exacte de l'avis FAO et nature de l'acte).
+   - Examinez l'*Indice Dérivé Calculé* : quelle est la transaction contiguë la plus proche ? À quelle distance en mètres ? Quel est son prix certifié au m² ?
+4. **Qualification du Signal** :
+   - *Hoirie sans aliénation* : Notez la date de la mutation. Si la publication a moins de 30 jours, appliquez la **période de réserve** (pas de démarchage frontal, préparer le dossier de veille).
+   - *Parcelle Zone 5 > 1'200 m²* : Ouvrez l'onglet Foncier pour vérifier si la parcelle est bordée par des parcelles éligibles à un regroupement.
+5. **Envoi vers le CRM** : Cliquez sur le bouton `➔ CRM` pour créer la tâche d'attribution automatique dans votre CRM sans ressaisie manuelle.
+
+---
+
+### Playbook 4.2 : Campagne Riverains en Lot (Batch Neighbor Advisory)
+
+Lorsqu'une transaction majeure ou un acte authentifié à prix élevé survient sur un secteur, l'ensemble des propriétaires voisins s'interroge sur l'impact de cet acte sur la valeur de leur bien.
+
+#### Protocole d'Exécution :
+1. **Identification de l'Acte Pivot** : Sélectionnez la transaction notariée récente dans le tiroir d'inspection ou le Radar.
+2. **Lancement de la Campagne** : Cliquez sur `Campagne Riverains en Lot ↗`.
+3. **Calibrage du Rayon Spatial** :
+   - Choisissez **150 m** si la transaction a eu lieu sur une rue résidentielle dense.
+   - Choisissez **250 m** pour un quartier pavillonnaire standard.
+   - Choisissez **400 m ou 600 m** en zone de campagne (Vandœuvres, Cologny, Troinex).
+4. **Revue de la Liste Riverains (Panneau Gauche)** :
+   - Désélectionnez les parcelles publiques, parcelles agricoles non bâties ou copropriétés institutionnelles.
+5. **Validation du Courrier Conseil (Panneau Droit)** :
+   - Vérifiez l'adéquation du texte généré : le courrier mentionne la mutation contiguë sous forme d'éclairage objectif sans divulguer de données secrètes.
+6. **Export & Publipostage** :
+   - Cliquez sur `Copier Tous les Courriers (Pack)` pour injection dans votre outil de publipostage papier.
+   - Ou cliquez sur `Télécharger Pack Campagne (.json)` pour transmission à votre secrétariat ou prestataire d'impression.
+7. **Taux de Retour Attendu** : 8% à 15% de demandes de fiches cadastrales et d'avis de valeur sous 21 jours.
+
+---
+
+### Playbook 4.3 : Intégration CRM Webhook & Workflow d'Attribution Commerciale
+
+Le connecteur Webhook permet de synchroniser directement les opportunités qualifiées avec les logiciels d'agence (HubSpot, Salesforce, Whise, Apimo, Zapier, Make).
+
+#### Configuration en 3 Étapes :
+1. Dans Cytria, cliquez sur `Connecteur CRM Webhook ⚙`.
+2. Saisissez l'URL de votre endpoint Webhook (ex: Webhook Catch Zapier ou URL d'ingestion API d'agence).
+3. Renseignez l'en-tête d'autorisation éventuelle (`Bearer token`), le nom de l'agence et l'agent assignataire. Cliquez sur `Enregistrer la Configuration`.
+
+#### Workflow de Traitement CRM Recommandé :
+- **À Réception du Lead (J0)** : Le CRM crée une tâche assignée au courtier du secteur : *"Dossier d'évaluation micro-locale à préparer pour la parcelle n° X"*.
+- **À J+3** : Envoi du courrier d'information patrimoniale par pli discret ou prise de contact téléphonique consultative.
+- **À J+14** : Relance de courtoisie téléphonique : *"Avez-vous bien réceptionné notre note d'actualisation foncière suite à la mutation du n° Y ?"*.
+- **À J+45** : Proposition de visite sur place pour affiner l'avis de valeur avant tout arbitrage fiscal de fin d'année.
+
+---
+
+## 5. FAQ Déontologique & Opérationnelle EarlySignals (Suisse & nLPD)
+
+### Q6 : Quelle est la durée de réserve déontologique recommandée suite à une succession ?
+Bien que la FAO soit publique dès sa parution, la déontologie suisse et le bon sens commercial imposent de respecter un **délai de décence de 30 à 60 jours** après la publication de l'avis de dévolution successorale. 
+Un démarchage agressif dans les jours suivant le décès est perçu très négativement par les héritiers et nuit durablement à la réputation de l'agence. En revanche, un contact intervenant à J+45 ou J+60 avec un dossier technique complet d'évaluation patrimoniale correspond exactement au moment où les héritiers reçoivent les formulaires fiscaux de l'Administration Fiscale Cantonale (AFC) et réalisent qu'ils ont besoin d'une estimation vénale officielle.
+
+### Q7 : Comment citer une transaction contiguë sans violer le secret d'affaires ?
+Seules les données légalement rendues publiques par la publication officielle au Registre Foncier (LaCC art. 157 et LDTR art. 39) peuvent être mentionnées :
+- La date de publication officielle dans la FAO.
+- La localisation cadastrale de la parcelle.
+- Le montant notarié lorsque la transaction relevait du champ de publication obligatoire (LDTR, ventes d'immeubles, adjudications).
+- Pour les ventes de gré à gré sans publication du prix en francs suisses, le courrier fait référence à *"la mutation notariée intervenue sur la parcelle contiguë"* et s'appuie sur la médiane de prix au m² du secteur calculée par le modèle Cytria.
+
+### Q8 : Le connecteur Webhook nécessite-t-il l'installation d'un serveur ou d'une infrastructure dédiée ?
+Non. Le connecteur Webhook fonctionne en pur appel HTTP standardisé côté client. Vos identifiants et URLs sont stockés exclusivement dans le `localStorage` de votre navigateur sécurisé. Aucune donnée privée de votre agence ne transite par un serveur intermédiaire Cytria. Vous pouvez connecter Cytria à un scénario Make (Integromat) ou Zapier en moins de 2 minutes.
+

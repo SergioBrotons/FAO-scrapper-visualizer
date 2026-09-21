@@ -150,3 +150,45 @@ Pour dominer un secteur, il doit connaître :
 4. Croisez avec les données de délais de parution :
    - Repérez les biens en mandat depuis plus de 90 jours sans offre.
    - Préparez un dossier d'estimation comparative (CMA) pour solliciter le propriétaire lors de l'expiration de l'exclusivité du confrère.
+
+---
+
+## 8. Workflow 6 : CYTRIA EARLYSIGNALS — Détection Pré-Marché, Campagne Riverains & Connexion CRM
+
+### Le Constat Métier
+La meilleure façon de remporter un mandat exclusif à Genève n'est pas de participer à une mise en concurrence avec 4 confrères lorsque le bien est déjà sur les portails. C'est d'intervenir **avant le marché**, dès qu'une mutation successorale ou un arbitrage foncier se produit au Registre Foncier, avec une approche consultative ultra-qualifiée.
+
+### Les 4 Piliers Opérationnels d'EarlySignals :
+
+#### A. Le 4e Onglet Maître Produit & Sous-Barre Dédiée
+- **Accès** : Cliquez sur l'onglet `EARLYSIGNALS` dans la barre supérieure.
+- **Filtres Rapides** :
+  - *Tous les signaux* : Vue panoramique des 4'346 opportunités qualifiées.
+  - *Hoiries & Successions (CC 602)* : Isole les transmissions familiales.
+  - *Densification & PLQ (Art. 59)* : Isole les parcelles à potentiel de bâtir additionnel.
+  - *Arbitrage Foncier* : Filtre les terrains et immeubles sous-optimisés.
+- **HUD Dynamique** : Affiche les métriques clés en temps réel (*Signaux Pré-Marché*, *Hoiries CC 602*, *Densif. Art. 59*, *Score >= 70*).
+
+#### B. Le Dashboard Macro Radar (`#earlySignalsRadarModal`)
+- **Accès** : Cliquez sur `Radar Pré-Marché (Table) ↗` dans la sous-barre ou dans la barre latérale.
+- **Usage** :
+  - Parcourez l'ensemble des opportunités cantonales classées par score décisionnel décroissant.
+  - Utilisez le champ de recherche pour filtrer instantanément par commune, rue ou numéro de parcelle.
+  - Consultez en un coup d'œil le lignage 3 tiers : Fait Public (date FAO), Indice Dérivé (distance et prix de la vente contiguë) et Signal Décisionnel.
+  - Déclenchez directement les actions : `Carte`, `Fiche` (dossier d'aide à la décision 3-tiers), `Campagne` ou `➔ CRM`.
+
+#### C. Le Générateur de Campagne Riverains en Lot (`#batchCampaignModal`)
+- **Accès** : Cliquez sur `Campagne Riverains en Lot ↗` depuis la sous-barre, la table Radar ou la fiche conseil.
+- **Usage** :
+  - L'outil scanne automatiquement toutes les parcelles riveraines dans un rayon de 150 m à 600 m autour de l'acte notarié de référence.
+  - Cochez ou décochez les riverains cibles dans la liste de gauche (avec affichage de la distance exacte au mètre près).
+  - Prévisualisez en direct dans le panneau de droite la lettre personnalisée adressée aux ayants droit, mentionnant l'impact de la transaction contiguë.
+  - Exportez en un clic : `Copier Tous les Courriers (Pack)` pour publipostage ou `Télécharger Pack Campagne (.json)`.
+
+#### D. Le Connecteur CRM Webhook Direct (`#crmSettingsModal`)
+- **Accès** : Cliquez sur `Connecteur CRM Webhook ⚙`.
+- **Usage** :
+  - Renseignez l'URL de votre endpoint Webhook (HubSpot, Salesforce, Whise, Apimo, Zapier, Make) et vos clés d'autorisation éventuelles.
+  - Sauvegardez dans votre navigateur local.
+  - Dès qu'une opportunité est qualifiée, cliquez sur `Transmettre au CRM (Webhook Direct ➔)` depuis le tiroir latéral ou le Radar pour créer la fiche prospect et la tâche commerciale sans quitter la carte.
+

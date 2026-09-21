@@ -2575,6 +2575,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <button type="button" class="league-tab-btn" id="tabMethPrix" onclick="setMethodologyTab('PRIX')">Vérité Prix & LDTR</button>
             <button type="button" class="league-tab-btn" id="tabMethCMA" onclick="setMethodologyTab('CMA')">Avis de Valeur & CMA</button>
             <button type="button" class="league-tab-btn" id="tabMethAgences" onclick="setMethodologyTab('AGENCES')">Agences & Délais</button>
+            <button type="button" class="league-tab-btn" id="tabMethEarlySignals" onclick="setMethodologyTab('EARLYSIGNALS')">EarlySignals & Pré-Marché</button>
           </div>
           <button class="modal-close-btn" onclick="closeMethodologyModal()">&times;</button>
         </div>
@@ -5311,7 +5312,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         'FONCIER': document.getElementById('tabMethFoncier'),
         'PRIX': document.getElementById('tabMethPrix'),
         'CMA': document.getElementById('tabMethCMA'),
-        'AGENCES': document.getElementById('tabMethAgences')
+        'AGENCES': document.getElementById('tabMethAgences'),
+        'EARLYSIGNALS': document.getElementById('tabMethEarlySignals')
       };
       Object.keys(tabBtns).forEach(k => {
         if (tabBtns[k]) tabBtns[k].classList.toggle('active', k === tabId);
@@ -5620,6 +5622,104 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+        `;
+      } else if (tabId === 'EARLYSIGNALS') {
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(201, 162, 77, 0.08); border-left: 3px solid var(--color-brand-400); padding: 14px 18px;">
+              <h3 style="margin: 0 0 6px; font-size: 15px; color: var(--color-brand-300); font-family: var(--font-brand);">CYTRIA EARLYSIGNALS : DÉTECTION PRÉ-MARCHÉ, LIGNAGE 3 TIERS & DÉONTOLOGIE</h3>
+              <p style="margin: 0; font-size: 12px; color: var(--color-sand-300);">Cadre méthodologique d'anticipation des mandats vendeurs, protocoles de publipostage radial et synchronisation CRM déontologique.</p>
+            </div>
+
+            <!-- Architecture Lignage 3 Tiers -->
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">1. Lignage de Données 3 Tiers (Architecture de Confiance)</h4>
+              <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 10px;">
+                Chaque signal d'opportunité généré par Cytria repose sur une séparation stricte des degrés de certitude pour préserver l'intégrité de l'agence et respecter la nLPD suisse :
+              </p>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); padding: 10px 12px;">
+                  <div style="font-weight: 800; color: #4ade80; font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Tier 1 : Fait Public Officiel</div>
+                  <div style="font-size: 11px; color: var(--color-sand-300); line-height: 1.4;">
+                    Donnée légale brute incontestable (avis officiel FAO, date de mutation RF, parcelle cadastrale SITG). Directement opposable et citable.
+                  </div>
+                </div>
+                <div style="background: rgba(96, 165, 250, 0.08); border: 1px solid rgba(96, 165, 250, 0.3); padding: 10px 12px;">
+                  <div style="font-weight: 800; color: #93c5fd; font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Tier 2 : Indice Dérivé Calculé</div>
+                  <div style="font-size: 11px; color: var(--color-sand-300); line-height: 1.4;">
+                    Métrique statistique calculée (distance de l'acte notarié contigu le plus proche en mètres, ratio CHF/m² officiel, emprise de parcelle).
+                  </div>
+                </div>
+                <div style="background: rgba(201, 162, 77, 0.08); border: 1px solid rgba(201, 162, 77, 0.3); padding: 10px 12px;">
+                  <div style="font-weight: 800; color: var(--color-brand-300); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Tier 3 : Signal Décisionnel</div>
+                  <div style="font-size: 11px; color: var(--color-sand-300); line-height: 1.4;">
+                    Score décisionnel (0 à 100), qualification patrimoniale (Hoirie CC 602, Art. 59 LCI) et consigne de période de réserve. <strong>Usage interne agence</strong>.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Les 3 Playbooks Opérationnels -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Playbook 1 : Macro Radar Cantonal</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  Le Radar Pré-Marché centralise l'ensemble des 4'346 opportunités qualifiées de Genève :
+                </p>
+                <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li><strong>Priorisation par score :</strong> Concentrez-vous sur les scores ≥ 75 pour vos tournées hebdomadaires.</li>
+                  <li><strong>Filtrage typologique :</strong> Hoiries & Successions, Densification Zone 5, ou Arbitrages Fonciers.</li>
+                  <li><strong>Actions immédiates :</strong> Localisation sur carte, ouverture du briefing stratégique et export CRM unitaire.</li>
+                </ul>
+                <div style="margin-top: 12px;">
+                  <button type="button" class="btn-sm" onclick="closeMethodologyModal(); openEarlySignalsRadarModal();" style="background: rgba(201, 162, 77, 0.2); border: 1px solid var(--color-brand-400); color: var(--color-brand-300); font-size: 11px; font-weight: 700; padding: 6px 12px; cursor: pointer;">
+                    Ouvrir le Radar Pré-Marché (Table) ↗
+                  </button>
+                </div>
+              </div>
+
+              <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Playbook 2 : Campagne Riverains en Lot</h4>
+                <p style="font-size: 12px; color: var(--color-paper); line-height: 1.5; margin-bottom: 8px;">
+                  Sensibilisation systématique du voisinage dès qu'une vente authentifiée survient sur une rue :
+                </p>
+                <ul style="font-size: 12px; color: var(--color-sand-300); margin: 0; padding-left: 18px; line-height: 1.6;">
+                  <li><strong>Scan radial :</strong> Détection automatique des voisins (150 m, 250 m, 400 m, 600 m).</li>
+                  <li><strong>Courrier conseil :</strong> Rédaction automatique de lettres personnalisées s'appuyant sur l'acte notarié contigu.</li>
+                  <li><strong>Export pack :</strong> Copie intégrale dans le presse-papiers ou téléchargement du fichier JSON de publipostage.</li>
+                </ul>
+                <div style="margin-top: 12px;">
+                  <button type="button" class="btn-sm" onclick="closeMethodologyModal(); openBatchCampaignModal();" style="background: rgba(96, 165, 250, 0.2); border: 1px solid rgba(96, 165, 250, 0.4); color: #93c5fd; font-size: 11px; font-weight: 700; padding: 6px 12px; cursor: pointer;">
+                    Lancer une Campagne Riverains ↗
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Déontologie & Connecteur CRM -->
+            <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); padding: 16px;">
+              <h4 style="margin: 0 0 10px; font-size: 13px; color: var(--color-brand-400); text-transform: uppercase; letter-spacing: 0.05em;">Cadre Déontologique nLPD & Période de Réserve</h4>
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; font-size: 12px; color: var(--color-sand-300); line-height: 1.5;">
+                <div>
+                  <p style="margin: 0 0 8px;">
+                    <strong>Période de réserve recommandée (30 à 60 jours) :</strong> Ne jamais contacter brutalement des héritiers dans les jours qui suivent la publication FAO. Observer un délai de convenance de 4 à 8 semaines, moment exact où les formulaires d'inventaire fiscal (AFC) leur sont transmis et où la nécessité d'une estimation vénale officielle se fait sentir.
+                  </p>
+                  <p style="margin: 0;">
+                    <strong>Droit d'opposition immédiat :</strong> Tout prospect exprimant son refus d'être sollicité doit être inscrit sur la liste d'exclusion interne de l'agence (art. 30 nLPD).
+                  </p>
+                </div>
+                <div style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.25); padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                  <div>
+                    <div style="font-weight: 800; color: #4ade80; margin-bottom: 4px;">Connecteur CRM Webhook</div>
+                    <div style="font-size: 11px; color: var(--color-sand-300);">Poussez les opportunités qualifiées directement vers HubSpot, Salesforce ou Whise.</div>
+                  </div>
+                  <button type="button" class="btn-sm" onclick="closeMethodologyModal(); openCrmSettingsModal();" style="margin-top: 10px; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; font-size: 11px; font-weight: 700; padding: 6px 10px; cursor: pointer; text-align: center;">
+                    Configurer le Webhook CRM ⚙
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         `;
@@ -7835,6 +7935,15 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
         openLeagueModal();
       } else if (target === 'sourcing') {
         switchProductSuite('SOURCING');
+      } else if (target === 'earlysignals' || target === 'radar' || target === 'pre-marche' || target === 'premarche') {
+        switchProductSuite('EARLYSIGNALS');
+        if (target === 'radar' || params.get('view') === 'table') {
+          openEarlySignalsRadarModal();
+        }
+      } else if (target === 'batch' || target === 'campagne' || target === 'riverains') {
+        openBatchCampaignModal();
+      } else if (target === 'crm' || target === 'webhook') {
+        openCrmSettingsModal();
       }
     }
 
