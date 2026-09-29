@@ -6,7 +6,8 @@ fao:
 
 browser:
   headless: false
-  profile_dir: "data/browser_profile"
+  profile_dir: "~/.cache/fao_browser_profile"
+  channel: "chrome"
   viewport:
     width: 1400
     height: 900

@@ -43,9 +43,7 @@ data/exports/*_geocoded.csv
 *.sqlite
 *.db
 
-# Kilo / IDE
-.kilo/
-.idea/
-.vscode/
-*.swp
-*.swo
+# Scratch & Temporary Testing
+scratch/
+data/browser_profile_test/
+

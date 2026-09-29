@@ -2010,6 +2010,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       <!-- Global Header Utilities -->
       <div class="top-bar-utilities">
+        <button type="button" class="subtool-btn utility-btn" id="hudOcstatBtn" onclick="openOcstatModal()" title="Consulter la mercuriale statistique OCSTAT des 44 communes, les barèmes fiscaux genevois 2026 et les géodonnées SITG">
+          🏛️ OCSTAT & Open Data
+        </button>
         <button type="button" class="subtool-btn utility-btn" id="hudOpenCmaBtn" onclick="openCmaModal()">
           Simulateur CMA ↗
         </button>
@@ -2496,6 +2499,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 
+  <!-- Cytria Official OCSTAT & Cantonal Open Data Modal -->
+  <div class="modal-overlay" id="ocstatModal" style="display:none;">
+    <div class="league-modal-window" style="max-width: 1160px; height: 88vh; display: flex; flex-direction: column;">
+      <div class="league-header">
+        <div class="league-title-box">
+          <h2>Référentiel Statistique OCSTAT, Barèmes Fiscaux & Géodonnées Open Data</h2>
+          <p>Office cantonal de la statistique (OCSTAT 2025/2026), barèmes fiscaux LDE & LIPP (Casatax, plus-values, droits de mutation) et infrastructure SITG du Canton de Genève.</p>
+        </div>
+        <div style="display:flex; align-items:center; gap: 14px;">
+          <div class="league-tabs">
+            <button type="button" class="league-tab-btn active" id="tabOcstatCommunes" onclick="setOcstatTab('COMMUNES')">📊 Mercuriale Communes (44)</button>
+            <button type="button" class="league-tab-btn" id="tabOcstatFiscal" onclick="setOcstatTab('FISCAL')">⚖️ Barèmes Fiscaux & Notariés</button>
+            <button type="button" class="league-tab-btn" id="tabOcstatOpenData" onclick="setOcstatTab('OPENDATA')">🌐 Flux Open Data & SITG</button>
+          </div>
+          <button class="modal-close-btn" onclick="closeOcstatModal()">&times;</button>
+        </div>
+      </div>
+
+      <div class="league-body" id="ocstatBodyContent" style="padding: 20px 24px; overflow-y: auto; flex: 1; background: var(--color-ink-950);">
+        <!-- Injected via renderOcstatView() -->
+      </div>
+    </div>
+  </div>
+
   <!-- Cytria Operational Methodology & Playbooks Modal -->
   <div class="modal-overlay" id="methodologyModal">
     <div class="league-modal-window" style="max-width: 1060px; height: 86vh;">
@@ -2724,6 +2751,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     const DATA = __RECORDS_JSON__;
     const COMMUNES = __COMMUNES_JSON__;
     const ZONES = __ZONES_JSON__;
+    const OCSTAT_DATA = __OCSTAT_JSON__;
+    const FINANCIAL_RULES = __FINANCIAL_RULES_JSON__;
+    let activeOcstatTab = 'COMMUNES';
+    let ocstatSearchQuery = '';
+    let ocstatRiveFilter = 'ALL';
 
     let appMode = 'MARKET'; // 'MARKET' | 'MANDATES' | 'DEVELOPMENT'
 
@@ -2980,14 +3012,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       let devCount = 0;
 
       records.forEach(r => {
-        if (!r.lat || !r.lon) return;
-
         if (r.price_chf) {
           totalVol += r.price_chf;
           pricedCount++;
         }
         if (r.mandate_score >= 70) hotMandates++;
         if (r.dev_score >= 25) devCount++;
+
+        if (!r.lat || !r.lon) return;
 
         const color = getMarkerColor(r);
         const radius = (r.price_chf && r.price_chf > 5000000) ? 8 : ((r.mandate_score >= 85 || r.permit_number) ? 7.5 : 6);
@@ -3204,6 +3236,55 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           ${r.zone_dev_name ? `<span class="badge-tag zonedev">${r.zone_dev_code || 'Zone Dév.'}</span>` : ''}
           ${r.permit_number ? `<span class="badge-tag permit">${r.permit_number}</span>` : ''}
         </div>
+
+        <!-- OCSTAT & Cantonal Reference Benchmark Card -->
+        ${(() => {
+          const occ = (typeof OCSTAT_DATA !== 'undefined' ? OCSTAT_DATA : []).find(c => normStr(c.commune) === normStr(r.commune));
+          if (!occ) return '';
+          const isPpe = r.typology_class === 'PPE';
+          const ppeMed = occ.ppe_median_sqm;
+          let deltaHtml = '';
+          if (isPpe && r.sqm_price && ppeMed) {
+            const diffPct = Math.round(((r.sqm_price - ppeMed) / ppeMed) * 100);
+            const sign = diffPct >= 0 ? '+' : '';
+            const color = diffPct >= 0 ? '#4ade80' : '#38bdf8';
+            deltaHtml = `<span style="font-size:10px; font-weight:700; color:${color}; margin-left:6px;">(${sign}${diffPct}% vs médiane OCSTAT)</span>`;
+          }
+          const isCasatax = r.price_chf && r.price_chf <= 1446000;
+          const transferDutyEst = r.price_chf ? Math.round(r.price_chf * 0.03) : null;
+          return `
+            <div style="background: rgba(201, 162, 77, 0.07); border: 1px solid rgba(201, 162, 77, 0.3); padding: 12px 14px; margin-bottom: 12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-brand-400);">🏛️ Référentiel OCSTAT & Fiscalité Communale</span>
+                <span style="font-size:10px; color:var(--color-sand-300); font-family:var(--font-mono);">${occ.commune} (${occ.rive === 'GAUCHE' ? 'Rive Gauche' : 'Rive Droite'})</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap: 10px; font-size: 11px;">
+                <div>
+                  <span style="color:var(--color-sand-400); display:block; font-size:10px;">Médiane Officielle OCSTAT</span>
+                  <strong style="color:var(--color-paper); font-size:12px; font-family:var(--font-brand);">
+                    ${isPpe ? ('CHF ' + Number(ppeMed).toLocaleString('fr-CH') + ' / m²') : ('CHF ' + (occ.villa_median_chf/1e6).toFixed(2) + ' Mio (Villas)')}
+                  </strong>
+                  ${deltaHtml}
+                </div>
+                <div>
+                  <span style="color:var(--color-sand-400); display:block; font-size:10px;">Centimes Additionnels</span>
+                  <strong style="color:var(--color-brand-300); font-size:12px;">${occ.centimes_additionnels}%</strong>
+                  <span style="color:var(--color-sand-400); font-size:10px; display:block;">~${occ.transactions_annuelles_est} actes / an</span>
+                </div>
+              </div>
+              <div style="margin-top:8px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; font-size:10px;">
+                <div>
+                  ${isCasatax 
+                    ? '<span style="color:#4ade80; font-weight:700;">🟢 Éligible Casatax 2026 (Exonération jusqu\'à CHF 20\'400)</span>' 
+                    : (r.price_chf ? `<span style="color:var(--color-sand-400);">Droits de mutation estimés (3%) : <strong>CHF ${transferDutyEst.toLocaleString('fr-CH')}</strong></span>` : '<span style="color:var(--color-sand-400);">Plafond Casatax 2026 : CHF 1\'446\'000</span>')}
+                </div>
+                <button type="button" onclick="openOcstatModal('${occ.commune}')" style="background:transparent; border:none; color:var(--color-brand-300); font-size:10px; font-weight:700; text-decoration:underline; cursor:pointer; padding:0;">
+                  Mercuriale ↗
+                </button>
+              </div>
+            </div>
+          `;
+        })()}
 
         <!-- Action Toolbar (Street View Modal, Satellite Fallback & SITG) -->
         <div class="action-toolbar">
@@ -5334,7 +5415,7 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
         const resp = await fetch('/api/health', { cache: 'no-store' });
         if (resp.ok) {
           if (badge) badge.className = 'status-dot online';
-          if (text) text.textContent = 'Serveur Python local actif (Port 8080)';
+          if (text) text.textContent = 'Serveur Python local actif (Port ' + (window.location.port || '8088') + ')';
           return true;
         }
       } catch (e) {
@@ -5446,7 +5527,7 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
         });
         if (postResp.ok) {
           serverHandled = true;
-          logToTerminal('[API] Session de scan initialisée avec succès sur le serveur Python (port 8080).', 'success');
+          logToTerminal('[API] Session de scan initialisée avec succès sur le serveur Python (port ' + (window.location.port || '8088') + ').', 'success');
           pollServerProgress();
         } else {
           const errData = await postResp.json().catch(() => ({}));
@@ -5589,6 +5670,10 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
         compBanner.style.display = 'flex';
       }
       logToTerminal(`[TERMINÉ] Synchronisation accomplie. Base historique sanctuarisée (${DATA.length} actes). ${newCount} nouveaux enregistrements insérés, ${dupCount} doublons ignorés.`, 'success');
+      if (newCount > 0) {
+        logToTerminal(`[ACTUALISATION] ${newCount} nouveaux actes intégrés ! Rechargement automatique de l'interface dans 3s...`, 'info');
+        setTimeout(() => { location.reload(); }, 3000);
+      }
     }
 
     document.getElementById('scanModal').addEventListener('click', (e) => {
@@ -6163,6 +6248,432 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
     setAppMode('MARKET');
 
     // ==========================================
+    // CYTRIA OCSTAT & OPEN DATA CONTROLLER
+    // ==========================================
+    function openOcstatModal(initialCommune) {
+      const modal = document.getElementById('ocstatModal');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      if (initialCommune) {
+        ocstatSearchQuery = initialCommune;
+        activeOcstatTab = 'COMMUNES';
+      }
+      setOcstatTab(activeOcstatTab);
+    }
+
+    function closeOcstatModal() {
+      const modal = document.getElementById('ocstatModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    const ocstatModalEl = document.getElementById('ocstatModal');
+    if (ocstatModalEl) {
+      ocstatModalEl.addEventListener('click', (e) => {
+        if (e.target.id === 'ocstatModal') closeOcstatModal();
+      });
+    }
+
+    function setOcstatTab(tabName) {
+      activeOcstatTab = tabName;
+      document.querySelectorAll('#ocstatModal .league-tab-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('tabOcstat' + (tabName === 'COMMUNES' ? 'Communes' : (tabName === 'FISCAL' ? 'Fiscal' : 'OpenData')));
+      if (activeBtn) activeBtn.classList.add('active');
+      renderOcstatView();
+    }
+
+    function setOcstatRiveFilter(rive) {
+      ocstatRiveFilter = rive;
+      renderOcstatView();
+    }
+
+    function handleOcstatSearch(val) {
+      ocstatSearchQuery = val.trim();
+      renderOcstatView();
+    }
+
+    function filterMapByCommuneFromOcstat(communeName) {
+      closeOcstatModal();
+      const select = document.getElementById('communeSelect');
+      if (select) {
+        select.value = communeName;
+        applyFilters();
+      }
+    }
+
+    function renderOcstatView() {
+      const container = document.getElementById('ocstatBodyContent');
+      if (!container) return;
+
+      if (activeOcstatTab === 'FISCAL') {
+        container.innerHTML = renderOcstatFiscalTab();
+      } else if (activeOcstatTab === 'OPENDATA') {
+        container.innerHTML = renderOcstatOpenDataTab();
+      } else {
+        container.innerHTML = renderOcstatCommunesTab();
+      }
+    }
+
+    function renderOcstatCommunesTab() {
+      const list = typeof OCSTAT_DATA !== 'undefined' ? OCSTAT_DATA : [];
+      const query = normStr(ocstatSearchQuery);
+
+      const filtered = list.filter(item => {
+        if (ocstatRiveFilter !== 'ALL' && item.rive !== ocstatRiveFilter) return false;
+        if (query) {
+          return normStr(item.commune).includes(query);
+        }
+        return true;
+      });
+
+      // Quick Cantonal Stats
+      const totalEstimated = list.reduce((acc, c) => acc + (c.transactions_annuelles_est || 0), 0);
+      const avgPpe = Math.round(list.reduce((acc, c) => acc + (c.ppe_median_sqm || 0), 0) / (list.length || 1));
+      const avgCentimes = (list.reduce((acc, c) => acc + (c.centimes_additionnels || 0), 0) / (list.length || 1)).toFixed(1);
+
+      // Precalculate Cytria FAO count per commune
+      const realCounts = {};
+      const realPpeSqm = {};
+      DATA.forEach(r => {
+        if (!r.commune) return;
+        const c = r.commune;
+        realCounts[c] = (realCounts[c] || 0) + 1;
+        if (r.typology_class === 'PPE' && r.sqm_price) {
+          if (!realPpeSqm[c]) realPpeSqm[c] = [];
+          realPpeSqm[c].push(r.sqm_price);
+        }
+      });
+
+      const rowsHtml = filtered.map(item => {
+        const cytriaCount = realCounts[item.commune] || 0;
+        const cytriaSqms = realPpeSqm[item.commune] || [];
+        let cytriaMedianPpe = '—';
+        let deltaHtml = '';
+        if (cytriaSqms.length > 0) {
+          cytriaSqms.sort((a,b) => a - b);
+          const med = cytriaSqms[Math.floor(cytriaSqms.length / 2)];
+          cytriaMedianPpe = 'CHF ' + med.toLocaleString('fr-CH');
+          const delta = Math.round(((med - item.ppe_median_sqm) / item.ppe_median_sqm) * 100);
+          const sign = delta >= 0 ? '+' : '';
+          const col = delta >= 0 ? '#4ade80' : '#38bdf8';
+          deltaHtml = `<span style="font-size:10px; color:${col}; font-weight:700;">${sign}${delta}%</span>`;
+        }
+
+        return `
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.06); font-size:12px;">
+            <td style="padding: 10px 12px; font-weight:700; color:var(--color-paper);">
+              ${item.commune}
+            </td>
+            <td style="padding: 10px 12px;">
+              <span class="subtool-badge" style="font-size:9px; background:${item.rive === 'GAUCHE' ? 'rgba(59,130,246,0.15)' : 'rgba(16,185,129,0.15)'}; color:${item.rive === 'GAUCHE' ? '#93c5fd' : '#6ee7b7'}; border-color:${item.rive === 'GAUCHE' ? '#3b82f6' : '#10b981'};">
+                ${item.rive === 'GAUCHE' ? 'Rive Gauche' : 'Rive Droite'}
+              </span>
+            </td>
+            <td style="padding: 10px 12px; font-weight:700; color:var(--color-brand-300); font-family:var(--font-brand);">
+              CHF ${Number(item.ppe_median_sqm).toLocaleString('fr-CH')} / m²
+            </td>
+            <td style="padding: 10px 12px; color:var(--color-sand-200); font-family:var(--font-brand);">
+              ${cytriaMedianPpe} ${deltaHtml}
+            </td>
+            <td style="padding: 10px 12px; color:var(--color-paper);">
+              CHF ${(item.villa_median_chf / 1e6).toFixed(2)} Mio
+            </td>
+            <td style="padding: 10px 12px; font-weight:700; color:#fbbf24;">
+              ${item.centimes_additionnels}%
+            </td>
+            <td style="padding: 10px 12px; color:var(--color-sand-300);">
+              ~${item.transactions_annuelles_est} <span style="font-size:10px; color:var(--color-sand-400);">/ an</span>
+            </td>
+            <td style="padding: 10px 12px; font-weight:700; color:#4ade80;">
+              ${cytriaCount.toLocaleString('fr-CH')}
+            </td>
+            <td style="padding: 10px 12px; text-align:right;">
+              <button type="button" onclick="filterMapByCommuneFromOcstat('${item.commune}')" class="subtool-btn utility-btn" style="padding:4px 8px; font-size:10px;">
+                Filtrer la carte ↗
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      return `
+        <!-- KPI Summary Strip -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:18px;">
+          <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:12px 14px;">
+            <div style="font-size:10px; text-transform:uppercase; color:var(--color-sand-400); letter-spacing:0.05em;">Communes Référencées</div>
+            <div style="font-size:18px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-top:2px;">${list.length} communes</div>
+            <div style="font-size:10px; color:var(--color-brand-400); margin-top:2px;">100% du territoire genevois</div>
+          </div>
+          <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:12px 14px;">
+            <div style="font-size:10px; text-transform:uppercase; color:var(--color-sand-400); letter-spacing:0.05em;">Médiane Cantonale PPE (OCSTAT)</div>
+            <div style="font-size:18px; font-weight:800; color:var(--color-brand-300); font-family:var(--font-brand); margin-top:2px;">CHF ${avgPpe.toLocaleString('fr-CH')} / m²</div>
+            <div style="font-size:10px; color:var(--color-sand-300); margin-top:2px;">Fourchette : 11'800 à 21'500 CHF/m²</div>
+          </div>
+          <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:12px 14px;">
+            <div style="font-size:10px; text-transform:uppercase; color:var(--color-sand-400); letter-spacing:0.05em;">Centimes Additionnels Moyens</div>
+            <div style="font-size:18px; font-weight:800; color:#fbbf24; font-family:var(--font-brand); margin-top:2px;">${avgCentimes}%</div>
+            <div style="font-size:10px; color:var(--color-sand-300); margin-top:2px;">Min 28.0% (Cologny) &bull; Max 51.0%</div>
+          </div>
+          <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:12px 14px;">
+            <div style="font-size:10px; text-transform:uppercase; color:var(--color-sand-400); letter-spacing:0.05em;">Transactions Annuelles Est.</div>
+            <div style="font-size:18px; font-weight:800; color:#4ade80; font-family:var(--font-brand); margin-top:2px;">~${totalEstimated.toLocaleString('fr-CH')} actes / an</div>
+            <div style="font-size:10px; color:var(--color-sand-300); margin-top:2px;">Base Cytria : ${DATA.length.toLocaleString('fr-CH')} actes sanctuarisés</div>
+          </div>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:12px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="text" value="${ocstatSearchQuery}" placeholder="Rechercher une commune (ex: Cologny, Carouge, Genève, Chêne-Bourg)..." oninput="handleOcstatSearch(this.value)" style="width:340px; padding:7px 12px; background:var(--color-ink-900); border:1px solid var(--panel-border); color:var(--color-paper); font-size:11px; outline:none;">
+            <button type="button" class="subtool-btn ${ocstatRiveFilter === 'ALL' ? 'active' : ''}" onclick="setOcstatRiveFilter('ALL')">Toutes (${list.length})</button>
+            <button type="button" class="subtool-btn ${ocstatRiveFilter === 'GAUCHE' ? 'active' : ''}" onclick="setOcstatRiveFilter('GAUCHE')">Rive Gauche</button>
+            <button type="button" class="subtool-btn ${ocstatRiveFilter === 'DROITE' ? 'active' : ''}" onclick="setOcstatRiveFilter('DROITE')">Rive Droite</button>
+          </div>
+          <div style="font-size:11px; color:var(--color-sand-400);">
+            Affichage de <strong>${filtered.length}</strong> communes sur ${list.length}
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div style="border:1px solid var(--panel-border); overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; text-align:left;">
+            <thead>
+              <tr style="background:var(--color-ink-900); border-bottom:1px solid var(--panel-border); font-size:10px; text-transform:uppercase; letter-spacing:0.04em; color:var(--color-sand-400);">
+                <th style="padding:10px 12px;">Commune</th>
+                <th style="padding:10px 12px;">Rive</th>
+                <th style="padding:10px 12px;">Médiane PPE (OCSTAT)</th>
+                <th style="padding:10px 12px;">Médiane PPE (Cytria FAO)</th>
+                <th style="padding:10px 12px;">Médiane Villas</th>
+                <th style="padding:10px 12px;">Centimes Fiscalité</th>
+                <th style="padding:10px 12px;">Actes Est. (OCSTAT)</th>
+                <th style="padding:10px 12px;">Actes Cytria</th>
+                <th style="padding:10px 12px; text-align:right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderOcstatFiscalTab() {
+      const rules = typeof FINANCIAL_RULES !== 'undefined' ? FINANCIAL_RULES : {};
+      const casatax = rules.casatax || { threshold_chf: 1446000, tax_reduction_chf: 20400 };
+      const mutation = rules.droits_mutation || { standard_rate_pct: 3.0, total_acquisition_costs_pct: 3.7 };
+      const gains = rules.impot_gains_immobiliers || { brackets: [] };
+
+      return `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px;">
+          <!-- Left Column: Casatax & Droits de mutation -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Casatax Card -->
+            <div style="background:var(--color-ink-900); border:1px solid var(--color-brand-400); padding:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-brand-400);">Exonération Fiscale Cantonal</span>
+                <span class="subtool-badge" style="background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;">Barème 2026</span>
+              </div>
+              <h3 style="font-size:16px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-bottom:6px;">
+                Dispositif CASATAX (Art. 8A LDE)
+              </h3>
+              <p style="font-size:12px; color:var(--color-sand-300); margin-bottom:12px; line-height:1.5;">
+                Casatax est un abattement fiscal cantonal destiné à encourager l'accession à la propriété pour les personnes physiques acquérant leur résidence principale à Genève.
+              </p>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; background:var(--color-ink-950); padding:12px; border:1px solid var(--panel-border);">
+                <div>
+                  <span style="font-size:10px; text-transform:uppercase; color:var(--color-sand-400);">Plafond d'Acquisition (2026)</span>
+                  <div style="font-size:16px; font-weight:800; color:#4ade80; font-family:var(--font-brand);">CHF ${Number(casatax.threshold_chf).toLocaleString('fr-CH')}</div>
+                  <span style="font-size:10px; color:var(--color-sand-400);">Indexé annuellement par l'OCSTAT</span>
+                </div>
+                <div>
+                  <span style="font-size:10px; text-transform:uppercase; color:var(--color-sand-400);">Économie Fiscale Maximale</span>
+                  <div style="font-size:16px; font-weight:800; color:var(--color-brand-300); font-family:var(--font-brand);">CHF ${Number(casatax.tax_reduction_chf).toLocaleString('fr-CH')}</div>
+                  <span style="font-size:10px; color:var(--color-sand-400);">Droits d'enregistrement + émoluments</span>
+                </div>
+              </div>
+              <div style="margin-top:10px; font-size:11px; color:var(--color-sand-300); line-height:1.4;">
+                &bull; <strong>Réduction créance hypothécaire :</strong> Réduction de 50% des droits d'enregistrement sur les cédules hypothécaires.<br>
+                &bull; <strong>Engagement :</strong> Domiciliation et occupation effective en résidence principale pendant 3 ans minimum.
+              </div>
+            </div>
+
+            <!-- Droits de Mutation & Frais de Notaire -->
+            <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:16px;">
+              <h3 style="font-size:14px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-bottom:8px;">
+                Droits de Mutation & Frais d'Acquisition Notariés
+              </h3>
+              <p style="font-size:12px; color:var(--color-sand-300); margin-bottom:12px; line-height:1.5;">
+                Pour toute acquisition immobilière à Genève ne bénéficiant pas de Casatax, l'acquéreur s'acquitte des droits suivants :
+              </p>
+              <div style="display:flex; flex-direction:column; gap:6px; font-size:11px;">
+                <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--color-ink-950);">
+                  <span>Droits d'enregistrement cantonaux (Loi LDE)</span>
+                  <strong style="color:var(--color-paper);">${mutation.standard_rate_pct}%</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--color-ink-950);">
+                  <span>Émoluments du Registre Foncier</span>
+                  <strong style="color:var(--color-paper);">${mutation.cadastral_registry_fee_pct || 0.2}%</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--color-ink-950);">
+                  <span>Honoraires notariés réglementés (Tarif cantonal)</span>
+                  <strong style="color:var(--color-paper);">~${mutation.notary_fee_est_pct || 0.5}%</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:8px 8px; background:rgba(201,162,77,0.12); border:1px solid rgba(201,162,77,0.4); margin-top:4px;">
+                  <strong style="color:var(--color-brand-300);">Total Frais d'Acquisition Estimés</strong>
+                  <strong style="color:var(--color-brand-300); font-size:13px;">~${mutation.total_acquisition_costs_pct || 3.7}% du prix d'achat</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Gains Immobiliers & Lois Cantonales -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Impôt sur les Gains Immobiliers (LIPP Art. 82) -->
+            <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-brand-400);">Fiscalité du Vendeur</span>
+                <span class="subtool-badge" style="font-size:9px;">Art. 82 LIPP Genève</span>
+              </div>
+              <h3 style="font-size:14px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-bottom:6px;">
+                Impôt sur les Gains Immobiliers (Plus-Values)
+              </h3>
+              <p style="font-size:12px; color:var(--color-sand-300); margin-bottom:12px; line-height:1.4;">
+                Barème cantonal dégressif dissuadant la spéculation à court terme et exonérant totalement les détenteurs de long terme :
+              </p>
+              <div style="border:1px solid var(--panel-border); overflow:hidden;">
+                <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                  <thead>
+                    <tr style="background:var(--color-ink-950); color:var(--color-sand-400); text-transform:uppercase; font-size:9px;">
+                      <th style="padding:6px 10px; text-align:left;">Durée de Possession</th>
+                      <th style="padding:6px 10px; text-align:right;">Taux d'Imposition</th>
+                      <th style="padding:6px 10px; text-align:right;">Impact Fiscal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-top:1px solid var(--panel-border); background:rgba(239,68,68,0.08);"><td style="padding:6px 10px; font-weight:700;">Moins de 2 ans</td><td style="padding:6px 10px; text-align:right; font-weight:800; color:#f87171;">50%</td><td style="padding:6px 10px; text-align:right; color:#f87171; font-size:10px;">Surtaxe spéculative maximale</td></tr>
+                    <tr style="border-top:1px solid var(--panel-border);"><td style="padding:6px 10px;">2 à 3 ans</td><td style="padding:6px 10px; text-align:right; font-weight:700;">40%</td><td style="padding:6px 10px; text-align:right; color:var(--color-sand-400); font-size:10px;">Forte taxation</td></tr>
+                    <tr style="border-top:1px solid var(--panel-border);"><td style="padding:6px 10px;">3 à 4 ans</td><td style="padding:6px 10px; text-align:right; font-weight:700;">30%</td><td style="padding:6px 10px; text-align:right; color:var(--color-sand-400); font-size:10px;">Taxation moyenne</td></tr>
+                    <tr style="border-top:1px solid var(--panel-border);"><td style="padding:6px 10px;">4 à 5 ans</td><td style="padding:6px 10px; text-align:right; font-weight:700;">20%</td><td style="padding:6px 10px; text-align:right; color:var(--color-sand-400); font-size:10px;">Taux standard</td></tr>
+                    <tr style="border-top:1px solid var(--panel-border);"><td style="padding:6px 10px;">5 à 10 ans</td><td style="padding:6px 10px; text-align:right; font-weight:700;">15%</td><td style="padding:6px 10px; text-align:right; color:var(--color-sand-400); font-size:10px;">Dégressivité active</td></tr>
+                    <tr style="border-top:1px solid var(--panel-border);"><td style="padding:6px 10px;">10 à 25 ans</td><td style="padding:6px 10px; text-align:right; font-weight:700; color:#fbbf24;">10%</td><td style="padding:6px 10px; text-align:right; color:#fbbf24; font-size:10px;">Taux réduit patrimonial</td></tr>
+                    <tr style="border-top:1px solid var(--panel-border); background:rgba(16,185,129,0.12);"><td style="padding:6px 10px; font-weight:800; color:#4ade80;">Plus de 25 ans</td><td style="padding:6px 10px; text-align:right; font-weight:800; color:#4ade80;">0%</td><td style="padding:6px 10px; text-align:right; color:#4ade80; font-size:10px; font-weight:700;">Exonération totale d'impôt</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Lois Réglementaires Cantonales -->
+            <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:16px;">
+              <h3 style="font-size:14px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-bottom:8px;">
+                Réglementations Cantonales Majeures
+              </h3>
+              <div style="display:flex; flex-direction:column; gap:10px; font-size:12px;">
+                <div style="padding:10px; background:var(--color-ink-950); border-left:3px solid #38bdf8;">
+                  <strong style="color:#38bdf8;">LDTR (Loi sur les démolitions, transformations et rénovations) :</strong>
+                  <div style="color:var(--color-sand-300); font-size:11px; margin-top:2px;">
+                    Protège le parc locatif genevois. Soumet à autorisation la vente d'appartements loués et impose un contrôle étatique des loyers pendant plusieurs années suite aux travaux.
+                  </div>
+                </div>
+                <div style="padding:10px; background:var(--color-ink-950); border-left:3px solid #f59e0b;">
+                  <strong style="color:#f59e0b;">Art. 157 LaCC (Loi d'application du code civil suisse) :</strong>
+                  <div style="color:var(--color-sand-300); font-size:11px; margin-top:2px;">
+                    Régit la publicité foncière officielle à Genève. Fonde les publications de la FAO (mutations, fixations de parts PPE, rectifications et déclarations de succession).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderOcstatOpenDataTab() {
+      return `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px;">
+          <!-- SITG Platform -->
+          <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-brand-400);">Système Géospatial Officiel</span>
+              <span class="subtool-badge" style="background:#172554; color:#93c5fd; border-color:#1e40af;">SITG OPEN DATA</span>
+            </div>
+            <h3 style="font-size:16px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-bottom:8px;">
+              SITG — Système d'Information du Territoire à Genève
+            </h3>
+            <p style="font-size:12px; color:var(--color-sand-300); margin-bottom:14px; line-height:1.5;">
+              La plateforme Cytria interroge en direct l'infrastructure Open Data du SITG via des protocoles WFS et REST pour enrichir chaque transaction de la FAO :
+            </p>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:11px;">
+              <div style="padding:8px 10px; background:var(--color-ink-950); border:1px solid var(--panel-border);">
+                <strong style="color:var(--color-brand-300);">Cadastre & Mensuration Officielle (RDPPF) :</strong>
+                <div style="color:var(--color-sand-300); font-size:10px; margin-top:2px;">Centroïdes WGS84, coordonnées LV95 suisses, surfaces cadastrales officielles et identifiant fédéral unique EGRID.</div>
+              </div>
+              <div style="padding:8px 10px; background:var(--color-ink-950); border:1px solid var(--panel-border);">
+                <strong style="color:var(--color-brand-300);">Plans Localisés de Quartier (PLQ) :</strong>
+                <div style="color:var(--color-sand-300); font-size:10px; margin-top:2px;">Détection automatique des parcelles sous PLQ voté ou en procédure, avec liens directs vers les arrêtés et plans du Conseil d'État.</div>
+              </div>
+              <div style="padding:8px 10px; background:var(--color-ink-950); border:1px solid var(--panel-border);">
+                <strong style="color:var(--color-brand-300);">Autorisations de Construire (APA / SAD) :</strong>
+                <div style="color:var(--color-sand-300); font-size:10px; margin-top:2px;">Croisement spatial avec les requêtes de permis déposées, délivrées ou en cours d'instruction dans le canton.</div>
+              </div>
+              <div style="padding:8px 10px; background:var(--color-ink-950); border:1px solid var(--panel-border);">
+                <strong style="color:var(--color-brand-300);">Orthophotos Aériennes HD (5 cm) :</strong>
+                <div style="color:var(--color-sand-300); font-size:10px; margin-top:2px;">Visualisation des toitures, limites de parcelles et emprises au sol en très haute résolution aérienne.</div>
+              </div>
+            </div>
+            <div style="margin-top:14px;">
+              <a href="https://ge.ch/sitg/" target="_blank" rel="noopener" class="subtool-btn utility-btn" style="display:inline-block; text-decoration:none; padding:6px 12px;">
+                Accéder au portail SITG Genève ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- OCSTAT & FAO Cantonal Platforms -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-brand-400);">Données Statistiques Publiques</span>
+                <span class="subtool-badge">OCSTAT GE</span>
+              </div>
+              <h3 style="font-size:15px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-bottom:8px;">
+                OCSTAT — Office Cantonal de la Statistique
+              </h3>
+              <p style="font-size:12px; color:var(--color-sand-300); margin-bottom:12px; line-height:1.5;">
+                Organisme d'État chargé de compiler les indices des prix immobiliers, les mercuriales par commune et les agrégats de mutations pour la République et Canton de Genève.
+              </p>
+              <div style="font-size:11px; color:var(--color-sand-300); line-height:1.5;">
+                &bull; <strong>Séries temporelles :</strong> Indices trimestriels des appartements PPE et maisons individuelles.<br>
+                &bull; <strong>Transparence du marché :</strong> Étalonnage officiel utilisé pour calibrer le simulateur CMA et les décotes notariées.
+              </div>
+              <div style="margin-top:12px;">
+                <a href="https://www.ge.ch/statistique/" target="_blank" rel="noopener" class="subtool-btn utility-btn" style="display:inline-block; text-decoration:none; padding:6px 12px;">
+                  Portail Officiel OCSTAT ↗
+                </a>
+              </div>
+            </div>
+
+            <div style="background:var(--color-ink-900); border:1px solid var(--panel-border); padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-brand-400);">Publicité Légale Officielle</span>
+                <span class="subtool-badge">FAO GENÈVE</span>
+              </div>
+              <h3 style="font-size:15px; font-weight:800; color:var(--color-paper); font-family:var(--font-brand); margin-bottom:8px;">
+                Feuille d'Avis Officielle (FAO) & Registre Foncier
+              </h3>
+              <p style="font-size:12px; color:var(--color-sand-300); margin-bottom:12px; line-height:1.5;">
+                Journal officiel du canton publiant les avis de mutation (Rubrique 133 / 137). Source primaire et irréfutable de la base de données Cytria, sanctuarisant chaque acte notarié dès sa parution.
+              </p>
+              <div style="margin-top:12px;">
+                <a href="https://fao.ge.ch" target="_blank" rel="noopener" class="subtool-btn utility-btn" style="display:inline-block; text-decoration:none; padding:6px 12px;">
+                  Feuille d'Avis Officielle (FAO) ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================
     // DEEP-LINKING & EXTERNAL URL ROUTER
     // Supports:
     //   #cma or ?tool=cma or ?modal=cma (&address=...)
@@ -6178,7 +6689,10 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
 
       if (!target) return;
 
-      if (target === 'cma' || target === 'simulateur' || target === 'avis-de-valeur' || target.includes('cma') || target.includes('valeur')) {
+      if (target === 'ocstat' || target === 'opendata' || target === 'statistique' || target.includes('ocstat')) {
+        const comm = params.get('commune');
+        openOcstatModal(comm);
+      } else if (target === 'cma' || target === 'simulateur' || target === 'avis-de-valeur' || target.includes('cma') || target.includes('valeur')) {
         const addr = params.get('address') || params.get('adresse');
         const surf = params.get('surface');
         const typo = params.get('typology') || params.get('type');
@@ -6222,12 +6736,16 @@ def compute_mandate_score(row: Dict[str, Any]) -> Tuple[int, List[str], bool]:
     price = row.get("price_chf") or 0
     
     is_heritage = any(k in tt for k in ["héritage", "heritage", "succession"])
+    is_fixation = any(k in tt for k in ["fixation", "fixations de parts"]) or "fixation" in str(row.get("nature") or "").lower()
     is_cession = any(k in tt for k in ["cession", "partage", "donation"])
     is_hoirie = False
     
     if is_heritage:
         score += 45
         reasons.append("Mutation par succession légale (FAO)")
+    elif is_fixation:
+        score += 35
+        reasons.append("Fixation de quote-parts (restructuration de copropriété / pré-cession)")
     elif is_cession:
         score += 25
         reasons.append("Cession de part ou partage intrafamilial")
@@ -6400,6 +6918,10 @@ def classify_nature(r: Dict[str, Any]) -> str:
         return "VENTE"
     elif any(k in tt for k in ["héritage", "heritage", "succession"]):
         return "SUCCESSION"
+    elif "fixation" in tt or "part" in tt:
+        return "MUTATION_PARTS"
+    elif "rectif" in tt:
+        return "RECTIFICATION"
     else:
         return "DONATION"
 
@@ -6464,23 +6986,9 @@ def build_interactive_map(
     out_file = Path(output_path or (Path(settings.storage.exports_dir) / "geneva_transactions_map.html"))
     out_file.parent.mkdir(parents=True, exist_ok=True)
 
-    csv_file = Path(settings.storage.exports_dir) / "geneva_property_transactions.csv"
-    if csv_file.exists():
-        import pandas as pd
-        console.print(f"[cyan]Loading fully enriched dataset from:[/cyan] {csv_file.name}")
-        df = pd.read_csv(csv_file, low_memory=False)
-        df = df[df["centroid_wgs84_lon"].notna() & df["centroid_wgs84_lat"].notna()]
-        df = df.rename(columns={
-            "centroid_wgs84_lon": "lon",
-            "centroid_wgs84_lat": "lat",
-            "centroid_lv95_e": "lv95_e",
-            "centroid_lv95_n": "lv95_n",
-        })
-        raw_rows = [
-            {k: (None if pd.isna(v) else v) for k, v in row.items()}
-            for row in df.to_dict(orient="records")
-        ]
-    elif db_file.exists():
+    # Prioritize authoritative SQLite database (state.sqlite) over stale exports (P0-06):
+    if db_file.exists():
+        console.print(f"[cyan]Loading authoritative enriched dataset from SQLite database:[/cyan] {db_file}")
         with sqlite3.connect(db_file) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
@@ -6520,6 +7028,20 @@ def build_interactive_map(
                 ORDER BY t.notice_date DESC
             """)
             raw_rows = [dict(r) for r in cursor.fetchall()]
+    elif csv_file.exists():
+        import pandas as pd
+        console.print(f"[cyan]Loading enriched dataset fallback from:[/cyan] {csv_file.name}")
+        df = pd.read_csv(csv_file, low_memory=False)
+        df = df.rename(columns={
+            "centroid_wgs84_lon": "lon",
+            "centroid_wgs84_lat": "lat",
+            "centroid_lv95_e": "lv95_e",
+            "centroid_lv95_n": "lv95_n",
+        })
+        raw_rows = [
+            {k: (None if pd.isna(v) else v) for k, v in row.items()}
+            for row in df.to_dict(orient="records")
+        ]
     else:
         raw_rows = []
 
@@ -6541,27 +7063,30 @@ def build_interactive_map(
         price = r.get("price_chf")
         surf_hab = r.get("surface_habitable_m2")
         surf_terr = r.get("surface_terrain_m2")
-        surf_src = r.get("surface_source") or "NOTARIEE_FAO"
+        surf_src = r.get("surface_source")
 
-        # Explicit verified benchmark in Geneva (Saut-du-Loup 16, parcel 4642-104, contemporary 2016 residence)
-        if r.get("id") == 246 or (str(r.get("parcel_number")) == "4642-104"):
-            surf_hab = 92.0
-            r["surface_habitable_m2"] = 92.0
-            r["surface_m2"] = 92.0
-            r["building_year"] = 2016
-            r["rooms"] = 4.0
-            surf_src = "NOTARIEE_FAO"
+        # Determine surface and source cleanly (P0-02):
+        surface = surf_hab or r.get("surface_m2")
 
-        surface = surf_hab or r.get("surface_m2") or r.get("surface_official_m2")
-
-        # Guard against cadastral plot land surfaces contaminating PPE apartments:
-        if typo == "PPE" and surface and surface > 320:
-            surface = None
+        if typo == "PPE":
+            # For PPE apartments, if surface is missing or inherited plot land (> 320 m2), living surface is unavailable
+            if not surface or surface > 320:
+                surface = None
+                surf_src = "NON_NOTARIEE"
+            elif not surf_src:
+                surf_src = "NOTARIEE_FAO"
+        else:
+            # Freehold villas or land
+            if not surface:
+                surface = r.get("surface_official_m2")
+                surf_src = surf_src or "CADASTRE_SITG"
+            elif not surf_src:
+                surf_src = "NOTARIEE_FAO"
 
         r["surface_habitable_m2"] = surf_hab or surface
         r["surface_terrain_m2"] = surf_terr
         r["surface_source"] = surf_src
-        r["surface_m2"] = surf_hab or surface
+        r["surface_m2"] = surface
 
         if price and surface and surface > 15 and price > 50000:
             sqm = price / surface
@@ -6611,6 +7136,22 @@ def build_interactive_map(
     league_data = get_ranked_league_table()
     league_json = json.dumps(league_data, ensure_ascii=False)
 
+    ocstat_file = Path("data/reference/ocstat_communes_2025_2026.json")
+    if ocstat_file.exists():
+        with open(ocstat_file, "r", encoding="utf-8") as f:
+            ocstat_data = json.load(f)
+    else:
+        ocstat_data = []
+    ocstat_json = json.dumps(ocstat_data, ensure_ascii=False)
+
+    rules_file = Path("data/reference/financial_rules.json")
+    if rules_file.exists():
+        with open(rules_file, "r", encoding="utf-8") as f:
+            financial_rules_data = json.load(f)
+    else:
+        financial_rules_data = {}
+    financial_rules_json = json.dumps(financial_rules_data, ensure_ascii=False)
+
     marketing_file = Path(settings.storage.exports_dir) / "geneva_marketing_benchmark.json"
     if marketing_file.exists():
         with open(marketing_file, "r", encoding="utf-8") as f:
@@ -6633,6 +7174,8 @@ def build_interactive_map(
         .replace("__ZONES_JSON__", zones_json)
         .replace("__LEAGUE_JSON__", league_json)
         .replace("__MARKETING_JSON__", marketing_json)
+        .replace("__OCSTAT_JSON__", ocstat_json)
+        .replace("__FINANCIAL_RULES_JSON__", financial_rules_json)
         .replace("__TOTAL_ROWS__", f"{len(rows):,}")
         .replace("__TOTAL_VOLUME__", f"{total_volume/1e9:.2f}")
         .replace("__PRICED_COUNT__", f"{priced_count:,}")

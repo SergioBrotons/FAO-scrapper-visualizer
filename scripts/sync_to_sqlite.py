@@ -1,7 +1,5 @@
-"""
-Sync all data from CSV and JSON exports into the SQLite database.
-Ensures data/state/state.sqlite and data/fao_transactions.db are 100% up-to-date and queryable.
-"""
+import sys
+sys.path = [p for p in sys.path if "Python313" not in p and "Python311" not in p]
 
 import json
 import sqlite3
@@ -19,10 +17,19 @@ def sync_database(db_path: str):
     csv_path = 'data/exports/geneva_property_transactions.csv'
     print(f"Loading {csv_path}...")
     df_txs = pd.read_csv(csv_path)
-    print(f"Loaded {len(df_txs)} transactions.")
-    
-    # Write transactions table
-    df_txs.to_sql('transactions', conn, if_exists='replace', index=False)
+    # Check existing table count before writing
+    c = conn.cursor()
+    c.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='transactions'")
+    table_exists = c.fetchone()[0] > 0
+    if table_exists:
+        c.execute("SELECT COUNT(*) FROM transactions")
+        existing_count = c.fetchone()[0]
+        if existing_count >= len(df_txs):
+            print(f"Skipping transactions overwrite: database already contains {existing_count} records (authoritative) vs {len(df_txs)} in CSV.")
+        else:
+            df_txs.to_sql('transactions', conn, if_exists='replace', index=False)
+    else:
+        df_txs.to_sql('transactions', conn, if_exists='replace', index=False)
     
     # Create indexes for high-speed querying
     c = conn.cursor()

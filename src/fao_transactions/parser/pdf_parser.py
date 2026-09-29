@@ -67,6 +67,9 @@ TRANSACTION_INDICATORS = [
     "acquereur",
     "mutation de propriété",
     "mutation de propriete",
+    "rectification",
+    "fixation de parts",
+    "fixations de parts",
 ]
 
 
@@ -77,7 +80,7 @@ def clean_spaces(text: str) -> str:
 
 
 def parse_price(price_str: Optional[str]) -> Tuple[Optional[str], Optional[float]]:
-    """Clean raw price text and parse numeric CHF value."""
+    """Clean raw price text and parse numeric CHF value, correctly preserving Swiss cents/decimals."""
     if not price_str:
         return None, None
     raw = clean_spaces(price_str)
@@ -85,16 +88,26 @@ def parse_price(price_str: Optional[str]) -> Tuple[Optional[str], Optional[float
     if any(k in lower for k in ["non communiqué", "sans indication", "donation", "partage", "gratuit", "héritage"]):
         return raw, None
 
-    match = re.search(r"(?:Fr\.?|CHF)?\s*([0-9][0-9\s'’.,]*[0-9])", raw)
+    # Handle standard Swiss currency dash endings like .--, .-, ,--
+    cleaned = re.sub(r"[.,]-{1,2}$", "", raw)
+
+    # Detect Swiss centimes/cents at end of price: e.g. .00, ,50, .50
+    cents_match = re.search(r"[.,](\d{2})\s*(?:CHF|Frs?\.?|frs?\.?)?$", cleaned)
+    cents = 0.0
+    if cents_match:
+        cents = float("0." + cents_match.group(1))
+        cleaned = cleaned[:cents_match.start()]
+
+    match = re.search(r"(?:Fr\.?|CHF)?\s*([0-9][0-9\s'’.,]*[0-9]|[0-9])", cleaned)
     if match:
         num_str = match.group(1)
-        cleaned_num = re.sub(r"[\s'’._-]", "", num_str).replace(",", ".")
-        try:
-            val = float(cleaned_num)
+        # Strip all thousands separators: spaces, apostrophes, periods, hyphens
+        clean_int = re.sub(r"[\s'’._-]", "", num_str)
+        if clean_int.isdigit():
+            val = float(clean_int) + cents
             return raw, val
-        except ValueError:
-            pass
     return raw, None
+
 
 
 def parse_surface(surface_str: Optional[str]) -> Optional[float]:
@@ -171,9 +184,24 @@ class FaoPdfParser:
         case_match = re.search(r"Affaire\s+([0-9]{4}/[0-9]+/[0-9]+)", text, re.IGNORECASE)
         case_number = case_match.group(1) if case_match else None
 
-        # Transaction type (Vente, Héritage, Partage, Donation, Echange)
-        trans_match = re.search(r"\b(Vente|Héritage|Heritage|Partage|Donation|Echange|Cession)\b", text, re.IGNORECASE)
-        transaction_type = trans_match.group(1).capitalize() if trans_match else None
+        # Rectification detection (erratum to earlier publication)
+        rect_match = re.search(
+            r"Rectification\s+de\s+la\s+publication\s+du\s+([0-9]{1,2}[.\s][0-9]{1,2}[.\s][0-9]{4}|[0-9]{1,2}\s+[a-zéû]+\s+[0-9]{4})",
+            text,
+            re.IGNORECASE,
+        )
+        is_rectification = bool(rect_match) or "rectification de la publication" in text.lower()[:60]
+        orig_notice_date = rect_match.group(1).strip() if rect_match else None
+
+        # Transaction type (Vente, Héritage, Partage, Donation, Echange, Fixation de parts, Rectification)
+        if re.search(r"\bFixations?\s+de\s+parts\b", text, re.IGNORECASE):
+            transaction_type = "Fixation de parts"
+        elif is_rectification:
+            trans_match = re.search(r"\b(Vente|Héritage|Heritage|Partage|Donation|Echange|Cession)\b", text, re.IGNORECASE)
+            transaction_type = trans_match.group(1).capitalize() if trans_match else "Rectification"
+        else:
+            trans_match = re.search(r"\b(Vente|Héritage|Heritage|Partage|Donation|Echange|Cession)\b", text, re.IGNORECASE)
+            transaction_type = trans_match.group(1).capitalize() if trans_match else None
 
         # Commune detection (prefer commune in notice body, e.g. "Versoix, 47" or "B-F Versoix")
         commune = current_commune
@@ -213,14 +241,22 @@ class FaoPdfParser:
         elif re.search(r"\bCOP\b", text, re.IGNORECASE):
             prop_type = "Copropriété"
 
-        # Parcel number detection (prioritize parcel right after property designation, avoid 1/2 fractions and /1000 PPE shares)
+        # Parcel number detection
         parcel_number = None
+        # Priority 1: standard Registry format: "- <Commune>, <parcel> - Affaire"
+        commune_parcel_match = re.search(
+            rf"(?:-\s*)?{re.escape(commune)},\s*([0-9]{{1,6}}(?:-[0-9]+)?)\s*-\s*Affaire",
+            text,
+            re.IGNORECASE,
+        )
         prop_parcel_match = re.search(
             r"(?:PPE|B-F|DDP|COP|parcelle(?:s)?)\s+[^,;]*?(?:,\s*)?(?:[0-9]{1,2}/)?([0-9]{1,6}(?:-[0-9]+)?)",
             text,
             re.IGNORECASE,
         )
-        if prop_parcel_match:
+        if commune_parcel_match:
+            parcel_number = commune_parcel_match.group(1).replace(" ", "")
+        elif prop_parcel_match:
             parcel_number = prop_parcel_match.group(1).replace(" ", "")
         else:
             # Fallback: scan slash parcel excluding coproperty fractions and thousandths
@@ -303,6 +339,11 @@ class FaoPdfParser:
         if addr_match:
             address = clean_spaces(addr_match.group(0))
 
+        # Guard against whole-building plot land surface contaminating PPE/apartment units (P0-02):
+        is_apt = (prop_type == "PPE") or (nature and any(k in nature.lower() for k in ["appartement", "loggia", "lot"]))
+        if is_apt and surface_m2 and surface_m2 > 350:
+            surface_m2 = None
+
         return TransactionRecord(
             commune=commune,
             commune_section=section,
@@ -319,6 +360,8 @@ class FaoPdfParser:
             price_chf=price_chf,
             notice_date=notice_date,
             raw_text=text,
+            is_rectification=is_rectification,
+            original_notice_date=orig_notice_date,
         )
 
     def parse_ldtr_block(

@@ -80,6 +80,7 @@ class Database:
             cursor.execute("PRAGMA table_info(transactions);")
             existing_cols = {row["name"] for row in cursor.fetchall()}
             new_cols = {
+                "publication_id": "INTEGER",
                 "source_category": "TEXT DEFAULT 'Registre_Foncier'",
                 "transaction_type": "TEXT DEFAULT 'Vente'",
                 "property_type": "TEXT",
@@ -89,10 +90,15 @@ class Database:
                 "unit_number": "TEXT",
                 "case_number": "TEXT",
                 "file_source": "TEXT",
+                "raw_text": "TEXT",
             }
             for col, col_type in new_cols.items():
                 if col not in existing_cols:
                     cursor.execute(f"ALTER TABLE transactions ADD COLUMN {col} {col_type};")
+
+            # Ensure unique indexes exist on transactions for foreign key compatibility
+            cursor.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_id ON transactions(id);")
+            cursor.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_hash ON transactions(transaction_hash);")
 
             # Enrichments table (linked to SITG cadastre)
             cursor.execute("""
@@ -199,21 +205,48 @@ class Database:
         price_chf: Optional[float] = None,
         file_source: Optional[str] = None,
         raw_text: Optional[str] = None,
+        is_rectification: bool = False,
+        original_notice_date: Optional[str] = None,
     ) -> Optional[int]:
-        """Insert a parsed transaction, ignoring duplicates by transaction_hash."""
+        """Insert a parsed transaction, ignoring duplicates by transaction_hash or updating on official rectification."""
         with self.get_connection() as conn:
             cursor = conn.cursor()
+
+            # If this is an official rectification erratum and refers to an existing case number, update the existing record
+            if case_number and is_rectification:
+                cursor.execute("SELECT id, raw_text FROM transactions WHERE case_number = ? LIMIT 1", (case_number,))
+                existing = cursor.fetchone()
+                if existing:
+                    existing_id = existing[0]
+                    rect_note = f"\n[RECTIFICATION DU {notice_date or ''}]: {raw_text or ''}"
+                    cursor.execute("""
+                        UPDATE transactions SET
+                            raw_text = COALESCE(raw_text, '') || ?,
+                            seller = COALESCE(?, seller),
+                            buyer = COALESCE(?, buyer),
+                            price_raw = COALESCE(?, price_raw),
+                            price_chf = COALESCE(?, price_chf),
+                            parcel_number = COALESCE(?, parcel_number),
+                            surface_m2 = COALESCE(?, surface_m2)
+                        WHERE id = ?
+                    """, (rect_note, seller, buyer, price_raw, price_chf, parcel_number, surface_m2, existing_id))
+                    conn.commit()
+                    return existing_id
+
+            cursor.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM transactions")
+            next_id = cursor.fetchone()[0]
             cursor.execute(
                 """
                 INSERT OR IGNORE INTO transactions (
-                    publication_id, transaction_hash, source_category, notice_date, commune,
+                    id, publication_id, transaction_hash, source_category, notice_date, commune,
                     commune_section, parcel_number, transaction_type, property_type, nature,
                     address, rooms, floor, unit_number, case_number, surface_m2,
                     seller, buyer, price_raw, price_chf, file_source, raw_text
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 RETURNING id;
                 """,
                 (
+                    next_id,
                     publication_id,
                     transaction_hash,
                     source_category,
@@ -267,7 +300,24 @@ class Database:
             price_chf=record.price_chf,
             file_source=record.file_source,
             raw_text=record.raw_text,
+            is_rectification=getattr(record, "is_rectification", False),
+            original_notice_date=getattr(record, "original_notice_date", None),
         )
+
+    def get_known_file_sources(self) -> set:
+        """Return set of all already recorded notice PDF filenames in lowercase."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT DISTINCT file_source FROM transactions WHERE file_source IS NOT NULL")
+            return {row[0].strip().lower() for row in cursor.fetchall() if row[0]}
+
+    def get_latest_notice_date(self) -> Optional[str]:
+        """Return the most recent notice date recorded in the database."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT notice_date FROM transactions WHERE notice_date IS NOT NULL ORDER BY id DESC LIMIT 1")
+            row = cursor.fetchone()
+            return row[0] if row else None
 
     def upsert_enrichment(
         self,
