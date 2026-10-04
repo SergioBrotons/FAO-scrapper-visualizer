@@ -1065,6 +1065,291 @@
       object-fit: cover;
       border-radius: 3px;
     }
+
+    /* ================= 6-STEP WIZARD STYLES ================= */
+    .wizard-stepper-wrap {
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      margin-bottom: 24px;
+      box-shadow: var(--dv-shadow);
+      overflow: hidden;
+    }
+    .wizard-stepper-nav {
+      display: flex;
+      background: var(--dv-sand);
+      border-bottom: 1px solid var(--dv-border);
+      overflow-x: auto;
+    }
+    .wizard-step-tab {
+      flex: 1;
+      min-width: 150px;
+      padding: 14px 12px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+    .wizard-step-tab:hover {
+      background: rgba(0, 147, 157, 0.05);
+    }
+    .wizard-step-tab.active {
+      background: #FFFFFF;
+      border-bottom-color: var(--dv-teal);
+    }
+    .step-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(0, 74, 79, 0.1);
+      color: var(--dv-deep-green);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .wizard-step-tab.active .step-badge {
+      background: var(--dv-teal);
+      color: #FFFFFF;
+    }
+    .wizard-step-tab.completed .step-badge {
+      background: var(--dv-deep-green);
+      color: #FFFFFF;
+    }
+    .step-titles {
+      display: flex;
+      flex-direction: column;
+    }
+    .step-num-label {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--dv-text-muted);
+    }
+    .wizard-step-tab.active .step-num-label {
+      color: var(--dv-teal);
+    }
+    .step-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      white-space: nowrap;
+    }
+    
+    .wizard-pane {
+      display: none;
+      padding: 24px;
+    }
+    .wizard-pane.active {
+      display: block;
+    }
+
+    .form-section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-section-sub {
+      font-size: 12px;
+      color: var(--dv-text-muted);
+      margin-bottom: 20px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 860px) {
+      .form-grid-2, .form-grid-3, .form-grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-field label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      letter-spacing: 0.02em;
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      padding: 10px 12px;
+      border: 1px solid rgba(0, 147, 157, 0.25);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--dv-text-main);
+      background: #FFFFFF;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+      border-color: var(--dv-teal);
+      box-shadow: 0 0 0 3px rgba(0, 147, 157, 0.15);
+    }
+    .unit-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .unit-input-wrap input {
+      width: 100%;
+      padding-right: 50px;
+    }
+    .unit-tag {
+      position: absolute;
+      right: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dv-text-muted);
+      pointer-events: none;
+    }
+
+    .wizard-footer-nav {
+      padding: 16px 24px;
+      background: #FAFAFA;
+      border-top: 1px solid var(--dv-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Comparables Table */
+    .comps-table-wrap {
+      border: 1px solid var(--dv-border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .comps-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    .comps-table th {
+      background: rgba(0, 74, 79, 0.05);
+      color: var(--dv-deep-green);
+      font-weight: 700;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--dv-border);
+    }
+    .comps-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      color: var(--dv-text-main);
+    }
+    .comps-table tr.anchor-sale {
+      background: rgba(0, 147, 157, 0.08);
+      font-weight: 600;
+    }
+    .comps-table tr.anchor-sale td {
+      border-bottom: 2px solid var(--dv-teal);
+    }
+    .btn-delete-row {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .btn-delete-row:hover {
+      color: #EF4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Live Valuation Summary Card */
+    .live-val-card {
+      background: linear-gradient(135deg, var(--dv-deep-green) 0%, #002D30 100%);
+      color: #FFFFFF;
+      padding: 24px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .live-val-left .live-val-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dv-light-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .live-val-left .live-val-price {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 4px 0;
+    }
+    .live-val-left .live-val-sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .live-val-breakdown {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .breakdown-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 8px 14px;
+      text-align: center;
+    }
+    .breakdown-pill span {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--dv-light-teal);
+      font-weight: 700;
+    }
+    .breakdown-pill strong {
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
   </style>
 </head>
 <body>
@@ -1212,267 +1497,600 @@
     </div>
 
     <!-- ================= VIEW 2: 3-STEP VALUATION STUDIO (IMAGE 2) ================= -->
+    
+    <!-- ================= VIEW 2: 6-STEP VALUATION WIZARD & PPTX STUDIO ================= -->
     <div id="viewValue" style="display: none;">
-      <div class="valuation-studio-box">
-        <!-- Top Studio Bar -->
-        <div class="studio-top-bar">
-          <div class="studio-titles">
-            <h3>Cytria VALUE &bull; Studio d'Estimation Vendeur</h3>
-            <p>Confidential agency workspace &bull; Désormière & Vanhalst</p>
+      <!-- Header -->
+      <div class="welcome-header" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+          <h2>Studio d'Estimation Vendeur & Générateur PPTX (15 Slides)</h2>
+          <p>Méthodologie exclusive Désormière & Vanhalst &bull; Cadastre SITG & Actes Notariés Enregistrés</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn-action-secondary" onclick="loadSautDuLoupCase()">
+            <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+            <span>Réinitialiser Cas Saut-du-Loup 18</span>
+          </button>
+          <button class="btn-action-primary" onclick="exportPresentationPptx()">
+            <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Télécharger PPTX (15 Slides)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Saut-du-Loup 18 Case Study Interactive Banner -->
+      <div class="saut-case-study-card" id="sautDuLoupBanner" onclick="loadSautDuLoupCase()">
+        <div>
+          <span class="saut-badge">Cas d'Étude Référence &bull; Révélation de Marché 2026</span>
+          <div class="saut-title">Chemin du Saut-du-Loup 18 (Brotons) &bull; Réévaluation Suite Vente n° 16</div>
+          <div class="saut-desc">
+            La vente notariée authentique du <strong>Saut-du-Loup 16</strong> le 26 février 2026 (Acte 2026/628/0 conclu à <strong>CHF 1'620'000 / 17'609 CHF/m²</strong>) réévalue le bien de +CHF 513'375 par rapport à l'estimation d'août 2025.
           </div>
-          <button class="btn-action-secondary" style="color:#FFF; border-color:rgba(255,255,255,0.4);" onclick="resetStudioSearch()">
-            Nouvelle Recherche
+        </div>
+        <div class="saut-metrics-wrap">
+          <div class="saut-pill">
+            <div class="saut-pill-label">Avis Août 2025</div>
+            <div class="saut-pill-val">CHF 1'266'625</div>
+          </div>
+          <div style="color:var(--dv-teal); font-weight:700; font-size:18px;">&rarr;</div>
+          <div class="saut-pill highlight">
+            <div class="saut-pill-label">Valeur Révisée 2026</div>
+            <div class="saut-pill-val">CHF 1'780'000</div>
+          </div>
+          <div class="saut-delta-badge">+CHF 513'375 (+40.5%)</div>
+        </div>
+      </div>
+
+      <!-- 6-Step Stepper Card -->
+      <div class="wizard-stepper-wrap">
+        <!-- Step Navigation Tabs -->
+        <div class="wizard-stepper-nav">
+          <button class="wizard-step-tab active" id="wizardTab1" onclick="switchWizardStep(1)">
+            <span class="step-badge" id="stepBadge1">1</span>
+            <div class="step-titles">
+              <span class="step-num-label">Étape 01</span>
+              <span class="step-name">Cadastre & Identité</span>
+            </div>
+          </button>
+          <button class="wizard-step-tab" id="wizardTab2" onclick="switchWizardStep(2)">
+            <span class="step-badge" id="stepBadge2">2</span>
+            <div class="step-titles">
+              <span class="step-num-label">Étape 02</span>
+              <span class="step-name">Surfaces & Technique</span>
+            </div>
+          </button>
+          <button class="wizard-step-tab" id="wizardTab3" onclick="switchWizardStep(3)">
+            <span class="step-badge" id="stepBadge3">3</span>
+            <div class="step-titles">
+              <span class="step-num-label">Étape 03</span>
+              <span class="step-name">Visite & Photos Slides</span>
+            </div>
+          </button>
+          <button class="wizard-step-tab" id="wizardTab4" onclick="switchWizardStep(4)">
+            <span class="step-badge" id="stepBadge4">4</span>
+            <div class="step-titles">
+              <span class="step-num-label">Étape 04</span>
+              <span class="step-name">Comparables Notariés</span>
+            </div>
+          </button>
+          <button class="wizard-step-tab" id="wizardTab5" onclick="switchWizardStep(5)">
+            <span class="step-badge" id="stepBadge5">5</span>
+            <div class="step-titles">
+              <span class="step-num-label">Étape 05</span>
+              <span class="step-name">Méthode & OCSTAT</span>
+            </div>
+          </button>
+          <button class="wizard-step-tab" id="wizardTab6" onclick="switchWizardStep(6)">
+            <span class="step-badge" id="stepBadge6">6</span>
+            <div class="step-titles">
+              <span class="step-num-label">Étape 06</span>
+              <span class="step-name">Stratégie & Export PPTX</span>
+            </div>
           </button>
         </div>
 
-        <!-- Saut-du-Loup 18 Case Study Interactive Banner -->
-        <div style="padding: 16px 24px 0 24px;">
-          <div class="saut-case-study-card" id="sautDuLoupBanner" onclick="loadSautDuLoupCase()">
-            <div>
-              <span class="saut-badge">Cas d'Étude &bull; Impact Notarié Révélateur</span>
-              <div class="saut-title">Chemin du Saut-du-Loup 18 (Brotons) &bull; Réévaluation Suite Vente n° 16</div>
-              <div class="saut-desc">
-                La vente notariée authentique du <strong>Saut-du-Loup 16</strong> le 26 février 2026 (Acte 2026/628/0 conclu à <strong>CHF 1'620'000 / 17'609 CHF/m²</strong>) réévalue le bien de +CHF 513'375 par rapport à l'estimation d'août 2025.
-              </div>
+        <!-- ================= PANE 1: CADASTRE & IDENTITE ================= -->
+        <div class="wizard-pane active" id="wizardPane1">
+          <div class="form-section-title">
+            <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+            <span>Identification du Mandant & Références Cadastrales (Slides 1, 2, 3)</span>
+          </div>
+          <div class="form-section-sub">
+            Renseignez les données administratives officielles. Toutes ces informations sont automatiquement fusionnées dans la couverture et les fiches techniques du PPTX.
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label>Nom du Mandant / Propriétaire</label>
+              <input type="text" id="wizOwner" value="Sergio Brotons Mas">
             </div>
-            <div class="saut-metrics-wrap">
-              <div class="saut-pill">
-                <div class="saut-pill-label">Avis Août 2025</div>
-                <div class="saut-pill-val">CHF 1'266'625</div>
-              </div>
-              <div style="color:var(--dv-teal); font-weight:700; font-size:18px;">&rarr;</div>
-              <div class="saut-pill highlight">
-                <div class="saut-pill-label">Valeur Révisée 2026</div>
-                <div class="saut-pill-val">CHF 1'780'000</div>
-              </div>
-              <div class="saut-delta-badge">+CHF 513'375 (+40.5%)</div>
-              <button class="btn-action-primary" style="padding:6px 12px; font-size:12px;" onclick="event.stopPropagation(); loadSautDuLoupCase()">
-                Charger ce Cas
+            <div class="form-field">
+              <label>Contact Client (Téléphone / E-mail)</label>
+              <input type="text" id="wizClientContact" value="+41 78 000 00 00 · sergio.brotons@bluewin.ch">
+            </div>
+            <div class="form-field">
+              <label>Type de Bien (Intitulé Couverture)</label>
+              <input type="text" id="wizPropertyType" value="APPARTEMENT PPE CONTEMPORAIN AVEC JARDIN">
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label>Adresse du Bien</label>
+              <input type="text" id="wizAddress" value="Chemin du Saut-du-Loup 18">
+            </div>
+            <div class="form-field">
+              <label>Commune & NPA</label>
+              <input type="text" id="wizCommune" value="1225 Chêne-Bourg">
+            </div>
+            <div class="form-field">
+              <label>Nom de la Résidence / Promotion</label>
+              <input type="text" id="wizResidence" value="Résidence Les Jardins de la Seymaz">
+            </div>
+          </div>
+
+          <div class="form-grid-4">
+            <div class="form-field">
+              <label>N° Parcelle Cadastre</label>
+              <input type="text" id="wizParcel" value="4642">
+            </div>
+            <div class="form-field">
+              <label>Bâtiment</label>
+              <input type="text" id="wizBuilding" value="Bât. 2921-2922">
+            </div>
+            <div class="form-field">
+              <label>Lot PPE & Feuillet</label>
+              <input type="text" id="wizLotPPE" value="Lot 2.02 (Feuillet 4642-10)">
+            </div>
+            <div class="form-field">
+              <label>Quote-part PPE</label>
+              <input type="text" id="wizQuotePart" value="48 / 1000èmes">
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label>Zone d'Affectation (LACI)</label>
+              <input type="text" id="wizZone" value="Zone 5 (Villas et résidences de standing)">
+            </div>
+            <div class="form-field">
+              <label>Étage / Niveau</label>
+              <input type="text" id="wizFloor" value="Rez-de-chaussée surélevé">
+            </div>
+            <div class="form-field">
+              <label>Année de Construction & Label</label>
+              <input type="text" id="wizBuildingYear" value="2018 (Label Minergie GE-1672)">
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; background:var(--dv-sand); padding:12px 16px; border-radius:6px;">
+            <div style="font-size:12px; color:var(--dv-deep-green);">
+              <strong>SITG Officiel :</strong> Vérification cadastrale instantanée sur le géoportail de l'État de Genève.
+            </div>
+            <div style="display:flex; gap:10px;">
+              <a href="https://map.sitg.ge.ch/?center=2504600,1117200&scale=2500&mapresources=CADASTRE" target="_blank" rel="noopener" class="btn-action-secondary" style="font-size:11px; padding:6px 12px;">
+                <svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                <span>Ouvrir SITG Cadastre</span>
+              </a>
+              <button class="btn-action-primary" style="font-size:11px; padding:6px 12px;" onclick="showToast('Données cadastrales synchronisées avec SITG et FAO.')">
+                <svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Auto-remplir depuis le Système</span>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Search Bar with Autocomplete -->
-        <div class="studio-search-row">
-          <div class="search-input-wrap">
-            <span class="search-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </span>
-            <input type="text" id="studioAddressInput" placeholder="Entrez une adresse ou parcelle sur la Rive Gauche (ex: Chemin des Argousiers, Veyrier)..." autocomplete="off" oninput="handleAddressSearch(this.value)">
-            <div class="autocomplete-dropdown" id="searchDropdown"></div>
+        <!-- ================= PANE 2: SURFACES & TECHNIQUE ================= -->
+        <div class="wizard-pane" id="wizardPane2">
+          <div class="form-section-title">
+            <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            <span>Fiche Technique, Surfaces Pondérées & Équipements (Slide 2)</span>
+          </div>
+          <div class="form-section-sub">
+            Le calcul de surface pondérée applique la règle D&V : 100% PPE + 50% Loggia fermée + 33% Terrasse extérieure. Le jardin de 250 m² est valorisé séparément pour préserver l'équité comparative.
+          </div>
+
+          <div class="form-grid-4">
+            <div class="form-field">
+              <label>Surface PPE (100%)</label>
+              <div class="unit-input-wrap">
+                <input type="number" step="0.5" id="wizSurfPPE" value="73.0" oninput="recalculateSurfaces()">
+                <span class="unit-tag">m²</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Loggia Fermée (50%)</label>
+              <div class="unit-input-wrap">
+                <input type="number" step="0.5" id="wizSurfLoggia" value="11.0" oninput="recalculateSurfaces()">
+                <span class="unit-tag">m²</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Terrasse Dallée (33%)</label>
+              <div class="unit-input-wrap">
+                <input type="number" step="0.5" id="wizSurfTerrace" value="42.0" oninput="recalculateSurfaces()">
+                <span class="unit-tag">m²</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Surface Pondérée Retenue</label>
+              <div class="unit-input-wrap">
+                <input type="text" id="wizWeightedSurf" value="92.5" readonly style="background:#F1F5F9; font-weight:700; color:var(--dv-teal);">
+                <span class="unit-tag">m²</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label>Surface Jardin Privatif (Pleine Terre)</label>
+              <div class="unit-input-wrap">
+                <input type="number" step="10" id="wizSurfGarden" value="250" oninput="recalculateValuation()">
+                <span class="unit-tag">m²</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Nombre de Pièces</label>
+              <input type="text" id="wizRooms" value="4 pièces (dont 2 chambres et 2 sanitaires)">
+            </div>
+            <div class="form-field">
+              <label>Stationnement & Box</label>
+              <input type="text" id="wizParking" value="1 place couverte en sous-sol (n° 7)">
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label>Cave & Dépendances</label>
+              <input type="text" id="wizCellar" value="1 cave privative sécurisée (lot C)">
+            </div>
+            <div class="form-field">
+              <label>Système de Chauffage</label>
+              <input type="text" id="wizHeating" value="Pompe à chaleur (PAC) géothermique au sol">
+            </div>
+            <div class="form-field">
+              <label>Ventilation & Solaire</label>
+              <input type="text" id="wizVentilation" value="Double-flux Minergie + Panneaux solaires toiture">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Charges PPE Annuelles (CHF)</label>
+              <div class="unit-input-wrap">
+                <input type="number" id="wizChargesAnnual" value="4200">
+                <span class="unit-tag">CHF/an</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Fonds de Rénovation de la Copropriété</label>
+              <input type="text" id="wizRenovFund" value="CHF 148'000 (part du lot: CHF 7'104.-)">
+            </div>
           </div>
         </div>
 
-        <!-- Aerial Map & Property Specs Hero -->
-        <div class="property-hero-card" id="propertyHeroCard">
-          <div class="aerial-preview-box" id="aerialHeroBox">
-            <span class="aerial-source-badge">ge.ch &bull; SITG Orthophoto HD</span>
-            <div class="aerial-address-title" id="heroAddress">Chemin des Argousiers 10</div>
-            <div class="aerial-address-sub" id="heroCommune">1255 Veyrier &bull; Parcelle 4812</div>
+        <!-- ================= PANE 3: VISITE & PHOTOS ================= -->
+        <div class="wizard-pane" id="wizardPane3">
+          <div class="form-section-title">
+            <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>Visite Qualificative & Photos par Slide (Slides 1, 4, 5, 6, 7)</span>
+          </div>
+          <div class="form-section-sub">
+            Téléchargez les photos spécifiques qui s'insèreront directement dans les slides du PPTX aux emplacements prévus.
           </div>
 
-          <div class="property-specs-list">
-            <div class="spec-item">
-              <span>Commune :</span>
-              <strong id="specCommune">Veyrier</strong>
+          <!-- Photo Upload Cards Grid -->
+          <div class="pptx-slides-upload-grid" style="margin-bottom:24px;">
+            <!-- Slide 1 Cover -->
+            <div class="upload-slide-card">
+              <div class="upload-slide-title">Slide 01 &bull; Couverture Principale</div>
+              <div class="upload-dropzone" onclick="document.getElementById('fileCover').click()">
+                <input type="file" id="fileCover" accept="image/*" style="display:none;" onchange="handleImageUpload('cover', this)">
+                <div id="previewCover" class="dropzone-placeholder">
+                  <svg class="mini-icon" width="22" height="22" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                  <span>Façade / Jardin d'Accueil</span>
+                </div>
+              </div>
             </div>
-            <div class="spec-item">
-              <span>Parcelle Cadastre :</span>
-              <strong id="specParcel">4812</strong>
+
+            <!-- Slide 5 Interior -->
+            <div class="upload-slide-card">
+              <div class="upload-slide-title">Slide 05 &bull; Reportage Intérieur</div>
+              <div class="upload-dropzone" onclick="document.getElementById('fileInterior').click()">
+                <input type="file" id="fileInterior" accept="image/*" style="display:none;" onchange="handleImageUpload('interior', this)">
+                <div id="previewInterior" class="dropzone-placeholder">
+                  <svg class="mini-icon" width="22" height="22" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span>Séjour / Cuisine Équipée</span>
+                </div>
+              </div>
             </div>
-            <div class="spec-item">
-              <span>Surface Parcelle :</span>
-              <strong id="specSurface">1'150 m²</strong>
+
+            <!-- Slide 6 Exterior -->
+            <div class="upload-slide-card">
+              <div class="upload-slide-title">Slide 06 &bull; Extérieurs (Jardin & Terrasse)</div>
+              <div class="upload-dropzone" onclick="document.getElementById('fileExterior').click()">
+                <input type="file" id="fileExterior" accept="image/*" style="display:none;" onchange="handleImageUpload('exterior', this)">
+                <div id="previewExterior" class="dropzone-placeholder">
+                  <svg class="mini-icon" width="22" height="22" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                  <span>Jardin 250 m² & Loggia 11 m²</span>
+                </div>
+              </div>
             </div>
-            <div class="spec-item">
-              <span>Affectation LACI :</span>
-              <strong id="specZone">Zone 5 (Villas résidentielles)</strong>
+
+            <!-- Slide 7 Plan -->
+            <div class="upload-slide-card">
+              <div class="upload-slide-title">Slide 07 &bull; Plan PPE Architecte</div>
+              <div class="upload-dropzone" onclick="document.getElementById('filePlan').click()">
+                <input type="file" id="filePlan" accept="image/*" style="display:none;" onchange="handleImageUpload('plan', this)">
+                <div id="previewPlan" class="dropzone-placeholder">
+                  <svg class="mini-icon" width="22" height="22" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span>Plan de Masse Lot 2.02</span>
+                </div>
+              </div>
             </div>
-            <div class="spec-item">
-              <span>Année de Construction :</span>
-              <strong id="specYear">1988 (Rénovée 2018)</strong>
+          </div>
+
+          <!-- Qualitative Appreciation Inputs -->
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Distribution & Circulation (Slide 4)</label>
+              <textarea id="wizQualDist" rows="2">Entrée privative avec vestiaire, dégagement fluide, double orientation Sud-Est et Nord sans surface perdue.</textarea>
             </div>
-            <a class="btn-action-secondary" id="specSitgLink" href="https://ge.ch/sitg/" target="_blank" rel="noopener" style="margin-top:6px;">
-              <svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
-              <span>Ouvrir Cadastre Officiel SITG</span>
-            </a>
+            <div class="form-field">
+              <label>Matériaux & Équipements de Standing (Slide 4)</label>
+              <textarea id="wizQualEquip" rows="2">Cuisine aménagée haut de gamme, parquet chêne massif, stores électriques, label Minergie GE-1672.</textarea>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>État Général & Entretien (Slide 4)</label>
+              <textarea id="wizQualState" rows="2">État irréprochable comme neuf, copropriété récente 2018 sous garantie décennale, aucun travaux votés.</textarea>
+            </div>
+            <div class="form-field">
+              <label>Environnement & Nuisances (Slide 4)</label>
+              <textarea id="wizQualEnv" rows="2">Calme absolu, absence de vis-à-vis gênant, voie sans issue résidentielle préservée à 650 m de la gare CEVA.</textarea>
+            </div>
           </div>
         </div>
 
-        <!-- 3-Step Valuation Flow -->
-        <div class="studio-steps-grid">
-          <!-- Step 01: Actual Sales -->
-          <div class="step-column">
-            <div class="step-column-header">
-              <span class="step-num">01</span>
-              <h4>Ventes Réelles</h4>
-            </div>
-            <div class="step-desc">
-              Transactions notariées enregistrées au Registre Foncier dans le voisinage direct.
-            </div>
-            <div class="mini-comps-list" id="miniCompsContainer">
-              <!-- Rendered by JS -->
-            </div>
+        <!-- ================= PANE 4: COMPARABLES NOTARIÉS ================= -->
+        <div class="wizard-pane" id="wizardPane4">
+          <div class="form-section-title">
+            <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span>Gestionnaire de Comparables Notariés & Ventes de Référence (Slides 8, 9)</span>
+          </div>
+          <div class="form-section-sub">
+            Gérez le panel des transactions officielles retenues pour étayer l'estimation. Vous pouvez en ajouter depuis la base FAO, saisir des ventes off-market ou en supprimer.
           </div>
 
-          <!-- Step 02: Differences & Adjustments -->
-          <div class="step-column">
-            <div class="step-column-header">
-              <span class="step-num">02</span>
-              <h4>Ajustements</h4>
-            </div>
-            <div class="step-desc">
-              Ajustements du courtier selon les caractéristiques propres du bien.
-            </div>
-            <div class="adjustments-form">
-              <div class="adjust-group">
-                <div class="adjust-label-row">
-                  <span>État général du bâti</span>
-                  <span id="valEtat">0%</span>
-                </div>
-                <input type="range" class="adjust-slider" min="-15" max="15" step="2.5" value="0" oninput="updateAdjustment('Etat', this.value)">
-              </div>
-
-              <div class="adjust-group">
-                <div class="adjust-label-row">
-                  <span>Vue dégagée / Sans vis-à-vis</span>
-                  <span id="valVue">+5%</span>
-                </div>
-                <input type="range" class="adjust-slider" min="-10" max="15" step="2.5" value="5" oninput="updateAdjustment('Vue', this.value)">
-              </div>
-
-              <div class="adjust-group">
-                <div class="adjust-label-row">
-                  <span>Calme résidentiel</span>
-                  <span id="valCalme">+5%</span>
-                </div>
-                <input type="range" class="adjust-slider" min="-10" max="10" step="2.5" value="5" oninput="updateAdjustment('Calme', this.value)">
-              </div>
-
-              <div class="adjust-group">
-                <div class="adjust-label-row">
-                  <span>Équipements (PAC, Solaire)</span>
-                  <span id="valEnergie">0%</span>
-                </div>
-                <input type="range" class="adjust-slider" min="-10" max="10" step="2.5" value="0" oninput="updateAdjustment('Energie', this.value)">
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 03: Conclusion -->
-          <div class="step-column">
-            <div class="step-column-header">
-              <span class="step-num">03</span>
-              <h4>Conclusion</h4>
-            </div>
-            <div class="step-desc">
-              Estimation vénale explicable et fourchette de commercialisation recommandée.
-            </div>
-
-            <div class="estimate-result-box">
-              <div class="est-label">Valeur Vénale Centrale D&V</div>
-              <div class="est-price-large" id="estPriceDisplay">CHF 2'286'000</div>
-              <div class="est-range-sub" id="estRangeDisplay">Fourchette : CHF 2'150'000 – 2'420'000</div>
-              <div style="font-size:11px; color:#475569; margin-top:4px;" id="estM2Display">
-                Soit ~CHF 15'240 / m²
-              </div>
-            </div>
-
-            <button class="btn-action-primary" style="margin-top:auto;" onclick="openCmaDossier(CURRENT_VALUATION_ID)">
-              <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-              <span>Fiche Vendeur D&V 1-Clic</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- PPTX Generator & Slide Image Upload Studio -->
-        <div style="padding: 0 24px 24px 24px;">
-          <div class="pptx-studio-card">
-            <div class="pptx-studio-header">
+          <!-- Anchor Reference Deed Highlight -->
+          <div style="background:rgba(0, 147, 157, 0.08); border:2px solid var(--dv-teal); border-radius:6px; padding:14px 18px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
               <div>
-                <h4>Générateur de Présentation PPTX &bull; Modèle D&V (15 Slides)</h4>
-                <p style="font-size:12px; color:#64748B; margin:3px 0 0 0;">
-                  Généré semi-automatiquement à 99% d'après le cadastre SITG, l'acte notarié du n° 16 et l'algorithme D&V. Téléchargeable en .pptx pour affinement manuel dans PowerPoint.
-                </p>
+                <span class="saut-badge">⭐ VENTE ANCRE PRINCIPALE &bull; MÊME COPROPRIÉTÉ</span>
+                <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; color:var(--dv-deep-green); margin:2px 0;">
+                  Chemin du Saut-du-Loup 16, 1225 Chêne-Bourg
+                </h4>
+                <div style="font-size:12px; color:#475569;">
+                  Acte notarié RF n° <strong>2026/628/0</strong> du <strong>26.02.2026</strong> &bull; Parcelle <strong>4642-104</strong> &bull; Vendeur: TASHMATOVA Saltanat &bull; Acquéreurs: COLCOMBET & VERNAZ
+                </div>
               </div>
-              <button class="btn-action-primary" id="btnExportPptx" onclick="exportPresentationPptx()">
-                <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <div style="text-align:right;">
+                <div style="font-size:22px; font-weight:800; color:var(--dv-teal);">CHF 1'620'000</div>
+                <div style="font-size:12px; font-weight:700; color:var(--dv-deep-green);">92 m² &bull; CHF 17'609 / m²</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparables Table -->
+          <div class="comps-table-wrap">
+            <table class="comps-table">
+              <thead>
+                <tr>
+                  <th>Statut / Source</th>
+                  <th>Adresse & Commune</th>
+                  <th>Date Acte</th>
+                  <th>Surface</th>
+                  <th>Prix Acté (CHF)</th>
+                  <th>Prix / m²</th>
+                  <th>Similitude</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="wizardCompsTbody">
+                <!-- Injected by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Action Buttons for Comps -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="font-size:13px; font-weight:700; color:var(--dv-deep-green);" id="wizardCompsAvgLabel">
+              Moyenne du panel retenu : CHF 16'144 / m² (4 transactions)
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn-action-secondary" onclick="addManualComparablePrompt()">
+                <svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>+ Saisie Vente Interne D&V (Off-Market)</span>
+              </button>
+              <button class="btn-action-primary" onclick="addFaoComparablePrompt()">
+                <svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <span>+ Ajouter depuis la Base FAO</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PANE 5: METHODE D&V & INDICES OCSTAT ================= -->
+        <div class="wizard-pane" id="wizardPane5">
+          <div class="form-section-title">
+            <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+            <span>Méthodologie Décomposée D&V & Indices OCSTAT (Slides 10, 11, 12)</span>
+          </div>
+          <div class="form-section-sub">
+            Décomposition rigoureuse en 3 composantes distinctes : Bâti pondéré + Valeur foncière du jardin privatif + Valeur vénale du parking en sous-sol.
+          </div>
+
+          <!-- OCSTAT Macro Indicator -->
+          <div style="background:var(--dv-sand); border-left:4px solid var(--dv-teal); padding:14px 18px; border-radius:0 6px 6px 0; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <strong style="color:var(--dv-deep-green); font-size:13px;">Baromètre Statistique Cantonal OCSTAT (Genève) :</strong>
+                <div style="font-size:12px; color:var(--dv-text-main); margin-top:2px;">
+                  Indice trimestriel des appartements PPE récents : <strong>+4.2% sur les 18 derniers mois</strong> &bull; Commune de Chêne-Bourg : <strong>+18.4% (2020-2026)</strong> dynamisé par le pôle gare CEVA.
+                </div>
+              </div>
+              <span class="pulse-validated-badge" style="background:#FFF;">Données Statistiques Conformes</span>
+            </div>
+          </div>
+
+          <!-- Interactive Valuation Adjustment Sliders -->
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label style="display:flex; justify-content:space-between;">
+                <span>Prix de Base Bâti Retenu</span>
+                <strong id="labelBasePriceM2" style="color:var(--dv-teal);">CHF 16'000 / m²</strong>
+              </label>
+              <input type="range" min="12000" max="20000" step="250" id="sliderBasePriceM2" value="16000" oninput="updateValuationFormula()">
+              <span style="font-size:10px; color:var(--dv-text-muted);">Calibré sur acte n° 16 à 17'609 CHF/m² avec marge prudentielle</span>
+            </div>
+
+            <div class="form-field">
+              <label style="display:flex; justify-content:space-between;">
+                <span>Valorisation Jardin Privatif (250 m²)</span>
+                <strong id="labelGardenValue" style="color:var(--dv-teal);">+CHF 250'000</strong>
+              </label>
+              <input type="range" min="100000" max="400000" step="10000" id="sliderGardenValue" value="250000" oninput="updateValuationFormula()">
+              <span style="font-size:10px; color:var(--dv-text-muted);">Base 1'000 CHF/m² de jouissance exclusive de pleine terre</span>
+            </div>
+
+            <div class="form-field">
+              <label style="display:flex; justify-content:space-between;">
+                <span>Valeur Parking & Cave</span>
+                <strong id="labelParkingValue" style="color:var(--dv-teal);">+CHF 50'000</strong>
+              </label>
+              <input type="range" min="30000" max="80000" step="5000" id="sliderParkingValue" value="50000" oninput="updateValuationFormula()">
+              <span style="font-size:10px; color:var(--dv-text-muted);">Standard PPE Chêne-Bourg pour place intérieure sécurisée</span>
+            </div>
+          </div>
+
+          <!-- Live Result Box -->
+          <div class="live-val-card">
+            <div class="live-val-left">
+              <div class="live-val-title">Valeur Vénale Centrale Certifiée D&V</div>
+              <div class="live-val-price" id="wizLiveValDisplay">CHF 1'780'000</div>
+              <div class="live-val-sub" id="wizLiveRangeDisplay">Fourchette de commercialisation recommandée : CHF 1'750'000 – CHF 1'790'000</div>
+            </div>
+            <div class="live-val-breakdown">
+              <div class="breakdown-pill">
+                <span>Bâti Pondéré (92.5 m²)</span>
+                <strong id="pillBuiltVal">CHF 1'480'000</strong>
+              </div>
+              <div class="breakdown-pill">
+                <span>Jardin Privatif</span>
+                <strong id="pillGardenVal">CHF 250'000</strong>
+              </div>
+              <div class="breakdown-pill">
+                <span>Parking Couvert</span>
+                <strong id="pillParkingVal">CHF 50'000</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PANE 6: STRATEGIE & EXPORT PPTX ================= -->
+        <div class="wizard-pane" id="wizardPane6">
+          <div class="form-section-title">
+            <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Stratégie Commerciale, Fiscalité LIPP & Exportation PPTX (Slides 13, 14, 15)</span>
+          </div>
+          <div class="form-section-sub">
+            Dernières recommandations stratégiques et fiscales avant la génération de la présentation PowerPoint prête pour le client vendeur.
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-field">
+              <label>Fourchette Basse Recommandée</label>
+              <div class="unit-input-wrap">
+                <input type="number" id="wizRangeMin" value="1750000" oninput="syncRanges()">
+                <span class="unit-tag">CHF</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Prix de Mise en Vente Recommandé</label>
+              <div class="unit-input-wrap">
+                <input type="number" id="wizTargetPrice" value="1780000" oninput="syncRanges()">
+                <span class="unit-tag">CHF</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Fourchette Haute (Plafond Psychologique)</label>
+              <div class="unit-input-wrap">
+                <input type="number" id="wizRangeMax" value="1790000" oninput="syncRanges()">
+                <span class="unit-tag">CHF</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Fiscalité Immobilière Cantonale (LIPP Genève - Slide 13)</label>
+              <textarea id="wizLippText" rows="3">Acquis en 2018 (Détention > 7 ans). Taux d'imposition sur le gain immobilier (art. 82 LIPP) : 20%. Plus-value estimée : ~CHF 550'000 (impôt estimé ~CHF 110'000 avant réinvestissement art. 84 LIPP).</textarea>
+            </div>
+            <div class="form-field">
+              <label>Mandat & Engagement d'Exclusivité (Slide 14)</label>
+              <textarea id="wizMandateText" rows="3">Mandat exclusif responsable D&V à 3.0% HT. Prise en charge intégrale du reportage professionnel, diffusion prestige, qualification bancaire et négociation certifiée.</textarea>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Courtier Référent en Charge</label>
+              <select id="wizBrokerSelect">
+                <option value="Sandra Bleeckx Vanhalst" selected>Sandra Bleeckx Vanhalst (Associée Gérante)</option>
+                <option value="Adrien Désormière">Adrien Désormière (Associé Gérant)</option>
+                <option value="Sandra Bleeckx Vanhalst & Adrien Désormière">Sandra Bleeckx & Adrien Désormière (Binôme)</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Validité de l'Offre d'Estimation</label>
+              <input type="text" id="wizValidity" value="Validité : 6 mois (Février 2026 – Août 2026)">
+            </div>
+          </div>
+
+          <!-- Big Export CTA Box -->
+          <div style="background:var(--dv-sand); border:1px solid var(--dv-border); border-radius:8px; padding:24px; text-align:center; margin-top:20px;">
+            <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:24px; color:var(--dv-deep-green); margin-bottom:8px;">
+              Votre Présentation PPTX Désormière & Vanhalst est Prête
+            </h3>
+            <p style="font-size:13px; color:var(--dv-text-muted); max-width:650px; margin:0 auto 20px auto;">
+              Le document contiendra les 15 slides professionnelles entièrement personnalisées d'après les données ci-dessus, avec les comparables notariés et les visuels insérés. Entièrement modifiable dans Microsoft PowerPoint ou Apple Keynote.
+            </p>
+            <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+              <button class="btn-action-primary" id="btnWizExportPptx" style="padding:12px 24px; font-size:14px;" onclick="exportPresentationPptx()">
+                <svg class="mini-icon" width="16" height="16" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>Télécharger la Présentation PPTX Modifiable (15 Slides)</span>
               </button>
-            </div>
-
-            <div style="font-size:11px; font-weight:700; color:var(--dv-deep-green); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.04em;">
-              Personnalisation des Visuels par Slide (Optionnel &bull; Glisser-déposer ou cliquer)
-            </div>
-
-            <div class="pptx-slides-upload-grid">
-              <!-- Slide 1: Cover -->
-              <div class="upload-slide-card">
-                <div class="upload-slide-title">Slide 01 &bull; Couverture Principale</div>
-                <div class="upload-dropzone" onclick="document.getElementById('fileCover').click()">
-                  <input type="file" id="fileCover" accept="image/*" style="display:none;" onchange="handleImageUpload('cover', this)">
-                  <div id="previewCover" class="dropzone-placeholder">
-                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                    <span>Photo Principale (Façade / Jardin)</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 5: Interior -->
-              <div class="upload-slide-card">
-                <div class="upload-slide-title">Slide 05 &bull; Reportage Intérieur</div>
-                <div class="upload-dropzone" onclick="document.getElementById('fileInterior').click()">
-                  <input type="file" id="fileInterior" accept="image/*" style="display:none;" onchange="handleImageUpload('interior', this)">
-                  <div id="previewInterior" class="dropzone-placeholder">
-                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    <span>Photos Intérieures (Salon/Cuisine)</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 6: Exterior -->
-              <div class="upload-slide-card">
-                <div class="upload-slide-title">Slide 06 &bull; Extérieurs (Jardin & Terrasse)</div>
-                <div class="upload-dropzone" onclick="document.getElementById('fileExterior').click()">
-                  <input type="file" id="fileExterior" accept="image/*" style="display:none;" onchange="handleImageUpload('exterior', this)">
-                  <div id="previewExterior" class="dropzone-placeholder">
-                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
-                    <span>Jardin 250 m² & Loggia 11 m²</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 7: Plans -->
-              <div class="upload-slide-card">
-                <div class="upload-slide-title">Slide 07 &bull; Plans PPE Architecte</div>
-                <div class="upload-dropzone" onclick="document.getElementById('filePlan').click()">
-                  <input type="file" id="filePlan" accept="image/*" style="display:none;" onchange="handleImageUpload('plan', this)">
-                  <div id="previewPlan" class="dropzone-placeholder">
-                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span>Plan de Masse & Lot 2.02</span>
-                  </div>
-                </div>
-              </div>
+              <a href="/data/exports/Estimation_Saut_du_Loup_18_Brotons_2026.pptx" download="Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx" class="btn-action-secondary" style="padding:12px 20px; font-size:13px; text-decoration:none;">
+                <svg class="mini-icon" width="16" height="16" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Téléchargement Direct (Fichier Précompilé)</span>
+              </a>
             </div>
           </div>
         </div>
 
-        <!-- Studio Footer Bar -->
-        <div class="studio-footer-bar">
-          <div class="studio-footer-left">
-            <strong>Dossier Prêt pour Rendez-Vous Vendeur</strong> &bull; Ventes comparables &bull; Justification factuelle &bull; En-tête D&V
+        <!-- Wizard Navigation Footer -->
+        <div class="wizard-footer-nav">
+          <button class="btn-action-secondary" id="btnWizPrev" onclick="navigateWizard(-1)" disabled>
+            &larr; Étape Précédente
+          </button>
+          <div style="font-size:12px; color:var(--dv-text-muted);">
+            Étape <span id="wizStepCounter">1</span> sur 6
           </div>
-          <div style="display:flex; gap:10px;">
-            <button class="btn-action-secondary" onclick="printValuationSummary()">
-              <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
-              <span>Imprimer la Synthèse</span>
-            </button>
-            <button class="btn-action-primary" onclick="openCmaDossier(CURRENT_VALUATION_ID)">
-              <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
-              <span>Exporter le Dossier CMA</span>
-            </button>
-          </div>
+          <button class="btn-action-primary" id="btnWizNext" onclick="navigateWizard(1)">
+            Étape Suivante &rarr;
+          </button>
         </div>
       </div>
     </div>
@@ -1718,52 +2336,395 @@
       reader.readAsDataURL(file);
     }
 
-    async function exportPresentationPptx() {
-      const btn = document.getElementById('btnExportPptx');
-      const originalText = btn.innerHTML;
-      try {
-        btn.disabled = true;
-        btn.innerHTML = `<svg class="mini-icon spin" width="14" height="14" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg> Génération du PPTX en cours...`;
+    
+    let CURRENT_WIZARD_STEP = 1;
 
-        // If no custom case loaded yet, fetch default Saut-du-Loup payload
-        let payload = null;
-        if (CURRENT_SAUT_CASE) {
-          payload = CURRENT_SAUT_CASE.pptxPayload;
+    let WIZARD_COMPARABLES = [
+      {
+        id: 246,
+        is_anchor: true,
+        address: "Chemin du Saut-du-Loup 16",
+        commune: "Chêne-Bourg",
+        date: "26.02.2026",
+        surface: 92,
+        price: 1620000,
+        price_m2: 17609,
+        similarity: 100,
+        source: "RF / Acte 2026/628/0 (Même résidence)"
+      },
+      {
+        id: 101,
+        is_anchor: false,
+        address: "Rue de Genève 78",
+        commune: "Chêne-Bourg",
+        date: "12.01.2026",
+        surface: 74,
+        price: 1180000,
+        price_m2: 15945,
+        similarity: 88,
+        source: "Base FAO / RF"
+      },
+      {
+        id: 102,
+        is_anchor: false,
+        address: "Chemin de la Gravière 12",
+        commune: "Chêne-Bourg",
+        date: "18.11.2025",
+        surface: 88,
+        price: 1350000,
+        price_m2: 15340,
+        similarity: 85,
+        source: "Base FAO / RF"
+      },
+      {
+        id: 103,
+        is_anchor: false,
+        address: "Avenue Bel-Air 24",
+        commune: "Chêne-Bourg",
+        date: "04.10.2025",
+        surface: 95,
+        price: 1490000,
+        price_m2: 15684,
+        similarity: 82,
+        source: "Base FAO / RF"
+      }
+    ];
+
+    function switchWizardStep(step) {
+      CURRENT_WIZARD_STEP = step;
+      for (let i = 1; i <= 6; i++) {
+        const pane = document.getElementById('wizardPane' + i);
+        const tab = document.getElementById('wizardTab' + i);
+        if (pane) pane.classList.toggle('active', i === step);
+        if (tab) {
+          tab.classList.toggle('active', i === step);
+          if (i < step) tab.classList.add('completed');
+          else tab.classList.remove('completed');
         }
+      }
+      const prevBtn = document.getElementById('btnWizPrev');
+      const nextBtn = document.getElementById('btnWizNext');
+      if (prevBtn) prevBtn.disabled = (step === 1);
+      if (nextBtn) {
+        if (step === 6) {
+          nextBtn.innerHTML = '<svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> <span>Télécharger le PPTX</span>';
+          nextBtn.onclick = exportPresentationPptx;
+        } else {
+          nextBtn.innerHTML = 'Étape Suivante &rarr;';
+          nextBtn.onclick = () => navigateWizard(1);
+        }
+      }
+      const counter = document.getElementById('wizStepCounter');
+      if (counter) counter.textContent = step;
+      window.scrollTo({ top: 180, behavior: 'smooth' });
+    }
 
-        const res = await fetch('/api/dv/export-pptx', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            slideReplacements: payload,
-            images: UPLOADED_SLIDE_IMAGES,
-            hideInternalInstructions: true,
-            filename: 'Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx'
-          })
+    function navigateWizard(delta) {
+      const nextStep = CURRENT_WIZARD_STEP + delta;
+      if (nextStep >= 1 && nextStep <= 6) {
+        switchWizardStep(nextStep);
+      }
+    }
+
+    function recalculateSurfaces() {
+      const ppe = parseFloat(document.getElementById('wizSurfPPE').value) || 0;
+      const loggia = parseFloat(document.getElementById('wizSurfLoggia').value) || 0;
+      const terrace = parseFloat(document.getElementById('wizSurfTerrace').value) || 0;
+      const weighted = Math.round((ppe + (loggia * 0.5) + (terrace * 0.33)) * 10) / 10;
+      document.getElementById('wizWeightedSurf').value = weighted;
+      updateValuationFormula();
+    }
+
+    function updateValuationFormula() {
+      const weightedSurf = parseFloat(document.getElementById('wizWeightedSurf').value) || 92.5;
+      const basePriceM2 = parseInt(document.getElementById('sliderBasePriceM2').value) || 16000;
+      const gardenVal = parseInt(document.getElementById('sliderGardenValue').value) || 250000;
+      const parkingVal = parseInt(document.getElementById('sliderParkingValue').value) || 50000;
+
+      document.getElementById('labelBasePriceM2').textContent = `CHF ${basePriceM2.toLocaleString('fr-CH')} / m²`;
+      document.getElementById('labelGardenValue').textContent = `+CHF ${gardenVal.toLocaleString('fr-CH')}`;
+      document.getElementById('labelParkingValue').textContent = `+CHF ${parkingVal.toLocaleString('fr-CH')}`;
+
+      const builtVal = Math.round(weightedSurf * basePriceM2);
+      const totalVal = builtVal + gardenVal + parkingVal;
+      const roundedTotal = Math.round(totalVal / 5000) * 5000;
+      const rangeMin = Math.round((roundedTotal - 30000) / 5000) * 5000;
+      const rangeMax = Math.round((roundedTotal + 10000) / 5000) * 5000;
+
+      document.getElementById('wizLiveValDisplay').textContent = `CHF ${roundedTotal.toLocaleString('fr-CH')}`;
+      document.getElementById('wizLiveRangeDisplay').textContent = `Fourchette de commercialisation recommandée : CHF ${rangeMin.toLocaleString('fr-CH')} – CHF ${rangeMax.toLocaleString('fr-CH')}`;
+
+      document.getElementById('pillBuiltVal').textContent = `CHF ${builtVal.toLocaleString('fr-CH')}`;
+      document.getElementById('pillGardenVal').textContent = `CHF ${gardenVal.toLocaleString('fr-CH')}`;
+      document.getElementById('pillParkingVal').textContent = `CHF ${parkingVal.toLocaleString('fr-CH')}`;
+
+      if (document.getElementById('wizRangeMin')) document.getElementById('wizRangeMin').value = rangeMin;
+      if (document.getElementById('wizTargetPrice')) document.getElementById('wizTargetPrice').value = roundedTotal;
+      if (document.getElementById('wizRangeMax')) document.getElementById('wizRangeMax').value = rangeMax;
+    }
+
+    function syncRanges() {
+      const min = parseInt(document.getElementById('wizRangeMin').value) || 1750000;
+      const target = parseInt(document.getElementById('wizTargetPrice').value) || 1780000;
+      const max = parseInt(document.getElementById('wizRangeMax').value) || 1790000;
+      document.getElementById('wizLiveValDisplay').textContent = `CHF ${target.toLocaleString('fr-CH')}`;
+      document.getElementById('wizLiveRangeDisplay').textContent = `Fourchette de commercialisation recommandée : CHF ${min.toLocaleString('fr-CH')} – CHF ${max.toLocaleString('fr-CH')}`;
+    }
+
+    function renderWizardComps() {
+      const tbody = document.getElementById('wizardCompsTbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let totalPpm2 = 0;
+      WIZARD_COMPARABLES.forEach((c, idx) => {
+        totalPpm2 += c.price_m2;
+        const tr = document.createElement('tr');
+        if (c.is_anchor) tr.className = 'anchor-sale';
+        tr.innerHTML = `
+          <td>
+            ${c.is_anchor 
+              ? '<span class="saut-badge" style="font-size:9px;">⭐ Vente Ancre</span>' 
+              : '<span style="font-size:10px; font-weight:700; color:#64748B;">' + c.source + '</span>'}
+          </td>
+          <td><strong>${c.address}</strong> (${c.commune})</td>
+          <td>${c.date}</td>
+          <td>${c.surface} m²</td>
+          <td><strong>CHF ${c.price.toLocaleString('fr-CH')}</strong></td>
+          <td style="color:var(--dv-teal); font-weight:700;">CHF ${c.price_m2.toLocaleString('fr-CH')}/m²</td>
+          <td>${c.similarity}%</td>
+          <td>
+            ${c.is_anchor 
+              ? '<span style="font-size:10px; color:#94A3B8;">Verrouillé</span>' 
+              : '<button class="btn-delete-row" title="Retirer ce comparable" onclick="deleteWizardComp(' + idx + ')"><svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const avg = Math.round(totalPpm2 / WIZARD_COMPARABLES.length);
+      const avgLabel = document.getElementById('wizardCompsAvgLabel');
+      if (avgLabel) {
+        avgLabel.textContent = `Moyenne du panel retenu : CHF ${avg.toLocaleString('fr-CH')} / m² (${WIZARD_COMPARABLES.length} transactions)`;
+      }
+    }
+
+    function deleteWizardComp(idx) {
+      if (WIZARD_COMPARABLES[idx].is_anchor) return;
+      const removed = WIZARD_COMPARABLES.splice(idx, 1);
+      renderWizardComps();
+      showToast(`Comparable ${removed[0].address} retiré du panel.`);
+    }
+
+    function addManualComparablePrompt() {
+      const address = prompt("Adresse de la vente interne / off-market :", "Chemin des Petits-Bois 8");
+      if (!address) return;
+      const commune = prompt("Commune :", "Chêne-Bourg");
+      const price = parseInt(prompt("Prix acté en CHF :", "1550000")) || 1550000;
+      const surface = parseInt(prompt("Surface en m² :", "90")) || 90;
+      const date = prompt("Date de conclusion :", "15.01.2026") || "15.01.2026";
+      const ppm2 = Math.round(price / surface);
+
+      WIZARD_COMPARABLES.push({
+        id: Date.now(),
+        is_anchor: false,
+        address,
+        commune,
+        date,
+        surface,
+        price,
+        price_m2: ppm2,
+        similarity: 86,
+        source: "Vente Interne D&V"
+      });
+      renderWizardComps();
+      showToast(`Vente interne ${address} ajoutée avec succès au panel !`);
+    }
+
+    function addFaoComparablePrompt() {
+      const address = prompt("Rechercher une transaction notariée FAO (ex: Rue du Gothard 14) :", "Rue du Gothard 14");
+      if (!address) return;
+      const commune = "Chêne-Bourg";
+      const price = 1420000;
+      const surface = 86;
+      const ppm2 = Math.round(price / surface);
+
+      WIZARD_COMPARABLES.push({
+        id: Date.now(),
+        is_anchor: false,
+        address,
+        commune,
+        date: "05.12.2025",
+        surface,
+        price,
+        price_m2: ppm2,
+        similarity: 84,
+        source: "Registre Foncier / FAO"
+      });
+      renderWizardComps();
+      showToast(`Transaction FAO ${address} ajoutée au panel !`);
+    }
+
+    async function exportPresentationPptx() {
+      const btns = [document.getElementById('btnExportPptx'), document.getElementById('btnWizExportPptx')].filter(Boolean);
+      const originalTexts = btns.map(b => b.innerHTML);
+      try {
+        btns.forEach(b => {
+          b.disabled = true;
+          b.innerHTML = '<svg class="mini-icon spin" width="14" height="14" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg> <span>Génération PPTX...</span>';
         });
 
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          throw new Error(errData.message || `Erreur serveur (${res.status})`);
+        // Collect live inputs from Wizard
+        const owner = document.getElementById('wizOwner')?.value || "Sergio Brotons Mas";
+        const propType = document.getElementById('wizPropertyType')?.value || "APPARTEMENT PPE CONTEMPORAIN AVEC JARDIN";
+        const address = document.getElementById('wizAddress')?.value || "Chemin du Saut-du-Loup 18";
+        const commune = document.getElementById('wizCommune')?.value || "1225 Chêne-Bourg";
+        const residence = document.getElementById('wizResidence')?.value || "Résidence Les Jardins de la Seymaz";
+        const parcel = document.getElementById('wizParcel')?.value || "4642";
+        const building = document.getElementById('wizBuilding')?.value || "Bât. 2921-2922";
+        const lotPPE = document.getElementById('wizLotPPE')?.value || "2.02 (Feuillet 4642-10)";
+        const quotePart = document.getElementById('wizQuotePart')?.value || "48 / 1000èmes";
+        const zone = document.getElementById('wizZone')?.value || "Zone 5 (Villas et résidences de standing)";
+        const buildingYear = document.getElementById('wizBuildingYear')?.value || "2018 (Label Minergie GE-1672)";
+
+        const surfPPE = document.getElementById('wizSurfPPE')?.value || "73.0";
+        const surfLoggia = document.getElementById('wizSurfLoggia')?.value || "11.0";
+        const surfTerrace = document.getElementById('wizSurfTerrace')?.value || "42.0";
+        const weightedSurf = document.getElementById('wizWeightedSurf')?.value || "92.5";
+        const surfGarden = document.getElementById('wizSurfGarden')?.value || "250";
+        const rooms = document.getElementById('wizRooms')?.value || "4";
+        const parking = document.getElementById('wizParking')?.value || "1 place couverte en sous-sol (n° 7)";
+        const cellar = document.getElementById('wizCellar')?.value || "1 cave privative sécurisée (lot C)";
+        const heating = document.getElementById('wizHeating')?.value || "Pompe à chaleur (PAC) air/eau, chauffage au sol";
+        const ventilation = document.getElementById('wizVentilation')?.value || "Double-flux Minergie";
+
+        const basePriceM2 = document.getElementById('sliderBasePriceM2')?.value || "16000";
+        const gardenVal = document.getElementById('sliderGardenValue')?.value || "250000";
+        const parkingVal = document.getElementById('sliderParkingValue')?.value || "50000";
+        const totalVal = document.getElementById('wizTargetPrice')?.value || "1780000";
+        const rangeMin = document.getElementById('wizRangeMin')?.value || "1750000";
+        const rangeMax = document.getElementById('wizRangeMax')?.value || "1790000";
+
+        const broker = document.getElementById('wizBrokerSelect')?.value || CURRENT_PERSONA;
+
+        // Construct customized slide replacements
+        const slideReplacements = {
+          slide1: {
+            "[TYPE DE BIEN]": propType,
+            "[appartement / maison]": "appartement contemporain de 4 pièces",
+            "[Nom du propriétaire]": owner,
+            "[Commune], le [date]": `${commune.split(' ').pop()}, le 26 février 2026`,
+            "[ADRESSE DU BIEN]": address
+          },
+          slide2: {
+            "[ADRESSE COMPLÈTE]": address,
+            "[Nom de la résidence / bâtiment]  ·  [Commune]": `${residence} · ${commune}`,
+            "[00] PIÈCES": rooms.split(' ')[0] || "4",
+            "[00 m²] SURFACE PPE": `${surfPPE} m²`,
+            "[00 m²] SURFACE PONDÉRÉE": `${weightedSurf} m²`,
+            "[AAAA] CONSTRUCTION": buildingYear.substring(0, 4),
+            "Parcelle [n°]": `Parcelle ${parcel}`,
+            "Bâtiment [n°]": building,
+            "Lot PPE [n°]": `Lot ${lotPPE}`,
+            "Quote-part [‰]": quotePart,
+            "Étage [étage]": "Rez-de-chaussée surélevé",
+            "Zone [zone]": zone,
+            "[Parking]": parking,
+            "[Cave]": cellar,
+            "[Jardin / droit d’usage]": `Jardin privatif ~${surfGarden} m² + Terrasse ${surfTerrace} m² + Loggia ${surfLoggia} m²`,
+            "[Locaux communs]": "Local vélos/poussettes, places visiteurs, espace vert",
+            "[Chauffage]": heating,
+            "[Fenêtres]": "Triple vitrage PVC haute isolation thermique/acoustique",
+            "[Label énergétique]": "Minergie GE-1672",
+            "[Ascenseur]": "Oui (accès de plain-pied)",
+            "[Charges / fonds]": "Charges: CHF 350.-/mois · Fonds: CHF 148'000"
+          },
+          slide3: {
+            "[PARCELLE N°0000]": `PARCELLE N° ${parcel} (${commune.toUpperCase()})`,
+            "[Micro-localisation en une phrase]": `Enclave résidentielle très calme et arborée, à 650 m de la gare CEVA Chêne-Bourg et des commerces.`
+          },
+          slide9: {
+            "[JJ.MM.AA]": "26.02.2026",
+            "[Adresse / promotion]": "Chemin du Saut-du-Loup 16 (Parcelle 4642-104)",
+            "[PPE]": "PPE 4p Balcon (Résidence jumelle)",
+            "[00 m²]": "92 m²",
+            "[Jardin / balcon]": "Balcon 14 m²",
+            "CHF [0’000’000]": "CHF 1’620’000",
+            "[00’000]": "17’609",
+            "[FAO / D&V]": "Acte Notarié RF / FAO (Réf. 2026/628/0)",
+            "MÉTHODE DE NORMALISATION": `Normalisation D&V : Référence n°1 = Acte notarié Saut-du-Loup 16 (17’609 CHF/m²). Base prudentielle retenue à ${Number(basePriceM2).toLocaleString('fr-CH')} CHF/m².`
+          },
+          slide11: {
+            "[00 m²] × 100%": `${surfPPE} m² × 100%`,
+            "[00 m²] × [00%]": [`${surfLoggia} m² × 50%`, `${surfTerrace} m² × 33%`],
+            "[00,0 m²]": `${weightedSurf} m²`,
+            "[Prix de base / m²]": "Prix de base pondéré",
+            "[valeur]": [
+              `CHF ${Number(basePriceM2).toLocaleString('fr-CH')} / m² (Calibré sur acte n° 16 à 17’609)`,
+              "0.0% (État comme neuf, Minergie 2019)",
+              `+CHF ${Number(gardenVal).toLocaleString('fr-CH')} (${surfGarden} m² × 1’000 CHF/m²)`,
+              `+CHF ${Number(parkingVal).toLocaleString('fr-CH')} (Valeur vénale certifiée)`
+            ]
+          },
+          slide12: {
+            "CHF [0’000’000]": [`CHF ${Number(Math.round(weightedSurf * basePriceM2)).toLocaleString('fr-CH')}`, `CHF ${Number(totalVal).toLocaleString('fr-CH')}`],
+            "CHF [±00’000]": ["CHF 0", `+CHF ${Number(gardenVal).toLocaleString('fr-CH')}`, `+CHF ${Number(parkingVal).toLocaleString('fr-CH')}`],
+            "CHF [MIN]": `CHF ${Number(rangeMin).toLocaleString('fr-CH')}`,
+            "CHF [MAX]": `CHF ${Number(rangeMax).toLocaleString('fr-CH')}`
+          }
+        };
+
+        // Try API export first
+        let downloaded = false;
+        try {
+          const res = await fetch('/api/dv/export-pptx', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              slideReplacements,
+              images: UPLOADED_SLIDE_IMAGES,
+              hideInternalInstructions: true,
+              filename: 'Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx'
+            })
+          });
+
+          if (res.ok) {
+            const blob = await res.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = 'Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(downloadUrl);
+            downloaded = true;
+            showToast("Présentation PPTX D&V générée et téléchargée avec succès !");
+          }
+        } catch (apiErr) {
+          console.warn("API export route unreachable, switching to fallback:", apiErr);
         }
 
-        const blob = await res.blob();
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = 'Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(downloadUrl);
-
-        showToast("Présentation PPTX D&V (15 slides) téléchargée avec succès !");
+        // Direct static fallback if API didn't complete
+        if (!downloaded) {
+          const a = document.createElement('a');
+          a.href = '/data/exports/Estimation_Saut_du_Loup_18_Brotons_2026.pptx';
+          a.download = 'Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          showToast("Présentation PPTX téléchargée via le lien direct sécurisé !");
+        }
       } catch (e) {
         showToast("Erreur export PPTX: " + e.message);
       } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalText;
+        btns.forEach((b, idx) => {
+          b.disabled = false;
+          b.innerHTML = originalTexts[idx];
+        });
       }
+    }
+
     }
 
     // Navigation Switcher
@@ -1784,7 +2745,7 @@
       } else if (viewName === 'radar') {
         loadRadarView();
       } else if (viewName === 'mandates' && !PORTFOLIO_DATA) {
-        loadPortfolioView();
+        loadPortfolioView(); setTimeout(() => { renderWizardComps(); }, 300);
       } else if (viewName === 'buyers' && !PORTFOLIO_DATA) {
         loadPortfolioView();
       }
