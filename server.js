@@ -706,6 +706,55 @@ async function handleFetch(req) {
     }
   }
 
+  // Désormière & Vanhalst Address Autocomplete Search API
+  if (pathname === "/api/dv/search" || pathname === "/api/dv/search/") {
+    try {
+      const searchParams = url.searchParams;
+      const q = searchParams.get("q") || "";
+      const dvService = new DVIntelligenceService(DB_PATH);
+      const results = dvService.searchProperties(q);
+      return Response.json(
+        { status: "ok", count: results.length, data: results },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
+  // Désormière & Vanhalst 3-Step Valuation Studio Workspace API
+  if (pathname === "/api/dv/valuation-studio" || pathname === "/api/dv/valuation-studio/") {
+    try {
+      const searchParams = url.searchParams;
+      const id = parseInt(searchParams.get("id") || "17169");
+      const dvService = new DVIntelligenceService(DB_PATH);
+      const data = dvService.getValuationStudio(id);
+      if (!data) {
+        return Response.json({ status: "error", message: "Bien introuvable" }, { status: 404 });
+      }
+      return Response.json(
+        { status: "ok", data },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
+  // Désormière & Vanhalst Agency Portfolio & Buyer Match API
+  if (pathname === "/api/dv/portfolio" || pathname === "/api/dv/portfolio/") {
+    try {
+      const dvService = new DVIntelligenceService(DB_PATH);
+      const data = dvService.getAgencyPortfolioReview();
+      return Response.json(
+        { status: "ok", ...data },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
   // 1-Click Valuation Dossier JSON Data API
   if (pathname === "/api/dossier/valuation" || pathname === "/api/dossier/valuation/") {
     try {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Désormière & Vanhalst — Intelligence Foncière & Radar Territorial</title>
+  <title>Désormière & Vanhalst — Espace Agence & Intelligence Foncière</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
     .top-navbar {
       background: var(--dv-deep-green);
       border-bottom: 3px solid var(--dv-teal);
-      padding: 16px 32px;
+      padding: 14px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -55,17 +55,17 @@
     .brand-section {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
     }
 
     .brand-logo {
-      height: 44px;
+      height: 42px;
       object-fit: contain;
     }
 
     .brand-titles h1 {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 700;
       color: #FFFFFF;
       letter-spacing: 0.02em;
@@ -79,6 +79,23 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-top: 3px;
+    }
+
+    .top-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .concept-ux-badge {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.04em;
     }
 
     .persona-selector {
@@ -112,12 +129,12 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
-    /* Sub Navigation Bar / Tab Bar */
+    /* Sub Navigation Bar */
     .sub-navbar {
       background: #FFFFFF;
       border-bottom: 1px solid var(--dv-border);
       position: sticky;
-      top: 79px;
+      top: 73px;
       z-index: 990;
       box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
@@ -133,14 +150,14 @@
 
     .nav-tabs {
       display: flex;
-      gap: 8px;
+      gap: 4px;
     }
 
     .nav-tab {
       background: transparent;
       border: none;
       border-bottom: 3px solid transparent;
-      padding: 14px 20px;
+      padding: 13px 18px;
       font-size: 13px;
       font-weight: 700;
       color: var(--dv-text-muted);
@@ -192,266 +209,490 @@
       padding: 24px 24px 80px;
     }
 
-    /* KPI Summary Row */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+    /* ================= SECTION: GREETING & 4 ACTIONS ================= */
+    .welcome-header {
       margin-bottom: 24px;
     }
 
-    .kpi-card {
-      background: var(--dv-card-bg);
-      border: 1px solid var(--dv-border);
-      border-radius: var(--dv-radius);
-      padding: 18px 20px;
-      box-shadow: var(--dv-shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    .welcome-header h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      line-height: 1.1;
     }
 
-    .kpi-label {
-      font-size: 11px;
+    .welcome-header p {
+      font-size: 13px;
+      color: var(--dv-text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--dv-text-muted);
-      font-weight: 700;
-    }
-
-    .kpi-value {
-      font-size: 28px;
-      font-weight: 800;
       color: var(--dv-deep-green);
-      letter-spacing: -0.02em;
+      margin-bottom: 14px;
     }
 
-    .kpi-sub {
-      font-size: 11px;
-      color: var(--dv-teal);
-      font-weight: 600;
+    /* 4 Primary Action Tiles */
+    .action-tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
     }
 
-    /* Filter Controls Bar */
-    .filter-panel {
+    .action-tile {
       background: var(--dv-card-bg);
       border: 1px solid var(--dv-border);
       border-radius: var(--dv-radius);
-      padding: 16px 20px;
-      margin-bottom: 22px;
-      box-shadow: var(--dv-shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .filter-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .filter-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--dv-deep-green);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      min-width: 90px;
-    }
-
-    .pill-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .pill {
-      background: var(--dv-sand);
-      border: 1px solid rgba(0, 147, 157, 0.2);
-      color: var(--dv-deep-green);
-      padding: 6px 14px;
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 20px;
+      padding: 20px 24px;
       cursor: pointer;
       transition: all 0.2s ease;
+      box-shadow: var(--dv-shadow);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      text-align: left;
     }
 
-    .pill:hover {
-      background: var(--dv-light-teal);
-      color: #FFFFFF;
-      border-color: var(--dv-light-teal);
-    }
-
-    .pill.active {
-      background: var(--dv-teal);
-      color: #FFFFFF;
+    .action-tile:hover {
+      transform: translateY(-2px);
       border-color: var(--dv-teal);
-      box-shadow: 0 2px 6px rgba(0, 147, 157, 0.35);
+      box-shadow: 0 10px 30px rgba(0, 74, 79, 0.12);
     }
 
-    /* Opportunity Cards Feed (Tab 1) */
-    .feed-header {
+    .action-tile.active {
+      border: 2px solid var(--dv-teal);
+      background: #FFFFFF;
+      box-shadow: 0 4px 20px rgba(0, 147, 157, 0.15);
+    }
+
+    .tile-icon {
+      font-size: 26px;
+      background: rgba(0, 147, 157, 0.08);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .tile-texts h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      margin-bottom: 3px;
+    }
+
+    .tile-texts p {
+      font-size: 12px;
+      color: var(--dv-text-muted);
+      line-height: 1.4;
+    }
+
+    /* Weekly Pulse Section (Image 1 bottom) */
+    .weekly-pulse-card {
+      background: var(--dv-card-bg);
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      padding: 20px 24px;
+      box-shadow: var(--dv-shadow);
+      margin-bottom: 32px;
+    }
+
+    .pulse-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
 
-    .feed-header h2 {
+    .pulse-header h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+    }
+
+    .pulse-validated-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dv-teal);
+      background: rgba(0, 147, 157, 0.1);
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    .pulse-sub {
+      font-size: 12px;
+      color: var(--dv-text-muted);
+      margin-bottom: 18px;
+    }
+
+    .pulse-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .pulse-kpi {
+      background: var(--dv-sand);
+      border: 1px solid rgba(0, 147, 157, 0.15);
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .pulse-kpi-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--dv-deep-green);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .pulse-kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--dv-text-muted);
+      line-height: 1.3;
+    }
+
+    /* ================= SECTION: VALUATION STUDIO (IMAGE 2) ================= */
+    .valuation-studio-box {
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      box-shadow: var(--dv-shadow);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .studio-top-bar {
+      background: var(--dv-deep-green);
+      color: #FFFFFF;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .studio-titles h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .studio-titles p {
+      font-size: 11px;
+      color: var(--dv-light-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Address Search */
+    .studio-search-row {
+      padding: 20px 24px;
+      background: #FAFAFA;
+      border-bottom: 1px solid var(--dv-border);
+      position: relative;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      max-width: 680px;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      font-size: 14px;
+      border: 1px solid rgba(0, 147, 157, 0.35);
+      border-radius: 6px;
+      font-family: inherit;
+      color: var(--dv-text-main);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-input-wrap input:focus {
+      border-color: var(--dv-teal);
+      box-shadow: 0 0 0 3px rgba(0, 147, 157, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 13px;
+      font-size: 16px;
+      color: var(--dv-teal);
+    }
+
+    .autocomplete-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 100;
+      max-height: 280px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .autocomplete-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .autocomplete-item:hover {
+      background: var(--dv-sand);
+      color: var(--dv-teal);
+    }
+
+    /* Aerial & Property Context Card */
+    .property-hero-card {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      border-bottom: 1px solid var(--dv-border);
+    }
+
+    .aerial-preview-box {
+      background: #E2E8F0;
+      border-radius: 6px;
+      overflow: hidden;
+      min-height: 240px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 16px;
+      background-image: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .aerial-source-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0, 74, 79, 0.85);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .aerial-address-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 24px;
-      color: var(--dv-deep-green);
       font-weight: 700;
+      color: #FFFFFF;
     }
 
-    .feed-count {
-      font-size: 13px;
-      color: var(--dv-text-muted);
+    .aerial-address-sub {
+      font-size: 12px;
+      color: var(--dv-light-teal);
       font-weight: 600;
     }
 
-    .cards-list {
+    .property-specs-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      justify-content: center;
     }
 
-    .opp-card {
-      background: var(--dv-card-bg);
-      border: 1px solid var(--dv-border);
-      border-radius: var(--dv-radius);
-      padding: 22px 26px;
-      box-shadow: var(--dv-shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(0, 147, 157, 0.12);
+    }
+
+    .spec-item span {
+      color: var(--dv-text-muted);
+    }
+
+    .spec-item strong {
+      color: var(--dv-deep-green);
+    }
+
+    /* 3-Step Valuation Flow */
+    .studio-steps-grid {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      align-items: start;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--dv-border);
+      border-bottom: 1px solid var(--dv-border);
     }
 
-    .opp-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0, 74, 79, 0.12);
-      border-color: var(--dv-teal);
+    .step-column {
+      background: #FFFFFF;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    .opp-left {
+    .step-column-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--dv-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .step-column-header h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+    }
+
+    .step-desc {
+      font-size: 11px;
+      color: var(--dv-text-muted);
+      line-height: 1.4;
+    }
+
+    /* Comparables mini-cards */
+    .mini-comps-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    .opp-badges {
+    .mini-comp-card {
+      background: var(--dv-sand);
+      border: 1px solid rgba(0, 147, 157, 0.15);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 11px;
+    }
+
+    .mini-comp-top {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .score-badge {
-      padding: 4px 10px;
-      border-radius: 14px;
-      font-size: 11px;
-      font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: 0.04em;
-    }
-
-    .signal-tag {
-      background: rgba(0, 147, 157, 0.08);
-      border: 1px solid var(--dv-teal);
-      color: var(--dv-deep-green);
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .broker-tag {
-      background: rgba(82, 33, 0, 0.08);
-      border: 1px solid rgba(82, 33, 0, 0.25);
-      color: var(--dv-brown-deep);
-      padding: 4px 9px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .opp-address {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 22px;
+      justify-content: space-between;
       font-weight: 700;
       color: var(--dv-deep-green);
-      letter-spacing: 0.01em;
+      margin-bottom: 2px;
     }
 
-    .opp-details {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      font-size: 13px;
+    .mini-comp-details {
       color: var(--dv-text-muted);
     }
 
-    .opp-details strong {
-      color: var(--dv-text-main);
-    }
-
-    .opp-pitch-box {
-      background: rgba(0, 147, 157, 0.04);
-      border-left: 3px solid var(--dv-teal);
-      padding: 10px 14px;
-      font-size: 12px;
-      color: #334155;
-      border-radius: 0 4px 4px 0;
-      line-height: 1.5;
-    }
-
-    .opp-right {
+    /* Adjustment Sliders */
+    .adjustments-form {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
       gap: 14px;
-      min-width: 220px;
     }
 
-    .opp-price-box {
-      text-align: right;
+    .adjust-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .opp-est-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--dv-teal);
+    .adjust-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
       font-weight: 700;
-    }
-
-    .opp-price-val {
-      font-size: 22px;
-      font-weight: 800;
       color: var(--dv-deep-green);
-      letter-spacing: -0.01em;
     }
 
-    .opp-actions {
+    .adjust-slider {
+      width: 100%;
+      accent-color: var(--dv-teal);
+      cursor: pointer;
+    }
+
+    /* Estimate Output Box */
+    .estimate-result-box {
+      background: rgba(0, 147, 157, 0.06);
+      border: 1px solid var(--dv-teal);
+      border-radius: 6px;
+      padding: 16px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      width: 100%;
+    }
+
+    .est-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dv-teal);
+      font-weight: 800;
+    }
+
+    .est-price-large {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--dv-deep-green);
+      letter-spacing: -0.02em;
+    }
+
+    .est-range-sub {
+      font-size: 11px;
+      color: var(--dv-text-muted);
+      font-weight: 600;
+    }
+
+    /* Studio Footer Bar */
+    .studio-footer-bar {
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FAFAFA;
+    }
+
+    .studio-footer-left {
+      font-size: 12px;
+      color: var(--dv-text-muted);
+    }
+
+    .studio-footer-left strong {
+      color: var(--dv-deep-green);
     }
 
     .btn-action-primary {
       background: var(--dv-teal);
       color: #FFFFFF;
       border: 1px solid var(--dv-teal);
-      padding: 9px 16px;
+      padding: 9px 18px;
       border-radius: 4px;
       font-size: 12px;
       font-weight: 700;
@@ -471,7 +712,7 @@
       background: #FFFFFF;
       color: var(--dv-deep-green);
       border: 1px solid rgba(0, 147, 157, 0.35);
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 4px;
       font-size: 12px;
       font-weight: 600;
@@ -486,139 +727,8 @@
       border-color: var(--dv-teal);
     }
 
-    /* Radar View (Tab 2) Styles */
-    .radar-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .radar-col {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .radar-col-header {
-      background: var(--dv-card-bg);
-      border: 1px solid var(--dv-border);
-      border-top: 4px solid var(--dv-teal);
-      border-radius: var(--dv-radius);
-      padding: 16px 20px;
-      box-shadow: var(--dv-shadow);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .radar-col-header.competitor {
-      border-top-color: var(--dv-brown-warm);
-    }
-
-    .radar-col-header h3 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--dv-deep-green);
-    }
-
-    .radar-col-header p {
-      font-size: 11px;
-      color: var(--dv-text-muted);
-      margin-top: 2px;
-    }
-
-    .radar-card {
-      background: var(--dv-card-bg);
-      border: 1px solid var(--dv-border);
-      border-radius: var(--dv-radius);
-      padding: 18px 20px;
-      box-shadow: var(--dv-shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .radar-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 74, 79, 0.1);
-      border-color: var(--dv-teal);
-    }
-
-    .radar-card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .radar-card-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--dv-deep-green);
-    }
-
-    .radar-card-price {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--dv-teal);
-      white-space: nowrap;
-    }
-
-    .radar-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--dv-text-muted);
-    }
-
-    .radar-meta strong {
-      color: var(--dv-text-main);
-    }
-
-    .radar-strategy-box {
-      background: rgba(0, 147, 157, 0.05);
-      border-left: 3px solid var(--dv-teal);
-      padding: 10px 12px;
-      font-size: 11px;
-      color: #334155;
-      border-radius: 0 4px 4px 0;
-      line-height: 1.45;
-    }
-
-    .radar-strategy-box.stale {
-      background: rgba(158, 64, 0, 0.06);
-      border-left-color: var(--dv-brown-warm);
-    }
-
-    .competitor-badge {
-      background: rgba(0, 74, 79, 0.08);
-      border: 1px solid rgba(0, 74, 79, 0.25);
-      color: var(--dv-deep-green);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    .stale-badge {
-      background: rgba(158, 64, 0, 0.12);
-      border: 1px solid var(--dv-brown-warm);
-      color: var(--dv-brown-warm);
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    /* Modal for Neighbor Canvassing & Courteous Letter */
-    .neighbor-modal-overlay {
+    /* Modal for Neighbor Canvassing */
+    .neighbor-modal-overlay, .cma-modal-overlay {
       display: none;
       position: fixed;
       top: 0;
@@ -633,9 +743,9 @@
       padding: 24px;
     }
 
-    .neighbor-modal-window {
+    .neighbor-modal-window, .cma-modal-window {
       background: #FFFFFF;
-      max-width: 820px;
+      max-width: 840px;
       width: 100%;
       max-height: 92vh;
       border-radius: 8px;
@@ -645,7 +755,7 @@
       box-shadow: 0 25px 60px rgba(0,0,0,0.35);
     }
 
-    .neighbor-modal-header {
+    .neighbor-modal-header, .cma-modal-header {
       background: var(--dv-deep-green);
       border-bottom: 3px solid var(--dv-teal);
       padding: 16px 24px;
@@ -655,19 +765,7 @@
       color: #FFFFFF;
     }
 
-    .neighbor-modal-header h3 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 21px;
-      font-weight: 700;
-    }
-
-    .neighbor-modal-header p {
-      font-size: 11px;
-      color: var(--dv-light-teal);
-      margin-top: 2px;
-    }
-
-    .neighbor-modal-close {
+    .neighbor-modal-close, .cma-modal-close {
       background: transparent;
       border: none;
       color: #FFFFFF;
@@ -676,14 +774,17 @@
       line-height: 1;
     }
 
-    .neighbor-modal-body {
+    .neighbor-modal-body, .cma-modal-body {
       flex: 1;
       overflow-y: auto;
       padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
       background: var(--dv-sand);
+    }
+
+    .cma-modal-body iframe {
+      width: 100%;
+      height: 75vh;
+      border: none;
     }
 
     .target-neighbors-card {
@@ -691,24 +792,14 @@
       border: 1px solid var(--dv-border);
       border-radius: 6px;
       padding: 16px 20px;
-    }
-
-    .target-neighbors-card h4 {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--dv-deep-green);
-      font-weight: 800;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 16px;
     }
 
     .neighbors-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 12px;
+      margin-top: 8px;
     }
 
     .neighbors-table th {
@@ -717,7 +808,6 @@
       background: rgba(0, 147, 157, 0.06);
       color: var(--dv-deep-green);
       font-weight: 700;
-      border-bottom: 1px solid var(--dv-border);
     }
 
     .neighbors-table td {
@@ -730,12 +820,9 @@
       background: #FFFFFF;
       border: 1px solid var(--dv-border);
       border-radius: 6px;
-      padding: 24px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 20px;
       font-size: 13px;
       line-height: 1.6;
-      color: #1E293B;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
       white-space: pre-wrap;
     }
 
@@ -748,62 +835,31 @@
       align-items: center;
     }
 
-    /* Modal for CMA Preview */
-    .cma-modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 74, 79, 0.65);
-      backdrop-filter: blur(4px);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
-    }
-
-    .cma-modal-window {
-      background: #FFFFFF;
-      max-width: 900px;
-      width: 100%;
-      max-height: 92vh;
-      border-radius: 8px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    }
-
-    .cma-modal-header {
-      background: var(--dv-deep-green);
-      padding: 16px 24px;
+    /* Footer Trust Signals (Image 1 bottom) */
+    .app-trust-footer {
+      max-width: 1240px;
+      margin: 40px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--dv-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: #FFFFFF;
+      font-size: 12px;
+      color: var(--dv-text-muted);
     }
 
-    .cma-modal-close {
-      background: transparent;
-      border: none;
-      color: #FFFFFF;
-      font-size: 24px;
-      cursor: pointer;
-      line-height: 1;
+    .trust-links {
+      display: flex;
+      gap: 16px;
     }
 
-    .cma-modal-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0;
+    .trust-links a {
+      color: var(--dv-text-muted);
+      text-decoration: none;
     }
 
-    .cma-modal-body iframe {
-      width: 100%;
-      height: 75vh;
-      border: none;
+    .trust-links a:hover {
+      color: var(--dv-teal);
     }
 
     /* Toast notification */
@@ -832,18 +888,15 @@
       transform: translateY(0);
     }
 
-    @media (max-width: 960px) {
-      .radar-grid {
+    @media (max-width: 860px) {
+      .action-tiles-grid {
         grid-template-columns: 1fr;
       }
-      .opp-card {
+      .studio-steps-grid {
         grid-template-columns: 1fr;
       }
-      .opp-right {
-        align-items: flex-start;
-      }
-      .opp-price-box {
-        text-align: left;
+      .property-hero-card {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -855,32 +908,42 @@
     <div class="brand-section">
       <img src="/public/dv/assets/DandV Logo right text clear.png" class="brand-logo" alt="Désormière & Vanhalst" onerror="this.src='/public/dv/assets/DandV Logo.png'">
       <div class="brand-titles">
-        <h1>Cellule d'Intelligence Foncière & Mandats</h1>
-        <p>Rive Gauche Genève • Troinex &bull; Veyrier &bull; Chêne-Bougeries &bull; Cologny</p>
+        <h1>Espace Agence · Rive Gauche Genève</h1>
+        <p>Désormière & Vanhalst &bull; Troinex &bull; Veyrier &bull; Chêne-Bougeries &bull; Cologny</p>
       </div>
     </div>
-    <div class="persona-selector">
-      <button class="persona-btn active" data-broker="all" onclick="filterByBroker('all', this)">Sandra & Adrien</button>
-      <button class="persona-btn" data-broker="Sandra Bleeckx Vanhalst" onclick="filterByBroker('Sandra Bleeckx Vanhalst', this)">Sandra Bleeckx</button>
-      <button class="persona-btn" data-broker="Adrien Désormière" onclick="filterByBroker('Adrien Désormière', this)">Adrien Désormière</button>
+
+    <div class="top-nav-right">
+      <div class="concept-ux-badge">Concept UX</div>
+      <div class="persona-selector">
+        <button class="persona-btn active" id="personaBtnSandra" onclick="selectPersona('Sandra Bleeckx Vanhalst')">Sandra Bleeckx</button>
+        <button class="persona-btn" id="personaBtnAdrien" onclick="selectPersona('Adrien Désormière')">Adrien Désormière</button>
+      </div>
     </div>
   </header>
 
-  <!-- Sub Navigation Bar / Tabs -->
+  <!-- Sub Navigation Bar -->
   <nav class="sub-navbar">
     <div class="sub-navbar-content">
       <div class="nav-tabs">
-        <button class="nav-tab active" id="tabSourcingBtn" onclick="switchMainTab('sourcing')">
-          <span>🏛️ Sourcing Foncier & Hoiries</span>
-          <span class="tab-badge" id="sourcingBadge">...</span>
+        <button class="nav-tab active" id="tabHubBtn" onclick="switchView('hub')">
+          <span>🏠 Accueil & Hub</span>
         </button>
-        <button class="nav-tab" id="tabRadarBtn" onclick="switchMainTab('radar')">
-          <span>🦅 Radar Ventes & Concurrence</span>
-          <span class="tab-badge" id="radarBadge">...</span>
+        <button class="nav-tab" id="tabValueBtn" onclick="switchView('value')">
+          <span>📄 Préparer une estimation (VALUE)</span>
+        </button>
+        <button class="nav-tab" id="tabRadarBtn" onclick="switchView('radar')">
+          <span>📖 Analyser mon secteur (TERRITORY)</span>
+        </button>
+        <button class="nav-tab" id="tabMandatesBtn" onclick="switchView('mandates')">
+          <span>🏷️ Revoir mes mandats (MANDATE)</span>
+        </button>
+        <button class="nav-tab" id="tabBuyersBtn" onclick="switchView('buyers')">
+          <span>👥 Activer mes acheteurs (MATCH)</span>
         </button>
       </div>
       <div class="territory-tagline">
-        Territoire Exclusif : <strong>Rive Gauche Genève</strong>
+        Portefeuille Privé + Cadastre Officiel
       </div>
     </div>
   </nav>
@@ -888,169 +951,296 @@
   <!-- Main Container -->
   <main class="container">
     
-    <!-- ================= TAB 1: SOURCING FONCIER & HOIRIES ================= -->
-    <div id="sourcingView">
-      <!-- KPI Row -->
-      <section class="kpi-grid">
-        <div class="kpi-card">
-          <span class="kpi-label">Opportunités Rive Gauche</span>
-          <span class="kpi-value" id="kpiTotal">...</span>
-          <span class="kpi-sub">Communes sous observation directe</span>
-        </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Hoiries & Successions (art. 602 CC)</span>
-          <span class="kpi-value" id="kpiHoiries" style="color:var(--dv-teal);">...</span>
-          <span class="kpi-sub">Mandats de partage prioritaire</span>
-        </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Parcelles Développeurs (Zone 5)</span>
-          <span class="kpi-value" id="kpiDivisions" style="color:var(--dv-brown-warm);">...</span>
-          <span class="kpi-sub">Potentiel détachement &bull; &ge; 1'000 m²</span>
-        </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Prestige DV Signature</span>
-          <span class="kpi-value" id="kpiPrestige" style="color:var(--dv-deep-green);">...</span>
-          <span class="kpi-sub">Cologny &bull; Vandœuvres &bull; > 3M CHF</span>
-        </div>
-      </section>
-
-      <!-- Filters Panel -->
-      <section class="filter-panel">
-        <!-- Commune Filter -->
-        <div class="filter-row">
-          <span class="filter-title">Communes :</span>
-          <div class="pill-group" id="communePills">
-            <button class="pill active" onclick="setCommune('all', this)">Toute Rive Gauche</button>
-            <button class="pill" onclick="setCommune('Troinex', this)">Troinex</button>
-            <button class="pill" onclick="setCommune('Veyrier', this)">Veyrier</button>
-            <button class="pill" onclick="setCommune('Chêne-Bougeries', this)">Chêne-Bougeries</button>
-            <button class="pill" onclick="setCommune('Plan-les-Ouates', this)">Plan-les-Ouates</button>
-            <button class="pill" onclick="setCommune('Cologny', this)">Cologny</button>
-            <button class="pill" onclick="setCommune('Vandœuvres', this)">Vandœuvres</button>
-            <button class="pill" onclick="setCommune('Collonge-Bellerive', this)">Collonge-Bellerive</button>
-            <button class="pill" onclick="setCommune('Thônex', this)">Thônex</button>
-          </div>
-        </div>
-
-        <!-- Signal Filter -->
-        <div class="filter-row">
-          <span class="filter-title">Signaux :</span>
-          <div class="pill-group" id="signalPills">
-            <button class="pill active" onclick="setSignal('all', this)">Tous les signaux</button>
-            <button class="pill" onclick="setSignal('hoirie', this)">🏛️ Hoiries Familiales</button>
-            <button class="pill" onclick="setSignal('division', this)">📐 Terrains & Divisions</button>
-            <button class="pill" onclick="setSignal('prestige', this)">⭐ DV Signature (> 3M CHF)</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Feed Header -->
-      <div class="feed-header">
-        <h2>Opportunités Qualifiées Détectées</h2>
-        <div class="feed-count" id="feedCount">Chargement des données foncières...</div>
+    <!-- ================= VIEW 1: EXECUTIVE HUB (IMAGE 1) ================= -->
+    <div id="viewHub">
+      <!-- Greeting Banner -->
+      <div class="welcome-header">
+        <h2 id="greetingTitle">Bonjour, Sandra</h2>
+        <p>Espace agence &bull; Rive Gauche Genève</p>
       </div>
 
-      <!-- Feed Cards List -->
-      <section class="cards-list" id="cardsList">
-        <!-- Dynamically inserted by JS -->
-      </section>
-    </div>
-
-    <!-- ================= TAB 2: RADAR VENTES & CONCURRENCE ================= -->
-    <div id="radarView" style="display: none;">
-      <!-- Radar KPI Row -->
-      <section class="kpi-grid">
-        <div class="kpi-card">
-          <span class="kpi-label">Ventes Conclues Rive Gauche</span>
-          <span class="kpi-value" id="kpiRadarSales" style="color:var(--dv-teal);">...</span>
-          <span class="kpi-sub">Villas & prestige enregistrés au RF</span>
-        </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Mandats Concurrence Actifs</span>
-          <span class="kpi-value" id="kpiRadarCompetitor">...</span>
-          <span class="kpi-sub">Réseaux concurrents sur le secteur</span>
-        </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Mandats en Souffrance (>75j)</span>
-          <span class="kpi-value" id="kpiRadarStale" style="color:var(--dv-brown-warm);">...</span>
-          <span class="kpi-sub">Cibles prioritaires de reprise exclusive</span>
-        </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Leader Concurrentiel Actif</span>
-          <span class="kpi-value" id="kpiRadarTopAgency" style="font-size:20px; color:var(--dv-deep-green); margin-top:4px;">...</span>
-          <span class="kpi-sub">Acteur le plus représenté</span>
-        </div>
-      </section>
-
-      <!-- Radar Commune Filter Bar -->
-      <section class="filter-panel">
-        <div class="filter-row">
-          <span class="filter-title">Secteur :</span>
-          <div class="pill-group" id="radarCommunePills">
-            <button class="pill active" onclick="setRadarCommune('all', this)">Toute Rive Gauche</button>
-            <button class="pill" onclick="setRadarCommune('Troinex', this)">Troinex</button>
-            <button class="pill" onclick="setRadarCommune('Veyrier', this)">Veyrier</button>
-            <button class="pill" onclick="setRadarCommune('Chêne-Bougeries', this)">Chêne-Bougeries</button>
-            <button class="pill" onclick="setRadarCommune('Plan-les-Ouates', this)">Plan-les-Ouates</button>
-            <button class="pill" onclick="setRadarCommune('Cologny', this)">Cologny</button>
-            <button class="pill" onclick="setRadarCommune('Vandœuvres', this)">Vandœuvres</button>
-            <button class="pill" onclick="setRadarCommune('Collonge-Bellerive', this)">Collonge-Bellerive</button>
-            <button class="pill" onclick="setRadarCommune('Thônex', this)">Thônex</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Two-Column Stream Layout -->
-      <div class="radar-grid">
-        <!-- Left Column: Recent Official Sales & Neighbor Effect -->
-        <div class="radar-col">
-          <div class="radar-col-header">
-            <div>
-              <h3>Dernières Ventes Enregistrées (FAO)</h3>
-              <p>Déclencheurs de prospection directe &laquo; Effet Voisin &raquo;</p>
-            </div>
-            <span class="tab-badge" id="salesColBadge">0</span>
-          </div>
-
-          <div id="salesStreamList" style="display:flex; flex-direction:column; gap:16px;">
-            <!-- Rendered by JS -->
+      <!-- 4 Action Tiles (Image 1) -->
+      <div class="section-title">Que souhaitez-vous faire ?</div>
+      <div class="action-tiles-grid">
+        <!-- Tile 1: Estimation -->
+        <div class="action-tile" onclick="switchView('value')">
+          <div class="tile-icon">📄</div>
+          <div class="tile-texts">
+            <h3>Préparer une estimation</h3>
+            <p>Comparables et dossier vendeur</p>
           </div>
         </div>
 
-        <!-- Right Column: Competitor Mandates & Stale Listings -->
-        <div class="radar-col">
-          <div class="radar-col-header competitor">
-            <div>
-              <h3>Nouveaux Mandats Concurrence & Souffrance</h3>
-              <p>Surveillance du stock concurrent & opportunités de reprise</p>
-            </div>
-            <span class="tab-badge" id="compColBadge" style="background:var(--dv-brown-warm); color:#FFF;">0</span>
+        <!-- Tile 2: Secteur & Radar -->
+        <div class="action-tile" onclick="switchView('radar')">
+          <div class="tile-icon">📖</div>
+          <div class="tile-texts">
+            <h3>Analyser mon secteur</h3>
+            <p>Marché local et opportunités</p>
           </div>
+        </div>
 
-          <div id="competitorStreamList" style="display:flex; flex-direction:column; gap:16px;">
-            <!-- Rendered by JS -->
+        <!-- Tile 3: Mandats -->
+        <div class="action-tile" onclick="switchView('mandates')">
+          <div class="tile-icon">🏷️</div>
+          <div class="tile-texts">
+            <h3>Revoir mes mandats</h3>
+            <p>Prix et activité commerciale</p>
+          </div>
+        </div>
+
+        <!-- Tile 4: Acheteurs -->
+        <div class="action-tile" onclick="switchView('buyers')">
+          <div class="tile-icon">👥</div>
+          <div class="tile-texts">
+            <h3>Activer mes acheteurs</h3>
+            <p>Recherche et correspondances</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weekly Market Summary (Image 1 bottom) -->
+      <div class="weekly-pulse-card">
+        <div class="pulse-header">
+          <h3>Mon marché cette semaine</h3>
+          <span class="pulse-validated-badge">✓ Données validées</span>
+        </div>
+        <div class="pulse-sub">
+          Activité observée dans mes communes : Dernières transactions notariées, segments actifs, comparables récents et évolutions vérifiées.
+        </div>
+        <div class="pulse-kpi-row">
+          <div class="pulse-kpi">
+            <div class="pulse-kpi-val" id="pulseSales">4</div>
+            <div class="pulse-kpi-label">Nouvelles ventes conclues enregistrées au RF</div>
+          </div>
+          <div class="pulse-kpi">
+            <div class="pulse-kpi-val" id="pulseCompetitors">18</div>
+            <div class="pulse-kpi-label">Mandats concurrents sous observation</div>
+          </div>
+          <div class="pulse-kpi">
+            <div class="pulse-kpi-val" id="pulseStale" style="color:var(--dv-brown-warm);">2</div>
+            <div class="pulse-kpi-label">Mandats en souffrance (>75j) à réajuster</div>
+          </div>
+          <div class="pulse-kpi">
+            <div class="pulse-kpi-val" id="pulseOpps" style="color:var(--dv-teal);">7</div>
+            <div class="pulse-kpi-label">Opportunités qualifiées (art. 602 CC Hoiries)</div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ================= VIEW 2: 3-STEP VALUATION STUDIO (IMAGE 2) ================= -->
+    <div id="viewValue" style="display: none;">
+      <div class="valuation-studio-box">
+        <!-- Top Studio Bar -->
+        <div class="studio-top-bar">
+          <div class="studio-titles">
+            <h3>Cytria VALUE &bull; Studio d'Estimation Vendeur</h3>
+            <p>Confidential agency workspace &bull; Désormière & Vanhalst</p>
+          </div>
+          <button class="btn-action-secondary" style="color:#FFF; border-color:rgba(255,255,255,0.4);" onclick="resetStudioSearch()">
+            Nouvelle Recherche
+          </button>
+        </div>
+
+        <!-- Search Bar with Autocomplete -->
+        <div class="studio-search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="studioAddressInput" placeholder="Entrez une adresse ou parcelle sur la Rive Gauche (ex: Chemin des Argousiers, Veyrier)..." autocomplete="off" oninput="handleAddressSearch(this.value)">
+            <div class="autocomplete-dropdown" id="searchDropdown"></div>
+          </div>
+        </div>
+
+        <!-- Aerial Map & Property Specs Hero -->
+        <div class="property-hero-card" id="propertyHeroCard">
+          <div class="aerial-preview-box" id="aerialHeroBox">
+            <span class="aerial-source-badge">ge.ch &bull; SITG Orthophoto HD</span>
+            <div class="aerial-address-title" id="heroAddress">Chemin des Argousiers 10</div>
+            <div class="aerial-address-sub" id="heroCommune">1255 Veyrier &bull; Parcelle 4812</div>
+          </div>
+
+          <div class="property-specs-list">
+            <div class="spec-item">
+              <span>Commune :</span>
+              <strong id="specCommune">Veyrier</strong>
+            </div>
+            <div class="spec-item">
+              <span>Parcelle Cadastre :</span>
+              <strong id="specParcel">4812</strong>
+            </div>
+            <div class="spec-item">
+              <span>Surface Parcelle :</span>
+              <strong id="specSurface">1'150 m²</strong>
+            </div>
+            <div class="spec-item">
+              <span>Affectation LACI :</span>
+              <strong id="specZone">Zone 5 (Villas résidentielles)</strong>
+            </div>
+            <div class="spec-item">
+              <span>Année de Construction :</span>
+              <strong id="specYear">1988 (Rénovée 2018)</strong>
+            </div>
+            <a class="btn-action-secondary" id="specSitgLink" href="https://ge.ch/sitg/" target="_blank" rel="noopener" style="margin-top:6px;">
+              🗺️ Ouvrir Cadastre Officiel SITG
+            </a>
+          </div>
+        </div>
+
+        <!-- 3-Step Valuation Flow -->
+        <div class="studio-steps-grid">
+          <!-- Step 01: Actual Sales -->
+          <div class="step-column">
+            <div class="step-column-header">
+              <span class="step-num">01</span>
+              <h4>Ventes Réelles</h4>
+            </div>
+            <div class="step-desc">
+              Transactions notariées enregistrées au Registre Foncier dans le voisinage direct.
+            </div>
+            <div class="mini-comps-list" id="miniCompsContainer">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Step 02: Differences & Adjustments -->
+          <div class="step-column">
+            <div class="step-column-header">
+              <span class="step-num">02</span>
+              <h4>Ajustements</h4>
+            </div>
+            <div class="step-desc">
+              Ajustements du courtier selon les caractéristiques propres du bien.
+            </div>
+            <div class="adjustments-form">
+              <div class="adjust-group">
+                <div class="adjust-label-row">
+                  <span>État général du bâti</span>
+                  <span id="valEtat">0%</span>
+                </div>
+                <input type="range" class="adjust-slider" min="-15" max="15" step="2.5" value="0" oninput="updateAdjustment('Etat', this.value)">
+              </div>
+
+              <div class="adjust-group">
+                <div class="adjust-label-row">
+                  <span>Vue dégagée / Sans vis-à-vis</span>
+                  <span id="valVue">+5%</span>
+                </div>
+                <input type="range" class="adjust-slider" min="-10" max="15" step="2.5" value="5" oninput="updateAdjustment('Vue', this.value)">
+              </div>
+
+              <div class="adjust-group">
+                <div class="adjust-label-row">
+                  <span>Calme résidentiel</span>
+                  <span id="valCalme">+5%</span>
+                </div>
+                <input type="range" class="adjust-slider" min="-10" max="10" step="2.5" value="5" oninput="updateAdjustment('Calme', this.value)">
+              </div>
+
+              <div class="adjust-group">
+                <div class="adjust-label-row">
+                  <span>Équipements (PAC, Solaire)</span>
+                  <span id="valEnergie">0%</span>
+                </div>
+                <input type="range" class="adjust-slider" min="-10" max="10" step="2.5" value="0" oninput="updateAdjustment('Energie', this.value)">
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 03: Conclusion -->
+          <div class="step-column">
+            <div class="step-column-header">
+              <span class="step-num">03</span>
+              <h4>Conclusion</h4>
+            </div>
+            <div class="step-desc">
+              Estimation vénale explicable et fourchette de commercialisation recommandée.
+            </div>
+
+            <div class="estimate-result-box">
+              <div class="est-label">Valeur Vénale Centrale D&V</div>
+              <div class="est-price-large" id="estPriceDisplay">CHF 2'286'000</div>
+              <div class="est-range-sub" id="estRangeDisplay">Fourchette : CHF 2'150'000 – 2'420'000</div>
+              <div style="font-size:11px; color:#475569; margin-top:4px;" id="estM2Display">
+                Soit ~CHF 15'240 / m²
+              </div>
+            </div>
+
+            <button class="btn-action-primary" style="margin-top:auto;" onclick="openCmaDossier(CURRENT_VALUATION_ID)">
+              📄 Fiche Vendeur D&V 1-Clic
+            </button>
+          </div>
+        </div>
+
+        <!-- Studio Footer Bar -->
+        <div class="studio-footer-bar">
+          <div class="studio-footer-left">
+            <strong>Dossier Prêt pour Rendez-Vous Vendeur</strong> &bull; Ventes comparables &bull; Justification factuelle &bull; En-tête D&V
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn-action-secondary" onclick="printValuationSummary()">🖨️ Imprimer la Synthèse</button>
+            <button class="btn-action-primary" onclick="openCmaDossier(CURRENT_VALUATION_ID)">Exporter le Dossier CMA</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 3: RADAR SECTEUR (TERRITORY) ================= -->
+    <div id="viewRadar" style="display: none;">
+      <!-- Territory Watch Content -->
+      <div id="radarContainer">
+        <!-- Rendered by existing radar logic -->
+      </div>
+    </div>
+
+    <!-- ================= VIEW 4: REVOIR MES MANDATS (MANDATE) ================= -->
+    <div id="viewMandates" style="display: none;">
+      <div class="section-title">Portefeuille & Mandats en Observation (Rive Gauche)</div>
+      <div id="mandatesListContainer" style="display:flex; flex-direction:column; gap:16px;">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ================= VIEW 5: ACTIVER MES ACHETEURS (MATCH) ================= -->
+    <div id="viewBuyers" style="display: none;">
+      <div class="section-title">Acheteurs Qualifiés & Correspondances de Marché</div>
+      <div id="buyersListContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Trust Footer -->
+    <footer class="app-trust-footer">
+      <div>Propulsé par <strong>Cytria</strong> pour <strong>Désormière & Vanhalst</strong></div>
+      <div class="trust-links">
+        <a href="#sources">Sources Notariées FAO</a>
+        <a href="#sitg">Cadastre SITG</a>
+        <a href="#confidentialite">Protection nLPD</a>
+      </div>
+    </footer>
 
   </main>
 
-  <!-- Modal for Neighbor Canvassing & Courtesy Letter -->
+  <!-- Modal for Neighbor Canvassing -->
   <div class="neighbor-modal-overlay" id="neighborModal">
     <div class="neighbor-modal-window">
       <div class="neighbor-modal-header">
         <div>
-          <h3>Prospection Immédiate &laquo; Effet Voisin &raquo;</h3>
-          <p id="neighborModalSubtitle">Chargement des parcelles voisines...</p>
+          <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:22px; font-weight:700;">
+            Prospection Immédiate &laquo; Effet Voisin &raquo;
+          </h3>
+          <p id="neighborModalSubtitle" style="font-size:12px; color:var(--dv-light-teal); margin-top:2px;">
+            Chargement des parcelles...
+          </p>
         </div>
         <button class="neighbor-modal-close" onclick="closeNeighborModal()">&times;</button>
       </div>
 
       <div class="neighbor-modal-body">
-        <!-- Target Neighbors -->
         <div class="target-neighbors-card">
-          <h4>👥 5 Parcelles Voisines Cibles à Démarcher</h4>
+          <h4 style="font-size:13px; font-weight:800; color:var(--dv-deep-green); margin-bottom:8px;">
+            👥 5 Parcelles Voisines Cibles à Démarcher
+          </h4>
           <table class="neighbors-table">
             <thead>
               <tr>
@@ -1060,18 +1250,15 @@
                 <th>Zone</th>
               </tr>
             </thead>
-            <tbody id="neighborTableBody">
-              <!-- Rendered by JS -->
-            </tbody>
+            <tbody id="neighborTableBody"></tbody>
           </table>
         </div>
 
-        <!-- Pre-formatted Letter -->
         <div class="target-neighbors-card">
-          <h4>✉️ Courrier de Voisinage Prêt à l'Envoi (En-tête Officiel D&V)</h4>
-          <div class="letter-paper-box" id="neighborLetterBox">
-            <!-- Rendered by JS -->
-          </div>
+          <h4 style="font-size:13px; font-weight:800; color:var(--dv-deep-green); margin-bottom:8px;">
+            ✉️ Courrier de Voisinage Prêt à l'Envoi (En-tête D&V)
+          </h4>
+          <div class="letter-paper-box" id="neighborLetterBox"></div>
         </div>
       </div>
 
@@ -1104,373 +1291,366 @@
   <div class="toast" id="toast">Message</div>
 
   <script>
-    let CURRENT_TAB = 'sourcing';
-    let CURRENT_COMMUNE = 'all';
-    let CURRENT_SIGNAL = 'all';
-    let CURRENT_BROKER = 'all';
-    let CURRENT_RADAR_COMMUNE = 'all';
-
-    let ALL_OPPORTUNITIES = [];
-    let RADAR_DATA = null;
+    let CURRENT_PERSONA = 'Sandra Bleeckx Vanhalst';
+    let CURRENT_VALUATION_ID = 17169;
+    let STUDIO_DATA = null;
+    let PORTFOLIO_DATA = null;
     let ACTIVE_NEIGHBOR_DATA = null;
 
-    // Tab Navigation
-    function switchMainTab(tab) {
-      CURRENT_TAB = tab;
-      const sourcingView = document.getElementById('sourcingView');
-      const radarView = document.getElementById('radarView');
-      const tabSourcingBtn = document.getElementById('tabSourcingBtn');
-      const tabRadarBtn = document.getElementById('tabRadarBtn');
+    let ADJUSTMENTS = {
+      Etat: 0,
+      Vue: 5,
+      Calme: 5,
+      Energie: 0
+    };
 
-      if (tab === 'sourcing') {
-        sourcingView.style.display = 'block';
-        radarView.style.display = 'none';
-        tabSourcingBtn.classList.add('active');
-        tabRadarBtn.classList.remove('active');
-      } else {
-        sourcingView.style.display = 'none';
-        radarView.style.display = 'block';
-        tabSourcingBtn.classList.remove('active');
-        tabRadarBtn.classList.add('active');
-        if (!RADAR_DATA) {
-          loadRadarWatch();
+    // Navigation Switcher
+    function switchView(viewName) {
+      const views = ['hub', 'value', 'radar', 'mandates', 'buyers'];
+      views.forEach(v => {
+        const el = document.getElementById('view' + v.charAt(0).toUpperCase() + v.slice(1));
+        const btn = document.getElementById('tab' + v.charAt(0).toUpperCase() + v.slice(1) + 'Btn');
+        if (el) el.style.display = (v === viewName) ? 'block' : 'none';
+        if (btn) {
+          if (v === viewName) btn.classList.add('active');
+          else btn.classList.remove('active');
         }
+      });
+
+      if (viewName === 'value' && !STUDIO_DATA) {
+        loadValuationStudio(CURRENT_VALUATION_ID);
+      } else if (viewName === 'radar') {
+        loadRadarView();
+      } else if (viewName === 'mandates' && !PORTFOLIO_DATA) {
+        loadPortfolioView();
+      } else if (viewName === 'buyers' && !PORTFOLIO_DATA) {
+        loadPortfolioView();
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ================= SOURCING TAB LOGIC =================
-    async function loadOpportunities() {
-      const feedCount = document.getElementById('feedCount');
-      feedCount.textContent = 'Interrogation du cadastre et des mutations officielles...';
+    // Persona Selector
+    function selectPersona(name) {
+      CURRENT_PERSONA = name;
+      const firstName = name.split(' ')[0];
+      document.getElementById('greetingTitle').textContent = `Bonjour, ${firstName}`;
       
+      const btnSandra = document.getElementById('personaBtnSandra');
+      const btnAdrien = document.getElementById('personaBtnAdrien');
+      if (name.includes('Sandra')) {
+        btnSandra.classList.add('active');
+        btnAdrien.classList.remove('active');
+      } else {
+        btnAdrien.classList.add('active');
+        btnSandra.classList.remove('active');
+      }
+
+      showToast(`Espace commuté sur : ${name}`);
+      if (PORTFOLIO_DATA) renderMandatesAndBuyers();
+    }
+
+    // ================= 3-STEP VALUATION STUDIO (IMAGE 2) =================
+    async function loadValuationStudio(id) {
       try {
-        const url = `/api/dv/opportunities?commune=${encodeURIComponent(CURRENT_COMMUNE)}&signal=${encodeURIComponent(CURRENT_SIGNAL)}&limit=100`;
-        const res = await fetch(url);
+        CURRENT_VALUATION_ID = id;
+        const res = await fetch(`/api/dv/valuation-studio?id=${id}`);
         const data = await res.json();
-        
         if (data.status === 'ok') {
-          ALL_OPPORTUNITIES = data.data;
-          document.getElementById('sourcingBadge').textContent = ALL_OPPORTUNITIES.length;
-          updateKPIs(data.stats);
-          renderCards();
-        } else {
-          feedCount.textContent = 'Erreur lors du chargement des opportunités.';
+          STUDIO_DATA = data.data;
+          renderStudio();
         }
       } catch (err) {
         console.error(err);
-        feedCount.textContent = 'Serveur non joignable. Vérifiez la connexion locale.';
       }
     }
 
-    function updateKPIs(stats) {
-      if (!stats) return;
-      document.getElementById('kpiTotal').textContent = stats.total_territory_leads || '0';
-      document.getElementById('kpiHoiries').textContent = stats.hoiries_count || '0';
-      document.getElementById('kpiDivisions').textContent = stats.divisions_count || '0';
-      document.getElementById('kpiPrestige').textContent = stats.prestige_count || '0';
-    }
+    function renderStudio() {
+      if (!STUDIO_DATA) return;
+      const t = STUDIO_DATA.target;
+      document.getElementById('heroAddress').textContent = t.address;
+      document.getElementById('heroCommune').textContent = `${t.commune} • Parcelle ${t.parcel_number}`;
+      document.getElementById('specCommune').textContent = t.commune;
+      document.getElementById('specParcel').textContent = t.parcel_number;
+      document.getElementById('specSurface').textContent = `${t.surface_effective_m2} m²`;
+      document.getElementById('specZone').textContent = t.zone_label;
+      document.getElementById('specYear').textContent = t.building_year;
+      document.getElementById('specSitgLink').href = t.aerial_context_url;
 
-    function renderCards() {
-      const container = document.getElementById('cardsList');
-      const feedCount = document.getElementById('feedCount');
-
-      let list = ALL_OPPORTUNITIES;
-      if (CURRENT_BROKER !== 'all') {
-        list = list.filter(o => o.target_broker === CURRENT_BROKER);
-      }
-
-      feedCount.textContent = `${list.length} opportunité(s) qualifiée(s) sur la Rive Gauche`;
-      container.innerHTML = '';
-
-      if (list.length === 0) {
-        container.innerHTML = `
-          <div style="background:#FFF; padding:40px; text-align:center; border-radius:8px; border:1px solid var(--dv-border); color:var(--dv-text-muted);">
-            <div style="font-size:32px; margin-bottom:10px;">🔍</div>
-            <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:22px; color:var(--dv-deep-green);">Aucune opportunité ne correspond à ces filtres</h3>
-            <p style="font-size:13px; margin-top:6px;">Essayez d'élargir la sélection géographique ou de réinitialiser le signal.</p>
+      // Render Comparables (Step 01)
+      const compsContainer = document.getElementById('miniCompsContainer');
+      compsContainer.innerHTML = '';
+      STUDIO_DATA.comparables.forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'mini-comp-card';
+        item.innerHTML = `
+          <div class="mini-comp-top">
+            <span>${c.address} (${c.commune})</span>
+            <span style="color:var(--dv-teal);">${c.price_display}</span>
+          </div>
+          <div class="mini-comp-details">
+            ${c.surface_m2} m² &bull; ${c.price_m2_display} &bull; Paru le ${c.date} &bull; Similitude ${c.similarity_score}%
           </div>
         `;
+        compsContainer.appendChild(item);
+      });
+
+      calculateDynamicValuation();
+    }
+
+    function updateAdjustment(type, val) {
+      ADJUSTMENTS[type] = parseFloat(val);
+      const sign = val > 0 ? '+' : '';
+      document.getElementById(`val${type}`).textContent = `${sign}${val}%`;
+      calculateDynamicValuation();
+    }
+
+    function calculateDynamicValuation() {
+      if (!STUDIO_DATA) return;
+      const base = STUDIO_DATA.valuation_baseline.base_price_chf;
+      const totalAdjPct = (ADJUSTMENTS.Etat + ADJUSTMENTS.Vue + ADJUSTMENTS.Calme + ADJUSTMENTS.Energie) / 100;
+      const adjustedPrice = Math.round(base * (1 + totalAdjPct));
+      const lowPrice = Math.round(adjustedPrice * 0.94);
+      const highPrice = Math.round(adjustedPrice * 1.06);
+      const surf = STUDIO_DATA.target.surface_effective_m2 || 200;
+      const pM2 = Math.round(adjustedPrice / surf);
+
+      document.getElementById('estPriceDisplay').textContent = `CHF ${adjustedPrice.toLocaleString('fr-CH')}`;
+      document.getElementById('estRangeDisplay').textContent = `Fourchette : CHF ${lowPrice.toLocaleString('fr-CH')} – ${highPrice.toLocaleString('fr-CH')}`;
+      document.getElementById('estM2Display').textContent = `Soit ~CHF ${pM2.toLocaleString('fr-CH')} / m²`;
+    }
+
+    // Autocomplete Search
+    let searchTimeout = null;
+    function handleAddressSearch(val) {
+      clearTimeout(searchTimeout);
+      const dropdown = document.getElementById('searchDropdown');
+      if (!val || val.length < 2) {
+        dropdown.style.display = 'none';
         return;
       }
 
-      list.forEach(o => {
-        const card = document.createElement('article');
-        card.className = 'opp-card';
+      searchTimeout = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/dv/search?q=${encodeURIComponent(val)}`);
+          const data = await res.json();
+          if (data.status === 'ok' && data.data.length > 0) {
+            dropdown.innerHTML = '';
+            data.data.forEach(r => {
+              const item = document.createElement('div');
+              item.className = 'autocomplete-item';
+              item.innerHTML = `
+                <div>
+                  <strong>${r.address}</strong>
+                  <div style="font-size:11px; color:#64748B;">${r.commune} &bull; Parcelle ${r.parcel_number}</div>
+                </div>
+                <div style="font-weight:700; color:var(--dv-teal); font-size:12px;">${r.price_display}</div>
+              `;
+              item.onclick = () => {
+                dropdown.style.display = 'none';
+                document.getElementById('studioAddressInput').value = `${r.address}, ${r.commune}`;
+                loadValuationStudio(r.id);
+              };
+              dropdown.appendChild(item);
+            });
+            dropdown.style.display = 'block';
+          } else {
+            dropdown.style.display = 'none';
+          }
+        } catch (e) {}
+      }, 250);
+    }
 
-        const signalsHtml = o.signals.map(s => `
-          <span class="signal-tag" title="${s.description}">
-            ${s.icon} ${s.label}
-          </span>
-        `).join('');
+    function resetStudioSearch() {
+      document.getElementById('studioAddressInput').value = '';
+      document.getElementById('studioAddressInput').focus();
+    }
 
+    // ================= PORTFOLIO & BUYERS (MANDATE & MATCH) =================
+    async function loadPortfolioView() {
+      try {
+        const res = await fetch('/api/dv/portfolio');
+        const data = await res.json();
+        if (data.status === 'ok') {
+          PORTFOLIO_DATA = data;
+          document.getElementById('pulseSales').textContent = data.weekly_pulse.sales_this_week;
+          document.getElementById('pulseCompetitors').textContent = data.weekly_pulse.active_competitor_listings;
+          document.getElementById('pulseStale').textContent = data.weekly_pulse.stale_reviews_recommended;
+          document.getElementById('pulseOpps').textContent = data.weekly_pulse.exclusive_opps;
+          renderMandatesAndBuyers();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderMandatesAndBuyers() {
+      if (!PORTFOLIO_DATA) return;
+
+      // 1. Mandates
+      const mandatesContainer = document.getElementById('mandatesListContainer');
+      mandatesContainer.innerHTML = '';
+      PORTFOLIO_DATA.mandates.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'weekly-pulse-card';
+        card.style.marginBottom = '0';
         card.innerHTML = `
-          <div class="opp-left">
-            <div class="opp-badges">
-              <span class="score-badge" style="background:${o.priority_color}">
-                ★ Score ${o.opportunity_score} &bull; ${o.priority_label}
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <span style="font-size:11px; font-weight:800; color:${m.status_color}; background:rgba(158,64,0,0.1); padding:3px 8px; border-radius:4px;">
+                ${m.status} (~${m.days_on_market} jours)
               </span>
-              <span class="broker-tag">
-                Spécialiste : ${o.target_broker.split(' ')[0]}
-              </span>
-              ${signalsHtml}
+              <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:22px; color:var(--dv-deep-green); margin-top:6px;">
+                ${m.address} (${m.commune})
+              </h3>
+              <div style="font-size:12px; color:var(--dv-text-muted);">Courtier référent : <strong>${m.broker}</strong></div>
             </div>
-
-            <div class="opp-address">
-              ${o.address}
-            </div>
-
-            <div class="opp-details">
-              <div>Commune : <strong>${o.commune}</strong></div>
-              <div>Parcelle : <strong>${o.parcel_number}</strong></div>
-              <div>Surface : <strong>${o.surface_m2 ? o.surface_m2 + ' m²' : 'Non précisée'}</strong></div>
-              <div>Affectation : <strong>Zone ${o.zone_code || '5 (Villas)'}</strong></div>
-              <div>Date Avis : <strong>${o.notice_date}</strong></div>
-            </div>
-
-            <div style="font-size:12px; color:#475569;">
-              Propriétaire(s) cédant(s) : <strong>${o.seller_masked}</strong> &bull; Acquéreur(s) / Héritier(s) : <strong>${o.buyer_masked}</strong>
-            </div>
-
-            <div class="opp-pitch-box">
-              <strong>💡 Angle d'Approche Recommandé :</strong> ${o.recommended_pitch}
+            <div style="text-align:right;">
+              <div style="font-size:20px; font-weight:800; color:var(--dv-teal);">${m.current_price_display}</div>
+              <div style="font-size:11px; color:#64748B;">Ajustement recommandé : <strong>${m.suggested_adjustment_pct}%</strong></div>
             </div>
           </div>
-
-          <div class="opp-right">
-            <div class="opp-price-box">
-              <div class="opp-est-label">Estimation Marché Référentiel</div>
-              <div class="opp-price-val">CHF ${Number(o.estimated_market_value_chf).toLocaleString('fr-CH')}</div>
-              <div style="font-size:11px; color:#64748B;">Médiane communale : CHF ${Number(o.estimated_m2_chf).toLocaleString('fr-CH')}/m²</div>
-            </div>
-
-            <div class="opp-actions">
-              <button class="btn-action-primary" onclick="openCmaDossier(${o.id})">
-                📄 Fiche Mandat CMA 1-Clic
-              </button>
-              ${o.sitg_map_url ? `
-                <a class="btn-action-secondary" href="${o.sitg_map_url}" target="_blank" rel="noopener">
-                  🗺️ Plan Cadastral SITG
-                </a>
-              ` : `
-                <a class="btn-action-secondary" href="https://ge.ch/sitg/sitg_catalog/sitg_donnees?keyword=${encodeURIComponent(o.address)}" target="_blank" rel="noopener">
-                  🗺️ Consulter SITG
-                </a>
-              `}
-              <button class="btn-action-secondary" onclick="copyApproachPitch(${o.id})">
-                💬 Copier l'Angle d'Approche
-              </button>
-            </div>
+          <div style="background:var(--dv-sand); border-left:3px solid var(--dv-teal); padding:10px 14px; font-size:12px; margin-top:12px; border-radius:0 4px 4px 0;">
+            <strong>💡 Recommandation Stratégique D&V :</strong> ${m.recommended_action}
           </div>
         `;
+        mandatesContainer.appendChild(card);
+      });
 
-        container.appendChild(card);
+      // 2. Buyers
+      const buyersContainer = document.getElementById('buyersListContainer');
+      buyersContainer.innerHTML = '';
+      PORTFOLIO_DATA.buyers.forEach(b => {
+        const card = document.createElement('div');
+        card.className = 'weekly-pulse-card';
+        card.style.marginBottom = '0';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <span style="font-size:11px; font-weight:800; color:var(--dv-deep-green); background:rgba(0,147,157,0.1); padding:3px 8px; border-radius:4px;">
+                ${b.client_name}
+              </span>
+              <h4 style="font-size:14px; font-weight:700; color:var(--dv-deep-green); margin-top:8px;">
+                Budget : ${b.budget_display}
+              </h4>
+              <div style="font-size:12px; color:var(--dv-text-muted); margin-top:2px;">
+                Secteurs : ${b.target_communes.join(', ')}
+              </div>
+            </div>
+            <span style="font-size:11px; font-weight:700; color:var(--dv-teal); background:var(--dv-sand); padding:4px 8px; border-radius:12px;">
+              ${b.match_count} opportunités
+            </span>
+          </div>
+          <div style="font-size:12px; color:#475569; margin-top:10px;">
+            <strong>Critères :</strong> ${b.criteria}
+          </div>
+          <div style="background:rgba(0,147,157,0.06); padding:8px 12px; border-radius:4px; font-size:11px; margin-top:10px;">
+            <strong>🎯 Meilleure Correspondance :</strong> ${b.top_match}
+          </div>
+        `;
+        buyersContainer.appendChild(card);
       });
     }
 
-    function setCommune(commune, el) {
-      CURRENT_COMMUNE = commune;
-      document.querySelectorAll('#communePills .pill').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
-      loadOpportunities();
-    }
-
-    function setSignal(signal, el) {
-      CURRENT_SIGNAL = signal;
-      document.querySelectorAll('#signalPills .pill').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
-      loadOpportunities();
-    }
-
-    function filterByBroker(broker, el) {
-      CURRENT_BROKER = broker;
-      document.querySelectorAll('.persona-selector .persona-btn').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
-      renderCards();
-    }
-
-    // ================= RADAR WATCH & COMPETITOR LOGIC =================
-    async function loadRadarWatch() {
+    // ================= RADAR SECTEUR (TERRITORY) VIEW =================
+    async function loadRadarView() {
+      const container = document.getElementById('radarContainer');
+      container.innerHTML = '<div style="text-align:center; padding:40px;">Chargement du radar territorial...</div>';
       try {
-        const url = `/api/dv/watch?commune=${encodeURIComponent(CURRENT_RADAR_COMMUNE)}&limit=50`;
-        const res = await fetch(url);
+        const res = await fetch('/api/dv/watch?limit=40');
         const data = await res.json();
-
         if (data.status === 'ok') {
-          RADAR_DATA = data;
-          document.getElementById('radarBadge').textContent = data.stats.sales_count + data.stats.competitor_deals_count;
-          updateRadarKPIs(data.stats);
-          renderRadarStreams();
+          renderRadarInContainer(container, data);
         }
-      } catch (err) {
-        console.error(err);
-        showToast("Erreur lors du chargement du Radar de Concurrence.");
+      } catch (e) {
+        console.error(e);
       }
     }
 
-    function updateRadarKPIs(stats) {
-      if (!stats) return;
-      document.getElementById('kpiRadarSales').textContent = stats.sales_count || '0';
-      document.getElementById('kpiRadarCompetitor').textContent = stats.competitor_deals_count || '0';
-      document.getElementById('kpiRadarStale').textContent = stats.stale_mandates_count || '0';
-      document.getElementById('kpiRadarTopAgency').textContent = stats.top_active_competitor || 'Barnes Suisse SA';
-      document.getElementById('salesColBadge').textContent = stats.sales_count || '0';
-      document.getElementById('compColBadge').textContent = stats.competitor_deals_count || '0';
-    }
-
-    function renderRadarStreams() {
-      if (!RADAR_DATA) return;
-
-      // 1. Render Sales Stream (Left Column)
-      const salesContainer = document.getElementById('salesStreamList');
-      salesContainer.innerHTML = '';
-
-      if (RADAR_DATA.recent_sales.length === 0) {
-        salesContainer.innerHTML = `
-          <div style="background:#FFF; padding:24px; text-align:center; border-radius:6px; border:1px solid var(--dv-border); color:var(--dv-text-muted);">
-            Aucune vente récente enregistrée pour ce secteur.
-          </div>
-        `;
-      } else {
-        RADAR_DATA.recent_sales.forEach(s => {
-          const card = document.createElement('div');
-          card.className = 'radar-card';
-          card.innerHTML = `
-            <div class="radar-card-top">
-              <div>
-                <div class="radar-card-title">${s.address}</div>
-                <div style="font-size:12px; color:var(--dv-text-muted); font-weight:600; margin-top:2px;">
-                  ${s.commune} &bull; Parcelle ${s.parcel_number}
+    function renderRadarInContainer(container, data) {
+      container.innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+          <!-- Left Column: Sales -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:#FFF; padding:16px 20px; border-radius:8px; border:1px solid var(--dv-border); border-top:4px solid var(--dv-teal);">
+              <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; color:var(--dv-deep-green);">Dernières Ventes Enregistrées (FAO)</h3>
+              <p style="font-size:11px; color:var(--dv-text-muted);">Déclencheur immédiat de prospection &laquo; Effet Voisin &raquo;</p>
+            </div>
+            ${data.recent_sales.map(s => `
+              <div style="background:#FFF; padding:18px 20px; border-radius:8px; border:1px solid var(--dv-border); box-shadow:var(--dv-shadow);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <div>
+                    <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:19px; color:var(--dv-deep-green);">${s.address}</h4>
+                    <div style="font-size:12px; color:#64748B;">${s.commune} &bull; Parcelle ${s.parcel_number}</div>
+                  </div>
+                  <div style="font-size:18px; font-weight:800; color:var(--dv-teal);">${s.price_display}</div>
+                </div>
+                <div style="font-size:11px; color:#475569; margin-top:8px;">
+                  Surface : <strong>${s.surface_m2 ? s.surface_m2 + ' m²' : 'Terrain'}</strong> &bull; Parution : <strong>${s.notice_date}</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+                  <span style="font-size:11px; font-weight:700; color:var(--dv-teal);">✓ Acte Notarié Confirmé</span>
+                  <button class="btn-action-primary" onclick="openNeighborModal(${s.id})">
+                    👥 5 Voisins Cibles & Courrier
+                  </button>
                 </div>
               </div>
-              <div class="radar-card-price">${s.price_display}</div>
-            </div>
-
-            <div class="radar-meta">
-              <div>Surface : <strong>${s.surface_m2 ? s.surface_m2 + ' m²' : 'Terrain'}</strong></div>
-              <div>Prix/m² : <strong>CHF ${Number(s.price_m2).toLocaleString('fr-CH')}</strong></div>
-              <div>Parution FAO : <strong>${s.notice_date}</strong></div>
-            </div>
-
-            <div class="radar-strategy-box">
-              <strong>💡 Opportunité Effet Voisin :</strong> Une transaction officielle à ce niveau de prix valorise immédiatement les propriétés contiguës.
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-              <span class="signal-tag" style="background:rgba(0,147,157,0.1); border-color:var(--dv-teal); color:var(--dv-deep-green);">
-                ✓ Vente Conclue RF
-              </span>
-              <button class="btn-action-primary" onclick="openNeighborModal(${s.id})">
-                👥 5 Voisins Cibles & Courrier
-              </button>
-            </div>
-          `;
-          salesContainer.appendChild(card);
-        });
-      }
-
-      // 2. Render Competitor Mandates Stream (Right Column)
-      const compContainer = document.getElementById('competitorStreamList');
-      compContainer.innerHTML = '';
-
-      if (RADAR_DATA.competitor_mandates.length === 0) {
-        compContainer.innerHTML = `
-          <div style="background:#FFF; padding:24px; text-align:center; border-radius:6px; border:1px solid var(--dv-border); color:var(--dv-text-muted);">
-            Aucun mandat concurrent détecté pour ce secteur.
+            `).join('')}
           </div>
-        `;
-      } else {
-        RADAR_DATA.competitor_mandates.forEach(m => {
-          const card = document.createElement('div');
-          card.className = 'radar-card';
-          card.innerHTML = `
-            <div class="radar-card-top">
-              <div>
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="competitor-badge">${m.agency_name}</span>
-                  ${m.is_stale ? `<span class="stale-badge">${m.status_badge}</span>` : `<span class="signal-tag">${m.status_badge}</span>`}
+
+          <!-- Right Column: Competitor -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:#FFF; padding:16px 20px; border-radius:8px; border:1px solid var(--dv-border); border-top:4px solid var(--dv-brown-warm);">
+              <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; color:var(--dv-deep-green);">Mandats Concurrence & Souffrance</h3>
+              <p style="font-size:11px; color:var(--dv-text-muted);">Opportunités de reprise de mandats stagnants</p>
+            </div>
+            ${data.competitor_mandates.map(m => `
+              <div style="background:#FFF; padding:18px 20px; border-radius:8px; border:1px solid var(--dv-border); box-shadow:var(--dv-shadow);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <div>
+                    <span style="font-size:10px; font-weight:800; background:rgba(0,74,79,0.08); padding:3px 7px; border-radius:4px; color:var(--dv-deep-green);">
+                      ${m.agency_name}
+                    </span>
+                    <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:19px; color:var(--dv-deep-green); margin-top:4px;">${m.address}</h4>
+                    <div style="font-size:12px; color:#64748B;">${m.commune} &bull; ${m.typology}</div>
+                  </div>
+                  <div style="font-size:18px; font-weight:800; color:var(--dv-deep-green);">${m.price_display}</div>
                 </div>
-                <div class="radar-card-title">${m.address}</div>
-                <div style="font-size:12px; color:var(--dv-text-muted); font-weight:600; margin-top:2px;">
-                  ${m.commune} &bull; Courtier : ${m.agent_name}
+                <div style="background:${m.is_stale ? 'rgba(158,64,0,0.08)' : 'rgba(0,147,157,0.05)'}; padding:10px 12px; border-radius:4px; font-size:11px; margin-top:10px;">
+                  <strong>🎯 Diagnostic :</strong> ${m.strategic_action}
                 </div>
               </div>
-              <div class="radar-card-price" style="color:var(--dv-deep-green);">${m.price_display}</div>
-            </div>
-
-            <div class="radar-meta">
-              <div>Typologie : <strong>${m.typology}</strong></div>
-              <div>Date Mandat : <strong>${m.date}</strong></div>
-            </div>
-
-            <div class="radar-strategy-box ${m.is_stale ? 'stale' : ''}">
-              <strong>🎯 Diagnostic Stratégique :</strong> ${m.strategic_action}
-            </div>
-
-            <div style="display:flex; justify-content:flex-end; margin-top:4px;">
-              <button class="btn-action-secondary" onclick="prepareStaleMandatePitch('${m.address.replace(/'/g, "\\'")}', '${m.commune}', '${m.price_display}', '${m.agency_name}')">
-                🎯 Préparer Reprise de Mandat
-              </button>
-            </div>
-          `;
-          compContainer.appendChild(card);
-        });
-      }
+            `).join('')}
+          </div>
+        </div>
+      `;
     }
 
-    function setRadarCommune(commune, el) {
-      CURRENT_RADAR_COMMUNE = commune;
-      document.querySelectorAll('#radarCommunePills .pill').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
-      loadRadarWatch();
-    }
-
-    // ================= NEIGHBOR EFFECT MODAL =================
+    // ================= NEIGHBOR MODAL =================
     async function openNeighborModal(saleId) {
       const modal = document.getElementById('neighborModal');
-      const subtitle = document.getElementById('neighborModalSubtitle');
-      const tableBody = document.getElementById('neighborTableBody');
-      const letterBox = document.getElementById('neighborLetterBox');
-
-      subtitle.textContent = 'Calcul cadastral des parcelles adjacentes en cours...';
-      tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Recherche des voisins...</td></tr>';
-      letterBox.textContent = 'Génération de la lettre personnalisée...';
       modal.style.display = 'flex';
-
       try {
         const res = await fetch(`/api/dv/neighbors?id=${saleId}`);
         const data = await res.json();
-
         if (data.status === 'ok') {
           ACTIVE_NEIGHBOR_DATA = data.data;
-          const s = ACTIVE_NEIGHBOR_DATA.sale;
-          subtitle.textContent = `Vente RF récente : ${s.address}, ${s.commune} — ${s.price_display} (${s.price_m2} CHF/m²)`;
-
-          // Populate table
-          tableBody.innerHTML = '';
-          if (ACTIVE_NEIGHBOR_DATA.neighbors.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Aucune parcelle voisine répertoriée dans le même périmètre immédiat.</td></tr>';
-          } else {
-            ACTIVE_NEIGHBOR_DATA.neighbors.forEach(n => {
-              const tr = document.createElement('tr');
-              tr.innerHTML = `
-                <td><strong>${n.parcel_number}</strong></td>
-                <td>${n.address}</td>
-                <td>${n.surface_m2 ? n.surface_m2 + ' m²' : 'Maison'}</td>
-                <td>Zone ${n.zone_code || '5'}</td>
-              `;
-              tableBody.appendChild(tr);
-            });
-          }
-
-          // Populate letter
-          letterBox.textContent = ACTIVE_NEIGHBOR_DATA.courtesy_letter_text;
-        } else {
-          subtitle.textContent = 'Erreur lors de la récupération des données voisines.';
+          const s = data.data.sale;
+          document.getElementById('neighborModalSubtitle').textContent = `${s.address} (${s.commune}) — ${s.price_display}`;
+          const tbody = document.getElementById('neighborTableBody');
+          tbody.innerHTML = '';
+          data.data.neighbors.forEach(n => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><strong>${n.parcel_number}</strong></td>
+              <td>${n.address}</td>
+              <td>${n.surface_m2 ? n.surface_m2 + ' m²' : 'Villa'}</td>
+              <td>Zone ${n.zone_code || '5'}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+          document.getElementById('neighborLetterBox').textContent = data.data.courtesy_letter_text;
         }
-      } catch (err) {
-        console.error(err);
-        subtitle.textContent = 'Erreur réseau.';
-      }
+      } catch (e) {}
     }
 
     function closeNeighborModal() {
@@ -1487,51 +1667,26 @@
 
     function printNeighborLetter() {
       if (!ACTIVE_NEIGHBOR_DATA) return;
-      const printWin = window.open('', '', 'width=800,height=900');
-      printWin.document.write(`
+      const win = window.open('', '', 'width=800,height=900');
+      win.document.write(`
         <html>
         <head>
           <title>Courrier Voisinage — Désormière & Vanhalst</title>
-          <style>
-            body { font-family: 'Georgia', serif; padding: 50px 60px; line-height: 1.6; color: #111; }
-            pre { white-space: pre-wrap; font-family: inherit; font-size: 14px; }
-          </style>
+          <style>body { font-family: 'Georgia', serif; padding: 50px 60px; line-height: 1.6; color: #111; } pre { white-space: pre-wrap; font-family: inherit; font-size: 14px; }</style>
         </head>
-        <body>
-          <pre>${ACTIVE_NEIGHBOR_DATA.courtesy_letter_text}</pre>
-        </body>
+        <body><pre>${ACTIVE_NEIGHBOR_DATA.courtesy_letter_text}</pre></body>
         </html>
       `);
-      printWin.document.close();
-      printWin.focus();
-      setTimeout(() => {
-        printWin.print();
-        printWin.close();
-      }, 300);
+      win.document.close();
+      win.focus();
+      setTimeout(() => { win.print(); win.close(); }, 300);
     }
 
-    function prepareStaleMandatePitch(address, commune, price, agency) {
-      const pitch = `[Reprise de Mandat Exclusif — Désormière & Vanhalst]
-Bien ciblé : ${address} (${commune})
-Affiché à : ${price}
-Agence actuelle : ${agency}
-Constat : Mandat en souffrance (> 75 jours). Absence de closing ou spread de surévaluation initial.
-Stratégie de reconquête D&V :
-1. Prise de contact directe et discrète avec le propriétaire.
-2. Remise de l'Avis de Valeur Vénale Référentiel D&V appuyé sur les transactions notariales réelles de la Rive Gauche.
-3. Proposition de mandat de vente exclusif de 90 jours avec plan de marketing ciblé Suisse Romande & International.
-Contact : Sandra Bleeckx Vanhalst & Adrien Désormière`;
-
-      navigator.clipboard.writeText(pitch).then(() => {
-        showToast(`✓ Fiche de stratégie de reprise (${agency}) copiée pour Sandra & Adrien !`);
-      });
-    }
-
-    // ================= CMA MODAL & UTILS =================
+    // ================= CMA PREVIEW & UTILS =================
     function openCmaDossier(id) {
       const modal = document.getElementById('cmaModal');
       const frame = document.getElementById('cmaFrame');
-      frame.src = `/api/dv/cma?id=${id}`;
+      frame.src = `/api/dv/cma?id=${id || CURRENT_VALUATION_ID}`;
       modal.style.display = 'flex';
     }
 
@@ -1542,33 +1697,28 @@ Contact : Sandra Bleeckx Vanhalst & Adrien Désormière`;
       modal.style.display = 'none';
     }
 
-    function copyApproachPitch(id) {
-      const opp = ALL_OPPORTUNITIES.find(o => o.id === id);
-      if (!opp) return;
-
-      const pitchText = `[Désormière & Vanhalst - Opportunité ${opp.commune}]
-Adresse : ${opp.address} (Parcelle ${opp.parcel_number})
-Estimation indicative : CHF ${Number(opp.estimated_market_value_chf).toLocaleString('fr-CH')}
-Recommandation : ${opp.recommended_pitch}
-Contact : ${opp.target_broker} (Désormière & Vanhalst Rive Gauche)`;
-
-      navigator.clipboard.writeText(pitchText).then(() => {
-        showToast("✓ Angle d'approche et données foncières copiés dans le presse-papier !");
-      });
+    function printValuationSummary() {
+      window.print();
     }
 
     function showToast(msg) {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
       toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3500);
+      setTimeout(() => { toast.classList.remove('show'); }, 3500);
     }
+
+    // Close autocomplete on click outside
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('searchDropdown');
+      if (dropdown && !e.target.closest('.search-input-wrap')) {
+        dropdown.style.display = 'none';
+      }
+    });
 
     // Initial Load
     window.addEventListener('DOMContentLoaded', () => {
-      loadOpportunities();
+      loadPortfolioView();
     });
   </script>
 </body>

@@ -145,26 +145,61 @@ describe("Désormière & Vanhalst Real Estate Intelligence Service", () => {
     expect(serverCode.includes("/api/dv/cma")).toBe(true);
     expect(serverCode.includes("/api/dv/watch")).toBe(true);
     expect(serverCode.includes("/api/dv/neighbors")).toBe(true);
+    expect(serverCode.includes("/api/dv/search")).toBe(true);
+    expect(serverCode.includes("/api/dv/valuation-studio")).toBe(true);
+    expect(serverCode.includes("/api/dv/portfolio")).toBe(true);
   });
 
-  it("should verify public/dv/index.html includes dual-tab navigation and neighbor canvassing elements", () => {
+  it("should verify property search, valuation studio, and agency portfolio review", () => {
+    // 1. Search properties
+    const searchRes = service.searchProperties("Veyrier", 5);
+    expect(searchRes.length).toBeGreaterThan(0);
+    expect(searchRes[0].address).toBeDefined();
+
+    // 2. Valuation studio
+    const studio = service.getValuationStudio(searchRes[0].id);
+    expect(studio).toBeDefined();
+    expect(studio.target.address).toBeDefined();
+    expect(studio.comparables.length).toBeGreaterThanOrEqual(3);
+    expect(studio.valuation_baseline.base_price_chf).toBeGreaterThan(0);
+    expect(studio.expert_checklist.length).toBe(4);
+
+    // 3. Portfolio & Buyers
+    const portfolio = service.getAgencyPortfolioReview();
+    expect(portfolio.mandates.length).toBeGreaterThan(0);
+    expect(portfolio.buyers.length).toBeGreaterThan(0);
+    expect(portfolio.weekly_pulse.sales_this_week).toBeGreaterThan(0);
+  });
+
+  it("should verify public/dv/index.html includes Executive Hub, 3-Step Valuation Studio, and actions", () => {
     const indexPath = path.resolve("public/dv/index.html");
     const html = fs.readFileSync(indexPath, "utf8");
 
-    // Dual-tab navigation
-    expect(html.includes("sourcingView")).toBe(true);
-    expect(html.includes("radarView")).toBe(true);
-    expect(html.includes("tabSourcingBtn")).toBe(true);
-    expect(html.includes("tabRadarBtn")).toBe(true);
-    expect(html.includes("switchMainTab")).toBe(true);
+    // Views & navigation
+    expect(html.includes("viewHub")).toBe(true);
+    expect(html.includes("viewValue")).toBe(true);
+    expect(html.includes("viewRadar")).toBe(true);
+    expect(html.includes("viewMandates")).toBe(true);
+    expect(html.includes("viewBuyers")).toBe(true);
+    expect(html.includes("switchView")).toBe(true);
+
+    // Executive Greeting & 4 Tiles
+    expect(html.includes("greetingTitle")).toBe(true);
+    expect(html.includes("Bonjour, Sandra")).toBe(true);
+    expect(html.includes("Préparer une estimation")).toBe(true);
+    expect(html.includes("Analyser mon secteur")).toBe(true);
+    expect(html.includes("Revoir mes mandats")).toBe(true);
+    expect(html.includes("Activer mes acheteurs")).toBe(true);
+
+    // Valuation Studio
+    expect(html.includes("studioAddressInput")).toBe(true);
+    expect(html.includes("calculateDynamicValuation")).toBe(true);
+    expect(html.includes("updateAdjustment")).toBe(true);
 
     // Neighbor modal & actions
     expect(html.includes("neighborModal")).toBe(true);
     expect(html.includes("openNeighborModal")).toBe(true);
     expect(html.includes("copyNeighborLetter")).toBe(true);
     expect(html.includes("printNeighborLetter")).toBe(true);
-
-    // Competitor recovery
-    expect(html.includes("prepareStaleMandatePitch")).toBe(true);
   });
 });
