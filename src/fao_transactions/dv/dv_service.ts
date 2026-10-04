@@ -225,7 +225,7 @@ export class DVIntelligenceService {
             code: "HOIRIE",
             label: "Succession / Hoirie (art. 602 CC)",
             description: "Indivision successorale nécessitant un partage des liquidités ou un consensus difficile.",
-            icon: "🏛️"
+            icon: "hoirie"
           });
         }
 
@@ -235,7 +235,7 @@ export class DVIntelligenceService {
             code: "DIVISION",
             label: `Parcelle ${surf} m² en Zone 5`,
             description: "Potentiel de détachement de parcelle ou de surélévation/construction d'une 2e villa (IUS 0.20-0.40).",
-            icon: "📐"
+            icon: "division"
           });
         }
 
@@ -245,7 +245,7 @@ export class DVIntelligenceService {
             code: "VINTAGE",
             label: "Détention Longue (> 20 ans)",
             description: "Propriétaire historique bénéficiant d'une exonération d'impôt sur les gains immobiliers (LIPP art. 82).",
-            icon: "⏳"
+            icon: "vintage"
           });
         }
 
@@ -255,7 +255,7 @@ export class DVIntelligenceService {
             code: "PRESTIGE",
             label: "Segment Prestige DV Signature",
             description: "Emplacement d'élite sur la Rive Gauche bénéficiant d'une prime de valorisation exclusive.",
-            icon: "⭐"
+            icon: "prestige"
           });
         }
 
@@ -730,7 +730,7 @@ export class DVIntelligenceService {
         let strategic_action = "Surveiller l'évolution du prix et l'activité marketing.";
 
         if (isStale) {
-          status_badge = `⚠️ En Souffrance (~${delay}j)`;
+          status_badge = `En Souffrance (~${delay}j)`;
           status_color = "#9E4000"; // Brun chaud / Alerte
           strategic_action = "Propriétaire potentiellement impatient. Préparer un dossier D&V de reprise de mandat avec valorisation réajustée.";
         } else if (c.reconciliation_level === "CONFIRMED_FAO") {

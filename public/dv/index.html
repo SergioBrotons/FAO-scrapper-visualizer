@@ -38,6 +38,18 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Minimalist SVG Icon Utility */
+    .mini-icon {
+      display: inline-block;
+      vertical-align: -2px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
     /* Top Navigation Header */
     .top-navbar {
       background: var(--dv-deep-green);
@@ -179,20 +191,6 @@
       background: rgba(0, 147, 157, 0.06);
     }
 
-    .tab-badge {
-      background: rgba(0, 147, 157, 0.12);
-      color: var(--dv-deep-green);
-      font-size: 11px;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 12px;
-    }
-
-    .nav-tab.active .tab-badge {
-      background: var(--dv-teal);
-      color: #FFFFFF;
-    }
-
     .territory-tagline {
       font-size: 12px;
       color: var(--dv-text-muted);
@@ -266,14 +264,7 @@
       box-shadow: 0 10px 30px rgba(0, 74, 79, 0.12);
     }
 
-    .action-tile.active {
-      border: 2px solid var(--dv-teal);
-      background: #FFFFFF;
-      box-shadow: 0 4px 20px rgba(0, 147, 157, 0.15);
-    }
-
     .tile-icon {
-      font-size: 26px;
       background: rgba(0, 147, 157, 0.08);
       width: 48px;
       height: 48px;
@@ -282,6 +273,7 @@
       justify-content: center;
       border-radius: 8px;
       flex-shrink: 0;
+      color: var(--dv-teal);
     }
 
     .tile-texts h3 {
@@ -326,8 +318,11 @@
       font-weight: 700;
       color: var(--dv-teal);
       background: rgba(0, 147, 157, 0.1);
-      padding: 3px 10px;
+      padding: 4px 10px;
       border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .pulse-sub {
@@ -431,7 +426,9 @@
       position: absolute;
       left: 14px;
       top: 13px;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--dv-teal);
     }
 
@@ -700,6 +697,10 @@
       text-align: center;
       transition: all 0.2s ease;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
     }
 
     .btn-action-primary:hover {
@@ -720,6 +721,10 @@
       text-align: center;
       transition: all 0.2s ease;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
     }
 
     .btn-action-secondary:hover {
@@ -835,7 +840,7 @@
       align-items: center;
     }
 
-    /* Footer Trust Signals (Image 1 bottom) */
+    /* Footer Trust Signals */
     .app-trust-footer {
       max-width: 1240px;
       margin: 40px auto 0;
@@ -927,19 +932,24 @@
     <div class="sub-navbar-content">
       <div class="nav-tabs">
         <button class="nav-tab active" id="tabHubBtn" onclick="switchView('hub')">
-          <span>🏠 Accueil & Hub</span>
+          <svg class="mini-icon" width="15" height="15" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Accueil & Hub</span>
         </button>
         <button class="nav-tab" id="tabValueBtn" onclick="switchView('value')">
-          <span>📄 Préparer une estimation (VALUE)</span>
+          <svg class="mini-icon" width="15" height="15" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          <span>Préparer une estimation (VALUE)</span>
         </button>
         <button class="nav-tab" id="tabRadarBtn" onclick="switchView('radar')">
-          <span>📖 Analyser mon secteur (TERRITORY)</span>
+          <svg class="mini-icon" width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span>Analyser mon secteur (TERRITORY)</span>
         </button>
         <button class="nav-tab" id="tabMandatesBtn" onclick="switchView('mandates')">
-          <span>🏷️ Revoir mes mandats (MANDATE)</span>
+          <svg class="mini-icon" width="15" height="15" viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+          <span>Revoir mes mandats (MANDATE)</span>
         </button>
         <button class="nav-tab" id="tabBuyersBtn" onclick="switchView('buyers')">
-          <span>👥 Activer mes acheteurs (MATCH)</span>
+          <svg class="mini-icon" width="15" height="15" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Activer mes acheteurs (MATCH)</span>
         </button>
       </div>
       <div class="territory-tagline">
@@ -964,7 +974,9 @@
       <div class="action-tiles-grid">
         <!-- Tile 1: Estimation -->
         <div class="action-tile" onclick="switchView('value')">
-          <div class="tile-icon">📄</div>
+          <div class="tile-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 17v-4"/><path d="M14 17v-2"/><path d="M6 17h12"/></svg>
+          </div>
           <div class="tile-texts">
             <h3>Préparer une estimation</h3>
             <p>Comparables et dossier vendeur</p>
@@ -973,7 +985,9 @@
 
         <!-- Tile 2: Secteur & Radar -->
         <div class="action-tile" onclick="switchView('radar')">
-          <div class="tile-icon">📖</div>
+          <div class="tile-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
           <div class="tile-texts">
             <h3>Analyser mon secteur</h3>
             <p>Marché local et opportunités</p>
@@ -982,7 +996,9 @@
 
         <!-- Tile 3: Mandats -->
         <div class="action-tile" onclick="switchView('mandates')">
-          <div class="tile-icon">🏷️</div>
+          <div class="tile-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+          </div>
           <div class="tile-texts">
             <h3>Revoir mes mandats</h3>
             <p>Prix et activité commerciale</p>
@@ -991,7 +1007,9 @@
 
         <!-- Tile 4: Acheteurs -->
         <div class="action-tile" onclick="switchView('buyers')">
-          <div class="tile-icon">👥</div>
+          <div class="tile-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
           <div class="tile-texts">
             <h3>Activer mes acheteurs</h3>
             <p>Recherche et correspondances</p>
@@ -1003,7 +1021,10 @@
       <div class="weekly-pulse-card">
         <div class="pulse-header">
           <h3>Mon marché cette semaine</h3>
-          <span class="pulse-validated-badge">✓ Données validées</span>
+          <span class="pulse-validated-badge">
+            <svg class="mini-icon" width="12" height="12" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Données validées
+          </span>
         </div>
         <div class="pulse-sub">
           Activité observée dans mes communes : Dernières transactions notariées, segments actifs, comparables récents et évolutions vérifiées.
@@ -1046,7 +1067,9 @@
         <!-- Search Bar with Autocomplete -->
         <div class="studio-search-row">
           <div class="search-input-wrap">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
             <input type="text" id="studioAddressInput" placeholder="Entrez une adresse ou parcelle sur la Rive Gauche (ex: Chemin des Argousiers, Veyrier)..." autocomplete="off" oninput="handleAddressSearch(this.value)">
             <div class="autocomplete-dropdown" id="searchDropdown"></div>
           </div>
@@ -1082,7 +1105,8 @@
               <strong id="specYear">1988 (Rénovée 2018)</strong>
             </div>
             <a class="btn-action-secondary" id="specSitgLink" href="https://ge.ch/sitg/" target="_blank" rel="noopener" style="margin-top:6px;">
-              🗺️ Ouvrir Cadastre Officiel SITG
+              <svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+              <span>Ouvrir Cadastre Officiel SITG</span>
             </a>
           </div>
         </div>
@@ -1167,7 +1191,8 @@
             </div>
 
             <button class="btn-action-primary" style="margin-top:auto;" onclick="openCmaDossier(CURRENT_VALUATION_ID)">
-              📄 Fiche Vendeur D&V 1-Clic
+              <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+              <span>Fiche Vendeur D&V 1-Clic</span>
             </button>
           </div>
         </div>
@@ -1178,8 +1203,14 @@
             <strong>Dossier Prêt pour Rendez-Vous Vendeur</strong> &bull; Ventes comparables &bull; Justification factuelle &bull; En-tête D&V
           </div>
           <div style="display:flex; gap:10px;">
-            <button class="btn-action-secondary" onclick="printValuationSummary()">🖨️ Imprimer la Synthèse</button>
-            <button class="btn-action-primary" onclick="openCmaDossier(CURRENT_VALUATION_ID)">Exporter le Dossier CMA</button>
+            <button class="btn-action-secondary" onclick="printValuationSummary()">
+              <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              <span>Imprimer la Synthèse</span>
+            </button>
+            <button class="btn-action-primary" onclick="openCmaDossier(CURRENT_VALUATION_ID)">
+              <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+              <span>Exporter le Dossier CMA</span>
+            </button>
           </div>
         </div>
       </div>
@@ -1187,26 +1218,19 @@
 
     <!-- ================= VIEW 3: RADAR SECTEUR (TERRITORY) ================= -->
     <div id="viewRadar" style="display: none;">
-      <!-- Territory Watch Content -->
-      <div id="radarContainer">
-        <!-- Rendered by existing radar logic -->
-      </div>
+      <div id="radarContainer"></div>
     </div>
 
     <!-- ================= VIEW 4: REVOIR MES MANDATS (MANDATE) ================= -->
     <div id="viewMandates" style="display: none;">
       <div class="section-title">Portefeuille & Mandats en Observation (Rive Gauche)</div>
-      <div id="mandatesListContainer" style="display:flex; flex-direction:column; gap:16px;">
-        <!-- Rendered by JS -->
-      </div>
+      <div id="mandatesListContainer" style="display:flex; flex-direction:column; gap:16px;"></div>
     </div>
 
     <!-- ================= VIEW 5: ACTIVER MES ACHETEURS (MATCH) ================= -->
     <div id="viewBuyers" style="display: none;">
       <div class="section-title">Acheteurs Qualifiés & Correspondances de Marché</div>
-      <div id="buyersListContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <!-- Rendered by JS -->
-      </div>
+      <div id="buyersListContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;"></div>
     </div>
 
     <!-- Trust Footer -->
@@ -1238,8 +1262,9 @@
 
       <div class="neighbor-modal-body">
         <div class="target-neighbors-card">
-          <h4 style="font-size:13px; font-weight:800; color:var(--dv-deep-green); margin-bottom:8px;">
-            👥 5 Parcelles Voisines Cibles à Démarcher
+          <h4 style="font-size:13px; font-weight:800; color:var(--dv-deep-green); margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+            <svg class="mini-icon" width="16" height="16" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span>5 Parcelles Voisines Cibles à Démarcher</span>
           </h4>
           <table class="neighbors-table">
             <thead>
@@ -1255,8 +1280,9 @@
         </div>
 
         <div class="target-neighbors-card">
-          <h4 style="font-size:13px; font-weight:800; color:var(--dv-deep-green); margin-bottom:8px;">
-            ✉️ Courrier de Voisinage Prêt à l'Envoi (En-tête D&V)
+          <h4 style="font-size:13px; font-weight:800; color:var(--dv-deep-green); margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+            <svg class="mini-icon" width="16" height="16" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span>Courrier de Voisinage Prêt à l'Envoi (En-tête D&V)</span>
           </h4>
           <div class="letter-paper-box" id="neighborLetterBox"></div>
         </div>
@@ -1265,8 +1291,14 @@
       <div class="neighbor-modal-footer">
         <button class="btn-action-secondary" onclick="closeNeighborModal()">Fermer</button>
         <div style="display:flex; gap:10px;">
-          <button class="btn-action-secondary" onclick="printNeighborLetter()">🖨️ Imprimer</button>
-          <button class="btn-action-primary" onclick="copyNeighborLetter()">📋 Copier le Courrier</button>
+          <button class="btn-action-secondary" onclick="printNeighborLetter()">
+            <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+            <span>Imprimer</span>
+          </button>
+          <button class="btn-action-primary" onclick="copyNeighborLetter()">
+            <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>Copier le Courrier</span>
+          </button>
         </div>
       </div>
     </div>
@@ -1385,7 +1417,7 @@
         item.innerHTML = `
           <div class="mini-comp-top">
             <span>${c.address} (${c.commune})</span>
-            <span style="color:var(--dv-teal);">${c.price_display}</span>
+            <span style="color:var(--dv-teal); font-weight:800;">${c.price_display}</span>
           </div>
           <div class="mini-comp-details">
             ${c.surface_m2} m² &bull; ${c.price_m2_display} &bull; Paru le ${c.date} &bull; Similitude ${c.similarity_score}%
@@ -1510,7 +1542,7 @@
             </div>
           </div>
           <div style="background:var(--dv-sand); border-left:3px solid var(--dv-teal); padding:10px 14px; font-size:12px; margin-top:12px; border-radius:0 4px 4px 0;">
-            <strong>💡 Recommandation Stratégique D&V :</strong> ${m.recommended_action}
+            <strong>Recommandation Stratégique D&V :</strong> ${m.recommended_action}
           </div>
         `;
         mandatesContainer.appendChild(card);
@@ -1544,7 +1576,7 @@
             <strong>Critères :</strong> ${b.criteria}
           </div>
           <div style="background:rgba(0,147,157,0.06); padding:8px 12px; border-radius:4px; font-size:11px; margin-top:10px;">
-            <strong>🎯 Meilleure Correspondance :</strong> ${b.top_match}
+            <strong>Meilleure Correspondance :</strong> ${b.top_match}
           </div>
         `;
         buyersContainer.appendChild(card);
@@ -1588,9 +1620,13 @@
                   Surface : <strong>${s.surface_m2 ? s.surface_m2 + ' m²' : 'Terrain'}</strong> &bull; Parution : <strong>${s.notice_date}</strong>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
-                  <span style="font-size:11px; font-weight:700; color:var(--dv-teal);">✓ Acte Notarié Confirmé</span>
+                  <span style="font-size:11px; font-weight:700; color:var(--dv-teal); display:inline-flex; align-items:center; gap:4px;">
+                    <svg class="mini-icon" width="12" height="12" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Acte Notarié Confirmé</span>
+                  </span>
                   <button class="btn-action-primary" onclick="openNeighborModal(${s.id})">
-                    👥 5 Voisins Cibles & Courrier
+                    <svg class="mini-icon" width="13" height="13" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <span>5 Voisins Cibles & Courrier</span>
                   </button>
                 </div>
               </div>
@@ -1616,7 +1652,7 @@
                   <div style="font-size:18px; font-weight:800; color:var(--dv-deep-green);">${m.price_display}</div>
                 </div>
                 <div style="background:${m.is_stale ? 'rgba(158,64,0,0.08)' : 'rgba(0,147,157,0.05)'}; padding:10px 12px; border-radius:4px; font-size:11px; margin-top:10px;">
-                  <strong>🎯 Diagnostic :</strong> ${m.strategic_action}
+                  <strong>Diagnostic :</strong> ${m.strategic_action}
                 </div>
               </div>
             `).join('')}
@@ -1661,7 +1697,7 @@
     function copyNeighborLetter() {
       if (!ACTIVE_NEIGHBOR_DATA) return;
       navigator.clipboard.writeText(ACTIVE_NEIGHBOR_DATA.courtesy_letter_text).then(() => {
-        showToast("✓ Courrier personnalisé D&V copié dans le presse-papier !");
+        showToast("Courrier personnalisé D&V copié dans le presse-papier !");
       });
     }
 
