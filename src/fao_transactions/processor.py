@@ -137,23 +137,26 @@ class UnifiedBatchProcessor:
                     t.buyer,
                     t.price_raw,
                     t.price_chf,
-                    e.zone_code,
-                    e.zone_name,
-                    e.building_destination,
-                    e.building_period,
-                    e.building_year,
-                    e.building_floors,
-                    e.egrid,
-                    e.surface_official_m2,
-                    e.centroid_wgs84_lon,
-                    e.centroid_wgs84_lat,
-                    e.centroid_lv95_e,
-                    e.centroid_lv95_n,
-                    CASE 
-                        WHEN e.centroid_lv95_e IS NOT NULL THEN 
-                            'https://map.sitg.ge.ch/?center=' || CAST(ROUND(e.centroid_lv95_e, 0) AS INT) || ',' || CAST(ROUND(e.centroid_lv95_n, 0) AS INT) || '&scale=2500&mapresources=CADASTRE'
-                        ELSE NULL 
-                    END as sitg_map_url,
+                    COALESCE(e.zone_code, t.zone_code) as zone_code,
+                    COALESCE(e.zone_name, t.zone_name) as zone_name,
+                    COALESCE(e.building_destination, t.building_destination) as building_destination,
+                    COALESCE(e.building_period, t.building_period) as building_period,
+                    COALESCE(e.building_year, t.building_year) as building_year,
+                    COALESCE(e.building_floors, t.building_floors) as building_floors,
+                    COALESCE(e.egrid, t.egrid) as egrid,
+                    COALESCE(e.surface_official_m2, t.surface_official_m2) as surface_official_m2,
+                    COALESCE(e.centroid_wgs84_lon, t.centroid_wgs84_lon) as centroid_wgs84_lon,
+                    COALESCE(e.centroid_wgs84_lat, t.centroid_wgs84_lat) as centroid_wgs84_lat,
+                    COALESCE(e.centroid_lv95_e, t.centroid_lv95_e) as centroid_lv95_e,
+                    COALESCE(e.centroid_lv95_n, t.centroid_lv95_n) as centroid_lv95_n,
+                    COALESCE(
+                        t.sitg_map_url,
+                        CASE 
+                            WHEN COALESCE(e.centroid_lv95_e, t.centroid_lv95_e) IS NOT NULL THEN 
+                                'https://map.sitg.ge.ch/?center=' || CAST(ROUND(COALESCE(e.centroid_lv95_e, t.centroid_lv95_e), 0) AS INT) || ',' || CAST(ROUND(COALESCE(e.centroid_lv95_n, t.centroid_lv95_n), 0) AS INT) || '&scale=2500&mapresources=CADASTRE'
+                            ELSE NULL 
+                        END
+                    ) as sitg_map_url,
                     t.file_source,
                     t.transaction_hash
                 FROM transactions t

@@ -7,6 +7,8 @@ import logging
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Optional
+import threading
+import time
 
 # Ensure project root is in python path
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
@@ -16,7 +18,11 @@ SRC_DIR = ROOT_DIR / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
+# Prevent incompatible external Python 3.13 user site-packages from polluting the 3.12 virtualenv
+sys.path = [p for p in sys.path if "Python313" not in p and "Python311" not in p]
+
 from fao_transactions.collector.sync_engine import sync_manager
+from fao_transactions.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -36,16 +42,36 @@ class CytriaApiHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     def _send_json_response(self, data: dict, status: int = 200):
-        """Helper to send JSON response with proper CORS headers."""
+        """Helper to send JSON response with proper CORS and Content-Length headers."""
+        body = json.dumps(data, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
         self.end_headers()
-        self.wfile.write(json.dumps(data, ensure_ascii=False).encode("utf-8"))
+        self.wfile.write(body)
+
+    protocol_version = "HTTP/1.1"
 
     def do_GET(self):
         """Route GET requests between REST API and static files."""
+        if self.path in ("/", "/index.html", ""):
+            index_path = ROOT_DIR / "index.html"
+            if index_path.exists():
+                try:
+                    content = index_path.read_bytes()
+                    self.send_response(200)
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                    self.send_header("Content-Length", str(len(content)))
+                    self.send_header("Connection", "close")
+                    self.send_header("Cache-Control", "no-cache, must-revalidate")
+                    self.end_headers()
+                    self.wfile.write(content)
+                    return
+                except Exception as e:
+                    logger.error(f"Error serving index.html: {e}")
+
         if self.path == "/api/health" or self.path == "/api/health/":
             self._send_json_response({
                 "status": "online",
@@ -67,7 +93,7 @@ class CytriaApiHandler(SimpleHTTPRequestHandler):
             self._send_json_response(status)
             return
 
-        # Fallback to serving static files (index.html, data/exports/..., etc.)
+        # Fallback to serving static files (data/exports/..., etc.)
         super().do_GET()
 
     def do_POST(self):
@@ -83,7 +109,7 @@ class CytriaApiHandler(SimpleHTTPRequestHandler):
             mode = body.get("mode", "quick")
             suite = body.get("suite", "MARKET")
             source = body.get("source", "ALL")
-            headed = body.get("headed", False)
+            headed = body.get("headed", not settings.browser.headless)
             options = body.get("options", {})
             options["suite"] = suite
             options["source"] = source
@@ -119,13 +145,60 @@ class CytriaApiHandler(SimpleHTTPRequestHandler):
         self.send_error(404, "Endpoint non trouvé.")
 
 
-def run_server(port: int = 8080, host: str = "0.0.0.0"):
-    """Run multi-threaded HTTP server with REST API."""
+class RobustThreadingHTTPServer(ThreadingHTTPServer):
+    """Threading HTTPServer with daemon threads and socket timeout."""
+    daemon_threads = True
+    allow_reuse_address = True
+
+    def handle_error(self, request, client_address):
+        """Silently ignore normal client disconnects (BrokenPipe / ConnectionReset)."""
+        exc_type, exc_val, _ = sys.exc_info()
+        if exc_type in (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            return
+        super().handle_error(request, client_address)
+
+
+def start_background_scheduler(interval_hours: int = 6):
+    """Run an automated background synchronization loop without any terminal or user intervention."""
+    def _worker():
+        # Allow server to initialize before first background check
+        time.sleep(15)
+        while True:
+            try:
+                if not sync_manager.is_scanning:
+                    logger.info("[SCHEDULER] Démarrage de la veille automatique d'arrière-plan FAO...")
+                    sync_manager.start_scan(
+                        mode="quick",
+                        options={
+                            "headed": False,
+                            "source": "ALL",
+                            "fao": True,
+                            "sitg": True,
+                            "agencies": True,
+                        }
+                    )
+            except Exception as e:
+                logger.error(f"[SCHEDULER Error] {e}")
+            time.sleep(interval_hours * 3600)
+
+    sched_thread = threading.Thread(target=_worker, daemon=True, name="CytriaBackgroundScheduler")
+    sched_thread.start()
+    logger.info(f"[SCHEDULER] Veille automatique d'arrière-plan activée (intervalle: {interval_hours}h).")
+
+
+def run_server(port: int = 8080, host: str = "0.0.0.0", auto_sync_hours: int = 6):
+    """Run multi-threaded HTTP server with REST API and background scheduler."""
     server_address = (host, port)
-    httpd = ThreadingHTTPServer(server_address, CytriaApiHandler)
+    httpd = RobustThreadingHTTPServer(server_address, CytriaApiHandler)
+    
+    # Start automated background synchronization engine
+    if auto_sync_hours > 0:
+        start_background_scheduler(interval_hours=auto_sync_hours)
+
     print(f"------------- CYTRIA INTELLIGENCE & SYNC SERVER -------------")
     print(f"Serving at http://localhost:{port}/ and http://{host}:{port}/")
     print(f"REST API: http://localhost:{port}/api/status")
+    print(f"Background Sync: Auto-scraping every {auto_sync_hours}h (100% automated)")
     print(f"Press Ctrl+C to stop.\n")
     try:
         httpd.serve_forever()

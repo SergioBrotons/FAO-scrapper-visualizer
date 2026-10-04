@@ -28,6 +28,8 @@ class TransactionRecord(BaseModel):
     notice_date: Optional[str] = Field(default=None, description="Date of notice or transaction")
     file_source: Optional[str] = Field(default=None, description="Source PDF filename")
     raw_text: str = Field(description="Full raw text of the notice block")
+    is_rectification: bool = Field(default=False, description="True if notice is an official rectification/erratum of a previous notice")
+    original_notice_date: Optional[str] = Field(default=None, description="Original publication date referenced in rectification notice")
     transaction_hash: Optional[str] = Field(default=None, description="Unique SHA256 identifier")
 
     def model_post_init(self, __context) -> None:

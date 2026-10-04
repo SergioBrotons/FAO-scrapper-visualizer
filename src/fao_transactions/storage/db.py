@@ -80,7 +80,6 @@ class Database:
             cursor.execute("PRAGMA table_info(transactions);")
             existing_cols = {row["name"] for row in cursor.fetchall()}
             new_cols = {
-                "publication_id": "INTEGER",
                 "source_category": "TEXT DEFAULT 'Registre_Foncier'",
                 "transaction_type": "TEXT DEFAULT 'Vente'",
                 "property_type": "TEXT",
@@ -90,15 +89,10 @@ class Database:
                 "unit_number": "TEXT",
                 "case_number": "TEXT",
                 "file_source": "TEXT",
-                "raw_text": "TEXT",
             }
             for col, col_type in new_cols.items():
                 if col not in existing_cols:
                     cursor.execute(f"ALTER TABLE transactions ADD COLUMN {col} {col_type};")
-
-            # Ensure unique indexes exist on transactions for foreign key compatibility
-            cursor.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_id ON transactions(id);")
-            cursor.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_hash ON transactions(transaction_hash);")
 
             # Enrichments table (linked to SITG cadastre)
             cursor.execute("""
@@ -140,11 +134,81 @@ class Database:
                 if col not in existing_enrich_cols:
                     cursor.execute(f"ALTER TABLE enrichments ADD COLUMN {col} {col_type};")
 
+            # OCSTAT Communal Benchmarks table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS ocstat_communal_benchmarks (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    commune_code INTEGER UNIQUE NOT NULL,
+                    commune TEXT NOT NULL,
+                    canton TEXT DEFAULT 'GE',
+                    rive TEXT,
+                    annee INTEGER DEFAULT 2025,
+                    prix_median_m2_ppe REAL,
+                    prix_moyen_m2_ppe REAL,
+                    prix_median_m2_maison REAL,
+                    prix_moyen_m2_maison REAL,
+                    taux_vacance_officiel_pct REAL,
+                    tendance_annuelle_pct REAL,
+                    volume_total_chf REAL,
+                    nb_transactions_annuel INTEGER,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+
+            # Financial Benchmarks table (CASATAX, FINMA stress testing)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS financial_benchmarks (
+                    year INTEGER PRIMARY KEY,
+                    casatax_threshold_chf REAL NOT NULL,
+                    casatax_rebate_mutation_chf REAL NOT NULL,
+                    casatax_cedule_rebate_pct REAL DEFAULT 0.50,
+                    taux_technique_finma_pct REAL DEFAULT 0.05,
+                    charges_entretien_pct REAL DEFAULT 0.01,
+                    amortissement_annuel_pct REAL DEFAULT 0.01,
+                    fonds_propres_min_pct REAL DEFAULT 0.20,
+                    fonds_propres_hard_cash_min_pct REAL DEFAULT 0.10,
+                    ratio_tenue_charge_max_pct REAL DEFAULT 0.3333,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+
+            # Financial Intelligence computed table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS financial_intelligence (
+                    transaction_id INTEGER PRIMARY KEY,
+                    commune TEXT,
+                    notice_date TEXT,
+                    price_chf REAL,
+                    surface_m2 REAL,
+                    price_per_m2_real REAL,
+                    ocstat_median_m2 REAL,
+                    price_vs_ocstat_ratio REAL,
+                    price_vs_ocstat_pct REAL,
+                    is_casatax_eligible INTEGER DEFAULT 0,
+                    casatax_savings_chf REAL DEFAULT 0,
+                    casatax_cliff_flag INTEGER DEFAULT 0,
+                    equity_min_required_chf REAL,
+                    equity_hard_cash_min_chf REAL,
+                    loan_amount_chf REAL,
+                    theoretical_annual_charge_chf REAL,
+                    min_gross_annual_income_chf REAL,
+                    deal_type_signal TEXT,
+                    is_hoirie INTEGER DEFAULT 0,
+                    computed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE
+                );
+            """)
+
             # Useful indexes
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_trans_commune ON transactions(commune);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_trans_parcel ON transactions(parcel_number);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_trans_cat ON transactions(source_category);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_enrich_egrid ON enrichments(egrid);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_ocstat_commune ON ocstat_communal_benchmarks(commune);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_ocstat_code ON ocstat_communal_benchmarks(commune_code);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_fi_casatax ON financial_intelligence(is_casatax_eligible);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_fi_cliff ON financial_intelligence(casatax_cliff_flag);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_fi_signal ON financial_intelligence(deal_type_signal);")
             conn.commit()
 
     def upsert_publication(
@@ -205,48 +269,21 @@ class Database:
         price_chf: Optional[float] = None,
         file_source: Optional[str] = None,
         raw_text: Optional[str] = None,
-        is_rectification: bool = False,
-        original_notice_date: Optional[str] = None,
     ) -> Optional[int]:
-        """Insert a parsed transaction, ignoring duplicates by transaction_hash or updating on official rectification."""
+        """Insert a parsed transaction, ignoring duplicates by transaction_hash."""
         with self.get_connection() as conn:
             cursor = conn.cursor()
-
-            # If this is an official rectification erratum and refers to an existing case number, update the existing record
-            if case_number and is_rectification:
-                cursor.execute("SELECT id, raw_text FROM transactions WHERE case_number = ? LIMIT 1", (case_number,))
-                existing = cursor.fetchone()
-                if existing:
-                    existing_id = existing[0]
-                    rect_note = f"\n[RECTIFICATION DU {notice_date or ''}]: {raw_text or ''}"
-                    cursor.execute("""
-                        UPDATE transactions SET
-                            raw_text = COALESCE(raw_text, '') || ?,
-                            seller = COALESCE(?, seller),
-                            buyer = COALESCE(?, buyer),
-                            price_raw = COALESCE(?, price_raw),
-                            price_chf = COALESCE(?, price_chf),
-                            parcel_number = COALESCE(?, parcel_number),
-                            surface_m2 = COALESCE(?, surface_m2)
-                        WHERE id = ?
-                    """, (rect_note, seller, buyer, price_raw, price_chf, parcel_number, surface_m2, existing_id))
-                    conn.commit()
-                    return existing_id
-
-            cursor.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM transactions")
-            next_id = cursor.fetchone()[0]
             cursor.execute(
                 """
                 INSERT OR IGNORE INTO transactions (
-                    id, publication_id, transaction_hash, source_category, notice_date, commune,
+                    publication_id, transaction_hash, source_category, notice_date, commune,
                     commune_section, parcel_number, transaction_type, property_type, nature,
                     address, rooms, floor, unit_number, case_number, surface_m2,
                     seller, buyer, price_raw, price_chf, file_source, raw_text
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 RETURNING id;
                 """,
                 (
-                    next_id,
                     publication_id,
                     transaction_hash,
                     source_category,
@@ -300,24 +337,7 @@ class Database:
             price_chf=record.price_chf,
             file_source=record.file_source,
             raw_text=record.raw_text,
-            is_rectification=getattr(record, "is_rectification", False),
-            original_notice_date=getattr(record, "original_notice_date", None),
         )
-
-    def get_known_file_sources(self) -> set:
-        """Return set of all already recorded notice PDF filenames in lowercase."""
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT DISTINCT file_source FROM transactions WHERE file_source IS NOT NULL")
-            return {row[0].strip().lower() for row in cursor.fetchall() if row[0]}
-
-    def get_latest_notice_date(self) -> Optional[str]:
-        """Return the most recent notice date recorded in the database."""
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT notice_date FROM transactions WHERE notice_date IS NOT NULL ORDER BY id DESC LIMIT 1")
-            row = cursor.fetchone()
-            return row[0] if row else None
 
     def upsert_enrichment(
         self,
@@ -450,3 +470,75 @@ class Database:
                 ORDER BY t.id ASC;
             """)
             return [dict(r) for r in cursor.fetchall()]
+
+    def get_ocstat_benchmarks(self, commune: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Retrieve official OCSTAT benchmarks for Geneva communes."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            if commune:
+                cursor.execute(
+                    "SELECT * FROM ocstat_communal_benchmarks WHERE lower(commune) = lower(?)",
+                    (commune.strip(),),
+                )
+            else:
+                cursor.execute("SELECT * FROM ocstat_communal_benchmarks ORDER BY commune ASC;")
+            return [dict(r) for r in cursor.fetchall()]
+
+    def get_financial_benchmarks(self, year: Optional[int] = None) -> List[Dict[str, Any]]:
+        """Retrieve CASATAX and FINMA underwriting benchmarks."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            if year:
+                cursor.execute("SELECT * FROM financial_benchmarks WHERE year = ?", (year,))
+            else:
+                cursor.execute("SELECT * FROM financial_benchmarks ORDER BY year DESC;")
+            return [dict(r) for r in cursor.fetchall()]
+
+    def get_financial_intelligence(
+        self,
+        transaction_id: Optional[int] = None,
+        casatax_only: bool = False,
+        cliff_only: bool = False,
+        undervalued_only: bool = False,
+        limit: int = 100,
+    ) -> List[Dict[str, Any]]:
+        """Retrieve computed financial intelligence for transactions."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM financial_intelligence WHERE 1=1"
+            params: List[Any] = []
+            if transaction_id:
+                query += " AND transaction_id = ?"
+                params.append(transaction_id)
+            if casatax_only:
+                query += " AND is_casatax_eligible = 1"
+            if cliff_only:
+                query += " AND casatax_cliff_flag = 1"
+            if undervalued_only:
+                query += " AND deal_type_signal = 'OPPORTUNITE_DECOTEE'"
+            query += f" ORDER BY transaction_id DESC LIMIT {int(limit)};"
+            cursor.execute(query, tuple(params))
+            return [dict(r) for r in cursor.fetchall()]
+
+    def get_intelligence_summary(self) -> Dict[str, Any]:
+        """Retrieve macro summary of transactions, CASATAX deals, and OCSTAT deviations."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            total_trans = cursor.execute("SELECT count(*) FROM transactions").fetchone()[0]
+            monetized_trans = cursor.execute("SELECT count(*) FROM transactions WHERE price_chf > 0").fetchone()[0]
+            casatax_deals = cursor.execute("SELECT count(*) FROM financial_intelligence WHERE is_casatax_eligible = 1").fetchone()[0]
+            cliff_deals = cursor.execute("SELECT count(*) FROM financial_intelligence WHERE casatax_cliff_flag = 1").fetchone()[0]
+            undervalued_deals = cursor.execute("SELECT count(*) FROM financial_intelligence WHERE deal_type_signal = 'OPPORTUNITE_DECOTEE'").fetchone()[0]
+            hoiries = cursor.execute("SELECT count(*) FROM financial_intelligence WHERE is_hoirie = 1").fetchone()[0]
+            total_volume = cursor.execute("SELECT sum(price_chf) FROM transactions WHERE price_chf > 0").fetchone()[0] or 0.0
+
+            return {
+                "total_transactions": total_trans,
+                "monetized_transactions": monetized_trans,
+                "total_volume_chf": total_volume,
+                "casatax_eligible_deals": casatax_deals,
+                "casatax_cliff_deals": cliff_deals,
+                "undervalued_deals": undervalued_deals,
+                "hoirie_succession_deals": hoiries,
+            }
+

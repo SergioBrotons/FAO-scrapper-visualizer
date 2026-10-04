@@ -3,6 +3,9 @@
 import sys
 from typing import Optional
 
+# Prevent incompatible external Python 3.13 user site-packages from polluting the 3.12 virtualenv
+sys.path = [p for p in sys.path if "Python313" not in p and "Python311" not in p]
+
 # Ensure UTF-8 output on Windows consoles
 if sys.platform == "win32":
     try:
@@ -49,6 +52,7 @@ def collect_transactions(
     delay_min: float = typer.Option(2.5, "--delay-min", help="Minimum safety pause in seconds"),
     delay_max: float = typer.Option(4.5, "--delay-max", help="Maximum safety pause in seconds"),
     headless: bool = typer.Option(True, "--headless/--headed", help="Run browser in headless or headed mode"),
+    stop_duplicates: int = typer.Option(3, "--stop-duplicates", "-s", help="Stop after N consecutive already-archived notices are reached (incremental mode)"),
 ):
     """Download official Geneva real-estate transaction PDFs with safety pauses and validation."""
     from fao_transactions.collector.transaction_batch import TransactionBatchCollector
@@ -57,6 +61,7 @@ def collect_transactions(
         headless=headless,
         delay_min=delay_min,
         delay_max=delay_max,
+        stop_on_duplicate_count=stop_duplicates,
     )
     collector.run(
         max_notices=limit,

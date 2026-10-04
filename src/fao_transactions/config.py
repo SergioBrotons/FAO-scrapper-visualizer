@@ -1,7 +1,7 @@
 """Configuration management using Pydantic and YAML."""
 
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 import yaml
 from pydantic import BaseModel, Field
 
@@ -16,6 +16,7 @@ class FaoSettings(BaseModel):
 class BrowserSettings(BaseModel):
     headless: bool = False
     profile_dir: str = "data/browser_profile"
+    channel: Optional[str] = "chrome"
     viewport_width: int = 1400
     viewport_height: int = 900
     slow_mo: int = 100

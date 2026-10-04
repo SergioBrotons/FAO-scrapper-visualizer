@@ -173,7 +173,12 @@ class SyncManager:
                     self.add_log("[FAO] Si un défi anti-robot / Cloudflare apparaît, complétez-le directement dans la fenêtre.")
                     try:
                         from fao_transactions.collector.transaction_batch import TransactionBatchCollector
-                        collector = TransactionBatchCollector(headless=False, delay_min=2.0, delay_max=3.5)
+                        collector = TransactionBatchCollector(
+                            headless=False,
+                            delay_min=2.0,
+                            delay_max=3.5,
+                            log_callback=self.add_log,
+                        )
                         pilot_res = collector.run(max_notices=5 if mode == "quick" else 20, initial_check_only=False)
                         self.add_log(f"[FAO] Téléchargement interactif terminé : {pilot_res.get('valid_pdfs', 0)} avis validés.")
                     except Exception as e:

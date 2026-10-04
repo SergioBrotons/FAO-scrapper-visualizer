@@ -1,0 +1,354 @@
+[
+  {
+    "commune": "Cologny",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 21500,
+    "villa_median_chf": 5800000,
+    "centimes_additionnels": 28.0,
+    "transactions_annuelles_est": 85
+  },
+  {
+    "commune": "Vandoeuvres",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 18200,
+    "villa_median_chf": 4900000,
+    "centimes_additionnels": 29.0,
+    "transactions_annuelles_est": 60
+  },
+  {
+    "commune": "Collonge-Bellerive",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 16800,
+    "villa_median_chf": 3800000,
+    "centimes_additionnels": 31.0,
+    "transactions_annuelles_est": 110
+  },
+  {
+    "commune": "Chêne-Bougeries",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 16400,
+    "villa_median_chf": 3600000,
+    "centimes_additionnels": 32.0,
+    "transactions_annuelles_est": 180
+  },
+  {
+    "commune": "Genève",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 15900,
+    "villa_median_chf": 3400000,
+    "centimes_additionnels": 45.5,
+    "transactions_annuelles_est": 1850
+  },
+  {
+    "commune": "Anières",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 15800,
+    "villa_median_chf": 3600000,
+    "centimes_additionnels": 29.5,
+    "transactions_annuelles_est": 45
+  },
+  {
+    "commune": "Hermance",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 15500,
+    "villa_median_chf": 3500000,
+    "centimes_additionnels": 30.0,
+    "transactions_annuelles_est": 30
+  },
+  {
+    "commune": "Pregny-Chambésy",
+    "rive": "DROITE",
+    "ppe_median_sqm": 15400,
+    "villa_median_chf": 3500000,
+    "centimes_additionnels": 30.0,
+    "transactions_annuelles_est": 55
+  },
+  {
+    "commune": "Choulex",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 15300,
+    "villa_median_chf": 3300000,
+    "centimes_additionnels": 32.0,
+    "transactions_annuelles_est": 35
+  },
+  {
+    "commune": "Genthod",
+    "rive": "DROITE",
+    "ppe_median_sqm": 15200,
+    "villa_median_chf": 3400000,
+    "centimes_additionnels": 28.5,
+    "transactions_annuelles_est": 50
+  },
+  {
+    "commune": "Corsier",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 15100,
+    "villa_median_chf": 3300000,
+    "centimes_additionnels": 31.0,
+    "transactions_annuelles_est": 40
+  },
+  {
+    "commune": "Meinier",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 14800,
+    "villa_median_chf": 3100000,
+    "centimes_additionnels": 33.0,
+    "transactions_annuelles_est": 40
+  },
+  {
+    "commune": "Troinex",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 14600,
+    "villa_median_chf": 3100000,
+    "centimes_additionnels": 33.0,
+    "transactions_annuelles_est": 45
+  },
+  {
+    "commune": "Gy",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 14500,
+    "villa_median_chf": 3000000,
+    "centimes_additionnels": 32.0,
+    "transactions_annuelles_est": 15
+  },
+  {
+    "commune": "Céligny",
+    "rive": "DROITE",
+    "ppe_median_sqm": 14100,
+    "villa_median_chf": 2850000,
+    "centimes_additionnels": 32.0,
+    "transactions_annuelles_est": 20
+  },
+  {
+    "commune": "Veyrier",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 14100,
+    "villa_median_chf": 2800000,
+    "centimes_additionnels": 38.0,
+    "transactions_annuelles_est": 140
+  },
+  {
+    "commune": "Jussy",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 13900,
+    "villa_median_chf": 2800000,
+    "centimes_additionnels": 35.0,
+    "transactions_annuelles_est": 25
+  },
+  {
+    "commune": "Bellevue",
+    "rive": "DROITE",
+    "ppe_median_sqm": 13800,
+    "villa_median_chf": 2900000,
+    "centimes_additionnels": 34.0,
+    "transactions_annuelles_est": 60
+  },
+  {
+    "commune": "Presinge",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 13800,
+    "villa_median_chf": 2750000,
+    "centimes_additionnels": 34.0,
+    "transactions_annuelles_est": 20
+  },
+  {
+    "commune": "Collex-Bossy",
+    "rive": "DROITE",
+    "ppe_median_sqm": 13600,
+    "villa_median_chf": 2700000,
+    "centimes_additionnels": 36.0,
+    "transactions_annuelles_est": 30
+  },
+  {
+    "commune": "Carouge",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 13600,
+    "villa_median_chf": 2600000,
+    "centimes_additionnels": 43.0,
+    "transactions_annuelles_est": 220
+  },
+  {
+    "commune": "Bardonnex",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 13400,
+    "villa_median_chf": 2700000,
+    "centimes_additionnels": 35.0,
+    "transactions_annuelles_est": 35
+  },
+  {
+    "commune": "Chêne-Bourg",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 13200,
+    "villa_median_chf": 2500000,
+    "centimes_additionnels": 42.0,
+    "transactions_annuelles_est": 115
+  },
+  {
+    "commune": "Puplinge",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 13200,
+    "villa_median_chf": 2600000,
+    "centimes_additionnels": 38.0,
+    "transactions_annuelles_est": 30
+  },
+  {
+    "commune": "Plan-les-Ouates",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 13100,
+    "villa_median_chf": 2650000,
+    "centimes_additionnels": 36.0,
+    "transactions_annuelles_est": 140
+  },
+  {
+    "commune": "Confignon",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 12900,
+    "villa_median_chf": 2550000,
+    "centimes_additionnels": 41.0,
+    "transactions_annuelles_est": 70
+  },
+  {
+    "commune": "Versoix",
+    "rive": "DROITE",
+    "ppe_median_sqm": 12900,
+    "villa_median_chf": 2700000,
+    "centimes_additionnels": 43.5,
+    "transactions_annuelles_est": 160
+  },
+  {
+    "commune": "Bernex",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 12700,
+    "villa_median_chf": 2500000,
+    "centimes_additionnels": 42.0,
+    "transactions_annuelles_est": 130
+  },
+  {
+    "commune": "Satigny",
+    "rive": "DROITE",
+    "ppe_median_sqm": 12500,
+    "villa_median_chf": 2450000,
+    "centimes_additionnels": 37.5,
+    "transactions_annuelles_est": 75
+  },
+  {
+    "commune": "Aire-la-Ville",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 12400,
+    "villa_median_chf": 2400000,
+    "centimes_additionnels": 35.0,
+    "transactions_annuelles_est": 18
+  },
+  {
+    "commune": "Thônex",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 12400,
+    "villa_median_chf": 2400000,
+    "centimes_additionnels": 44.0,
+    "transactions_annuelles_est": 210
+  },
+  {
+    "commune": "Cartigny",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 12200,
+    "villa_median_chf": 2300000,
+    "centimes_additionnels": 36.0,
+    "transactions_annuelles_est": 20
+  },
+  {
+    "commune": "Perly-Certoux",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 12100,
+    "villa_median_chf": 2350000,
+    "centimes_additionnels": 41.0,
+    "transactions_annuelles_est": 60
+  },
+  {
+    "commune": "Russin",
+    "rive": "DROITE",
+    "ppe_median_sqm": 11900,
+    "villa_median_chf": 2250000,
+    "centimes_additionnels": 38.0,
+    "transactions_annuelles_est": 15
+  },
+  {
+    "commune": "Soral",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 11900,
+    "villa_median_chf": 2200000,
+    "centimes_additionnels": 37.0,
+    "transactions_annuelles_est": 15
+  },
+  {
+    "commune": "Lancy",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 11800,
+    "villa_median_chf": 2200000,
+    "centimes_additionnels": 50.0,
+    "transactions_annuelles_est": 380
+  },
+  {
+    "commune": "Laconnex",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 11800,
+    "villa_median_chf": 2200000,
+    "centimes_additionnels": 36.0,
+    "transactions_annuelles_est": 15
+  },
+  {
+    "commune": "Dardagny",
+    "rive": "DROITE",
+    "ppe_median_sqm": 11700,
+    "villa_median_chf": 2150000,
+    "centimes_additionnels": 39.0,
+    "transactions_annuelles_est": 20
+  },
+  {
+    "commune": "Avusy",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 11600,
+    "villa_median_chf": 2150000,
+    "centimes_additionnels": 40.0,
+    "transactions_annuelles_est": 18
+  },
+  {
+    "commune": "Avully",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 11400,
+    "villa_median_chf": 2100000,
+    "centimes_additionnels": 44.0,
+    "transactions_annuelles_est": 22
+  },
+  {
+    "commune": "Chancy",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 11200,
+    "villa_median_chf": 2050000,
+    "centimes_additionnels": 43.0,
+    "transactions_annuelles_est": 20
+  },
+  {
+    "commune": "Onex",
+    "rive": "GAUCHE",
+    "ppe_median_sqm": 10800,
+    "villa_median_chf": 2100000,
+    "centimes_additionnels": 48.0,
+    "transactions_annuelles_est": 190
+  },
+  {
+    "commune": "Vernier",
+    "rive": "DROITE",
+    "ppe_median_sqm": 10500,
+    "villa_median_chf": 1950000,
+    "centimes_additionnels": 49.0,
+    "transactions_annuelles_est": 420
+  },
+  {
+    "commune": "Meyrin",
+    "rive": "DROITE",
+    "ppe_median_sqm": 10200,
+    "villa_median_chf": 1900000,
+    "centimes_additionnels": 46.0,
+    "transactions_annuelles_est": 240
+  }
+]

@@ -1,0 +1,90 @@
+{
+  "casatax": {
+    "year": 2026,
+    "threshold_chf": 1394928,
+    "tax_reduction_chf": 20924,
+    "mortgage_fee_reduction_pct": 50.0,
+    "legal_basis": "Loi sur les droits d'enregistrement (LDE - art. 8A)",
+    "description": "Exonération fiscale partielle pour l'acquisition d'un logement destiné à la résidence principale de l'acquéreur à Genève.",
+    "annual_schedules": {
+      "2024": {
+        "ceiling_price_chf": 1359903,
+        "max_rebate_mutation_chf": 20398,
+        "cedule_rebate_pct": 0.50
+      },
+      "2025": {
+        "ceiling_price_chf": 1374396,
+        "max_rebate_mutation_chf": 20616,
+        "cedule_rebate_pct": 0.50
+      },
+      "2026": {
+        "ceiling_price_chf": 1394928,
+        "max_rebate_mutation_chf": 20924,
+        "cedule_rebate_pct": 0.50
+      }
+    }
+  },
+  "droits_mutation": {
+    "standard_rate_pct": 3.0,
+    "cadastral_registry_fee_pct": 0.2,
+    "notary_fee_est_pct": 0.5,
+    "total_acquisition_costs_pct": 3.7,
+    "legal_basis": "Loi sur les droits d'enregistrement (LDE)"
+  },
+  "impot_gains_immobiliers": {
+    "legal_basis": "Loi sur l'imposition des personnes physiques (LIPP - art. 82)",
+    "brackets": [
+      {
+        "years_held_max": 2,
+        "rate_pct": 50,
+        "label": "< 2 ans (spéculatif)"
+      },
+      {
+        "years_held_max": 3,
+        "rate_pct": 40,
+        "label": "2 à 3 ans"
+      },
+      {
+        "years_held_max": 4,
+        "rate_pct": 30,
+        "label": "3 à 4 ans"
+      },
+      {
+        "years_held_max": 5,
+        "rate_pct": 20,
+        "label": "4 à 5 ans"
+      },
+      {
+        "years_held_max": 10,
+        "rate_pct": 15,
+        "label": "5 à 10 ans"
+      },
+      {
+        "years_held_max": 25,
+        "rate_pct": 10,
+        "label": "10 à 25 ans"
+      },
+      {
+        "years_held_max": 999,
+        "rate_pct": 0,
+        "label": "> 25 ans (exonération totale)"
+      }
+    ]
+  },
+  "reglementation_cantonale": {
+    "ldtr": {
+      "name": "LDTR (Loi sur les démolitions, transformations et rénovations)",
+      "scope": "Protection du parc locatif genevois. Soumet à autorisation la vente d'appartements loués et le changement d'affectation.",
+      "alert": "Contrôle des loyers et droit de préemption de l'État."
+    },
+    "lacc_art_157": {
+      "name": "Art. 157 LaCC (Loi d'application du code civil suisse)",
+      "scope": "Publicité légale des transferts immobiliers et des fixations de parts PPE / rectifications au Registre Foncier de Genève.",
+      "source": "Feuille d'Avis Officielle (FAO) & Registre Foncier"
+    },
+    "lex_koller": {
+      "name": "LFAIE (Lex Koller)",
+      "scope": "Réglemente l'acquisition d'immeubles par des personnes à l'étranger à Genève."
+    }
+  }
+}

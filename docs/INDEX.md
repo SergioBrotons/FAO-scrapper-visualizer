@@ -42,7 +42,8 @@ docs/
 ├── 02_GENEVA_CADASTRE_LEGAL_GLOSSARY.md      # Dictionnaire exhaustif juridique, cadastral & foncier genevois
 ├── 03_FACTORS_AND_METRICS_ANALYSIS_GUIDE.md  # Analyse détaillée de chaque facteur de donnée et son impact métier
 ├── 04_STRATEGIC_PLAYBOOK_SCRIPTS_FAQ.md      # Scripts de prise de contact, conformité suisse LPD et FAQ
-└── 05_INFORMATION_ARCHITECTURE_ROADMAP.md    # Architecture d'information, schéma de données et roadmap produit
+├── 05_INFORMATION_ARCHITECTURE_ROADMAP.md    # Architecture d'information, schéma de données et roadmap produit
+└── TODO.md                                   # Backlog des tâches, audit courtiers & roadmap active
 ```
 
 ---

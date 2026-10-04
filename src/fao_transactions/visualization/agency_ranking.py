@@ -9,6 +9,8 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 
+from fao_transactions.visualization.agency_velocity import compute_agency_velocity
+
 logger = logging.getLogger(__name__)
 
 GENEVA_AGENCIES_DATA: List[Dict[str, Any]] = [
@@ -1215,6 +1217,15 @@ def get_ranked_league_table() -> Dict[str, Any]:
                     if k in curated and not ag.get(k):
                         ag[k] = curated[k]
 
+        # Ensure all curated agencies (e.g. NESSELL Real Estate SA) are present in the list
+        existing_ids = {ag.get("id") for ag in agencies_list}
+        for curated in GENEVA_AGENCIES_DATA:
+            cid = curated["id"]
+            alias = curated_aliases.get(cid)
+            if cid not in existing_ids and (not alias or alias not in existing_ids):
+                agencies_list.append(dict(curated))
+                existing_ids.add(cid)
+
     ranked_agencies = []
     all_brokers = []
 
@@ -1222,6 +1233,15 @@ def get_ranked_league_table() -> Dict[str, Any]:
         score = compute_agency_score(ag)
         ag_copy = dict(ag)
         ag_copy["cytria_score"] = score
+        if "velocity" not in ag_copy or not ag_copy.get("velocity"):
+            v_data = compute_agency_velocity(ag_copy)
+            ag_copy["velocity"] = v_data
+            ag_copy["dsls_days"] = v_data["dsls_days"]
+            ag_copy["velocity_momentum_pct"] = v_data["momentum_delta_pct"]
+            ag_copy["velocity_score"] = v_data["velocity_score"]
+            ag_copy["sales_t3m_count"] = v_data["sales_t3m_count"]
+            ag_copy["volume_t3m_chf_m"] = v_data["volume_t3m_chf_m"]
+            ag_copy["sales_per_agent_pace"] = v_data["sales_per_agent_pace"]
         ranked_agencies.append(ag_copy)
 
     brokers_file = Path("data/exports/geneva_brokers_master.json")

@@ -204,5 +204,14 @@ with open(agencies_file, "w", encoding="utf-8") as f:
     json.dump(agencies, f, indent=2, ensure_ascii=False)
 
 print(f"[OK] Saved {len(all_benchmarks)} marketing benchmark entries to {bench_file}")
-print(f"[OK] Saved {len(brokers)} brokers with 100% verified LinkedIn handles to {brokers_file}")
+print(f"[OK] Saved {len(brokers)} brokers to {brokers_file}")
 print(f"[OK] Saved {len(agencies)} agencies with embedded social links & active blog dates to {agencies_file}")
+
+# Compute & enrich Agency Sales Velocity KPIs
+try:
+    from compute_agency_velocity import update_all_agencies_velocity
+    update_all_agencies_velocity(agencies_file)
+    print("[OK] Agency Sales Velocity & Momentum Benchmarks calculated successfully.")
+except Exception as e:
+    print(f"[Warning] Velocity calculation error: {e}")
+

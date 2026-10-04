@@ -1,0 +1,16 @@
+{
+  "name": "geneva-property-transactions-visualizer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cytria — Geneva Real Estate & Land Intelligence Platform",
+  "scripts": {
+    "dev": "bun server.js --port 8088",
+    "start": "bun server.js --port 8088",
+    "serve": "bun server.js --port 8088",
+    "ingest:financials": "bun scripts/ingest_ocstat_financials.ts",
+    "radar:dev": "bun scripts/build_developer_radar.ts",
+    "dossier": "bun scripts/generate_dossier.ts",
+    "sync:fastlane": "python src/fao_transactions/collector/fastlane_collector.py",
+    "enrich:cadastre": "python scripts/enrich_open_data_cadastre.py"
+  }
+}
