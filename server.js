@@ -4,6 +4,7 @@ import { existsSync, statSync, readFileSync } from "fs";
 import { Database } from "bun:sqlite";
 import { ValuationService } from "./src/fao_transactions/dossier/valuation_service.ts";
 import { DVIntelligenceService } from "./src/fao_transactions/dv/dv_service.ts";
+import { DVPptxGenerator } from "./src/fao_transactions/dv/dv_pptx_generator.ts";
 
 function getRequestedPort() {
   const args = process.argv.slice(2);
@@ -750,6 +751,58 @@ async function handleFetch(req) {
         { status: "ok", ...data },
         { headers: { "Access-Control-Allow-Origin": "*" } }
       );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
+  // Désormière & Vanhalst Saut-du-Loup 18 Comparative Case Study API
+  if (pathname === "/api/dv/saut-du-loup-case" || pathname === "/api/dv/saut-du-loup-case/") {
+    try {
+      const generator = new DVPptxGenerator();
+      const data = generator.getSautDuLoupCaseStudy();
+      return Response.json(
+        { status: "ok", data },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
+  // Désormière & Vanhalst PPTX Presentation Export Engine API
+  if (pathname === "/api/dv/export-pptx" || pathname === "/api/dv/export-pptx/") {
+    try {
+      let body = {};
+      if (req.method === "POST") {
+        try {
+          body = await req.json();
+        } catch {}
+      }
+
+      const generator = new DVPptxGenerator();
+      const defaultCase = generator.getSautDuLoupCaseStudy();
+      const slideReplacements = body.slideReplacements || defaultCase.pptxPayload;
+      const images = body.images || {};
+      const hideInternalInstructions = body.hideInternalInstructions !== false;
+
+      const buffer = generator.generatePptxBuffer({
+        slideReplacements,
+        images,
+        hideInternalInstructions
+      });
+
+      const filename = body.filename || "Estimation_DV_Chemin_du_Saut_du_Loup_18.pptx";
+
+      return new Response(buffer, {
+        status: 200,
+        headers: {
+          "Content-Type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "Content-Disposition": `attachment; filename="${filename}"`,
+          "Access-Control-Allow-Origin": "*",
+          "Content-Length": buffer.length.toString()
+        }
+      });
     } catch (e) {
       return Response.json({ status: "error", message: e.message }, { status: 500 });
     }

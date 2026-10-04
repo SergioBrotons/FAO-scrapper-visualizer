@@ -897,12 +897,173 @@
       .action-tiles-grid {
         grid-template-columns: 1fr;
       }
-      .studio-steps-grid {
-        grid-template-columns: 1fr;
+    /* ================= SAUT-DU-LOUP CASE STUDY BANNER ================= */
+    .saut-case-study-card {
+      background: linear-gradient(135deg, rgba(0, 147, 157, 0.08) 0%, rgba(23, 218, 232, 0.04) 100%);
+      border: 1px solid rgba(0, 147, 157, 0.28);
+      border-left: 4px solid var(--dv-teal);
+      border-radius: var(--dv-radius);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .saut-case-study-card:hover {
+      box-shadow: 0 4px 16px rgba(0, 147, 157, 0.15);
+      border-color: var(--dv-teal);
+    }
+    .saut-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+      background: var(--dv-teal);
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .saut-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      margin-bottom: 2px;
+    }
+    .saut-desc {
+      font-size: 12px;
+      color: var(--dv-text-main);
+      line-height: 1.4;
+    }
+    .saut-metrics-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .saut-pill {
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      text-align: center;
+    }
+    .saut-pill.highlight {
+      border-color: var(--dv-teal);
+      background: rgba(0, 147, 157, 0.05);
+    }
+    .saut-pill-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--dv-text-muted);
+      text-transform: uppercase;
+    }
+    .saut-pill-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+    }
+    .saut-pill.highlight .saut-pill-val {
+      color: var(--dv-teal);
+    }
+    .saut-delta-badge {
+      background: #DCFCE7;
+      color: #166534;
+      border: 1px solid #BBF7D0;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+
+    /* ================= PPTX GENERATOR STUDIO & MEDIA UPLOAD ================= */
+    .pptx-studio-card {
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      padding: 20px 24px;
+      margin-top: 24px;
+      box-shadow: var(--dv-shadow);
+    }
+    .pptx-studio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--dv-border);
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pptx-studio-header h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+    }
+    .pptx-slides-upload-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 980px) {
+      .pptx-slides-upload-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
-      .property-hero-card {
-        grid-template-columns: 1fr;
-      }
+    }
+    .upload-slide-card {
+      border: 1px solid var(--dv-border);
+      border-radius: 6px;
+      background: #FBFBFB;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .upload-slide-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      letter-spacing: 0.02em;
+    }
+    .upload-dropzone {
+      border: 1.5px dashed rgba(0, 147, 157, 0.4);
+      background: #FFFFFF;
+      border-radius: 4px;
+      min-height: 105px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-align: center;
+      padding: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .upload-dropzone:hover {
+      border-color: var(--dv-teal);
+      background: rgba(0, 147, 157, 0.03);
+    }
+    .dropzone-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--dv-text-muted);
+    }
+    .dropzone-preview-img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 3px;
     }
   </style>
 </head>
@@ -1064,6 +1225,34 @@
           </button>
         </div>
 
+        <!-- Saut-du-Loup 18 Case Study Interactive Banner -->
+        <div style="padding: 16px 24px 0 24px;">
+          <div class="saut-case-study-card" id="sautDuLoupBanner" onclick="loadSautDuLoupCase()">
+            <div>
+              <span class="saut-badge">Cas d'Étude &bull; Impact Notarié Révélateur</span>
+              <div class="saut-title">Chemin du Saut-du-Loup 18 (Brotons) &bull; Réévaluation Suite Vente n° 16</div>
+              <div class="saut-desc">
+                La vente notariée authentique du <strong>Saut-du-Loup 16</strong> le 26 février 2026 (Acte 2026/628/0 conclu à <strong>CHF 1'620'000 / 17'609 CHF/m²</strong>) réévalue le bien de +CHF 513'375 par rapport à l'estimation d'août 2025.
+              </div>
+            </div>
+            <div class="saut-metrics-wrap">
+              <div class="saut-pill">
+                <div class="saut-pill-label">Avis Août 2025</div>
+                <div class="saut-pill-val">CHF 1'266'625</div>
+              </div>
+              <div style="color:var(--dv-teal); font-weight:700; font-size:18px;">&rarr;</div>
+              <div class="saut-pill highlight">
+                <div class="saut-pill-label">Valeur Révisée 2026</div>
+                <div class="saut-pill-val">CHF 1'780'000</div>
+              </div>
+              <div class="saut-delta-badge">+CHF 513'375 (+40.5%)</div>
+              <button class="btn-action-primary" style="padding:6px 12px; font-size:12px;" onclick="event.stopPropagation(); loadSautDuLoupCase()">
+                Charger ce Cas
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Search Bar with Autocomplete -->
         <div class="studio-search-row">
           <div class="search-input-wrap">
@@ -1194,6 +1383,78 @@
               <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
               <span>Fiche Vendeur D&V 1-Clic</span>
             </button>
+          </div>
+        </div>
+
+        <!-- PPTX Generator & Slide Image Upload Studio -->
+        <div style="padding: 0 24px 24px 24px;">
+          <div class="pptx-studio-card">
+            <div class="pptx-studio-header">
+              <div>
+                <h4>Générateur de Présentation PPTX &bull; Modèle D&V (15 Slides)</h4>
+                <p style="font-size:12px; color:#64748B; margin:3px 0 0 0;">
+                  Généré semi-automatiquement à 99% d'après le cadastre SITG, l'acte notarié du n° 16 et l'algorithme D&V. Téléchargeable en .pptx pour affinement manuel dans PowerPoint.
+                </p>
+              </div>
+              <button class="btn-action-primary" id="btnExportPptx" onclick="exportPresentationPptx()">
+                <svg class="mini-icon" width="14" height="14" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Télécharger la Présentation PPTX Modifiable (15 Slides)</span>
+              </button>
+            </div>
+
+            <div style="font-size:11px; font-weight:700; color:var(--dv-deep-green); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.04em;">
+              Personnalisation des Visuels par Slide (Optionnel &bull; Glisser-déposer ou cliquer)
+            </div>
+
+            <div class="pptx-slides-upload-grid">
+              <!-- Slide 1: Cover -->
+              <div class="upload-slide-card">
+                <div class="upload-slide-title">Slide 01 &bull; Couverture Principale</div>
+                <div class="upload-dropzone" onclick="document.getElementById('fileCover').click()">
+                  <input type="file" id="fileCover" accept="image/*" style="display:none;" onchange="handleImageUpload('cover', this)">
+                  <div id="previewCover" class="dropzone-placeholder">
+                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                    <span>Photo Principale (Façade / Jardin)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 5: Interior -->
+              <div class="upload-slide-card">
+                <div class="upload-slide-title">Slide 05 &bull; Reportage Intérieur</div>
+                <div class="upload-dropzone" onclick="document.getElementById('fileInterior').click()">
+                  <input type="file" id="fileInterior" accept="image/*" style="display:none;" onchange="handleImageUpload('interior', this)">
+                  <div id="previewInterior" class="dropzone-placeholder">
+                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Photos Intérieures (Salon/Cuisine)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 6: Exterior -->
+              <div class="upload-slide-card">
+                <div class="upload-slide-title">Slide 06 &bull; Extérieurs (Jardin & Terrasse)</div>
+                <div class="upload-dropzone" onclick="document.getElementById('fileExterior').click()">
+                  <input type="file" id="fileExterior" accept="image/*" style="display:none;" onchange="handleImageUpload('exterior', this)">
+                  <div id="previewExterior" class="dropzone-placeholder">
+                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                    <span>Jardin 250 m² & Loggia 11 m²</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 7: Plans -->
+              <div class="upload-slide-card">
+                <div class="upload-slide-title">Slide 07 &bull; Plans PPE Architecte</div>
+                <div class="upload-dropzone" onclick="document.getElementById('filePlan').click()">
+                  <input type="file" id="filePlan" accept="image/*" style="display:none;" onchange="handleImageUpload('plan', this)">
+                  <div id="previewPlan" class="dropzone-placeholder">
+                    <svg class="mini-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>Plan de Masse & Lot 2.02</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1335,6 +1596,175 @@
       Calme: 5,
       Energie: 0
     };
+
+    let CURRENT_SAUT_CASE = null;
+    let UPLOADED_SLIDE_IMAGES = {};
+
+    async function loadSautDuLoupCase() {
+      try {
+        switchView('value');
+        showToast("Chargement de l'étude de cas Saut-du-Loup 18...");
+        const res = await fetch('/api/dv/saut-du-loup-case');
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message || "Erreur chargement cas d'étude");
+
+        CURRENT_SAUT_CASE = json.data;
+        const sub = CURRENT_SAUT_CASE.subject;
+        const anc = CURRENT_SAUT_CASE.anchorSale16;
+        const rev = CURRENT_SAUT_CASE.february2026Valuation;
+
+        // Populate Target Specs Hero
+        document.getElementById('studioAddressInput').value = sub.address;
+        document.getElementById('heroAddress').textContent = sub.address;
+        document.getElementById('heroCommune').textContent = `${sub.commune} • Parcelle ${sub.parcel} (Lot ${sub.lotPPE})`;
+        document.getElementById('specCommune').textContent = sub.commune;
+        document.getElementById('specParcel').textContent = `${sub.parcel} (Bât. 2921-2922)`;
+        document.getElementById('specSurface').textContent = `${sub.surfacePPE} m² PPE (${sub.weightedSurface} m² pondérée)`;
+        document.getElementById('specZone').textContent = "Zone 5 (Villas et résidences de standing)";
+        document.getElementById('specYear').textContent = `${sub.buildingYear} (${sub.energyStandard})`;
+        document.getElementById('specSitgLink').href = "https://map.sitg.ge.ch/?center=2504600,1117200&scale=2500&mapresources=CADASTRE";
+
+        // Render Comparables (Step 01) with Saut-du-Loup 16 highlighted at the top
+        const compsContainer = document.getElementById('miniCompsContainer');
+        compsContainer.innerHTML = `
+          <div class="mini-comp-card" style="border: 2px solid var(--dv-teal); background: rgba(0, 147, 157, 0.05); padding:10px 12px; border-radius:6px;">
+            <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase; margin-bottom:4px;">
+              ⭐ RÉFÉRENCE ABSOLUE &bull; MÊME RÉSIDENCE MINERGIE
+            </div>
+            <div class="mini-comp-top">
+              <strong>${anc.address}</strong>
+              <span style="color:var(--dv-teal); font-weight:800; font-size:13px;">CHF ${Number(anc.price_chf).toLocaleString('fr-CH')}</span>
+            </div>
+            <div class="mini-comp-details" style="color:var(--dv-deep-green); font-weight:600;">
+              ${anc.surface_m2} m² &bull; CHF ${anc.price_m2.toLocaleString('fr-CH')}/m² &bull; Acte du ${anc.date} &bull; Parcelle ${anc.parcel}
+            </div>
+            <div style="font-size:11px; color:#475569; margin-top:4px; line-height:1.3;">
+              ${anc.significance}
+            </div>
+          </div>
+
+          <div class="mini-comp-card">
+            <div class="mini-comp-top">
+              <span>Rue de Genève 78 (Chêne-Bourg)</span>
+              <span style="color:var(--dv-teal); font-weight:800;">CHF 1'180'000</span>
+            </div>
+            <div class="mini-comp-details">
+              74 m² &bull; CHF 15'945/m² &bull; Paru le 12.01.2026 &bull; Similitude 88%
+            </div>
+          </div>
+
+          <div class="mini-comp-card">
+            <div class="mini-comp-top">
+              <span>Chemin de la Gravière 12 (Chêne-Bourg)</span>
+              <span style="color:var(--dv-teal); font-weight:800;">CHF 1'350'000</span>
+            </div>
+            <div class="mini-comp-details">
+              88 m² &bull; CHF 15'340/m² &bull; Paru le 18.11.2025 &bull; Similitude 85%
+            </div>
+          </div>
+
+          <div class="mini-comp-card">
+            <div class="mini-comp-top">
+              <span>Avenue Bel-Air 24 (Chêne-Bourg)</span>
+              <span style="color:var(--dv-teal); font-weight:800;">CHF 1'490'000</span>
+            </div>
+            <div class="mini-comp-details">
+              95 m² &bull; CHF 15'684/m² &bull; Paru le 04.10.2025 &bull; Similitude 82%
+            </div>
+          </div>
+        `;
+
+        // Update step 02 adjustments to 0 (since building is proved like-new)
+        document.getElementById('valEtat').textContent = '0%';
+        document.getElementById('valVue').textContent = '+5%';
+        document.getElementById('valCalme').textContent = '+5%';
+        document.getElementById('valEnergie').textContent = '0%';
+
+        // Display 2026 Recalibrated Valuation (Step 03)
+        document.getElementById('estPriceDisplay').textContent = `CHF ${rev.totalValuation.toLocaleString('fr-CH')}`;
+        document.getElementById('estRangeDisplay').textContent = `Fourchette D&V : CHF ${rev.askingRangeMin.toLocaleString('fr-CH')} – ${rev.askingRangeMax.toLocaleString('fr-CH')}`;
+        document.getElementById('estM2Display').textContent = `Base pondérée retenue : CHF ${rev.retainedBasePricePerM2.toLocaleString('fr-CH')} / m² (Surface pondérée 92.5 m² + Jardin 250 m² + Parking)`;
+
+        showToast("Cas Saut-du-Loup 18 chargé : Vente n° 16 intégrée avec succès !");
+      } catch (e) {
+        showToast("Erreur: " + e.message);
+      }
+    }
+
+    function handleImageUpload(slot, input) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Url = e.target.result;
+        const targetMediaMap = {
+          cover: 'ppt/media/image.png',
+          interior: 'ppt/media/image2.jpeg',
+          exterior: 'ppt/media/image7.jpeg',
+          plan: 'ppt/media/image.jpeg'
+        };
+
+        const targetMedia = targetMediaMap[slot];
+        if (targetMedia) {
+          UPLOADED_SLIDE_IMAGES[targetMedia] = base64Url;
+        }
+
+        const previewContainer = document.getElementById('preview' + slot.charAt(0).toUpperCase() + slot.slice(1));
+        if (previewContainer) {
+          previewContainer.innerHTML = `<img src="${base64Url}" class="dropzone-preview-img" alt="Aperçu ${slot}">`;
+        }
+        showToast(`Image pour ${slot} intégrée au modèle PPTX.`);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function exportPresentationPptx() {
+      const btn = document.getElementById('btnExportPptx');
+      const originalText = btn.innerHTML;
+      try {
+        btn.disabled = true;
+        btn.innerHTML = `<svg class="mini-icon spin" width="14" height="14" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg> Génération du PPTX en cours...`;
+
+        // If no custom case loaded yet, fetch default Saut-du-Loup payload
+        let payload = null;
+        if (CURRENT_SAUT_CASE) {
+          payload = CURRENT_SAUT_CASE.pptxPayload;
+        }
+
+        const res = await fetch('/api/dv/export-pptx', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slideReplacements: payload,
+            images: UPLOADED_SLIDE_IMAGES,
+            hideInternalInstructions: true,
+            filename: 'Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx'
+          })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.message || `Erreur serveur (${res.status})`);
+        }
+
+        const blob = await res.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = 'Estimation_DV_Chemin_du_Saut_du_Loup_18_Brotons.pptx';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(downloadUrl);
+
+        showToast("Présentation PPTX D&V (15 slides) téléchargée avec succès !");
+      } catch (e) {
+        showToast("Erreur export PPTX: " + e.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
 
     // Navigation Switcher
     function switchView(viewName) {

@@ -147,7 +147,8 @@ describe("Désormière & Vanhalst Real Estate Intelligence Service", () => {
     expect(serverCode.includes("/api/dv/neighbors")).toBe(true);
     expect(serverCode.includes("/api/dv/search")).toBe(true);
     expect(serverCode.includes("/api/dv/valuation-studio")).toBe(true);
-    expect(serverCode.includes("/api/dv/portfolio")).toBe(true);
+    expect(serverCode.includes("/api/dv/saut-du-loup-case")).toBe(true);
+    expect(serverCode.includes("/api/dv/export-pptx")).toBe(true);
   });
 
   it("should verify property search, valuation studio, and agency portfolio review", () => {
@@ -191,15 +192,121 @@ describe("Désormière & Vanhalst Real Estate Intelligence Service", () => {
     expect(html.includes("Revoir mes mandats")).toBe(true);
     expect(html.includes("Activer mes acheteurs")).toBe(true);
 
-    // Valuation Studio
+    // Valuation Studio & Saut-du-Loup Banner
     expect(html.includes("studioAddressInput")).toBe(true);
     expect(html.includes("calculateDynamicValuation")).toBe(true);
     expect(html.includes("updateAdjustment")).toBe(true);
+    expect(html.includes("sautDuLoupBanner")).toBe(true);
+    expect(html.includes("loadSautDuLoupCase")).toBe(true);
+
+    // PPTX Generator Studio
+    expect(html.includes("btnExportPptx")).toBe(true);
+    expect(html.includes("exportPresentationPptx")).toBe(true);
+    expect(html.includes("handleImageUpload")).toBe(true);
+    expect(html.includes("fileCover")).toBe(true);
+    expect(html.includes("fileInterior")).toBe(true);
+    expect(html.includes("fileExterior")).toBe(true);
+    expect(html.includes("filePlan")).toBe(true);
 
     // Neighbor modal & actions
     expect(html.includes("neighborModal")).toBe(true);
     expect(html.includes("openNeighborModal")).toBe(true);
     expect(html.includes("copyNeighborLetter")).toBe(true);
     expect(html.includes("printNeighborLetter")).toBe(true);
+  });
+
+  it("should calculate and document the Saut-du-Loup 18 vs 16 valuation delta (+513k CHF)", () => {
+    const { DVPptxGenerator } = require("../src/fao_transactions/dv/dv_pptx_generator");
+    const generator = new DVPptxGenerator();
+    const caseStudy = generator.getSautDuLoupCaseStudy();
+
+    // Subject property verified facts
+    expect(caseStudy.subject.address).toBe("Chemin du Saut-du-Loup 18, 1225 Chêne-Bourg");
+    expect(caseStudy.subject.parcel).toBe("4643");
+    expect(caseStudy.subject.surfacePPE).toBe(73);
+    expect(caseStudy.subject.weightedSurface).toBe(92.5);
+    expect(caseStudy.subject.garden).toBe(250);
+
+    // Anchor sale 16 verified facts (Deed 2026/628/0)
+    expect(caseStudy.anchorSale16.address).toBe("Chemin du Saut-du-Loup 16, 1225 Chêne-Bourg");
+    expect(caseStudy.anchorSale16.parcel).toBe("4642-104");
+    expect(caseStudy.anchorSale16.price_chf).toBe(1620000);
+    expect(caseStudy.anchorSale16.price_m2).toBe(17609);
+
+    // August 2025 vs February 2026 delta
+    expect(caseStudy.august2025Valuation.totalValuation).toBe(1266625);
+    expect(caseStudy.february2026Valuation.totalValuation).toBe(1780000);
+    expect(caseStudy.impactSummary.valueDeltaChf).toBe(513375);
+    expect(caseStudy.impactSummary.valueDeltaPct).toBeGreaterThan(40);
+  });
+
+  it("should generate tailored D&V PPTX presentation with 15 slides and verified tokens", async () => {
+    const { DVPptxGenerator, readZipEntries } = require("../src/fao_transactions/dv/dv_pptx_generator");
+    const generator = new DVPptxGenerator();
+    const caseStudy = generator.getSautDuLoupCaseStudy();
+
+    const outputPath = path.resolve("data/exports/test_valuation_pptx.pptx");
+    const res = await generator.generatePptx({
+      outputPath,
+      slideReplacements: caseStudy.pptxPayload,
+      hideInternalInstructions: true
+    });
+
+    expect(res.success).toBe(true);
+    expect(fs.existsSync(outputPath)).toBe(true);
+    const fileBuf = fs.readFileSync(outputPath);
+    expect(fileBuf.length).toBeGreaterThan(5000000); // Master template ~5.8 MB
+
+    const entries = readZipEntries(fileBuf);
+    expect(entries.size).toBe(90);
+
+    // Verify all 15 slides exist
+    for (let i = 1; i <= 15; i++) {
+      expect(entries.has(`ppt/slides/slide${i}.xml`)).toBe(true);
+    }
+
+    // Slide 1: Owner & Address
+    const s1 = entries.get("ppt/slides/slide1.xml")!.toString("utf8");
+    expect(s1.includes("Sergio Brotons Mas")).toBe(true);
+    expect(s1.includes("Saut-du-Loup 18")).toBe(true);
+
+    // Slide 9: Anchor Comparable Saut-du-Loup 16
+    const s9 = entries.get("ppt/slides/slide9.xml")!.toString("utf8");
+    expect(s9.includes("Saut-du-Loup 16")).toBe(true);
+    expect(s9.includes("1'620'000") || s9.includes("1’620’000")).toBe(true);
+
+    // Slide 11: Base rate & Breakdown
+    const s11 = entries.get("ppt/slides/slide11.xml")!.toString("utf8");
+    expect(s11.includes("16’000") || s11.includes("16'000")).toBe(true);
+    expect(s11.includes("92.5 m²")).toBe(true);
+
+    // Slide 12: Total & Asking Range
+    const s12 = entries.get("ppt/slides/slide12.xml")!.toString("utf8");
+    expect(s12.includes("1’780’000") || s12.includes("1'780'000")).toBe(true);
+    expect(s12.includes("1’750’000") || s12.includes("1'750'000")).toBe(true);
+    expect(s12.includes("1’790’000") || s12.includes("1'790'000")).toBe(true);
+  });
+
+  it("should support custom image replacements across PPTX slides", async () => {
+    const { DVPptxGenerator, readZipEntries } = require("../src/fao_transactions/dv/dv_pptx_generator");
+    const generator = new DVPptxGenerator();
+    const caseStudy = generator.getSautDuLoupCaseStudy();
+
+    const dummyPng = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+    const outputPath = path.resolve("data/exports/test_image_replace.pptx");
+
+    const res = await generator.generatePptx({
+      outputPath,
+      slideReplacements: caseStudy.pptxPayload,
+      images: {
+        "ppt/media/image.png": dummyPng
+      }
+    });
+
+    expect(res.success).toBe(true);
+    const entries = readZipEntries(fs.readFileSync(outputPath));
+    const replaced = entries.get("ppt/media/image.png");
+    expect(replaced).toBeDefined();
+    expect(replaced!.length).toBe(70); // 1x1 test png size
   });
 });
