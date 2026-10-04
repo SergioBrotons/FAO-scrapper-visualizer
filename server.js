@@ -3,6 +3,7 @@ import { join } from "path";
 import { existsSync, statSync, readFileSync } from "fs";
 import { Database } from "bun:sqlite";
 import { ValuationService } from "./src/fao_transactions/dossier/valuation_service.ts";
+import { DVIntelligenceService } from "./src/fao_transactions/dv/dv_service.ts";
 
 function getRequestedPort() {
   const args = process.argv.slice(2);
@@ -597,6 +598,65 @@ async function handleFetch(req) {
       });
     } catch (e) {
       return new Response(`Erreur de génération du dossier : ${e.message}`, { status: 500 });
+    }
+  }
+
+  // Désormière & Vanhalst Portal View
+  if (pathname === "/dv" || pathname === "/dv/" || pathname === "/desormiere-vanhalst") {
+    const dvHtml = join(ROOT_DIR, "public", "dv", "index.html");
+    if (existsSync(dvHtml)) {
+      return new Response(Bun.file(dvHtml), {
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
+    }
+  }
+
+  // Désormière & Vanhalst Opportunities API
+  if (pathname === "/api/dv/opportunities" || pathname === "/api/dv/opportunities/") {
+    try {
+      const searchParams = url.searchParams;
+      const commune = searchParams.get("commune") || "all";
+      const signal = searchParams.get("signal") || "all";
+      const minScore = parseFloat(searchParams.get("min_score") || "35");
+      const limit = parseInt(searchParams.get("limit") || "80");
+
+      const dvService = new DVIntelligenceService(DB_PATH);
+      const data = dvService.getOpportunities({
+        commune: commune === "all" ? undefined : commune,
+        signal: signal === "all" ? undefined : signal,
+        min_score: minScore,
+        limit,
+      });
+
+      const stats = dvService.getSummaryStats();
+
+      return Response.json(
+        { status: "ok", count: data.length, data, stats },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
+  // Désormière & Vanhalst Branded CMA Dossier View
+  if (pathname === "/api/dv/cma" || pathname === "/api/dv/cma/") {
+    try {
+      const searchParams = url.searchParams;
+      const txId = parseInt(searchParams.get("id") || searchParams.get("transaction_id") || "16945");
+      const dvService = new DVIntelligenceService(DB_PATH);
+      const html = dvService.getCmaHtml(txId);
+      if (!html) {
+        return new Response("Transaction introuvable pour l'estimation D&V", { status: 404 });
+      }
+      return new Response(html, {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+    } catch (e) {
+      return new Response(`Erreur de génération CMA : ${e.message}`, { status: 500 });
     }
   }
 
