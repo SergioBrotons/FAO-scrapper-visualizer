@@ -660,6 +660,52 @@ async function handleFetch(req) {
     }
   }
 
+  // Désormière & Vanhalst Territorial Watch & Competitor Radar API
+  if (pathname === "/api/dv/watch" || pathname === "/api/dv/watch/") {
+    try {
+      const searchParams = url.searchParams;
+      const commune = searchParams.get("commune") || "all";
+      const limit = parseInt(searchParams.get("limit") || "40");
+
+      const dvService = new DVIntelligenceService(DB_PATH);
+      const watchData = dvService.getTerritorialWatch({
+        commune: commune === "all" ? undefined : commune,
+        limit,
+      });
+
+      return Response.json(
+        { status: "ok", ...watchData },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
+  // Désormière & Vanhalst Neighbor Canvassing & Letter API
+  if (pathname === "/api/dv/neighbors" || pathname === "/api/dv/neighbors/") {
+    try {
+      const searchParams = url.searchParams;
+      const id = parseInt(searchParams.get("id") || searchParams.get("transaction_id") || "0");
+      if (!id) {
+        return Response.json({ status: "error", message: "Paramètre 'id' requis" }, { status: 400 });
+      }
+
+      const dvService = new DVIntelligenceService(DB_PATH);
+      const neighborData = dvService.getNeighborsForSale(id);
+      if (!neighborData) {
+        return Response.json({ status: "error", message: "Transaction introuvable" }, { status: 404 });
+      }
+
+      return Response.json(
+        { status: "ok", data: neighborData },
+        { headers: { "Access-Control-Allow-Origin": "*" } }
+      );
+    } catch (e) {
+      return Response.json({ status: "error", message: e.message }, { status: 500 });
+    }
+  }
+
   // 1-Click Valuation Dossier JSON Data API
   if (pathname === "/api/dossier/valuation" || pathname === "/api/dossier/valuation/") {
     try {

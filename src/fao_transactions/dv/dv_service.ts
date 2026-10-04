@@ -626,4 +626,194 @@ export class DVIntelligenceService {
       top_commune: topCommune
     };
   }
+
+  public getTerritorialWatch(options: { commune?: string; limit?: number } = {}): {
+    recent_sales: any[];
+    competitor_mandates: any[];
+    stats: {
+      sales_count: number;
+      competitor_deals_count: number;
+      stale_mandates_count: number;
+      top_active_competitor: string;
+    };
+  } {
+    const db = this.getDB();
+    try {
+      const territory = this.getTerritoryCommunes();
+      const limit = Math.min(options.limit ?? 25, 60);
+
+      let communeWhere = "";
+      const params: any[] = [];
+      if (options.commune && options.commune !== "all") {
+        communeWhere = "AND lower(commune) = lower(?)";
+        params.push(options.commune.trim());
+      } else {
+        communeWhere = `AND commune IN (${territory.map(() => "?").join(",")})`;
+        params.push(...territory);
+      }
+
+      // 1. Stream A: Recent official sales with high neighbor effect (villas/standing > 1.2M)
+      const salesRows = db.query(`
+        SELECT id, notice_date, commune, parcel_number, address, property_type, surface_m2, price_chf, raw_text
+        FROM transactions
+        WHERE price_chf >= 1200000
+          ${communeWhere}
+        ORDER BY id DESC
+        LIMIT ?;
+      `).all(...params, limit) as any[];
+
+      const recent_sales = salesRows.map(r => {
+        const surf = r.surface_m2 || 160;
+        const pM2 = Math.round(r.price_chf / surf);
+        return {
+          id: r.id,
+          notice_date: r.notice_date || "Date récente",
+          commune: r.commune,
+          parcel_number: r.parcel_number || "N/A",
+          address: r.address || `${r.commune} (Parcelle ${r.parcel_number})`,
+          property_type: r.property_type || "Villa",
+          surface_m2: surf,
+          price_chf: r.price_chf,
+          price_display: `CHF ${Number(r.price_chf).toLocaleString("fr-CH")}`,
+          price_m2: pM2,
+          price_m2_display: `CHF ${pM2.toLocaleString("fr-CH")}/m²`,
+          neighbor_targets_count: 5,
+          pitch_trigger: `Mutation enregistrée à ${r.commune} (CHF ${pM2.toLocaleString("fr-CH")}/m²). Moment optimal pour adresser un courrier d'estimation aux parcelles contiguës.`
+        };
+      });
+
+      // 2. Stream B: Competitor agency listings on their territory
+      const compRows = db.query(`
+        SELECT a.name as agency_name, asp.agency_id, asp.fao_id, asp.date, asp.typology,
+               asp.commune, asp.address, asp.price_chf, asp.agent_name, asp.reconciliation_level,
+               asp.publishing_delay_days
+        FROM agency_sold_properties asp
+        JOIN agencies a ON a.id = asp.agency_id
+        WHERE asp.price_chf >= 800000
+          AND a.name NOT LIKE '%Désormière%'
+          ${communeWhere.replace(/commune/g, "asp.commune")}
+        ORDER BY asp.rowid DESC
+        LIMIT ?;
+      `).all(...params, limit) as any[];
+
+      let staleCount = 0;
+      const agencyTally: Record<string, number> = {};
+
+      const competitor_mandates = compRows.map(c => {
+        agencyTally[c.agency_name] = (agencyTally[c.agency_name] || 0) + 1;
+        const delay = c.publishing_delay_days || 45;
+        const isStale = delay >= 75 || c.reconciliation_level === "PENDING_TRANSCRIPTION";
+        if (isStale) staleCount++;
+
+        let status_badge = "Mandat Actif";
+        let status_color = "#00939D"; // Turquoise
+        let strategic_action = "Surveiller l'évolution du prix et l'activité marketing.";
+
+        if (isStale) {
+          status_badge = `⚠️ En Souffrance (~${delay}j)`;
+          status_color = "#9E4000"; // Brun chaud / Alerte
+          strategic_action = "Propriétaire potentiellement impatient. Préparer un dossier D&V de reprise de mandat avec valorisation réajustée.";
+        } else if (c.reconciliation_level === "CONFIRMED_FAO") {
+          status_badge = "Vente Réalisée par Concurrent";
+          status_color = "#004A4F";
+          strategic_action = "Vérifier le spread de négociation final par rapport au prix d'affichage initial.";
+        }
+
+        return {
+          agency_name: c.agency_name,
+          agent_name: c.agent_name || "Équipe de courtage",
+          commune: c.commune,
+          address: c.address,
+          typology: c.typology || "Villa",
+          price_chf: c.price_chf,
+          price_display: `CHF ${Number(c.price_chf).toLocaleString("fr-CH")}`,
+          date: c.date,
+          status_badge,
+          status_color,
+          is_stale: isStale,
+          strategic_action
+        };
+      });
+
+      const topCompetitor = Object.entries(agencyTally).sort((a, b) => b[1] - a[1])[0]?.[0] || "Barnes Suisse SA";
+
+      return {
+        recent_sales,
+        competitor_mandates,
+        stats: {
+          sales_count: recent_sales.length,
+          competitor_deals_count: competitor_mandates.length,
+          stale_mandates_count: staleCount,
+          top_active_competitor: topCompetitor
+        }
+      };
+    } finally {
+      db.close();
+    }
+  }
+
+  public getNeighborsForSale(id: number): {
+    sale: any;
+    neighbors: any[];
+    courtesy_letter_text: string;
+  } | null {
+    const db = this.getDB();
+    try {
+      const sale = db.query(`
+        SELECT id, notice_date, commune, parcel_number, address, property_type, surface_m2, price_chf
+        FROM transactions WHERE id = ?
+      `).get(id) as any;
+
+      if (!sale) return null;
+
+      // Find 5 other transactions in the same commune to serve as neighboring reference parcels
+      const neighbors = db.query(`
+        SELECT id, notice_date, parcel_number, address, surface_m2, zone_code, property_type
+        FROM transactions
+        WHERE lower(commune) = lower(?) AND id != ?
+        ORDER BY id DESC
+        LIMIT 5;
+      `).all(sale.commune, id) as any[];
+
+      const surf = sale.surface_m2 || 180;
+      const pM2 = Math.round(sale.price_chf / surf);
+
+      const courtesyLetter = `DÉSORMIÈRE & VANHALST
+Rive Gauche Genève • +41 22 794 80 82 • contact@desormiere-vanhalst.ch
+
+Genève, le ${new Date().toLocaleDateString("fr-CH", { day: "numeric", month: "long", year: "numeric" })}
+
+Objet : Évolution du marché immobilier dans votre secteur (${sale.commune})
+
+Madame, Monsieur,
+
+En qualité de spécialistes de l'immobilier résidentiel sur la commune de ${sale.commune}, nous vous informons avec discrétion qu'une transaction immobilière notable vient d'être enregistrée au Registre Foncier dans votre voisinage immédiat :
+
+• Adresse : ${sale.address}
+• Prix conclu : CHF ${Number(sale.price_chf).toLocaleString("fr-CH")} (environ CHF ${pM2.toLocaleString("fr-CH")}/m²)
+• Date de parution officielle : ${sale.notice_date}
+
+Ce résultat confirme l'excellente tenue de la valeur des propriétés de caractère dans votre quartier.
+
+Dans ce contexte dynamique, Sandra Bleeckx Vanhalst et Adrien Désormière se tiennent à votre entière disposition pour vous remettre, à titre purement gracieux et sous le sceau de la confidentialité, une actualisation de la valeur vénale de votre bien immobilier.
+
+Nous vous prions d'agréer, Madame, Monsieur, l'expression de nos salutations distinguées.
+
+Sandra Bleeckx Vanhalst & Adrien Désormière
+Associés & Directeurs — Désormière & Vanhalst`;
+
+      return {
+        sale: {
+          ...sale,
+          price_display: `CHF ${Number(sale.price_chf).toLocaleString("fr-CH")}`,
+          price_m2: pM2,
+        },
+        neighbors,
+        courtesy_letter_text: courtesyLetter
+      };
+    } finally {
+      db.close();
+    }
+  }
 }
+

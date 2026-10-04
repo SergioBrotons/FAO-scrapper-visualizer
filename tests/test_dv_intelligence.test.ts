@@ -99,4 +99,72 @@ describe("Désormière & Vanhalst Real Estate Intelligence Service", () => {
     const logoPath = path.resolve("public/dv/assets/DandV Logo right text clear.png");
     expect(fs.existsSync(logoPath)).toBe(true);
   });
+
+  it("should retrieve territorial watch data with recent sales and competitor mandates", () => {
+    const watch = service.getTerritorialWatch({ limit: 20 });
+    expect(watch).toBeDefined();
+    expect(watch.recent_sales.length).toBeGreaterThan(0);
+    expect(watch.competitor_mandates.length).toBeGreaterThan(0);
+    expect(watch.stats.sales_count).toBeGreaterThan(0);
+    expect(watch.stats.competitor_deals_count).toBeGreaterThan(0);
+    expect(typeof watch.stats.stale_mandates_count).toBe("number");
+    expect(typeof watch.stats.top_active_competitor).toBe("string");
+
+    // Check sales structure
+    const firstSale = watch.recent_sales[0];
+    expect(firstSale.id).toBeDefined();
+    expect(firstSale.commune).toBeDefined();
+    expect(firstSale.address).toBeDefined();
+    expect(firstSale.price_chf).toBeGreaterThanOrEqual(1200000);
+
+    // Check competitor mandate structure
+    const firstMandate = watch.competitor_mandates[0];
+    expect(firstMandate.agency_name).toBeDefined();
+    expect(firstMandate.status_badge).toBeDefined();
+    expect(firstMandate.strategic_action).toBeDefined();
+  });
+
+  it("should generate neighbor effect canvassing data and courtesy letter", () => {
+    const watch = service.getTerritorialWatch({ limit: 5 });
+    const saleId = watch.recent_sales[0].id;
+    const neighborData = service.getNeighborsForSale(saleId);
+
+    expect(neighborData).toBeDefined();
+    expect(neighborData!.sale.id).toBe(saleId);
+    expect(neighborData!.neighbors.length).toBeGreaterThan(0);
+    expect(neighborData!.neighbors.length).toBeLessThanOrEqual(5);
+
+    // Courtesy letter verification
+    expect(neighborData!.courtesy_letter_text).toContain("DÉSORMIÈRE & VANHALST");
+    expect(neighborData!.courtesy_letter_text).toContain("Sandra Bleeckx Vanhalst & Adrien Désormière");
+  });
+
+  it("should verify server.js registers all required DV endpoints", () => {
+    const serverCode = fs.readFileSync(path.resolve("server.js"), "utf8");
+    expect(serverCode.includes("/api/dv/opportunities")).toBe(true);
+    expect(serverCode.includes("/api/dv/cma")).toBe(true);
+    expect(serverCode.includes("/api/dv/watch")).toBe(true);
+    expect(serverCode.includes("/api/dv/neighbors")).toBe(true);
+  });
+
+  it("should verify public/dv/index.html includes dual-tab navigation and neighbor canvassing elements", () => {
+    const indexPath = path.resolve("public/dv/index.html");
+    const html = fs.readFileSync(indexPath, "utf8");
+
+    // Dual-tab navigation
+    expect(html.includes("sourcingView")).toBe(true);
+    expect(html.includes("radarView")).toBe(true);
+    expect(html.includes("tabSourcingBtn")).toBe(true);
+    expect(html.includes("tabRadarBtn")).toBe(true);
+    expect(html.includes("switchMainTab")).toBe(true);
+
+    // Neighbor modal & actions
+    expect(html.includes("neighborModal")).toBe(true);
+    expect(html.includes("openNeighborModal")).toBe(true);
+    expect(html.includes("copyNeighborLetter")).toBe(true);
+    expect(html.includes("printNeighborLetter")).toBe(true);
+
+    // Competitor recovery
+    expect(html.includes("prepareStaleMandatePitch")).toBe(true);
+  });
 });
