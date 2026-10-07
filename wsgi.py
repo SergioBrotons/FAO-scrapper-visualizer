@@ -28,8 +28,21 @@ def app(environ, start_response):
     if not path:
         path = "/"
 
-    # 1. Main Cytria Platform
-    if path in ("/", "/index.html"):
+    # 1. SaaS Welcome Page
+    if path in ("/", "/welcome", "/welcome.html"):
+        welcome_file = ROOT_DIR / "welcome.html"
+        target_file = welcome_file if welcome_file.exists() else (ROOT_DIR / "index.html")
+        if target_file.exists():
+            content = target_file.read_bytes()
+            start_response("200 OK", [
+                ("Content-Type", "text/html; charset=utf-8"),
+                ("Content-Length", str(len(content))),
+                ("Cache-Control", "public, max-age=3600")
+            ])
+            return [content]
+
+    # 2. Interactive Real Estate Cadastre Map Platform
+    if path in ("/map", "/map/", "/app", "/index.html"):
         index_file = ROOT_DIR / "index.html"
         if index_file.exists():
             content = index_file.read_bytes()

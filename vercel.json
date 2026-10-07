@@ -1,4 +1,9 @@
 {
   "version": 2,
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/welcome.html" },
+    { "source": "/map", "destination": "/index.html" },
+    { "source": "/app", "destination": "/index.html" }
+  ]
 }

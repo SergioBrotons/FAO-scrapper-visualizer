@@ -34,6 +34,7 @@ function getRequestedPort() {
 
 const ROOT_DIR = import.meta.dir;
 const INDEX_HTML = join(ROOT_DIR, "index.html");
+const WELCOME_HTML = join(ROOT_DIR, "welcome.html");
 const DB_PATH = join(ROOT_DIR, "data/state/state.sqlite");
 const VENV_PYTHON = join(ROOT_DIR, ".venv", "Scripts", "python.exe");
 const PYTHON_EXE = existsSync(VENV_PYTHON) ? VENV_PYTHON : "python";
@@ -1454,8 +1455,19 @@ async function fetchFederalBuildingDetails(featureId) {
     }
   }
 
-  // Root document
-  if (pathname === "/" || pathname === "" || pathname === "/index.html") {
+  // Root document / Welcome SaaS Page
+  if (pathname === "/" || pathname === "" || pathname === "/welcome" || pathname === "/welcome.html") {
+    const targetWelcome = existsSync(WELCOME_HTML) ? WELCOME_HTML : INDEX_HTML;
+    if (existsSync(targetWelcome)) {
+      return new Response(Bun.file(targetWelcome), {
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
+    }
+    return new Response("welcome.html not found", { status: 404 });
+  }
+
+  // Interactive Cadastre & Intelligence Map
+  if (pathname === "/map" || pathname === "/map/" || pathname === "/app" || pathname === "/app/" || pathname === "/index.html") {
     if (existsSync(INDEX_HTML)) {
       return new Response(Bun.file(INDEX_HTML), {
         headers: { "Content-Type": "text/html; charset=utf-8" },
@@ -1468,7 +1480,8 @@ async function fetchFederalBuildingDetails(featureId) {
   try {
     const cleanPath = pathname.replace(/^\/+/, "");
     if (!cleanPath) {
-      return new Response(Bun.file(INDEX_HTML), {
+      const targetDoc = existsSync(WELCOME_HTML) ? WELCOME_HTML : INDEX_HTML;
+      return new Response(Bun.file(targetDoc), {
         headers: { "Content-Type": "text/html; charset=utf-8" },
       });
     }
