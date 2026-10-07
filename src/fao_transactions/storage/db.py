@@ -129,10 +129,37 @@ class Database:
                 "building_period": "TEXT",
                 "building_year": "INTEGER",
                 "building_floors": "INTEGER",
+                "has_pool": "INTEGER DEFAULT 0",
+                "pool_count": "INTEGER DEFAULT 0",
+                "pool_surface_m2": "REAL DEFAULT 0.0",
+                "pool_status": "TEXT DEFAULT 'none'",
+                "pool_details_json": "TEXT",
             }
             for col, col_type in new_enrich_cols.items():
                 if col not in existing_enrich_cols:
                     cursor.execute(f"ALTER TABLE enrichments ADD COLUMN {col} {col_type};")
+
+            # Geneva Swimming Pools Register (SITG CAD_PISCINE)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS geneva_pools (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    source TEXT DEFAULT 'sitg_cadastre',
+                    objectid INTEGER UNIQUE NOT NULL,
+                    commune_code INTEGER,
+                    commune_name TEXT,
+                    mutation_num TEXT,
+                    mutation_date TEXT,
+                    surface_m2 REAL,
+                    perimeter_m REAL,
+                    confidence_score REAL DEFAULT 1.0,
+                    centroid_wgs84_lon REAL,
+                    centroid_wgs84_lat REAL,
+                    geom_geojson_wgs84 TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_pools_commune_code ON geneva_pools(commune_code);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_pools_commune_name ON geneva_pools(commune_name);")
 
             # OCSTAT Communal Benchmarks table
             cursor.execute("""

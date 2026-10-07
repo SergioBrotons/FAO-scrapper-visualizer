@@ -1,0 +1,51 @@
+{
+  "agency_id": "template_white_label",
+  "name": "Nom de l'Agence Partenaire",
+  "short_name": "NAP",
+  "tagline": "Courtage Immobilier & Expertise Foncière",
+  "brand": {
+    "primary_color": "#1E3A8A",
+    "primary_hover": "#3B82F6",
+    "secondary_prestige": "#0F172A",
+    "background_sand": "#F8FAFC",
+    "card_bg": "#FFFFFF",
+    "accent_warm_brown": "#B45309",
+    "accent_deep_brown": "#78350F",
+    "text_main": "#0F172A",
+    "text_muted": "#64748B",
+    "font_heading": "'Playfair Display', Georgia, serif",
+    "font_body": "'Inter', -apple-system, sans-serif",
+    "logo_main": "/assets/placeholder_logo.png",
+    "logo_round": "/assets/placeholder_round.png",
+    "logo_badge": "/assets/placeholder_badge.png"
+  },
+  "territory": {
+    "region_name": "Genève et Environs",
+    "focus_communes": [
+      "Genève",
+      "Carouge",
+      "Lancy",
+      "Meyrin",
+      "Vernier"
+    ],
+    "default_commune": "Genève"
+  },
+  "personas": [
+    {
+      "name": "Expert Référent",
+      "role": "Spécialiste Courtage & Estimation",
+      "editorial_angle": "Accompagnement rigoureux de la première estimation à l'acte notarié.",
+      "signature_topics": [
+        "Estimation vénale certifiée",
+        "Optimisation de la valeur nette vendeur"
+      ]
+    }
+  ],
+  "competitors_monitored": [],
+  "telemetry_settings": {
+    "ga4_measurement_id": "",
+    "gsc_property": "",
+    "meta_pixel_id": "",
+    "linkedin_insight_tag": ""
+  }
+}

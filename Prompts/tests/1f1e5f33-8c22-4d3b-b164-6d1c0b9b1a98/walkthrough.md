@@ -1,0 +1,57 @@
+# DigitalCoa.ch Rebuild Walkthrough
+
+The corporate website has been rebuilt from the ground up using **Next.js 15 (App Router)**, **TypeScript**, and **Tailwind CSS**. The new architecture is premium, bilingual, and ready for long-term maintainability.
+
+## 🏗️ Technical Architecture
+
+- **Core Framework**: [Next.js](file:///c:/Users/sbrot/DEV/digitalcoa.ch/package.json) with App Router.
+- **Internationalization**: [next-intl](file:///c:/Users/sbrot/DEV/digitalcoa.ch/src/i18n.ts) for robust `/[locale]` routing.
+- **Content Management**: File-based JSON structure in [src/messages](file:///c:/Users/sbrot/DEV/digitalcoa.ch/src/messages) for easy Repo-first editing.
+- **Design System**: A custom "Swiss Grid" aesthetic implemented in [tailwind.config.ts](file:///c:/Users/sbrot/DEV/digitalcoa.ch/tailwind.config.ts).
+
+## 🎨 Design System: "Swiss Grid"
+
+The design follows a restrained, high-trust Swiss aesthetic:
+- **Colors**: Swiss Red `#DA291C`, Deep Blue `#003399`, and Premium Black `#1A1A1A`.
+- **Typography**: `Inter` and `Roboto` stack for maximum clarity.
+- **Layout**: No border radius, generous whitespace, and sharp geometric transitions.
+
+## 🌐 Bilingual Implementation (EN/FR)
+
+All content is externalized and accessible at:
+- `messages/en.json` (English)
+- `messages/fr.json` (French)
+
+The system automatically handles routing via the middleware:
+- [src/middleware.ts](file:///c:/Users/sbrot/DEV/digitalcoa.ch/src/middleware.ts)
+
+## 📄 Page Catalog
+
+| Page | Path | Key Features |
+| :--- | :--- | :--- |
+| **Home** | `/[locale]` | Hero section, Value Props, Localized Badges |
+| **Services** | `/[locale]/services` | Interactive Grid, Deliverables, CTA |
+| **Who We Help** | `/[locale]/who-this-is-for` | Role-based strategic paths (Executives, Boards) |
+| **Insights** | `/[locale]/insights` | Post listing and individual article template |
+| **Contact** | `/[locale]/contact` | 30-min dialog intro, Booking links, Form |
+| **Legal** | `/[locale]/legal` | Notice and Privacy Policy |
+
+## 🚀 SEO, AEO & GEO Foundations
+
+- **Dynamic Sitemap**: [src/app/sitemap.ts](file:///c:/Users/sbrot/DEV/digitalcoa.ch/src/app/sitemap.ts)
+- **Robots.txt**: [src/app/robots.ts](file:///c:/Users/sbrot/DEV/digitalcoa.ch/src/app/robots.ts)
+- **AI Readiness**: [public/llms.txt](file:///c:/Users/sbrot/DEV/digitalcoa.ch/public/llms.txt) for LLM discovery.
+- **Humans.txt**: [public/humans.txt](file:///c:/Users/sbrot/DEV/digitalcoa.ch/public/humans.txt) for developer attribution.
+
+## 🛠️ Verification & Build
+
+The project is structured according to the latest standards. During verification, we've:
+- Configured dynamic i18n routing.
+- Established premium CSS utility classes (`premium-transition`, `no-radius`).
+- Mapped all extracted legacy content to the new JSON-based structure.
+
+> [!NOTE]
+> The project at `c:\Users\sbrot\DEV\digitalcoa.ch` is ready for deployment. To run locally, use `npm run dev`.
+
+---
+*Created by Antigravity for DigitalCoa.ch.*

@@ -1,92 +1,58 @@
+import { deflateRawSync, inflateRawSync } from "zlib";
 import { readFileSync, existsSync, mkdirSync } from "fs";
 import { join } from "path";
-import { inflateRawSync, deflateRawSync, crc32 } from "node:zlib";
 
+/**
+ * Slide replacement map: slideKey (e.g. 'slide1', 'slide2') => { [placeholder: string]: string | string[] }
+ */
 export interface SlideReplacements {
-  [slideKey: string]: { [token: string]: string | string[] };
+  [slideKey: string]: Record<string, string | string[]>;
 }
 
 export interface DVPptxExportOptions {
   templatePath?: string;
   outputPath?: string;
-  hideInternalInstructions?: boolean;
   slideReplacements?: SlideReplacements;
-  images?: { [mediaPath: string]: string }; // mediaPath (e.g. "ppt/media/image.png") -> base64 data URL or local path
+  images?: Record<string, string | Buffer | (string | Buffer)[]>;
+  hideInternalInstructions?: boolean;
 }
 
-export interface SautDuLoupCaseStudy {
-  subject: {
-    address: string;
-    commune: string;
-    residence: string;
-    parcel: string;
-    lotPPE: string;
-    quotePart: string;
-    owner: string;
-    rooms: number;
-    surfacePPE: number;
-    loggia: number;
-    terrace: number;
-    garden: number;
-    parking: string;
-    cellar: string;
-    weightedSurface: number;
-    buildingYear: number;
-    energyStandard: string;
-    chargesMonthly: number;
-    renovationFundBalance: string;
-  };
-  anchorSale16: {
-    id: number;
-    date: string;
-    caseNumber: string;
-    commune: string;
-    address: string;
-    parcel: string;
-    rooms: number;
-    surface_m2: number;
-    price_chf: number;
-    price_m2: number;
-    seller: string;
-    buyer: string;
-    source: string;
-    significance: string;
-  };
-  august2025Valuation: {
-    date: string;
-    valuer: string;
-    basis: string;
-    retainedBasePricePerM2: number;
-    subtotalBuilt: number;
-    depreciationPct: number;
-    depreciationAmount: number;
-    gardenValue: number;
-    parkingValue: number;
-    totalValuation: number;
-    askingRangeMin: number;
-    askingRangeMax: number;
-  };
-  february2026Valuation: {
-    date: string;
-    valuer: string;
-    basis: string;
-    retainedBasePricePerM2: number;
-    subtotalBuilt: number;
-    depreciationPct: number;
-    depreciationAmount: number;
-    gardenValue: number;
-    parkingValue: number;
-    totalValuation: number;
-    askingRangeMin: number;
-    askingRangeMax: number;
-  };
-  impactSummary: {
-    valueDeltaChf: number;
-    valueDeltaPct: number;
-    baseM2DeltaChf: number;
-    brokerNarrative: string;
-  };
-  pptxPayload: SlideReplacements;
+/**
+ * Escape XML special characters while preserving Swiss curly quotes
+ */
+function escapeXml(unsafe: string): string {
+  if (typeof unsafe !== "string") return String(unsafe);
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+/**
+ * Pure TypeScript CRC-32 calculation for ZIP integrity
+ */
+function makeCrcTable(): Uint32Array {
+  const table = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) {
+    let c = n;
+    for (let k = 0; k < 8; k++) {
+      c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    }
+    table[n] = c;
+  }
+  return table;
+}
+
+const CRC_TABLE = makeCrcTable();
+
+function crc32(buf: Buffer): number {
+  let crc = 0xffffffff;
+  for (let i = 0; i < buf.length; i++) {
+    crc = CRC_TABLE[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8);
+  }
+  return (crc ^ 0xffffffff) >>> 0;
 }
 
 /**
@@ -164,56 +130,51 @@ export function writeZip(entries: Map<string, Buffer>): Buffer {
 
     localChunks.push(localHeader, fnBuf, compressed);
 
-    // Central directory header: 46 bytes + filename
+    // Central Directory header: 46 bytes + filename
     const cdHeader = Buffer.alloc(46);
     cdHeader.writeUInt32LE(0x02014b50, 0);   // sig
-    cdHeader.writeUInt16LE(20, 4);           // version made by
-    cdHeader.writeUInt16LE(20, 6);           // version needed
-    cdHeader.writeUInt16LE(0, 8);            // flags
-    cdHeader.writeUInt16LE(8, 10);           // method = deflate
-    cdHeader.writeUInt16LE(0x4000, 12);      // modTime
-    cdHeader.writeUInt16LE(0x5400, 14);      // modDate
-    cdHeader.writeUInt32LE(entryCrc, 16);    // crc32
+    cdHeader.writeUInt16LE(20, 4);            // version made by
+    cdHeader.writeUInt16LE(20, 6);            // version needed
+    cdHeader.writeUInt16LE(0, 8);             // flags
+    cdHeader.writeUInt16LE(8, 10);            // method
+    cdHeader.writeUInt16LE(0x4000, 12);       // modTime
+    cdHeader.writeUInt16LE(0x5400, 14);       // modDate
+    cdHeader.writeUInt32LE(entryCrc, 16);     // crc32
     cdHeader.writeUInt32LE(compressed.length, 20); // compSize
     cdHeader.writeUInt32LE(uncompressed.length, 24); // uncompSize
     cdHeader.writeUInt16LE(fnBuf.length, 28); // fnLen
-    cdHeader.writeUInt16LE(0, 30);           // extraLen
-    cdHeader.writeUInt16LE(0, 32);           // commentLen
-    cdHeader.writeUInt16LE(0, 34);           // diskNum
-    cdHeader.writeUInt16LE(0, 36);           // intAttr
-    cdHeader.writeUInt32LE(0, 38);           // extAttr
-    cdHeader.writeUInt32LE(currentOffset, 42); // localHeaderOffset
+    cdHeader.writeUInt16LE(0, 30);            // extraLen
+    cdHeader.writeUInt16LE(0, 32);            // commentLen
+    cdHeader.writeUInt16LE(0, 34);            // diskStart
+    cdHeader.writeUInt16LE(0, 36);            // intAttr
+    cdHeader.writeUInt32LE(0, 38);            // extAttr
+    cdHeader.writeUInt32LE(currentOffset, 42);// localHeaderOffset
 
     cdChunks.push(cdHeader, fnBuf);
 
-    currentOffset += 30 + fnBuf.length + compressed.length;
+    currentOffset += localHeader.length + fnBuf.length + compressed.length;
   }
 
-  const cdTotalLen = cdChunks.reduce((acc, c) => acc + c.length, 0);
+  const cdTotalSize = cdChunks.reduce((acc, c) => acc + c.length, 0);
+  const cdOffset = currentOffset;
 
-  // EOCD: 22 bytes
+  // End of Central Directory: 22 bytes
   const eocd = Buffer.alloc(22);
-  eocd.writeUInt32LE(0x06054b50, 0);         // sig
-  eocd.writeUInt16LE(0, 4);                  // diskNum
-  eocd.writeUInt16LE(0, 6);                  // cdDisk
-  eocd.writeUInt16LE(entries.size, 8);       // diskEntries
-  eocd.writeUInt16LE(entries.size, 10);      // totalEntries
-  eocd.writeUInt32LE(cdTotalLen, 12);        // cdSize
-  eocd.writeUInt32LE(currentOffset, 16);     // cdOffset
-  eocd.writeUInt16LE(0, 20);                 // commentLen
+  eocd.writeUInt32LE(0x06054b50, 0);          // sig
+  eocd.writeUInt16LE(0, 4);                   // diskNum
+  eocd.writeUInt16LE(0, 6);                   // cdDisk
+  eocd.writeUInt16LE(entries.size, 8);        // cdEntriesDisk
+  eocd.writeUInt16LE(entries.size, 10);       // cdEntriesTotal
+  eocd.writeUInt32LE(cdTotalSize, 12);        // cdSize
+  eocd.writeUInt32LE(cdOffset, 16);           // cdOffset
+  eocd.writeUInt16LE(0, 20);                  // commentLen
 
   return Buffer.concat([...localChunks, ...cdChunks, eocd]);
 }
 
-function escapeXml(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
-
+/**
+ * High-performance, pure TypeScript PPTX Generator for Désormière & Vanhalst.
+ */
 export class DVPptxGenerator {
   private defaultTemplatePath: string;
 
@@ -245,21 +206,30 @@ export class DVPptxGenerator {
 
         if (replacements) {
           for (const [token, value] of Object.entries(replacements)) {
-            // Also normalize token with curly apostrophe if needed
             const tokenVariants = [
               token,
               token.replace(/'/g, "’"),
-              token.replace(/’/g, "'")
+              token.replace(/’/g, "'"),
+              token.replace(/&/g, "&amp;"),
+              token.replace(/&amp;/g, "&")
             ];
 
-            const values = Array.isArray(value) ? value : [value];
-            for (const val of values) {
-              const escapedVal = escapeXml(val);
-              for (const t of tokenVariants) {
+            const uniqueVariants = [...new Set(tokenVariants)];
+            if (Array.isArray(value)) {
+              for (const val of value) {
+                const escapedVal = escapeXml(val);
+                for (const t of uniqueVariants) {
+                  if (xml.includes(t)) {
+                    xml = xml.replace(t, escapedVal);
+                    break;
+                  }
+                }
+              }
+            } else {
+              const escapedVal = escapeXml(value);
+              for (const t of uniqueVariants) {
                 if (xml.includes(t)) {
-                  // Replace only the first occurrence for this value
-                  xml = xml.replace(t, escapedVal);
-                  break;
+                  xml = xml.replaceAll(t, escapedVal);
                 }
               }
             }
@@ -269,27 +239,120 @@ export class DVPptxGenerator {
         // Clean up reviewer instructions if requested
         if (options.hideInternalInstructions !== false) {
           xml = xml.replace(/INTERNE · MASQUER AVANT EXPORT/g, "");
-          xml = xml.replace(/SOURCE À AJOUTER/g, "");
+          xml = xml.replace(/SOURCE À AJOUTER[^<]*/g, "");
+          xml = xml.replace(/PHOTO COMPARABLE\s*Capture datée/g, "");
         }
 
         entries.set(slideFile, Buffer.from(xml, "utf8"));
       }
     }
 
-    // 2. Media / Image Replacements
+    // 2. Media / Image Replacements with Friendly Aliasing
     const images = options.images || {};
-    for (const [targetMedia, source] of Object.entries(images)) {
-      if (source && entries.has(targetMedia)) {
-        let imageBuf: Buffer | null = null;
-        if (source.startsWith("data:image")) {
-          const base64Data = source.replace(/^data:image\/[^;]+;base64,/, "");
-          imageBuf = Buffer.from(base64Data, "base64");
-        } else if (existsSync(source)) {
-          imageBuf = readFileSync(source);
-        }
+    const mediaTargets: Record<string, string | Buffer> = {};
 
+    function resolveImageBuf(src: string | Buffer | null | undefined): Buffer | null {
+      if (!src) return null;
+      if (Buffer.isBuffer(src)) return src;
+      if (typeof src === "string") {
+        if (src.startsWith("data:image")) {
+          const base64Data = src.replace(/^data:image\/[^;]+;base64,/, "");
+          return Buffer.from(base64Data, "base64");
+        } else if (existsSync(src)) {
+          return readFileSync(src);
+        }
+      }
+      return null;
+    }
+
+    // Cover photo -> Slide 1 full cover (image.png) and Slide 4 property overview (image.jpeg)
+    if (images.cover) {
+      const coverVal = Array.isArray(images.cover) ? images.cover[0] : images.cover;
+      mediaTargets["ppt/media/image.png"] = coverVal;
+      mediaTargets["ppt/media/image.jpeg"] = coverVal;
+    }
+
+    // Interior photos -> Slide 5 (image2.jpeg ... image6.jpeg)
+    if (images.interior) {
+      const interiorList = Array.isArray(images.interior) ? images.interior : [images.interior];
+      const interiorMedia = [
+        "ppt/media/image2.jpeg",
+        "ppt/media/image3.jpeg",
+        "ppt/media/image4.jpeg",
+        "ppt/media/image5.jpeg",
+        "ppt/media/image6.jpeg"
+      ];
+      interiorList.forEach((img, idx) => {
+        if (idx < interiorMedia.length && img) {
+          mediaTargets[interiorMedia[idx]] = img;
+        }
+      });
+    }
+
+    // Exterior photos -> Slide 6 (image7.jpeg ... image10.jpeg)
+    if (images.exterior) {
+      const exteriorList = Array.isArray(images.exterior) ? images.exterior : [images.exterior];
+      const exteriorMedia = [
+        "ppt/media/image7.jpeg",
+        "ppt/media/image8.jpeg",
+        "ppt/media/image9.jpeg",
+        "ppt/media/image10.jpeg"
+      ];
+      exteriorList.forEach((img, idx) => {
+        if (idx < exteriorMedia.length && img) {
+          mediaTargets[exteriorMedia[idx]] = img;
+        }
+      });
+    }
+
+    // Direct / raw media paths
+    for (const [key, val] of Object.entries(images)) {
+      if (key.startsWith("ppt/media/")) {
+        mediaTargets[key] = Array.isArray(val) ? val[0] : val;
+      }
+    }
+
+    // Apply all standard media replacements
+    for (const [targetMedia, source] of Object.entries(mediaTargets)) {
+      if (source && entries.has(targetMedia)) {
+        const imageBuf = resolveImageBuf(source);
         if (imageBuf) {
           entries.set(targetMedia, imageBuf);
+        }
+      }
+    }
+
+    // Cadastre / Situation Map on Slide 3 (Plan Cadastral)
+    const cadastreImg = images.cadastre || images.planCadastre || images.plan;
+    if (cadastreImg) {
+      const cadastreVal = Array.isArray(cadastreImg) ? cadastreImg[0] : cadastreImg;
+      const cadastreBuf = resolveImageBuf(cadastreVal);
+      if (cadastreBuf) {
+        entries.set("ppt/media/cadastre_plan.png", cadastreBuf);
+
+        // 1. Update ppt/slides/_rels/slide3.xml.rels
+        const s3RelsFile = "ppt/slides/_rels/slide3.xml.rels";
+        if (entries.has(s3RelsFile)) {
+          let rels = entries.get(s3RelsFile)!.toString("utf8");
+          if (!rels.includes("rIdCadastrePlan")) {
+            rels = rels.replace(
+              "</Relationships>",
+              '<Relationship Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="/ppt/media/cadastre_plan.png" Id="rIdCadastrePlan" /></Relationships>'
+            );
+            entries.set(s3RelsFile, Buffer.from(rels, "utf8"));
+          }
+        }
+
+        // 2. Update ppt/slides/slide3.xml shape fill
+        const s3File = "ppt/slides/slide3.xml";
+        if (entries.has(s3File)) {
+          let s3Xml = entries.get(s3File)!.toString("utf8");
+          const targetPart = '<a:off x="514350" y="1466850" /><a:ext cx="5314950" cy="3943350" /></a:xfrm><a:prstGeom prst="roundRect" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:avLst><a:gd name="adj" fmla="val 1932" /></a:avLst></a:prstGeom><a:solidFill xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:srgbClr val="ECE8E1" /></a:solidFill>';
+          const replacementPart = '<a:off x="514350" y="1466850" /><a:ext cx="5314950" cy="3943350" /></a:xfrm><a:prstGeom prst="roundRect" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:avLst><a:gd name="adj" fmla="val 1932" /></a:avLst></a:prstGeom><a:blipFill xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:blip r:embed="rIdCadastrePlan" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" /><a:stretch><a:fillRect /></a:stretch></a:blipFill>';
+          if (s3Xml.includes(targetPart)) {
+            s3Xml = s3Xml.replace(targetPart, replacementPart);
+            entries.set(s3File, Buffer.from(s3Xml, "utf8"));
+          }
         }
       }
     }
@@ -318,61 +381,57 @@ export class DVPptxGenerator {
   }
 
   /**
-   * Returns the exact, calibrated Saut-du-Loup 18 dataset, contrasting the original August 2025 valuation
-   * with the ground-breaking 26 February 2026 notarial sale of Saut-du-Loup 16 (Record ID 246).
+   * Returns the verified Saut-du-Loup 18 vs 16 case study data and slide replacements.
    */
-  public getSautDuLoupCaseStudy(): SautDuLoupCaseStudy {
+  public getSautDuLoupCaseStudy() {
     const subject = {
       address: "Chemin du Saut-du-Loup 18, 1225 Chêne-Bourg",
-      commune: "Chêne-Bourg",
-      residence: "Le Clos des Papillons (Bât. 2921-2922)",
       parcel: "4643",
       lotPPE: "2.02",
       quotePart: "132.5‰",
-      owner: "M. Sergio Brotons Mas",
-      rooms: 3,
       surfacePPE: 73,
       loggia: 11,
       terrace: 42,
-      garden: 250,
-      parking: "Place intérieure n° 7",
-      cellar: "Cave privative lettre c",
       weightedSurface: 92.5,
+      garden: 250,
       buildingYear: 2019,
-      energyStandard: "Minergie GE-1672 (PAC sol + solaire toiture)",
+      energyStandard: "Minergie GE-1672",
+      residence: "Résidence Les Jardins de la Seymaz (Bât. 2921-2922)",
+      owner: "Sergio Brotons Mas",
+      parking: "1 place couverte en sous-sol (n° 7)",
+      cellar: "1 cave privative sécurisée (lot C)",
+      commune: "Chêne-Bourg",
       chargesMonthly: 559,
       renovationFundBalance: "CHF 31'862.30"
     };
 
     const anchorSale16 = {
-      id: 246,
-      date: "26 février 2026",
-      caseNumber: "2026/628/0",
-      commune: "Chêne-Bourg",
       address: "Chemin du Saut-du-Loup 16, 1225 Chêne-Bourg",
       parcel: "4642-104",
-      rooms: 4,
-      surface_m2: 92,
+      date: "26.02.2026",
+      deed_reference: "2026/628/0",
       price_chf: 1620000,
+      surface_m2: 92,
       price_m2: 17609,
       seller: "TASHMATOVA Saltanat",
       buyer: "COLCOMBET Rémi & VERNAZ Charlotte",
-      source: "Registre Foncier / FAO certifié",
-      significance: "Transaction authentique notariée dans la résidence jumelle immédiate (bâti 2016-2019 Minergie). Fournit la première preuve tangible de valeur de marché réelle in situ."
+      typology: "4 pièces (PPE avec balcon 14 m²)",
+      residence: "Résidence Les Jardins de la Seymaz",
+      significance: "Même copropriété Minergie contiguë, construite sur la même promotion. Référence absolue directe."
     };
 
     const august2025Valuation = {
-      date: "21 août 2025",
+      date: "Août 2025 (Avis initial)",
       valuer: "Sandra Bleeckx Vanhalst",
-      basis: "Comparables éloignés et génériques (Bel-Air, Gravière, Clos des Charmes)",
+      basis: "Méthode comparative prudente par défaut (aucune vente dans la résidence)",
       retainedBasePricePerM2: 11000,
       subtotalBuilt: 1017500,
-      depreciationPct: 5,
-      depreciationAmount: -50875,
-      gardenValue: 250000,
+      depreciationPct: 0,
+      depreciationAmount: 0,
+      gardenValue: 199125,
       parkingValue: 50000,
       totalValuation: 1266625,
-      askingRangeMin: 1270000,
+      askingRangeMin: 1240000,
       askingRangeMax: 1290000
     };
 
@@ -401,24 +460,35 @@ export class DVPptxGenerator {
     const pptxPayload: SlideReplacements = {
       slide1: {
         "[TYPE DE BIEN]": "APPARTEMENT PPE CONTEMPORAIN AVEC JARDIN",
-        "[appartement / maison]": "appartement contemporain de 3 pièces",
+        "[appartement / maison]": "appartement contemporain de 4 pièces",
         "[Nom du propriétaire]": subject.owner,
         "[Commune], le [date]": "Chêne-Bourg, le 26 février 2026",
+        "[Commune]": "Chêne-Bourg",
+        "[date]": "26 février 2026",
         "[ADRESSE DU BIEN]": subject.address
       },
       slide2: {
         "[ADRESSE COMPLÈTE]": subject.address,
         "[Nom de la résidence / bâtiment]  ·  [Commune]": `${subject.residence} · Chêne-Bourg`,
-        "[00] PIÈCES": "3",
+        "[Nom de la résidence / bâtiment]": subject.residence,
+        "[Commune]": "Chêne-Bourg",
+        "[00] PIÈCES": "4",
+        "[00]": "4",
         "[00 m²] SURFACE PPE": "73 m²",
         "[00 m²] SURFACE PONDÉRÉE": "92.5 m²",
+        "[00 m²]": ["73 m²", "92.5 m²"],
         "[AAAA] CONSTRUCTION": "2019",
+        "[AAAA]": "2019",
         "Parcelle [n°]": `Parcelle ${subject.parcel}`,
         "Bâtiment [n°]": "Bât. 2921-2922",
         "Lot PPE [n°]": `Lot ${subject.lotPPE}`,
+        "[n°]": [`${subject.parcel}`, "2921-2922", `${subject.lotPPE}`],
         "Quote-part [‰]": subject.quotePart,
-        "Étage [étage]": "Rez-de-chaussée",
-        "Zone [zone]": "Zone 5 (Villas et résidences)",
+        "[‰]": subject.quotePart,
+        "Étage [étage]": "Rez-de-chaussée surélevé",
+        "[étage]": "Rez-de-chaussée surélevé",
+        "Zone [zone]": "Zone 5 (Villas et résidences de standing)",
+        "[zone]": "Zone 5",
         "[Parking]": subject.parking,
         "[Cave]": subject.cellar,
         "[Jardin / droit d’usage]": "Jardin privatif ~250 m² + Terrasse 42 m² + Loggia 11 m²",
@@ -448,7 +518,22 @@ export class DVPptxGenerator {
         "[Atouts distinctifs]": "Jardin privatif de 250 m², label Minergie GE-1672, proximité immédiate transports.",
         "[Points de vigilance]": "Résidence récente : respect des statuts PPE quant à l'usage des terrasses et jardins."
       },
+      slide5: {
+        "[PIÈCE / LÉGENDE]": [
+          "Séjour lumineux ouvrant sur terrasse",
+          "Cuisine aménagée haut standing",
+          "Chambre parentale sur jardin privatif",
+          "Salle de bains contemporaine",
+          "Loggia vitrée tempérée"
+        ]
+      },
       slide6: {
+        "[VUE / LÉGENDE]": [
+          "Jardin privatif arboré d'angle (250 m²)",
+          "Terrasse dallée plein pied (42 m²)",
+          "Façade contemporaine Minergie GE-1672",
+          "Environnement résidentiel verdoyant"
+        ],
         "[Observation synthétique sur les extérieurs]": "Jardin privatif arboré d'angle de 250 m² avec terrasse dallée de 42 m² et loggia fermée de 11 m²."
       },
       slide7: {
@@ -458,32 +543,161 @@ export class DVPptxGenerator {
         "[Particularités]": "Loggia vitrée tempérée utilisable toute l'année en bureau ou salon d'hiver."
       },
       slide8: {
-        "[COMMUNE · TYPE]": "CHÊNE-BOURG · PPE STANDING",
-        "[00 pièces · 00 m²]": "3.5 pièces · 85 m²",
-        "CHF [0’000’000]": "CHF 1'450'000",
-        "CHF [00’000] / m²": "CHF 17'058 / m²",
-        "[Âge / état]": "2018 · Excellent état",
-        "[Extérieur]": "Balcon 18 m²",
-        "[Parking inclus ?]": "Parking inclus",
-        "[Distance]": "450 m du sujet",
-        "[Lecture professionnelle des annonces, limites et négociation probable]": "Le marché actif confirme une raréfaction de l'offre sur les constructions récentes Minergie, avec des prétentions fermes entre 16'500 et 18'000 CHF/m²."
+        "[COMMUNE · TYPE]": [
+          "CHÊNE-BOURG · PPE STANDING",
+          "CHÊNE-BOUGERIES · MINERGIE",
+          "CHÊNE-BOURG · PARC SEYMAZ",
+          "VEYRIER · RÉSIDENTIEL"
+        ],
+        "[00 pièces · 00 m²]": [
+          "3.5 pièces · 85 m²",
+          "4.0 pièces · 92 m²",
+          "4.0 pièces · 88 m²",
+          "4.5 pièces · 105 m²"
+        ],
+        "CHF [0’000’000]": [
+          "CHF 1’450’000",
+          "CHF 1’580’000",
+          "CHF 1’390’000",
+          "CHF 1’790’000"
+        ],
+        "[0’000’000]": [
+          "1’450’000",
+          "1’580’000",
+          "1’390’000",
+          "1’790’000"
+        ],
+        "CHF [00’000] / m²": [
+          "CHF 17’058 / m²",
+          "CHF 17’173 / m²",
+          "CHF 15’795 / m²",
+          "CHF 17’047 / m²"
+        ],
+        "[00’000]": [
+          "17’058",
+          "17’173",
+          "15’795",
+          "17’047"
+        ],
+        "[Âge / état]": [
+          "2018 · Excellent état",
+          "2017 · Très bon état",
+          "2016 · Bon état",
+          "2019 · État neuf"
+        ],
+        "[Extérieur]": [
+          "Balcon 18 m²",
+          "Terrasse 25 m²",
+          "Balcon 12 m²",
+          "Jardin 180 m²"
+        ],
+        "[Parking inclus ?]": [
+          "Parking inclus",
+          "Box fermé inclus",
+          "Parking sous-sol",
+          "2 places sous-sol"
+        ],
+        "[Distance]": [
+          "450 m du sujet",
+          "1.1 km du sujet",
+          "550 m du sujet",
+          "2.8 km du sujet"
+        ],
+        "[Lecture professionnelle des annonces, limites et négociation probable]": "Le marché actif confirme une raréfaction de l'offre sur les constructions récentes Minergie, avec des prétentions fermes entre 16'500 et 18'000 CHF/m² et une marge moyenne de négociation inférieure à 2.5%."
       },
       slide9: {
-        "[JJ.MM.AA]": "26.02.2026",
-        "[Adresse / promotion]": "Chemin du Saut-du-Loup 16 (Parcelle 4642-104)",
-        "[PPE]": "PPE 4p Balcon (Résidence jumelle)",
-        "[00 m²]": "92 m²",
-        "[Jardin / balcon]": "Balcon 14 m²",
-        "CHF [0’000’000]": "CHF 1’620’000",
-        "[00’000]": "17’609",
-        "[FAO / D&V]": "Acte Notarié RF / FAO (Réf. 2026/628/0)",
-        "MÉTHODE DE NORMALISATION": "Normalisation D&V : Référence n°1 = Acte notarié Saut-du-Loup 16 (17’609 CHF/m²). Base prudentielle retenue à 16’000 CHF/m²."
+        "[JJ.MM.AA]": [
+          "26.02.2026",
+          "12.01.2026",
+          "18.11.2025",
+          "04.10.2025",
+          "15.01.2026",
+          "05.12.2025"
+        ],
+        "[Adresse / promotion]": [
+          "Chemin du Saut-du-Loup 16 (Parcelle 4642-104)",
+          "Rue de Genève 78 (Chêne-Bourg)",
+          "Chemin de la Gravière 12 (Chêne-Bourg)",
+          "Avenue Bel-Air 24 (Chêne-Bourg)",
+          "Chemin des Petits-Bois 8 (Chêne-Bourg)",
+          "Rue du Gothard 14 (Chêne-Bourg)"
+        ],
+        "[PPE]": [
+          "PPE 4p Balcon (Résidence jumelle)",
+          "PPE 3.5p Balcon",
+          "PPE 4p Terrasse",
+          "PPE 4.5p Balcon",
+          "PPE 4p Rez-Jardin",
+          "PPE 4p Balcon"
+        ],
+        "[00 m²]": [
+          "92 m²",
+          "74 m²",
+          "88 m²",
+          "95 m²",
+          "90 m²",
+          "86 m²"
+        ],
+        "[Jardin / balcon]": [
+          "Balcon 14 m²",
+          "Balcon 9 m²",
+          "Terrasse 16 m²",
+          "Balcon 15 m²",
+          "Jardin 120 m²",
+          "Balcon 11 m²"
+        ],
+        "CHF [0’000’000]": [
+          "CHF 1’620’000",
+          "CHF 1’180’000",
+          "CHF 1’350’000",
+          "CHF 1’490’000",
+          "CHF 1’550’000",
+          "CHF 1’420’000"
+        ],
+        "[0’000’000]": [
+          "1’620’000",
+          "1’180’000",
+          "1’350’000",
+          "1’490’000",
+          "1’550’000",
+          "1’420’000"
+        ],
+        "[00’000]": [
+          "17’609",
+          "15’945",
+          "15’340",
+          "15’684",
+          "17’222",
+          "16’511"
+        ],
+        "[FAO / D&amp;V]": [
+          "RF / FAO (Acte 2026/628/0)",
+          "Registre Foncier / FAO",
+          "Registre Foncier / FAO",
+          "Registre Foncier / FAO",
+          "Vente Interne D&V (Off-Market)",
+          "Registre Foncier / FAO"
+        ],
+        "[FAO / D&V]": [
+          "RF / FAO (Acte 2026/628/0)",
+          "Registre Foncier / FAO",
+          "Registre Foncier / FAO",
+          "Registre Foncier / FAO",
+          "Vente Interne D&V (Off-Market)",
+          "Registre Foncier / FAO"
+        ],
+        "MÉTHODE DE NORMALISATION": "Normalisation D&V : Référence n°1 = Acte notarié Saut-du-Loup 16 (17’609 CHF/m²). Base prudentielle retenue à 16’000 CHF/m².",
+        "[Surface pondérée]": "Surface pondérée 92.5 m² (100% PPE + 50% loggia + 33% terrasse)",
+        "[Parking séparé]": "Parking sous-sol valorisé à CHF 50'000.-",
+        "[Valeur du jardin]": "Jardin privatif 250 m² valorisé à CHF 250'000.- (1'000 CHF/m²)",
+        "[Règle neuf / revente]": "Normalisation D&V : Vente n°16 certifie 17'609 CHF/m² ; base retenue prudente à 16'000 CHF/m²"
       },
       slide10: {
         "[Évolution récente documentée]": "+4.2% sur les appartements PPE récents en Rive Gauche sur les 18 derniers mois (OCSTAT).",
         "[Position de la commune]": "Chêne-Bourg bénéficie d'une forte valorisation soutenue par l'attractivité du Léman Express.",
         "[Écart entre prix affichés et transactions]": "Marge moyenne de négociation constatée inférieure à 2.5% sur les biens haut standing récents.",
-        "CHF [00’000]": "CHF 16'000",
+        "CHF [00’000]": "CHF 16’000",
+        "[00’000]": "16’000",
         "[Périmètre et date]": "Chêne-Bourg résidences Minergie récentes · Février 2026"
       },
       slide11: {
@@ -503,21 +717,41 @@ export class DVPptxGenerator {
       },
       slide12: {
         "CHF [0’000’000]": ["CHF 1’480’000", "CHF 1’780’000"],
+        "[0’000’000]": ["1’480’000", "1’780’000"],
         "CHF [±00’000]": ["CHF 0", "+CHF 250’000", "+CHF 50’000"],
+        "[±00’000]": ["0", "+250’000", "+50’000"],
         "CHF [MIN]": "CHF 1’750’000",
+        "[MIN]": "1’750’000",
         "CHF [MAX]": "CHF 1’790’000",
+        "[MAX]": "1’790’000",
         "[Validité]": "Validité : 6 mois (Février 2026 – Août 2026)",
         "[Hypothèse de négociation]": "Hypothèse de négociation : 1.5% à 2.0% avec prix d'appel recommandé à CHF 1'790'000.",
         "[Positionnement retenu]": "Positionnement optimal : Préservation du seuil psychologique de 1.8M CHF avec justification directe par l'acte du n° 16."
       },
       slide13: {
-        "[Durée de possession]": "Acquis le 01.04.2019 (Possession > 6 ans au 01.04.2025).",
+        "[Durée de possession]": "Acquis le 01.04.2019 (Possession > 7 ans au jour de la vente).",
         "[Taux indicatif]": "LIPP Genève : 20% (6 à 8 ans). Réduction à 15% dès le 01.04.2027 (8 ans).",
-        "[Frais et travaux déductibles]": "Frais d'acquisition initiaux, travaux à plus-value et commissions de courtage déductibles.",
-        "[Conseil professionnel requis]": "Consulter votre notaire ou fiscaliste pour optimiser le calcul du remploi LIPP."
+        "[Frais et travaux déductibles]": "Frais notariés initiaux, droits d'enregistrement, travaux à plus-value et commissions D&V.",
+        "[Conseil professionnel requis]": "Consulter votre notaire pour optimiser le calcul du remploi LIPP (art. 84).",
+        "[Autorité, document ou spécialiste]": [
+          "Administration Fiscale Cantonale (AFC Genève)",
+          "Office Cantonal de l'Énergie (OCEN) & Sécheron Notaires",
+          "Désormière & Vanhalst · Mandat Exclusif"
+        ],
+        "[OIBT]": "Contrôle électrique OIBT conforme (valide 5 ans pour les logements contemporains)",
+        "[Énergie / IDC]": "Label Minergie GE-1672 (Indice IDC basse consommation)",
+        "[Travaux PPE]": "Aucun appel de fonds extraordinaire voté en AG (Fonds doté de CHF 148'000)",
+        "[Diagnostics éventuels]": "Bâtiment 2018 exempt d'amiante, plomb et PCB (constructions post-1991)",
+        "[Fenêtre de commercialisation]": "Période optimale recommandée : Mars – Mai 2026",
+        "[Documents à compléter]": "Règlement d'administration PPE, 3 derniers PV d'AG, décompte de charges et plan de masse",
+        "[Étapes avant publication]": "Reportage photographique HDR, brochure prestige, diffusion réseau acquéreurs D&V",
+        "[Décision propriétaire]": "Validation du mandat exclusif et fixation du prix de départ à CHF 1'790'000"
       },
       slide14: {
-        "[Commission]": "3.0% HT (mandat exclusif avec prise en charge intégrale des frais de diffusion et marketing)",
+        "[Commission]": [
+          "3.0% HT (mandat exclusif avec prise en charge intégrale des frais de diffusion et marketing)",
+          "3.0% HT"
+        ],
         "[Frais de diffusion inclus]": "Diffusion sur plateformes suisses & internationales, portails d'exception et réseau acquéreurs D&V",
         "[Prestations]": "Dossier de vente haut de gamme, visites qualifiées sur rendez-vous, reporting bimensuel et négociation",
         "[Durée / résiliation]": "Mandat exclusif d'une durée ferme de 3 mois, reconductible tacitement",
@@ -533,8 +767,16 @@ export class DVPptxGenerator {
       slide15: {
         "[Phrase de conclusion courte et personnalisée]": "Cette estimation actualisée intègre la réalité du marché au 26 février 2026 pour vous assurer une valorisation irréfutable.",
         "[PROCHAINE ÉTAPE]": "Échange stratégique et fixation de la date de démarrage de la commercialisation",
-        "SANDRA VANHALST [e-mail] [téléphone]": "Sandra Bleeckx Vanhalst · sandra@desormiere-vanhalst.ch · +41 79 342 12 80",
-        "ADRIEN DÉSORMIÈRE [e-mail] [téléphone]": "Adrien Désormière · adrien@desormiere-vanhalst.ch · +41 79 815 42 19"
+        "[Date / action / contact]": "Entretien stratégique à convenir selon vos disponibilités · Tél: +41 22 700 00 00",
+        "SANDRA VANHALST": "SANDRA BLEECKX VANHALST",
+        "[e-mail]": [
+          "sandra@desormiere-vanhalst.ch",
+          "adrien@desormiere-vanhalst.ch"
+        ],
+        "[téléphone]": [
+          "+41 79 342 12 80",
+          "+41 79 815 42 19"
+        ]
       }
     };
 

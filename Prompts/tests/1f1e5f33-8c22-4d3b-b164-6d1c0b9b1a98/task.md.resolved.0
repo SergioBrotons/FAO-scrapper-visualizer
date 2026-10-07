@@ -1,0 +1,29 @@
+# Task: Rebuild DigitalCoa.ch
+
+- [ ] Project Initialization [/]
+    - [ ] Initialize Next.js app with App Router & TypeScript
+    - [ ] Setup `next-intl` for EN/FR i18n
+    - [ ] Configure Tailwind CSS with Swiss Grid design tokens
+- [ ] Design System & Components
+    - [ ] Define global styles (typography, colors)
+    - [ ] Build core components (Navigation, Footer, Container, Section)
+    - [ ] Build specialized UI components (Service Cards, Contact Form, FAQ)
+- [ ] Content & Architecture
+    - [ ] Create file-based content structure (messages/en.json, messages/fr.json)
+    - [ ] Map extracted content to new page structures
+- [ ] Page Implementation
+    - [ ] Home Page
+    - [ ] About Page
+    - [ ] Services Overview & Detail Pages
+    - [ ] Industries (Who We Help)
+    - [ ] Insights (Blog) Listing & Post Template
+    - [ ] Contact Page
+    - [ ] Legal Pages (Legal Notice, Privacy Policy)
+- [ ] SEO, AEO & GEO
+    - [ ] Metadata API implementation for all pages
+    - [ ] JSON-LD Structured Data
+    - [ ] `llms.txt`, `humans.txt`, `robots.ts`, `sitemap.ts`
+- [ ] Verification
+    - [ ] i18n Routing & Language Switcher
+    - [ ] Performance & Responsiveness
+    - [ ] Final Walkthrough

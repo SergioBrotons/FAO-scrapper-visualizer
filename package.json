@@ -11,6 +11,7 @@
     "radar:dev": "bun scripts/build_developer_radar.ts",
     "dossier": "bun scripts/generate_dossier.ts",
     "sync:fastlane": "python src/fao_transactions/collector/fastlane_collector.py",
-    "enrich:cadastre": "python scripts/enrich_open_data_cadastre.py"
+    "enrich:cadastre": "python scripts/enrich_open_data_cadastre.py",
+    "ingest:pools": "python scripts/ingest_sitg_pools.py"
   }
 }

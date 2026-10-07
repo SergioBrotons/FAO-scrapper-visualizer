@@ -31,3 +31,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/fao_transactions"]
+
+[tool.vercel]
+entrypoint = "wsgi.py:app"

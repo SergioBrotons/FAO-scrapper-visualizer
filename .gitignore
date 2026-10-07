@@ -46,4 +46,8 @@ data/exports/*_geocoded.csv
 # Scratch & Temporary Testing
 scratch/
 data/browser_profile_test/
+data/exports/test_*.pptx
+commit_*_index.html
+temp_*.pptx
+*.signal
 

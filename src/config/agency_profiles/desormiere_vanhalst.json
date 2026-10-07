@@ -1,0 +1,76 @@
+{
+  "agency_id": "desormiere_vanhalst",
+  "name": "Désormière & Vanhalst",
+  "short_name": "D&V",
+  "tagline": "Immobilier de Caractère • Rive Gauche Genève",
+  "brand": {
+    "primary_color": "#00939D",
+    "primary_hover": "#17DAE8",
+    "secondary_prestige": "#004A4F",
+    "background_sand": "#F6F3F3",
+    "card_bg": "#FFFFFF",
+    "accent_warm_brown": "#9E4000",
+    "accent_deep_brown": "#522100",
+    "text_main": "#1E293B",
+    "text_muted": "#64748B",
+    "font_heading": "'Cormorant Garamond', Georgia, serif",
+    "font_body": "'Plus Jakarta Sans', -apple-system, sans-serif",
+    "logo_main": "/dv/assets/DandV Logo right text clear.png",
+    "logo_round": "/dv/assets/DV logo rond signature.png",
+    "logo_badge": "/dv/assets/DV logo rond.png"
+  },
+  "territory": {
+    "region_name": "Rive Gauche Genève",
+    "focus_communes": [
+      "Cologny",
+      "Vandoeuvres",
+      "Collonge-Bellerive",
+      "Chêne-Bougeries",
+      "Troinex",
+      "Veyrier",
+      "Thônex",
+      "Chêne-Bourg",
+      "Plan-les-Ouates",
+      "Hermance",
+      "Anières",
+      "Corsier"
+    ],
+    "default_commune": "Troinex"
+  },
+  "personas": [
+    {
+      "name": "Sandra Bleeckx Vanhalst",
+      "role": "Spécialiste Villas, Familles & Transmission",
+      "editorial_angle": "Accompagnement patrimonial, successions et sorties d'indivision (Hoiries CC 602). Approche humaine, discrète et estimation de consensus familial.",
+      "signature_topics": [
+        "Sortie d'indivision successorale sans conflit",
+        "Transmission de propriété familiale à Genève",
+        "Vendre après le départ des enfants (downsizing)"
+      ]
+    },
+    {
+      "name": "Adrien Désormière",
+      "role": "Spécialiste Terrains, Villas d'Exception & Promotion",
+      "editorial_angle": "Faisabilité urbanistique en Zone 5 (Villas), détachement parcellaire, calcul de potentiel IUS et valorisation auprès d'investisseurs de gré à gré.",
+      "signature_topics": [
+        "Potentiel de division parcellaire en Zone 5",
+        "Optimisation de la valeur foncière constructible",
+        "Vente confidentielle off-market de propriétés d'exception"
+      ]
+    }
+  ],
+  "competitors_monitored": [
+    { "name": "Comptoir Immobilier", "type": "Grande Régie Traditionnelle", "focus": "Cantonal / Institutionnel" },
+    { "name": "SPG Société Privée de Gérance", "type": "Groupe Immobilier Majeur", "focus": "Prestige & Développement" },
+    { "name": "Pilet & Renaud", "type": "Régie Historique", "focus": "Gestion & Vente Rive Gauche" },
+    { "name": "Rosset Immobilier", "type": "Régie Cantonale", "focus": "Courtage & Gérance" },
+    { "name": "Barnes Suisse", "type": "Courage International", "focus": "Ultra-Luxury Cologny/Vandœuvres" },
+    { "name": "Engel & Völkers Genève", "type": "Franchise Internationale", "focus": "Résidentiel & Prestige" }
+  ],
+  "telemetry_settings": {
+    "ga4_measurement_id": "G-DVGENEVA01",
+    "gsc_property": "sc-domain:desormiere-vanhalst.ch",
+    "meta_pixel_id": "678912345098",
+    "linkedin_insight_tag": "5049382"
+  }
+}

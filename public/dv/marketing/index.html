@@ -1,0 +1,3180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Désormière & Vanhalst — Moteur Content Marketing & Inbound Vendeurs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="/dv/marketing/surveillance_data.js"></script>
+
+  <style>
+    :root {
+      --dv-teal: #00939D;
+      --dv-deep-green: #004A4F;
+      --dv-light-teal: #17DAE8;
+      --dv-sand: #F6F3F3;
+      --dv-brown-deep: #522100;
+      --dv-brown-warm: #9E4000;
+      --dv-card-bg: #FFFFFF;
+      --dv-text-main: #1E293B;
+      --dv-text-muted: #64748B;
+      --dv-border: rgba(0, 147, 157, 0.22);
+      --dv-shadow: 0 4px 20px rgba(0, 74, 79, 0.07);
+      --dv-radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dv-sand);
+      color: var(--dv-text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Minimalist SVG Icon Utility */
+    .icon {
+      display: inline-block;
+      vertical-align: -2px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* Top Navigation Header */
+    .top-navbar {
+      background: var(--dv-deep-green);
+      border-bottom: 3px solid var(--dv-teal);
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      height: 42px;
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .brand-titles h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    .brand-titles p {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--dv-light-teal);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .top-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-white-label {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-nav-link {
+      background: transparent;
+      border: 1px solid var(--dv-light-teal);
+      color: var(--dv-light-teal);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-nav-link:hover {
+      background: var(--dv-light-teal);
+      color: var(--dv-deep-green);
+    }
+
+    /* Subheader Tabs Bar - Ergonomic, Zero Lateral Scroll */
+    .tabs-bar {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--dv-border);
+      padding: 0 24px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      justify-content: stretch;
+    }
+    .tabs-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      padding: 14px 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dv-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      white-space: nowrap;
+      flex: 1 1 0;
+      min-width: 170px;
+      justify-content: center;
+    }
+
+    .tab-btn:hover {
+      color: var(--dv-teal);
+      background: rgba(0, 147, 157, 0.03);
+    }
+
+    .tab-btn.active {
+      color: var(--dv-deep-green);
+      border-bottom-color: var(--dv-teal);
+      font-weight: 700;
+      background: rgba(0, 147, 157, 0.05);
+    }
+
+    .tab-btn .tab-badge {
+      background: rgba(0, 147, 157, 0.12);
+      color: var(--dv-deep-green);
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .grid-5col {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .grid-6col {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 8px 0;
+      border-radius: 6px;
+    }
+
+    .source-card {
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      padding: 14px;
+      box-shadow: var(--dv-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 3px solid var(--dv-teal);
+      transition: all 0.2s;
+    }
+    .source-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 147, 157, 0.12);
+    }
+
+    .lead-magnet-card {
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      padding: 18px;
+      box-shadow: var(--dv-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-left: 4px solid var(--dv-teal);
+      transition: all 0.2s;
+    }
+    .lead-magnet-card:hover {
+      box-shadow: 0 8px 20px rgba(0, 74, 79, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .badge-chan {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .badge-chan.linkedin { background: #0A66C2; color: #FFFFFF; }
+    .badge-chan.instagram { background: #E1306C; color: #FFFFFF; }
+    .badge-chan.web { background: #0F766E; color: #FFFFFF; }
+    .badge-chan.youtube { background: #FF0000; color: #FFFFFF; }
+    .badge-chan.tiktok { background: #000000; color: #FFFFFF; }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1440px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--dv-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Cards & Grids */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .dv-card {
+      background: var(--dv-card-bg);
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      box-shadow: var(--dv-shadow);
+      padding: 22px;
+      position: relative;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dv-deep-green);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    /* Form & Sliders */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dv-text-main);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .form-label .val-display {
+      color: var(--dv-teal);
+      font-weight: 700;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #CBD5E1;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      color: var(--dv-text-main);
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--dv-teal);
+      box-shadow: 0 0 0 3px rgba(0, 147, 157, 0.15);
+    }
+
+    .form-range {
+      width: 100%;
+      accent-color: var(--dv-teal);
+      height: 6px;
+      cursor: pointer;
+    }
+
+    /* KPI Mini Cards */
+    .kpi-card {
+      background: #FFFFFF;
+      border: 1px solid var(--dv-border);
+      border-radius: var(--dv-radius);
+      padding: 16px;
+      box-shadow: var(--dv-shadow);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dv-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .kpi-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--dv-deep-green);
+      margin-top: 4px;
+      line-height: 1.1;
+    }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--dv-teal);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Result Banner */
+    .result-banner {
+      background: linear-gradient(135deg, var(--dv-deep-green), #002c2f);
+      color: #FFFFFF;
+      border-radius: var(--dv-radius);
+      padding: 22px;
+      margin-top: 18px;
+      border-left: 4px solid var(--dv-light-teal);
+    }
+
+    .result-banner h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .result-banner p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.5;
+    }
+
+    .badge-casatax {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .badge-casatax.eligible {
+      background: #DCFCE7;
+      color: #166534;
+      border: 1px solid #86EFAC;
+    }
+
+    .badge-casatax.ineligible {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FCD34D;
+    }
+
+    /* Buttons */
+    .btn-action {
+      background: var(--dv-teal);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-action:hover {
+      background: var(--dv-deep-green);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--dv-deep-green);
+      border: 1px solid var(--dv-border);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--dv-sand);
+      border-color: var(--dv-teal);
+    }
+
+    /* Social Carousel Mockup Slides */
+    .carousel-container {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+
+    .carousel-slide-card {
+      min-width: 210px;
+      max-width: 210px;
+      background: linear-gradient(145deg, #004A4F, #002A2D);
+      border: 1px solid rgba(23, 218, 232, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 240px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .slide-badge {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--dv-light-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .slide-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 8px 0;
+      color: #FFFFFF;
+    }
+
+    .slide-body {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    .slide-footer {
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 8px;
+      margin-top: 6px;
+    }
+
+    /* Table Styles */
+    .dv-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .dv-table th {
+      background: #F8FAFC;
+      color: var(--dv-text-muted);
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 2px solid #E2E8F0;
+    }
+
+    .dv-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #EDF2F7;
+      color: var(--dv-text-main);
+    }
+
+    .dv-table tr:hover td {
+      background: #FAFBFB;
+    }
+
+    .tag-status {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .tag-status.hot {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .tag-status.opp {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .tag-status.safe {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    /* Subtabs navigation */
+    .subtabs-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #E2E8F0;
+      padding-bottom: 8px;
+    }
+
+    .subtab-btn {
+      background: none;
+      border: none;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dv-text-muted);
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subtab-btn:hover {
+      color: var(--dv-deep-green);
+      background: rgba(0, 147, 157, 0.08);
+    }
+
+    .subtab-btn.active {
+      color: #FFFFFF;
+      background: var(--dv-teal);
+    }
+
+    /* Funnel Bars */
+    .funnel-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .funnel-step {
+      display: grid;
+      grid-template-columns: 260px 1fr 100px;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .funnel-bar-wrapper {
+      background: #E2E8F0;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .funnel-bar-fill {
+      background: linear-gradient(90deg, var(--dv-teal), var(--dv-light-teal));
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .grid-2col, .grid-3col, .grid-4col {
+        grid-template-columns: 1fr;
+      }
+      .funnel-step {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
+    /* ICP Onboarding Tiles */
+    .icp-tile {
+      border: 2px solid #E2E8F0;
+      border-radius: var(--dv-radius);
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #FFFFFF;
+      position: relative;
+    }
+    .icp-tile:hover {
+      border-color: var(--dv-teal);
+      transform: translateY(-2px);
+    }
+    .icp-tile.active {
+      border-color: var(--dv-teal);
+      background: rgba(0, 147, 157, 0.04);
+      box-shadow: 0 4px 14px rgba(0, 147, 157, 0.12);
+    }
+    .icp-tile input[type="checkbox"] {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      accent-color: var(--dv-teal);
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Funnel Stage Filter Chips */
+    .stage-chips {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .stage-chip {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--dv-border);
+      background: #FFFFFF;
+      color: var(--dv-text-main);
+      transition: all 0.2s;
+    }
+    .stage-chip:hover {
+      background: var(--dv-sand);
+      border-color: var(--dv-teal);
+    }
+    .stage-chip.active {
+      background: var(--dv-deep-green);
+      color: #FFFFFF;
+      border-color: var(--dv-deep-green);
+    }
+
+    /* Modal Reader Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 30, 35, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-container {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 940px;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      overflow-y: auto;
+      border: 2px solid var(--dv-teal);
+      position: relative;
+    }
+    .modal-header {
+      background: var(--dv-deep-green);
+      color: #FFFFFF;
+      padding: 18px 28px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--dv-teal);
+    }
+    .modal-body {
+      padding: 30px 36px;
+      color: var(--dv-text-main);
+    }
+    .guide-chapter {
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #EDF2F7;
+    }
+    .guide-chapter h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      color: var(--dv-deep-green);
+      margin-bottom: 8px;
+    }
+    .guide-highlight {
+      background: #F0FDFA;
+      border-left: 4px solid var(--dv-teal);
+      padding: 12px 16px;
+      font-size: 13px;
+      margin: 12px 0;
+      color: var(--dv-deep-green);
+      font-weight: 600;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* ================= RESPONSIVE MULTI-BREAKPOINT ENGINE ================= */
+    @media (max-width: 1200px) {
+      .grid-5col, .grid-6col {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid-4col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .top-navbar {
+        padding: 12px 20px;
+      }
+      .brand-titles h1 {
+        font-size: 18px;
+      }
+      /* Simulator: Stacks Left Inputs & Right Results cleanly */
+      .grid-2col {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .grid-2col .grid-2col {
+        grid-template-columns: 1fr 1fr;
+      }
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .section-header > div:last-child {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .top-navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .top-nav-right {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .grid-3col {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .grid-5col, .grid-6col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .tabs-bar {
+        padding: 0 12px;
+      }
+      .tab-btn {
+        flex: 0 0 auto;
+        padding: 11px 12px;
+        font-size: 12px;
+        min-width: 140px;
+      }
+      .result-banner {
+        padding: 18px;
+      }
+      .result-banner div[style*="justify-content:space-between"] {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+      }
+      .result-banner button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .main-container {
+        padding: 0 12px;
+        margin: 14px auto;
+      }
+      .brand-logo {
+        height: 34px;
+      }
+      .brand-titles h1 {
+        font-size: 16px;
+      }
+      .brand-titles p {
+        font-size: 10px;
+      }
+      .top-nav-right a, .top-nav-right button {
+        font-size: 11px;
+        padding: 6px 12px;
+        width: 100%;
+        justify-content: center;
+      }
+      .grid-2col .grid-2col, .grid-4col, .grid-5col, .grid-6col {
+        grid-template-columns: 1fr;
+      }
+      .kpi-val {
+        font-size: 20px;
+      }
+      .tab-btn .tab-badge {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="top-navbar">
+    <div class="brand-section">
+      <img src="/dv/assets/DandV Logo right text clear.png" alt="Désormière & Vanhalst" class="brand-logo" onerror="this.src='/dv/assets/DV logo rond signature.png'">
+      <div class="brand-titles">
+        <h1>Moteur Content Marketing & Inbound Vendeurs</h1>
+        <p>Rive Gauche Genève • Intelligence Foncière Cytria</p>
+      </div>
+    </div>
+    <div class="top-nav-right">
+      <a href="/dv/?view=value" class="btn-action" style="padding:6px 14px; font-size:12px; font-weight:700; text-decoration:none; background:var(--dv-teal); color:#FFFFFF; border-radius:4px; display:inline-flex; align-items:center; gap:6px;">
+        <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+        <span>Studio d'Estimation (15 Slides PPTX)</span>
+      </a>
+      <a href="/dv/" class="btn-nav-link" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+        <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Espace Agence D&amp;V (5 Écrans)</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Subheader Navigation Tabs - 4 Tabs, Zero Lateral Scroll -->
+  <nav class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('tab-studio')">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 8 9"></polyline></svg>
+      <span>Studio Inbound & Simulateur</span>
+      <span class="tab-badge">Lead Magnet</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-funnel')">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+      <span>Matrice Funnel & Idées de Contenu</span>
+      <span class="tab-badge">Données Réelles</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-benchmark')">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      <span>Veille Réseaux & Benchmark Régies</span>
+      <span class="tab-badge">Social & Stale</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-telemetry')">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+      <span>Cockpit Télémétrie Interne</span>
+      <span class="tab-badge">Conversion</span>
+    </button>
+  </nav>
+
+  <!-- Main Body Content -->
+  <main class="main-container">
+
+    <!-- TAB 1: STUDIO INBOUND & SIMULATEUR -->
+    <div id="tab-studio" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Simulateur Fiscal Net Vendeur & Décodeur Casatax 2026</h2>
+          <p class="section-subtitle">Outil d'acquisition inbound : transformez les questions financières des propriétaires en mandats exclusifs D&V.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn-outline" onclick="copyInboundPitch()">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copier l'Argumentaire Vendeur</span>
+          </button>
+          <button class="btn-action" onclick="window.print()">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Exporter Fiche A4 Client</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulator Inputs & Outputs -->
+      <div class="grid-2col">
+        <!-- Left: Inputs -->
+        <div class="dv-card">
+          <h3 class="card-title">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            <span>Paramètres de la Transaction (Genève)</span>
+          </h3>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Prix de Vente Estimé (CHF)</span>
+              <span class="val-display" id="lbl-sell-price">2'450'000 CHF</span>
+            </div>
+            <input type="range" class="form-range" id="input-sell-price" min="800000" max="8000000" step="50000" value="2450000" oninput="runSimulation()">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Prix d'Acquisition Initial (CHF)</span>
+              <span class="val-display" id="lbl-acq-price">1'600'000 CHF</span>
+            </div>
+            <input type="range" class="form-range" id="input-acq-price" min="400000" max="6000000" step="50000" value="1600000" oninput="runSimulation()">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Années de Détention (IBGI, LIPP Art. 84)</span>
+              <span class="val-display" id="lbl-years">12 ans</span>
+            </div>
+            <input type="range" class="form-range" id="input-years" min="1" max="30" step="1" value="12" oninput="runSimulation()">
+            <div style="font-size:11px; color:var(--dv-text-muted); margin-top:4px;">
+              Barème cantonal dégressif : de 50% (&lt; 2 ans) au plancher de 2% (≥ 25 ans, Loi 13414).
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Travaux d'Amélioration & Impenses Déductibles (CHF)</span>
+              <span class="val-display" id="lbl-reno">180'000 CHF</span>
+            </div>
+            <input type="range" class="form-range" id="input-reno" min="0" max="800000" step="10000" value="180000" oninput="runSimulation()">
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <div class="form-label">
+              <span>Commune Cible (Rive Gauche)</span>
+            </div>
+            <select id="select-commune" class="form-input" onchange="onCommuneChange(this.value)">
+              <option value="Troinex" selected>Troinex (Villas & Familles)</option>
+              <option value="Veyrier">Veyrier (Résidentiel Familial)</option>
+              <option value="Cologny">Cologny (Ultra-Prestige)</option>
+              <option value="Vandoeuvres">Vandœuvres (Campagne Chic)</option>
+              <option value="Chêne-Bougeries">Chêne-Bougeries (PPE & Villas)</option>
+              <option value="Collonge-Bellerive">Collonge-Bellerive (Lac & Prestige)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Right: Real-Time Results -->
+        <div>
+          <div class="grid-2col" style="margin-bottom:14px;">
+            <div class="kpi-card">
+              <div class="kpi-label">Gain Brut Réalisé</div>
+              <div class="kpi-val" id="res-gross-gain">CHF 850'000</div>
+              <div class="kpi-sub" id="res-deductions">Déductions : CHF 304'700</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Taux IBGI (LIPP Art. 84)</div>
+              <div class="kpi-val" id="res-tax-rate" style="color:var(--dv-teal);">10%</div>
+              <div class="kpi-sub" id="res-bracket-label">Détention 10 à 25 ans</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Impôt Cantonal Estimé</div>
+              <div class="kpi-val" id="res-tax-due" style="color:#B91C1C;">CHF 54'530</div>
+              <div class="kpi-sub" id="res-next-bracket">Optimisation : - CHF 54'530 à 25 ans</div>
+            </div>
+            <div class="kpi-card" style="border: 2px solid var(--dv-teal);">
+              <div class="kpi-label">Estimation Indicative Produit Net Vendeur</div>
+              <div class="kpi-val" id="res-net-proceeds" style="color:var(--dv-deep-green);">CHF 2'321'970</div>
+              <div class="kpi-sub" id="res-net-pct">94.8% du prix de vente</div>
+            </div>
+          </div>
+
+          <p style="font-size:11px; color:var(--dv-text-muted); margin-bottom:12px; line-height:1.4;">
+            * Estimation indicative basée sur le barème cantonal genevois en vigueur (IBGI, art. 80-87 LIPP / Loi 13414). Ne tient pas compte du report d'imposition en cas de réinvestissement dans la résidence principale (remploi, art. 84 LIPP) ni des situations fiscales particulières (frais et déductions définitives arrêtés par le fisc).
+          </p>
+
+          <!-- Dynamic Casatax & Marketing Hook Banner -->
+          <div class="result-banner">
+            <h3 id="res-hook-title">Valorisation & Arbitrage Foncier Rive Gauche</h3>
+            <p id="res-hook-body">Chargement de l'argumentaire personnalisé...</p>
+            <div id="res-casatax-badge" class="badge-casatax eligible">
+              <svg class="icon" width="12" height="12" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span id="res-casatax-text">Éligibilité Casatax 2026 analysée</span>
+            </div>
+            <div style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.15); display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; font-weight:700; color:var(--dv-light-teal);" id="res-broker-rec">Expert Référent : Sandra Bleeckx Vanhalst</span>
+              <button class="btn-action" style="background:#FFFFFF; color:var(--dv-deep-green); padding:6px 14px; font-size:11.5px; font-weight:700;" onclick="window.location.href='/dv/?view=value'">
+                <span>Ouvrir Studio d'Estimation PPTX ↗</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hyper-Local Quartier Guide & Carousel Generator -->
+      <div class="dv-card" style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <div>
+            <h3 class="card-title" style="margin-bottom:2px;" id="guide-header-title">
+              <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+              <span>Baromètre de Marché Officiel OCSTAT & Carrousel Social</span>
+            </h3>
+            <p style="font-size:12px; color:var(--dv-text-muted);">Prêt à publier sur LinkedIn et Instagram pour capter les propriétaires du secteur.</p>
+          </div>
+          <button class="btn-outline" onclick="copyCarouselText()">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+            <span>Copier Texte Post LinkedIn</span>
+          </button>
+        </div>
+
+        <div class="grid-3col" style="margin-bottom:18px;">
+          <div style="background:#F8FAFC; padding:12px 16px; border-radius:6px; border:1px solid #E2E8F0;">
+            <div style="font-size:11px; color:var(--dv-text-muted); font-weight:700;">Prix Médian PPE (OCSTAT)</div>
+            <div style="font-size:20px; font-weight:800; color:var(--dv-deep-green);" id="q-ppe-sqm">CHF 14'500 / m²</div>
+          </div>
+          <div style="background:#F8FAFC; padding:12px 16px; border-radius:6px; border:1px solid #E2E8F0;">
+            <div style="font-size:11px; color:var(--dv-text-muted); font-weight:700;">Prix Médian Villas (OCSTAT)</div>
+            <div style="font-size:20px; font-weight:800; color:var(--dv-deep-green);" id="q-villa-chf">CHF 3'200'000</div>
+          </div>
+          <div style="background:#F8FAFC; padding:12px 16px; border-radius:6px; border:1px solid #E2E8F0;">
+            <div style="font-size:11px; color:var(--dv-text-muted); font-weight:700;">Taux Communal & Transactions</div>
+            <div style="font-size:20px; font-weight:800; color:var(--dv-teal);" id="q-tax-tx">35.0 cts • 95 tx/an</div>
+          </div>
+        </div>
+
+        <!-- 5-Slide Carousel Preview -->
+        <div class="carousel-container" id="carousel-slides">
+          <!-- Slides dynamically injected -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: MATRICE FUNNEL, ICP & CARREFOUR DES SOURCES CONTRASTÉES -->
+    <div id="tab-funnel" class="tab-content" style="display:none;">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Matrice Funnel & Générateur d'Idées Vendeurs</h2>
+          <p class="section-subtitle">Alimenté en continu par les 6 sources officielles d'intelligence foncière Cytria pour calibrer les lead magnets et générer des guides d'acquisition.</p>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="font-size:12px; font-weight:700; color:var(--dv-deep-green);">Commune Cible :</label>
+          <select id="funnel-commune-select" class="form-input" style="width:200px; padding:6px 12px; font-size:13px;" onchange="loadFunnelContent(this.value)">
+            <option value="Troinex" selected>Troinex (Rive Gauche)</option>
+            <option value="Veyrier">Veyrier (Rive Gauche)</option>
+            <option value="Cologny">Cologny (Prestige)</option>
+            <option value="Vandoeuvres">Vandœuvres (Prestige)</option>
+            <option value="Chêne-Bougeries">Chêne-Bougeries</option>
+            <option value="Collonge-Bellerive">Collonge-Bellerive</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- CARREFOUR DES 6 SOURCES CONTRASTÉES CYTRIA -->
+      <div style="margin-bottom:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;">
+          <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; font-weight:700; color:var(--dv-deep-green); display:flex; align-items:center; gap:8px;">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span>Carrefour des 6 Sources Contrastées Cytria (Déclencheurs d'Idées & Contenus)</span>
+          </h3>
+          <span style="font-size:11px; font-weight:600; color:var(--dv-teal);">Données Officielles & Actes Notariés Connectés</span>
+        </div>
+
+        <div class="grid-6col">
+          <div class="source-card">
+            <div>
+              <div style="font-size:9px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Source 1 • Notariat</div>
+              <div style="font-weight:700; font-size:13px; color:var(--dv-deep-green); margin:4px 0;">Actes Notariés FAO</div>
+              <p style="font-size:11px; color:var(--dv-text-muted); line-height:1.3;">Prix réels enregistrés, transactions récentes et décotes constatées.</p>
+            </div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">8'970 actes indexés</div>
+          </div>
+
+          <div class="source-card">
+            <div>
+              <div style="font-size:9px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Source 2 • Fiscalité</div>
+              <div style="font-weight:700; font-size:13px; color:var(--dv-deep-green); margin:4px 0;">IBGI (LIPP Art. 80-87)</div>
+              <p style="font-size:11px; color:var(--dv-text-muted); line-height:1.3;">Barème cantonal dégressif de 50% (&lt; 2 ans) au plancher de 2% (≥ 25 ans, Loi 13414).</p>
+            </div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Calcul net vendeur instantané</div>
+          </div>
+
+          <div class="source-card">
+            <div>
+              <div style="font-size:9px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Source 3 • Incitation</div>
+              <div style="font-weight:700; font-size:13px; color:var(--dv-deep-green); margin:4px 0;">Seuil Casatax 2026</div>
+              <p style="font-size:11px; color:var(--dv-text-muted); line-height:1.3;">Plafond officiel CHF 1'394'928 et abattement de droits de mutation de CHF 20'924.</p>
+            </div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Déclencheur d'offres acheteurs</div>
+          </div>
+
+          <div class="source-card">
+            <div>
+              <div style="font-size:9px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Source 4 • Statistique</div>
+              <div style="font-weight:700; font-size:13px; color:var(--dv-deep-green); margin:4px 0;">Baromètre OCSTAT</div>
+              <p style="font-size:11px; color:var(--dv-text-muted); line-height:1.3;">Médianes officielles au m² PPE, prix des villas et centimes communaux.</p>
+            </div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Actualisation trimestrielle</div>
+          </div>
+
+          <div class="source-card">
+            <div>
+              <div style="font-size:9px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Source 5 • Cadastre</div>
+              <div style="font-weight:700; font-size:13px; color:var(--dv-deep-green); margin:4px 0;">SITG & Zone 5 Villas</div>
+              <p style="font-size:11px; color:var(--dv-text-muted); line-height:1.3;">Potentiel de division parcellaire, ratios IUS et valorisation foncière.</p>
+            </div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Arbitrage anti-promoteurs</div>
+          </div>
+
+          <div class="source-card">
+            <div>
+              <div style="font-size:9px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Source 6 • Radar Marché</div>
+              <div style="font-weight:700; font-size:13px; color:var(--dv-deep-green); margin:4px 0;">Mandats Bloqués & Veille</div>
+              <p style="font-size:11px; color:var(--dv-text-muted); line-height:1.3;">Biens en souffrance &gt; 90-120 jours chez les concurrents et veille réseaux.</p>
+            </div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Opportunités de reprise D&V</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ATELIER D'ÉCHANGE & ONBOARDING ICP (DISCUSSION INITIALE D&V) -->
+      <div class="dv-card" style="margin-bottom:24px; border-top:4px solid var(--dv-teal);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <h3 class="card-title" style="margin-bottom:2px;">
+                <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>Atelier d'Alignement Stratégique & Onboarding ICP (Validation D&V)</span>
+              </h3>
+              <span style="font-size:10px; font-weight:800; background:rgba(0,147,157,0.1); color:var(--dv-teal); padding:2px 8px; border-radius:10px;">Étape de Discussion Partenaires</span>
+            </div>
+            <p style="font-size:12px; color:var(--dv-text-muted); max-width:850px; margin-top:4px;">
+              Module interactif de cadrage conçu pour arbitrer avec Sandra Bleeckx Vanhalst et Adrien Désormière les personas prioritaires, le ton d'autorité confidentielle et les axes de prospection avant le lancement des campagnes.
+            </p>
+          </div>
+          <button class="btn-action" onclick="saveICPPreferences()">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Valider la Stratégie & Recalibrer</span>
+          </button>
+        </div>
+
+        <div class="grid-5col">
+          <label class="icp-tile active" id="tile-icp-1">
+            <input type="checkbox" id="check-icp-1" checked onchange="toggleIcpTile(1)">
+            <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">ICP 1 • Transmission</div>
+            <div style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Hoiries & Successions (CC 602)</div>
+            <div style="font-size:11px; color:var(--dv-text-muted);">Indivision successorale, peur des conflits familiaux et de la fiscalité cantonale.</div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Référent : Sandra Bleeckx Vanhalst</div>
+          </label>
+
+          <label class="icp-tile active" id="tile-icp-2">
+            <input type="checkbox" id="check-icp-2" checked onchange="toggleIcpTile(2)">
+            <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">ICP 2 • Senior Vintage</div>
+            <div style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Détention &gt; 20 ans (Downsizing)</div>
+            <div style="font-size:11px; color:var(--dv-text-muted);">Villa trop grande, recherche d'attique standing et exonération LIPP art. 82 réinvestissement.</div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Référent : Sandra Bleeckx Vanhalst</div>
+          </label>
+
+          <label class="icp-tile active" id="tile-icp-3">
+            <input type="checkbox" id="check-icp-3" checked onchange="toggleIcpTile(3)">
+            <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">ICP 3 • Urbanisme Foncier</div>
+            <div style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Grandes Parcelles Zone 5 (&ge;900m²)</div>
+            <div style="font-size:11px; color:var(--dv-text-muted);">Propriétaires sollicités par promoteurs : division de terrain vs valorisation en bloc.</div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Référent : Adrien Désormière</div>
+          </label>
+
+          <label class="icp-tile active" id="tile-icp-4">
+            <input type="checkbox" id="check-icp-4" checked onchange="toggleIcpTile(4)">
+            <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">ICP 4 • PPE Résidentielle</div>
+            <div style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Biens au Seuil Casatax 2026</div>
+            <div style="font-size:11px; color:var(--dv-text-muted);">Plafond officiel CHF 1'394'928 : stratégie de prix pour déclencher 3x plus d'offres.</div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Référent : Sandra & Adrien</div>
+          </label>
+
+          <label class="icp-tile active" id="tile-icp-5">
+            <input type="checkbox" id="check-icp-5" checked onchange="toggleIcpTile(5)">
+            <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">ICP 5 • Mandats Bloqués</div>
+            <div style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Vendeurs Déçus des Régies (&gt;90j)</div>
+            <div style="font-size:11px; color:var(--dv-text-muted);">Mandats simples usés, baisses de prix successives : reprise en mandat exclusif off-market.</div>
+            <div style="font-size:10px; font-weight:700; color:var(--dv-teal); margin-top:8px;">Référent : Désormière & Vanhalst</div>
+          </label>
+        </div>
+
+        <!-- Tone & Channel Alignment Options for D&V -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:16px; padding-top:14px; border-top:1px solid #E2E8F0;">
+          <div>
+            <label class="form-label">Tonalité & Ligne Éditoriale D&V :</label>
+            <select class="form-input" id="icp-tone-select" style="font-size:12px; padding:8px 10px;">
+              <option value="prestige_fiscale" selected>Prestige, Discrétion & Haute Précision Fiscale (Recommandé D&V)</option>
+              <option value="pedagogique">Pédagogie & Clarté Foncier (Accompagnement de Proximité)</option>
+              <option value="arbitrage">Arbitrage Patrimonial Privé & Réseau Off-Market</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Canal d'Acquisition Inbound Prioritaire :</label>
+            <select class="form-input" id="icp-channel-select" style="font-size:12px; padding:8px 10px;">
+              <option value="direct_mail_linkedin" selected>Courriers Confidentiels Nominatifs + LinkedIn Décideurs (Recommandé)</option>
+              <option value="inbound_guides">Guides PDF Téléchargeables & Campagnes Meta Ultra-Ciblées</option>
+              <option value="notaires">Réseau Notarial & Prescripteurs Patrimoniaux</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATRICE DES 5 LEAD MAGNETS CONTRASTÉS PAR ICP -->
+      <div style="margin-bottom:24px;">
+        <div style="margin-bottom:14px;">
+          <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:22px; font-weight:700; color:var(--dv-deep-green);">Matrice des Lead Magnets Spécifiques par ICP</h3>
+          <p style="font-size:13px; color:var(--dv-text-muted);">Outils d'inbound concrets prêts à déployer pour capter les propriétaires en amont de leur décision de vente :</p>
+        </div>
+
+        <div class="grid-5col">
+          <!-- Lead Magnet 1 -->
+          <div class="lead-magnet-card">
+            <div>
+              <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Pour ICP 1 • Hoiries</div>
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Guide & Attestation Successorale</h4>
+              <p style="font-size:11px; color:var(--dv-text-main); margin-bottom:8px; line-height:1.4;">
+                <em>« Transmettre ou Vendre en Indivision à Genève : Le Protocole de Paix Familiale et d'Arbitrage Fiscal »</em>
+              </p>
+              <div style="font-size:10px; color:var(--dv-text-muted); background:#F8FAFC; padding:8px; border-radius:4px; margin-bottom:10px;">
+                <strong>Ancrage Cytria :</strong> Actes FAO Hoiries + IBGI (LIPP art. 80-87).
+              </div>
+            </div>
+            <button class="btn-action" style="width:100%; font-size:11px; padding:6px 8px; justify-content:center;" onclick="openFullGuide('hoirie-transmission', document.getElementById('funnel-commune-select').value)">
+              <span>Lire le Guide Complet</span>
+            </button>
+          </div>
+
+          <!-- Lead Magnet 2 -->
+          <div class="lead-magnet-card">
+            <div>
+              <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Pour ICP 2 • Senior Vintage</div>
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Dossier Arbitrage Patrimonial</h4>
+              <p style="font-size:11px; color:var(--dv-text-main); margin-bottom:8px; line-height:1.4;">
+                <em>« Quitter la Villa Familiale pour une Attique sans Pression Fiscale (Art. 84 LIPP - Réinvestissement) »</em>
+              </p>
+              <div style="font-size:10px; color:var(--dv-text-muted); background:#F8FAFC; padding:8px; border-radius:4px; margin-bottom:10px;">
+                <strong>Ancrage Cytria :</strong> Taux plancher 2% dès 25 ans + Prix villas Rive Gauche.
+              </div>
+            </div>
+            <button class="btn-action" style="width:100%; font-size:11px; padding:6px 8px; justify-content:center;" onclick="openFullGuide('senior-downsizing', document.getElementById('funnel-commune-select').value)">
+              <span>Lire le Guide Complet</span>
+            </button>
+          </div>
+
+          <!-- Lead Magnet 3 -->
+          <div class="lead-magnet-card">
+            <div>
+              <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Pour ICP 3 • Zone 5</div>
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Dossier Foncier Anti-Promoteur</h4>
+              <p style="font-size:11px; color:var(--dv-text-main); margin-bottom:8px; line-height:1.4;">
+                <em>« Division de Parcelle vs Vente en Bloc à un Promoteur : Comment Sécuriser votre Plus-Value »</em>
+              </p>
+              <div style="font-size:10px; color:var(--dv-text-muted); background:#F8FAFC; padding:8px; border-radius:4px; margin-bottom:10px;">
+                <strong>Ancrage Cytria :</strong> Cadastre SITG Zone 5 + IUS 0.20-0.40.
+              </div>
+            </div>
+            <button class="btn-action" style="width:100%; font-size:11px; padding:6px 8px; justify-content:center;" onclick="openFullGuide('zone5-division', document.getElementById('funnel-commune-select').value)">
+              <span>Lire le Guide Complet</span>
+            </button>
+          </div>
+
+          <!-- Lead Magnet 4 -->
+          <div class="lead-magnet-card">
+            <div>
+              <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Pour ICP 4 • Casatax 2026</div>
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Baromètre Pricing Stratégique</h4>
+              <p style="font-size:11px; color:var(--dv-text-main); margin-bottom:8px; line-height:1.4;">
+                <em>« Le Décodeur Casatax 2026 : Pourquoi Fixer son Prix sous CHF 1'394'928 Déclenche 3x Plus d'Offres »</em>
+              </p>
+              <div style="font-size:10px; color:var(--dv-text-muted); background:#F8FAFC; padding:8px; border-radius:4px; margin-bottom:10px;">
+                <strong>Ancrage Cytria :</strong> Rabais acheteur CHF 20'924 (plafond CHF 1'394'928).
+              </div>
+            </div>
+            <button class="btn-action" style="width:100%; font-size:11px; padding:6px 8px; justify-content:center;" onclick="openFullGuide('casatax-2026-pricing', document.getElementById('funnel-commune-select').value)">
+              <span>Lire le Guide Complet</span>
+            </button>
+          </div>
+
+          <!-- Lead Magnet 5 -->
+          <div class="lead-magnet-card">
+            <div>
+              <div style="font-size:10px; font-weight:800; color:var(--dv-teal); text-transform:uppercase;">Pour ICP 5 • Mandats Bloqués</div>
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:16px; font-weight:700; color:var(--dv-deep-green); margin:6px 0;">Audit Diagnostic de Relance</h4>
+              <p style="font-size:11px; color:var(--dv-text-main); margin-bottom:8px; line-height:1.4;">
+                <em>« Pourquoi Votre Bien Ne Se Vend Pas : Les 5 Erreurs Commises par les Régies Traditionnelles »</em>
+              </p>
+              <div style="font-size:10px; color:var(--dv-text-muted); background:#F8FAFC; padding:8px; border-radius:4px; margin-bottom:10px;">
+                <strong>Ancrage Cytria :</strong> Mandats stagnants &gt; 120j &amp; décotes.
+              </div>
+            </div>
+            <button class="btn-action" style="width:100%; font-size:11px; padding:6px 8px; justify-content:center;" onclick="openFullGuide('mandats-bloques-relance', document.getElementById('funnel-commune-select').value)">
+              <span>Lire le Guide Complet</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUGGESTIONS DYNAMIQUES PAR ÉTAPE DE FUNNEL -->
+      <div class="section-header">
+        <div>
+          <h3 class="section-title" style="font-size:22px;">Suggestions de Contenu par Étape du Funnel Vendeur</h3>
+          <p class="section-subtitle">Générées automatiquement en croisant les données réelles de la commune sélectionnée (FAO, OCSTAT, Fiscalité).</p>
+        </div>
+        <div class="stage-chips">
+          <button class="stage-chip active" id="chip-ALL" onclick="filterFunnelStage('ALL')">Tous les Niveaux (Funnel Complet)</button>
+          <button class="stage-chip" id="chip-TOFU" onclick="filterFunnelStage('TOFU')">1. TOFU : Notoriété & Déclencheur</button>
+          <button class="stage-chip" id="chip-MOFU" onclick="filterFunnelStage('MOFU')">2. MOFU : Sécurisation Fiscale</button>
+          <button class="stage-chip" id="chip-BOFU" onclick="filterFunnelStage('BOFU')">3. BOFU : Choix du Mandat Exclusif</button>
+        </div>
+      </div>
+
+      <!-- Live Suggestions Grid -->
+      <div class="grid-3col" id="funnel-suggestions-grid">
+        <!-- UX Placeholder Notice -->
+        <div style="grid-column: 1 / -1; background: rgba(0, 147, 157, 0.08); border: 1px solid var(--dv-teal); border-radius: 6px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+          <span style="font-size: 16px;">💡</span>
+          <span style="font-size: 12px; color: var(--dv-deep-green); font-weight: 600;">
+            Note : Exemples contextuels pour l'expérience utilisateur ancrés dans les données réelles Cytria (FAO, OCSTAT, LIPP) — en attente de synchronisation avec l'agent autonome de génération de contenu.
+          </span>
+        </div>
+
+        <!-- Card 1: TOFU Baromètre -->
+        <div class="dv-card funnel-card-item" data-stage="TOFU" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:10px; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:10px;">1. TOFU : Notoriété &amp; Déclencheur</span>
+              <span style="font-size:10px; font-weight:700; color:var(--dv-text-muted);">Carrousel LinkedIn</span>
+            </div>
+            <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:18px; font-weight:700; color:var(--dv-deep-green); line-height:1.2; margin-bottom:6px;">Baromètre Officiel de l'Immobilier à Troinex • Édition 2026</h4>
+            <p style="font-size:12px; color:var(--dv-text-main); margin-bottom:12px;">Analyse des actes notariés FAO et des médianes OCSTAT (14'500 CHF/m² pour la PPE).</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; margin-bottom:12px;">
+              <div style="color:var(--dv-teal); font-weight:700; margin-bottom:2px;">Donnée Réelle Cytria Connectée :</div>
+              <div style="color:var(--dv-text-main);">Médiane PPE: CHF 14'500/m² • Villas: CHF 3'200'000</div>
+            </div>
+            <div style="font-size:11px; color:var(--dv-text-muted); margin-bottom:8px;">
+              <strong>Cible ICP :</strong> Tous Propriétaires Rive Gauche<br>
+              <strong>Persona D&amp;V :</strong> Sandra Bleeckx Vanhalst
+            </div>
+          </div>
+          <div style="border-top:1px solid #EDF2F7; padding-top:12px; margin-top:8px;">
+            <button class="btn-action" style="width:100%; justify-content:center; font-size:12px;" onclick="openFullGuide('tofu_barometre_quartier', 'Troinex')">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>Consulter le Format Carrousel</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: TOFU Hoiries -->
+        <div class="dv-card funnel-card-item" data-stage="TOFU" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:10px; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:10px;">1. TOFU : Notoriété &amp; Déclencheur</span>
+              <span style="font-size:10px; font-weight:700; color:var(--dv-text-muted);">Guide PDF Long-Form</span>
+            </div>
+            <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:18px; font-weight:700; color:var(--dv-deep-green); line-height:1.2; margin-bottom:6px;">Transmission Patrimoniale &amp; Indivision Successorale à Troinex</h4>
+            <p style="font-size:12px; color:var(--dv-text-main); margin-bottom:12px;">Comment préserver la valeur d'une maison de famille entre cohéritiers sans risquer le blocage (art. 602 CC).</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; margin-bottom:12px;">
+              <div style="color:var(--dv-teal); font-weight:700; margin-bottom:2px;">Donnée Réelle Cytria Connectée :</div>
+              <div style="color:var(--dv-text-main);">4 successions familiales identifiées au Registre Foncier sur Troinex</div>
+            </div>
+            <div style="font-size:11px; color:var(--dv-text-muted); margin-bottom:8px;">
+              <strong>Cible ICP :</strong> Hoiries &amp; Héritiers (ICP 1)<br>
+              <strong>Persona D&amp;V :</strong> Sandra Bleeckx Vanhalst
+            </div>
+          </div>
+          <div style="border-top:1px solid #EDF2F7; padding-top:12px; margin-top:8px;">
+            <button class="btn-action" style="width:100%; justify-content:center; font-size:12px;" onclick="openFullGuide('tofu_succession_famille', 'Troinex')">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>Consulter &amp; Télécharger le Guide</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: MOFU LIPP 82 -->
+        <div class="dv-card funnel-card-item" data-stage="MOFU" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:10px; font-weight:800; background:#CCFBF1; color:#00939D; padding:3px 8px; border-radius:10px;">2. MOFU : Sécurisation Fiscale</span>
+              <span style="font-size:10px; font-weight:700; color:var(--dv-text-muted);">Simulateur Interactif</span>
+            </div>
+            <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:18px; font-weight:700; color:var(--dv-deep-green); line-height:1.2; margin-bottom:6px;">Vendre après 15, 20 ou 25 ans à Genève : Le Barème IBGI (LIPP Art. 80-87)</h4>
+            <p style="font-size:12px; color:var(--dv-text-main); margin-bottom:12px;">Simulez votre impôt cantonal indicatif et vos déductions pour travaux d'amélioration avant signature.</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; margin-bottom:12px;">
+              <div style="color:var(--dv-teal); font-weight:700; margin-bottom:2px;">Donnée Réelle Cytria Connectée :</div>
+              <div style="color:var(--dv-text-main);">Taux dégressif : de 50% (&lt; 2 ans) à 2% (taux plancher dès 25 ans, Loi 13414)</div>
+            </div>
+            <div style="font-size:11px; color:var(--dv-text-muted); margin-bottom:8px;">
+              <strong>Cible ICP :</strong> Propriétaires Seniors / Détention &gt; 20 ans (ICP 2)<br>
+              <strong>Persona D&amp;V :</strong> Sandra Bleeckx Vanhalst
+            </div>
+          </div>
+          <div style="border-top:1px solid #EDF2F7; padding-top:12px; margin-top:8px;">
+            <button class="btn-action" style="width:100%; justify-content:center; font-size:12px;" onclick="switchTab('studio')">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Lancer le Simulateur Interactif</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4: MOFU Zone 5 -->
+        <div class="dv-card funnel-card-item" data-stage="MOFU" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:10px; font-weight:800; background:#CCFBF1; color:#00939D; padding:3px 8px; border-radius:10px;">2. MOFU : Sécurisation Fiscale</span>
+              <span style="font-size:10px; font-weight:700; color:var(--dv-text-muted);">Guide PDF Long-Form</span>
+            </div>
+            <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:18px; font-weight:700; color:var(--dv-deep-green); line-height:1.2; margin-bottom:6px;">Valorisation Foncière en Zone 5 : Potentiel de Détachement Parcellaire à Troinex</h4>
+            <p style="font-size:12px; color:var(--dv-text-main); margin-bottom:12px;">Étude de densification (IUS 0.20-0.40) : vendre la parcelle en bloc ou créer un lot à bâtir indépendant ?</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; margin-bottom:12px;">
+              <div style="color:var(--dv-teal); font-weight:700; margin-bottom:2px;">Donnée Réelle Cytria Connectée :</div>
+              <div style="color:var(--dv-text-main);">5 parcelles avec potentiel de division constructible sur la commune</div>
+            </div>
+            <div style="font-size:11px; color:var(--dv-text-muted); margin-bottom:8px;">
+              <strong>Cible ICP :</strong> Grandes Parcelles Zone 5 (ICP 3)<br>
+              <strong>Persona D&amp;V :</strong> Adrien Désormière
+            </div>
+          </div>
+          <div style="border-top:1px solid #EDF2F7; padding-top:12px; margin-top:8px;">
+            <button class="btn-action" style="width:100%; justify-content:center; font-size:12px;" onclick="openFullGuide('mofu_division_zone5', 'Troinex')">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>Consulter &amp; Télécharger le Guide</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 5: MOFU Casatax 2026 -->
+        <div class="dv-card funnel-card-item" data-stage="MOFU" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:10px; font-weight:800; background:#CCFBF1; color:#00939D; padding:3px 8px; border-radius:10px;">2. MOFU : Sécurisation Fiscale</span>
+              <span style="font-size:10px; font-weight:700; color:var(--dv-text-muted);">Guide PDF Long-Form</span>
+            </div>
+            <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:18px; font-weight:700; color:var(--dv-deep-green); line-height:1.2; margin-bottom:6px;">Le Décodeur Casatax 2026 : Pourquoi le Seuil de CHF 1'394'928 Change Tout</h4>
+            <p style="font-size:12px; color:var(--dv-text-main); margin-bottom:12px;">Comprendre pourquoi les biens sous le plafond se vendent 2x plus vite grâce au rabais de droits pour l'acheteur.</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; margin-bottom:12px;">
+              <div style="color:var(--dv-teal); font-weight:700; margin-bottom:2px;">Donnée Réelle Cytria Connectée :</div>
+              <div style="color:var(--dv-text-main);">Abattement de CHF 20'924 sur les droits de mutation et 50% sur la cédule</div>
+            </div>
+            <div style="font-size:11px; color:var(--dv-text-muted); margin-bottom:8px;">
+              <strong>Cible ICP :</strong> Propriétaires PPE (ICP 4)<br>
+              <strong>Persona D&amp;V :</strong> Sandra Bleeckx Vanhalst
+            </div>
+          </div>
+          <div style="border-top:1px solid #EDF2F7; padding-top:12px; margin-top:8px;">
+            <button class="btn-action" style="width:100%; justify-content:center; font-size:12px;" onclick="openFullGuide('mofu_casatax_sweetspot', 'Troinex')">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>Consulter &amp; Télécharger le Guide</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6: BOFU Mandat Exclusif -->
+        <div class="dv-card funnel-card-item" data-stage="BOFU" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:10px; font-weight:800; background:#FEE2E2; color:#991B1B; padding:3px 8px; border-radius:10px;">3. BOFU : Choix du Mandat Exclusif</span>
+              <span style="font-size:10px; font-weight:700; color:var(--dv-text-muted);">Guide &amp; Audit Off-Market</span>
+            </div>
+            <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:18px; font-weight:700; color:var(--dv-deep-green); line-height:1.2; margin-bottom:6px;">Pourquoi 40% des Propriétés Rive Gauche Stagnent plus de 120 Jours</h4>
+            <p style="font-size:12px; color:var(--dv-text-main); margin-bottom:12px;">L'impact désastreux des mandats simples multi-diffusés et la stratégie D&amp;V pour relancer un bien usé.</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; margin-bottom:12px;">
+              <div style="color:var(--dv-teal); font-weight:700; margin-bottom:2px;">Donnée Réelle Cytria Connectée :</div>
+              <div style="color:var(--dv-text-main);">Délai moyen constatés régies concurrentes : 124 jours • 52% baisses de prix</div>
+            </div>
+            <div style="font-size:11px; color:var(--dv-text-muted); margin-bottom:8px;">
+              <strong>Cible ICP :</strong> Vendeurs Actifs / Propriétaires Déçus (ICP 5)<br>
+              <strong>Persona D&amp;V :</strong> Sandra &amp; Adrien Désormière
+            </div>
+          </div>
+          <div style="border-top:1px solid #EDF2F7; padding-top:12px; margin-top:8px;">
+            <button class="btn-action" style="width:100%; justify-content:center; font-size:12px;" onclick="openFullGuide('mandats-bloques-relance', 'Troinex')">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>Consulter &amp; Télécharger le Guide</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: VEILLE RÉSEAUX SOCIAUX & BENCHMARK RÉGIES -->
+    <div id="tab-benchmark" class="tab-content" style="display:none;">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Veille Réseaux Sociaux & Benchmark des Régies Concurrentes</h2>
+          <p class="section-subtitle">Surveillance en continu de l'activité marketing et réseaux sociaux des 96 régies et agences genevoises + détection des mandats stagnants &gt; 90 jours.</p>
+        </div>
+        <button class="btn-action" onclick="loadSocialSurveillance(); loadCompetitorData(); alert('Données de veille concurrentielle actualisées depuis la base des 96 régies.');">
+          <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          <span>Actualiser la Veille</span>
+        </button>
+      </div>
+
+      <!-- Tab 3 Sub-tabs Navigation -->
+      <div class="subtabs-bar">
+        <button class="subtab-btn active" id="btn-subtab-social" onclick="switchBenchmarkSubTab('social')">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+          <span>1. Veille Réseaux Sociaux &amp; Stratégies (96 Régies)</span>
+        </button>
+        <button class="subtab-btn" id="btn-subtab-macro" onclick="switchBenchmarkSubTab('macro')">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>2. Benchmark Macro &amp; Mandats Stagnants (&gt; 90-120j)</span>
+        </button>
+      </div>
+
+      <!-- PANEL 1: VEILLE RÉSEAUX SOCIAUX (96 RÉGIES) -->
+      <div id="panel-subtab-social">
+        <!-- Social Surveillance KPI Cards -->
+        <div class="grid-4col" style="margin-bottom:20px;">
+          <div class="kpi-card">
+            <div class="kpi-label">Agences Surveillées (Cytria)</div>
+            <div class="kpi-val" id="social-total-agencies">96</div>
+            <div class="kpi-sub">Base d'intelligence genevoise active</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Actives sur LinkedIn</div>
+            <div class="kpi-val" id="social-pct-linkedin" style="color:var(--dv-teal);">81%</div>
+            <div class="kpi-sub">Canal clé des propriétaires</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Actives sur Instagram</div>
+            <div class="kpi-val" id="social-pct-instagram" style="color:var(--dv-deep-green);">73%</div>
+            <div class="kpi-sub">Format visuel &amp; lifestyle</div>
+          </div>
+          <div class="kpi-card" style="border: 2px solid var(--dv-teal);">
+            <div class="kpi-label">Angle d'Attaque D&amp;V</div>
+            <div class="kpi-val" style="font-size:16px; color:var(--dv-deep-green); margin-top:6px;">Expertise Fiscale</div>
+            <div class="kpi-sub">Face au vide éducatif adverse</div>
+          </div>
+        </div>
+
+        <!-- Strategic Synthesis Box -->
+        <div class="result-banner" style="margin-top:0; margin-bottom:20px; background:linear-gradient(135deg, var(--dv-deep-green), #002B2E);">
+          <h3 style="font-size:18px;">Synthèse de Surveillance : Angle Mort des Régies Concurrentes</h3>
+          <p id="social-dominant-flaw" style="font-size:13px; margin-bottom:6px;">
+            84% des concurrents se contentent d'afficher des photos de salons ou des annonces catalogues sans aucune valeur éducative ou fiscale pour le propriétaire.
+          </p>
+          <p id="social-dv-opportunity" style="font-size:12px; color:var(--dv-light-teal); font-weight:600;">
+            Opportunité D&amp;V : Diffuser des contenus d'expertise technique (Casatax 2026, impôt LIPP art. 82, Zone 5) pour convertir en amont les vendeurs avant qu'ils ne signent un mandat simple avec une grande régie.
+          </p>
+        </div>
+
+        <!-- Social Media Feed Table & Controls -->
+        <div class="dv-card" style="margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+            <h3 class="card-title" style="margin-bottom:0;">
+              <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+              <span>Veille Réseaux Sociaux &amp; Stratégies de Contenu des 96 Régies Genevoises</span>
+            </h3>
+            <div style="position:relative; min-width:280px;">
+              <input type="text" id="agency-search-input" placeholder="Filtrer régie, commune, mot-clé..." 
+                oninput="onAgencySearch(this.value)"
+                style="width:100%; padding:8px 12px 8px 32px; border:1px solid var(--dv-border); border-radius:6px; font-size:12px;">
+              <svg style="position:absolute; left:10px; top:9px; color:var(--dv-text-muted);" width="14" height="14" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+          </div>
+
+          <!-- Filter Chips -->
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;" id="agency-filter-chips">
+            <button class="stage-chip active" data-channel="all" onclick="filterAgencyChannel('all', this)">Toutes les Agences (96)</button>
+            <button class="stage-chip" data-channel="Rive Gauche" onclick="filterAgencyChannel('Rive Gauche', this)">Rive Gauche &amp; Cologny (59)</button>
+            <button class="stage-chip" data-channel="LinkedIn" onclick="filterAgencyChannel('LinkedIn', this)">Actives LinkedIn (78)</button>
+            <button class="stage-chip" data-channel="Instagram" onclick="filterAgencyChannel('Instagram', this)">Actives Instagram (70)</button>
+            <button class="stage-chip" data-channel="Prestige" onclick="filterAgencyChannel('Prestige', this)">Segment Prestige &gt; 3.5M (29)</button>
+          </div>
+
+          <table class="dv-table">
+            <thead>
+              <tr>
+                <th style="width:200px;">Régie / Agence</th>
+                <th style="width:130px;">Volume 24m &amp; Ventes</th>
+                <th style="width:130px;">Canaux Actifs</th>
+                <th>Dernier Sujet / Publication Détecté</th>
+                <th style="width:90px;">Date</th>
+                <th style="width:340px;">Angle Stratégique &amp; Accompagnement D&amp;V</th>
+              </tr>
+            </thead>
+            <tbody id="social-surveillance-table-body">
+              <!-- Pre-rendered Top 10 Contrasted Agencies (guarantees zero blank state, overwritten with full 96 by JS) -->
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">BARNES Suisse SA - Genève</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #1 &bull; Score: 99/100 &bull; Cologny / Rive Gauche</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 210.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">52 ventes (méd. 3.95M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span> <span class="badge-chan youtube">YouTube</span> <span class="badge-chan tiktok">TikTok</span> <span class="badge-chan web">Facebook</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Résidences d'exception et marché de l'ultra-luxe à Cologny et Vandoeuvres</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-09-18</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'accompagnement D&amp;V : Barnes surfe sur l'ultra-luxe abstrait (&gt;15M). Sandra &amp; Adrien captent les propriétaires de villas 2.5M-7M Rive Gauche avec un accompagnement ultra-personnalisé et confidentiel.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">Cardis | Sotheby's International Realty Genève</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #2 &bull; Score: 98/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 185.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">45 ventes (méd. 4.10M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span> <span class="badge-chan youtube">YouTube</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Actualités du marché de prestige et mandats exclusifs</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-09-14</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'accompagnement D&amp;V : Cardis publie des actualités génériques. D&amp;V oppose des études d'impact fiscal de proximité (IBGI art. 80-87) et le décodeur Casatax 2026.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">SPG One | Christie's International Real Estate</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #3 &bull; Score: 97/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 195.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">38 ventes (méd. 5.10M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span> <span class="badge-chan tiktok">TikTok</span> <span class="badge-chan web">Facebook</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Propriétés pieds dans l'eau et domaines d'exception</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-09-12</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : SPG valorise les promotions neuves d'immeubles. D&amp;V se positionne comme l'avocat exclusif du propriétaire individuel de villa en Zone 5.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">Naef Prestige Knight Frank Genève</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #4 &bull; Score: 96/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 165.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">48 ventes (méd. 3.40M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span> <span class="badge-chan youtube">YouTube</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Réseau international et transactions de prestige</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-09-10</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : Naef communique sur un réseau international étendu. D&amp;V réplique par une présence chirurgicale de terrain sur la Rive Gauche avec zéro dilution d'attention.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">Comptoir Immobilier SA</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #5 &bull; Score: 95/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 158.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">68 ventes (méd. 2.15M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span> <span class="badge-chan youtube">YouTube</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Gestion de patrimoine immobilier et courtage résidentiel</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-09-08</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : Comptoir adopte un ton institutionnel froid. D&amp;V humanise la relation avec Sandra (médiation familiale) et Adrien (arbitrage technique foncier).</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">Neho Suisse (Commission Fixe)</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #6 &bull; Score: 94/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 126.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">74 ventes (méd. 1.65M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span> <span class="badge-chan tiktok">TikTok</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Vendez sans commission d'agence pour forfait fixe</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-09-05</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : Neho met en avant le low-cost commission fixe. D&amp;V démontre que brader le conseil patrimonial et la négociation coûte 3x à 5x plus cher en décote de prix finale.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">Gerofinance Régie du Rhône</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #7 &bull; Score: 93/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 135.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">55 ventes (méd. 2.25M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Gérance locative et courtage résidentiel genevois</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-09-02</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : Grand groupe orienté gérance locative. D&amp;V offre un traitement d'orfèvre sur mesure pour chaque mandat de vente résidentiel.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">m3 Immobilier</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #8 &bull; Score: 92/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 118.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">44 ventes (méd. 2.50M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span> <span class="badge-chan youtube">YouTube</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Projets urbains et transactions haut de gamme</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-08-30</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : M3 privilégie les grands développements institutionnels. D&amp;V s'adresse directement aux familles propriétaires de villas et de domaines d'exception.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">Swissroc Properties</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #9 &bull; Score: 91/100 &bull; Genève</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 122.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">36 ventes (méd. 3.15M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Promotion immobilière et rénovation de caractère</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-08-28</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : Swissroc axé sur la promotion et rénovation. D&amp;V valorise l'existant sans travaux obligatoires et optimise le gain net fiscal immédiat.</td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">Brolliet SA (Groupe Bernard Nicod)</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">Rang #10 &bull; Score: 90/100 &bull; Carouge</div>
+                </td>
+                <td>
+                  <div style="font-weight:700; color:var(--dv-deep-green);">CHF 112.0M</div>
+                  <div style="font-size:10px; color:var(--dv-text-muted);">46 ventes (méd. 2.20M)</div>
+                </td>
+                <td><div style="display:flex; gap:4px; flex-wrap:wrap;"><span class="badge-chan web">Web/Blog</span> <span class="badge-chan linkedin">LinkedIn</span> <span class="badge-chan instagram">Instagram</span></div></td>
+                <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">Tradition immobilière genevoise et gérance</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">2026-08-25</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal);">Angle d'attaque D&amp;V : Régie séculaire absorbée par un groupe vaudois. D&amp;V incarne l'indépendance 100% genevoise et la proximité décisionnelle immédiate.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PANEL 2: BENCHMARK MACRO & MANDATS STAGNANTS -->
+      <div id="panel-subtab-macro" style="display:none;">
+        <!-- Stale Mandates by Commune -->
+        <div class="section-header">
+          <div>
+            <h3 class="section-title" style="font-size:22px;">Mandats Stagnants par Commune Rive Gauche (&gt; 120 jours)</h3>
+            <p class="section-subtitle">Propriétaires déçus subissant l'usure de leur bien : opportunités de contre-attaque D&amp;V.</p>
+          </div>
+        </div>
+        <div class="grid-2col" id="stale-opportunities-cards" style="margin-bottom:24px;">
+          <!-- Pre-rendered 4 Top Stale Mandates Opportunities -->
+          <div class="dv-card" style="border-left: 4px solid var(--dv-teal);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; font-weight:700; color:var(--dv-deep-green);">Cologny</h4>
+              <span class="tag-status hot">11 mandats bloqués</span>
+            </div>
+            <p style="font-size:12px; font-weight:600; color:var(--dv-text-main); margin:8px 0;">45% des villas à Cologny restent affichées plus de 4 mois faute de cadrage financier initial.</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; color:var(--dv-text-muted); margin-top:8px;">
+              <strong style="color:var(--dv-teal);">Campagne Éditoriale D&amp;V Recommandée :</strong><br>
+              Campagne LinkedIn &amp; Courrier confidentiel : 'Pourquoi les propriétés de prestige stagnent en 2026 : l'audit D&amp;V en 3 points'.
+            </div>
+          </div>
+
+          <div class="dv-card" style="border-left: 4px solid var(--dv-teal);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; font-weight:700; color:var(--dv-deep-green);">Vandoeuvres</h4>
+              <span class="tag-status hot">7 mandats bloqués</span>
+            </div>
+            <p style="font-size:12px; font-weight:600; color:var(--dv-text-main); margin:8px 0;">Biens haut de gamme bloqués : l'écart entre estimation initiale et offre notariée atteint CHF 420'000.</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; color:var(--dv-text-muted); margin-top:8px;">
+              <strong style="color:var(--dv-teal);">Campagne Éditoriale D&amp;V Recommandée :</strong><br>
+              Guide Spécial Vendeur : 'Arbitrage Foncier à Vandœuvres : Faut-il vendre en bloc ou détacher une parcelle ?'.
+            </div>
+          </div>
+
+          <div class="dv-card" style="border-left: 4px solid var(--dv-teal);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; font-weight:700; color:var(--dv-deep-green);">Troinex</h4>
+              <span class="tag-status hot">5 mandats bloqués</span>
+            </div>
+            <p style="font-size:12px; font-weight:600; color:var(--dv-text-main); margin:8px 0;">Marché familial dynamique mais freiné par des prétentions hors-sol face aux taux hypothécaires actuels.</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; color:var(--dv-text-muted); margin-top:8px;">
+              <strong style="color:var(--dv-teal);">Campagne Éditoriale D&amp;V Recommandée :</strong><br>
+              Post Carrousel Instagram : 'Vendre à Troinex : Comment les acquéreurs financent leur projet en 2026'.
+            </div>
+          </div>
+
+          <div class="dv-card" style="border-left: 4px solid var(--dv-teal);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; font-weight:700; color:var(--dv-deep-green);">Chêne-Bougeries</h4>
+              <span class="tag-status hot">13 mandats bloqués</span>
+            </div>
+            <p style="font-size:12px; font-weight:600; color:var(--dv-text-main); margin:8px 0;">Forte concurrence entre PPE et villas contiguës : les mandats multi-agences subissent 2x plus de baisses de prix.</p>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; color:var(--dv-text-muted); margin-top:8px;">
+              <strong style="color:var(--dv-teal);">Campagne Éditoriale D&amp;V Recommandée :</strong><br>
+              Tribune de Sandra Bleeckx Vanhalst : 'Mandat exclusif vs Mandat simple : Pourquoi la dispersion détruit la valeur de votre bien'.
+            </div>
+          </div>
+        </div>
+
+        <!-- Competitor Table -->
+        <div class="dv-card">
+          <h3 class="card-title">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            <span>Benchmark Macro : Délais de Vente et Taux de Mandats Bloqués</span>
+          </h3>
+          <table class="dv-table">
+            <thead>
+              <tr>
+                <th>Régie / Agence</th>
+                <th>Typologie</th>
+                <th>Mandats Actifs</th>
+                <th>Délai Moyen</th>
+                <th>% Mandats &gt; 90j</th>
+                <th>% Baisses de Prix</th>
+                <th>Indicateur de Tendance de Marché</th>
+                <th>Angle d'Accompagnement D&amp;V</th>
+              </tr>
+            </thead>
+            <tbody id="competitor-table-body">
+              <!-- Pre-rendered 8 Competitor Rows -->
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">Comptoir Immobilier</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Grande Régie Traditionnelle</td>
+                <td style="font-weight:700;">74</td>
+                <td>112 jours</td>
+                <td><span class="tag-status hot">46%</span></td>
+                <td>22%</td>
+                <td style="font-size:11px; color:#991B1B;">Absence de vulgarisation juridique/fiscale. Communication généraliste.</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Publier le 'Guide des Droits de Mutation et Déductions' : positionner D&amp;V en conseil patrimonial transparent.</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">SPG Société Privée de Gérance</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Groupe Immobilier Majeur</td>
+                <td style="font-weight:700;">62</td>
+                <td>128 jours</td>
+                <td><span class="tag-status hot">52%</span></td>
+                <td>28%</td>
+                <td style="font-size:11px; color:#991B1B;">Délais accrus sur les micromarchés de villas individuelles Rive Gauche.</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Diffuser des 'Baromètres Ventes Réalisées vs Prix Affichés' démontrant que D&amp;V valorise au juste prix sans rabais excessif.</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">Pilet &amp; Renaud</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Régie Historique</td>
+                <td style="font-weight:700;">41</td>
+                <td>98 jours</td>
+                <td><span class="tag-status opp">38%</span></td>
+                <td>19%</td>
+                <td style="font-size:11px; color:#991B1B;">Digital conventionnel, sans simulateur fiscal interactif en ligne.</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Proposer le Simulateur Net Vendeur D&amp;V sur mobile : capter les propriétaires recherchant la clarté financière.</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">Barnes Suisse</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Courtage International Luxury</td>
+                <td style="font-weight:700;">48</td>
+                <td>165 jours</td>
+                <td><span class="tag-status hot">58%</span></td>
+                <td>31%</td>
+                <td style="font-size:11px; color:#991B1B;">Périodes de commercialisation prolongées (> 150j) sur les mandats haut de gamme.</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Dossiers confidentiels d'arbitrage off-market menés par Adrien Désormière : rapidité et discrétion sans usure du bien.</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">Engel &amp; Völkers Genève</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Franchise Internationale</td>
+                <td style="font-weight:700;">36</td>
+                <td>104 jours</td>
+                <td><span class="tag-status opp">42%</span></td>
+                <td>25%</td>
+                <td style="font-size:11px; color:#991B1B;">Prise en compte limitée des spécificités du droit cantonal genevois (LDTR, IBGI art. 80-87).</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Affirmer l'expertise locale Rive Gauche de Sandra &amp; Adrien : décryptage des règles d'urbanisme de la Zone 5.</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">Cardis | Sotheby's International Realty</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Courtage Réseau Prestige</td>
+                <td style="font-weight:700;">52</td>
+                <td>134 jours</td>
+                <td><span class="tag-status hot">49%</span></td>
+                <td>27%</td>
+                <td style="font-size:11px; color:#991B1B;">Communication suprarégionale suisse romande, non spécifique au canton de Genève.</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Produire des études d'impact fiscal de proximité (IBGI art. 80-87) pour les propriétaires genevois.</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">Naef Prestige Knight Frank</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Régie Traditionnelle &amp; Prestige</td>
+                <td style="font-weight:700;">58</td>
+                <td>118 jours</td>
+                <td><span class="tag-status opp">44%</span></td>
+                <td>24%</td>
+                <td style="font-size:11px; color:#991B1B;">Dilution de la marque entre gérance, copropriété et courtage sans figure d'expert incarnée.</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Mettre en avant le binôme expert Sandra (négociation &amp; famille) / Adrien (urbanisme &amp; technique).</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--dv-deep-green);">Neho Suisse (Commission Fixe)</td>
+                <td style="font-size:11px; color:var(--dv-text-muted);">Agence Digitale Sans Courtier Dédié</td>
+                <td style="font-weight:700;">28</td>
+                <td>89 jours</td>
+                <td><span class="tag-status opp">32%</span></td>
+                <td>36%</td>
+                <td style="font-size:11px; color:#991B1B;">Absence d'accompagnement terrain personnalisé, photos automatiques, négociation laissée au propriétaire.</td>
+                <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">Démontrer par les chiffres qu'une négociation d'expert D&amp;V préserve 5% à 8% de valeur supplémentaire.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TELEMETRY INTERNE & FUNNEL -->
+    <div id="tab-telemetry" class="tab-content" style="display:none;">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Cockpit Télémétrie & Funnel d'Acquisition Vendeurs</h2>
+          <p class="section-subtitle">Mesure en temps réel de l'impact des guides, simulateurs et requêtes Google Search Console sur la signature de mandats exclusifs.</p>
+        </div>
+      </div>
+
+      <!-- Top Metric Cards -->
+      <div class="grid-4col" style="margin-bottom:20px;">
+        <div class="kpi-card">
+          <div class="kpi-label">Impressions SEO Organiques</div>
+          <div class="kpi-val" id="tele-impressions">48'620</div>
+          <div class="kpi-sub">Requêtes à haute intention Genève</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Clics Qualifiés (GSC)</div>
+          <div class="kpi-val" id="tele-clicks" style="color:var(--dv-teal);">2'940</div>
+          <div class="kpi-sub" id="tele-ctr">CTR Moyen : 6.05%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Leads Vendeurs Qualifiés</div>
+          <div class="kpi-val" id="tele-leads" style="color:var(--dv-deep-green);">38</div>
+          <div class="kpi-sub">Simulations & demandes complétées</div>
+        </div>
+        <div class="kpi-card" style="border: 2px solid var(--dv-teal);">
+          <div class="kpi-label">Mandats Exclusifs Signés</div>
+          <div class="kpi-val" id="tele-mandates" style="color:var(--dv-teal);">5</div>
+          <div class="kpi-sub">Attribution directe au contenu</div>
+        </div>
+      </div>
+
+      <!-- Funnel Progress Visualization -->
+      <div class="dv-card" style="margin-bottom:20px;">
+        <h3 class="card-title">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+          <span>Entonnoir de Conversion des Propriétaires Vendeurs (30 Jours)</span>
+        </h3>
+        <div class="funnel-container" id="funnel-steps-container">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- GSC High-Intent Keywords Table -->
+      <div class="dv-card">
+        <h3 class="card-title">
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Mots-Clés Stratégiques Google Search Console à Forte Intention Vendeur</span>
+        </h3>
+        <table class="dv-table">
+          <thead>
+            <tr>
+              <th>Requête de Recherche</th>
+              <th>Intention</th>
+              <th>Impressions</th>
+              <th>Clics</th>
+              <th>CTR</th>
+              <th>Position Moyenne</th>
+              <th>Statut Opportunité</th>
+              <th>Plan d'Action SEO D&V</th>
+            </tr>
+          </thead>
+          <tbody id="keywords-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5: WHITE-LABEL ARCHITECTURE (HIDDEN FROM NAVBAR) -->
+    <div id="tab-whitelabel" class="tab-content" style="display:none;">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Architecture Marque Blanche & Multi-Tenant</h2>
+          <p class="section-subtitle">Démontre comment l'ensemble du moteur Cytria est découplé de la marque D&V pour un déploiement SaaS instantané.</p>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="dv-card">
+          <h3 class="card-title">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <span>Configuration Active de l'Agence (`agency_profile.json`)</span>
+          </h3>
+          <p style="font-size:12px; color:var(--dv-text-muted); margin-bottom:12px;">
+            La charte graphique, les personas, les territoires et les tags de télémétrie sont injectés sans modifier le moteur d'intelligence foncière.
+          </p>
+          <pre id="profile-json-preview" style="background:#0F172A; color:#38BDF8; padding:16px; border-radius:6px; font-size:12px; font-family:monospace; overflow-x:auto; max-height:480px;"></pre>
+        </div>
+
+        <div class="dv-card">
+          <h3 class="card-title">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
+            <span>Simulateur de Switch Marque Blanche</span>
+          </h3>
+          <p style="font-size:13px; color:var(--dv-text-muted); margin-bottom:16px;">
+            Sélectionnez un profil pour prévisualiser la réadaptation instantanée du design et des angles éditoriaux :
+          </p>
+          
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="border:2px solid var(--dv-teal); border-radius:6px; padding:14px; background:#F8FAFC;">
+              <div style="font-weight:700; color:var(--dv-deep-green); font-size:14px;">Désormière & Vanhalst (Actif par défaut)</div>
+              <div style="font-size:12px; color:var(--dv-text-muted); margin-top:2px;">Palette : #00939D, #004A4F • Rive Gauche • Personas : Sandra & Adrien</div>
+              <button class="btn-action" style="margin-top:10px; font-size:11px; padding:5px 10px;" onclick="alert('Profil D&V déjà actif')">Profil Sélectionné</button>
+            </div>
+
+            <div style="border:1px solid #E2E8F0; border-radius:6px; padding:14px; background:#FFFFFF;">
+              <div style="font-weight:700; color:#1E3A8A; font-size:14px;">Agence Partenaire A (Gabarit White-Label)</div>
+              <div style="font-size:12px; color:var(--dv-text-muted); margin-top:2px;">Palette : #1E3A8A, #0F172A • Rive Droite / Centre • Personas Génériques</div>
+              <button class="btn-outline" style="margin-top:10px; font-size:11px; padding:5px 10px;" onclick="loadWhiteLabelDemo()">Simuler ce Thème Marque Blanche</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal Reader for Full Inbound Guide (1'200+ words) -->
+  <div id="modal-guide" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div>
+          <span id="modal-guide-badge" style="font-size:10px; font-weight:800; color:var(--dv-light-teal); text-transform:uppercase; letter-spacing:0.06em;">GUIDE OFFICIEL D&V</span>
+          <h3 id="modal-guide-title" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:22px; color:#FFFFFF; margin-top:2px;">Titre du Guide</h3>
+        </div>
+        <button onclick="closeGuideModal()" style="background:transparent; border:none; color:#FFFFFF; font-size:24px; cursor:pointer; padding:4px 8px;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-guide-content">
+          <!-- Injected dynamic chapters, comps table, and author box -->
+        </div>
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:center;">
+          <button class="btn-outline" onclick="copyGuideMarkdown()">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copier en Markdown (SEO/CMS)</span>
+          </button>
+          <div style="display:flex; gap:10px;">
+            <button class="btn-outline" onclick="window.print()">
+              <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              <span>Imprimer Guide A4</span>
+            </button>
+            <button class="btn-action" onclick="closeGuideModal()">Fermer le Lecteur</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      const target = document.getElementById(tabId);
+      if (target) target.style.display = 'block';
+      if (window.event && window.event.currentTarget) {
+        window.event.currentTarget.classList.add('active');
+      }
+      if (tabId === 'tab-benchmark') {
+        loadSocialSurveillance();
+        loadCompetitorData();
+      }
+    }
+
+    // Formatters
+    function fmtCHF(val) {
+      return 'CHF ' + Math.round(val).toLocaleString('fr-CH');
+    }
+
+    // Live Simulator Calculation
+    let currentSimResult = null;
+
+    // Comprehensive Official OCSTAT & Content Engine Dictionary for Zero-Latency Instant Rendering
+    const COMMUNE_INTELLIGENCE = {
+      'Troinex': {
+        commune: 'Troinex',
+        quarter: 'Q1 2026',
+        tagline: 'Villas & Familles',
+        ocstat: {
+          ppe_median_sqm: 14500,
+          villa_median_chf: 3200000,
+          centimes_additionnels: 35.0,
+          transactions_annuelles_est: 95
+        },
+        expert: 'Sandra Bleeckx Vanhalst',
+        expert_role: 'Spécialiste Villas, Familles & Transmission Patrimoniale',
+        expert_cta: 'Accompagnement confidentiel pour consensus familial et arbitrage de succession.',
+        market_summary: "Troinex offre un cadre de vie préservé très prisé des familles genevoises. Marché caractérisé par une forte rétention patrimoniale et des délais de vente courts lorsque le prix est aligné sur l'ancre OCSTAT.",
+        slides: [
+          { slide_number: 1, title: 'Baromètre Immobilier Troinex • Q1 2026', body: 'Ce que révèlent les statistiques officielles OCSTAT et les actes notariés du Registre Foncier.', badge: 'Chiffres Clés Officiels' },
+          { slide_number: 2, title: 'Prix Médian au m² & Villas', body: 'Appartements PPE : CHF 14\'500 / m²\nVillas : CHF 3\'200\'000\nTaux communal : 35.0 cts • 95 transactions/an', badge: 'Données de Référence' },
+          { slide_number: 3, title: 'Le Piège de la Surévaluation', body: 'À Troinex, 38% des mandats multi-agences subissent une baisse de prix de 5 à 8% après 90 jours d\'affichage infructueux.', badge: 'Alerte Vendeur' },
+          { slide_number: 4, title: 'L\'Atout Casatax 2026', body: 'Pour les biens sous CHF 1\'394\'928, vos acquéreurs bénéficient de CHF 20\'924 d\'abattement, stimulant les offres fermes.', badge: 'Levier d\'Offre' },
+          { slide_number: 5, title: 'Expertise de Proximité D&V', body: 'Sandra Bleeckx Vanhalst vous accompagne pour une estimation vénale rigoureuse basée sur les actes authentiques récents.', badge: 'Désormière & Vanhalst' }
+        ]
+      },
+      'Cologny': {
+        commune: 'Cologny',
+        quarter: 'Q1 2026',
+        tagline: 'Ultra-Prestige & Parcelles d\'Exception',
+        ocstat: {
+          ppe_median_sqm: 21500,
+          villa_median_chf: 5800000,
+          centimes_additionnels: 28.0,
+          transactions_annuelles_est: 85
+        },
+        expert: 'Adrien Désormière',
+        expert_role: 'Spécialiste Propriétés d\'Exception & Foncier Rive Gauche',
+        expert_cta: 'Étude d\'arbitrage confidentiel, valorisation parcellaire et diffusion off-market ciblée.',
+        market_summary: "Cologny constitue le sommet de l'immobilier de prestige en Suisse romande. Transactions dominées par des acquéreurs en fonds propres très solides, insensibles aux plafonds d'aide publique.",
+        slides: [
+          { slide_number: 1, title: 'Baromètre Immobilier Cologny • Q1 2026', body: 'Statistiques officielles OCSTAT et actes notariés d\'exception sur la colline de Cologny.', badge: 'Prestige Officiel' },
+          { slide_number: 2, title: 'Prix Médian au m² & Propriétés', body: 'Appartements PPE : CHF 21\'500 / m²\nVillas : CHF 5\'800\'000 (médiane cantonale haute)\nTaux communal : 28.0 cts • 85 transactions/an', badge: 'Données de Référence' },
+          { slide_number: 3, title: 'Arbitrage Foncier & Zone 5', body: 'À Cologny, la valeur réside souvent dans l\'emprise au sol et le potentiel de redéveloppement architectural d\'exception.', badge: 'Potentiel Foncier' },
+          { slide_number: 4, title: 'Marché Hors Plafond Casatax', body: 'Avec une assiette médiane à 5.8M CHF, le marché requiert une approche off-market ultra-qualifiée auprès de family offices.', badge: 'Cible Acquéreurs' },
+          { slide_number: 5, title: 'Expertise Confidentielle D&V', body: 'Adrien Désormière orchestre des transactions d\'exception sous mandat exclusif sans exposition publique dévalorisante.', badge: 'Désormière & Vanhalst' }
+        ]
+      },
+      'Vandoeuvres': {
+        commune: 'Vandoeuvres',
+        quarter: 'Q1 2026',
+        tagline: 'Campagne Chic & Grands Domaines',
+        ocstat: {
+          ppe_median_sqm: 18200,
+          villa_median_chf: 4900000,
+          centimes_additionnels: 29.0,
+          transactions_annuelles_est: 60
+        },
+        expert: 'Adrien Désormière',
+        expert_role: 'Spécialiste Propriétés d\'Exception & Foncier Rive Gauche',
+        expert_cta: 'Analyse d\'emprise foncière et stratégie de vente exclusive pour parcelles de maître.',
+        market_summary: "Vandœuvres séduit par son caractère champêtre préservé à quelques minutes du centre. Volumes de vente restreints assurant un maintien exemplaire des valorisations.",
+        slides: [
+          { slide_number: 1, title: 'Baromètre Immobilier Vandœuvres • Q1 2026', body: 'Synthèse des données officielles du Registre Foncier et de l\'OCSTAT pour Vandœuvres.', badge: 'Campagne Chic' },
+          { slide_number: 2, title: 'Valeurs Médianes Enregistrées', body: 'Appartements PPE : CHF 18\'200 / m²\nVillas : CHF 4\'900\'000\nTaux communal : 29.0 cts • 60 transactions/an', badge: 'Données de Référence' },
+          { slide_number: 3, title: 'Découpage Foncier Stratégique', body: 'Pour les parcelles supérieures à 1\'200 m², une analyse préalable du droit à bâtir peut valoriser substantiellement le prix de cession.', badge: 'Optimisation Foncier' },
+          { slide_number: 4, title: 'Positionnement Haut de Gamme', body: 'Les acquéreurs ciblent des résidences d\'exception avec parcs arborés, nécessitant un argumentaire technique de haut niveau.', badge: 'Stratégie Commerciale' },
+          { slide_number: 5, title: 'Accompagnement Sur Mesure D&V', body: 'Désormière & Vanhalst déploie une visibilité sélective auprès d\'une clientèle patrimoniale vérifiée.', badge: 'Désormière & Vanhalst' }
+        ]
+      },
+      'Collonge-Bellerive': {
+        commune: 'Collonge-Bellerive',
+        quarter: 'Q1 2026',
+        tagline: 'Lac & Prestige Résidentiel',
+        ocstat: {
+          ppe_median_sqm: 16800,
+          villa_median_chf: 3800000,
+          centimes_additionnels: 31.0,
+          transactions_annuelles_est: 110
+        },
+        expert: 'Sandra Bleeckx Vanhalst',
+        expert_role: 'Spécialiste Villas, Familles & Transmission Patrimoniale',
+        expert_cta: 'Conseil de mise en valeur pour villas individuelles et appartements de standing bord du lac.',
+        market_summary: "Collonge-Bellerive bénéficie d'une forte demande pour sa qualité de vie en bordure de lac et ses commodités scolaires et sportives haut de gamme.",
+        slides: [
+          { slide_number: 1, title: 'Baromètre Immobilier Collonge-Bellerive • Q1 2026', body: 'Indicateurs clés du marché résidentiel entre lac et campagne genevoise.', badge: 'Rive Gauche Lac' },
+          { slide_number: 2, title: 'Prix Médian au m² & Villas', body: 'Appartements PPE : CHF 16\'800 / m²\nVillas : CHF 3\'800\'000\nTaux communal : 31.0 cts • 110 transactions/an', badge: 'Données de Référence' },
+          { slide_number: 3, title: 'Prime à la Vue et au Calme', body: 'Les surcotes liées au dégagement lacustre et à la tranquillité atteignent +10% à +15% sur les actes vérifiés.', badge: 'Critères Clés' },
+          { slide_number: 4, title: 'Calendrier de Détention IBGI', body: 'Anticiper le palier fiscal de détention permet d\'économiser plusieurs dizaines de milliers de francs d\'impôt cantonal.', badge: 'Fiscalité Cantonal' },
+          { slide_number: 5, title: 'Mandat Exclusif D&V', body: 'Sandra Bleeckx Vanhalst sécurise votre transaction par une estimation fondée sur les 110 actes récents du secteur.', badge: 'Désormière & Vanhalst' }
+        ]
+      },
+      'Chêne-Bougeries': {
+        commune: 'Chêne-Bougeries',
+        quarter: 'Q1 2026',
+        tagline: 'PPE & Villas Proche Centre',
+        ocstat: {
+          ppe_median_sqm: 16400,
+          villa_median_chf: 3600000,
+          centimes_additionnels: 32.0,
+          transactions_annuelles_est: 180
+        },
+        expert: 'Sandra Bleeckx Vanhalst',
+        expert_role: 'Spécialiste Villas, Familles & Transmission Patrimoniale',
+        expert_cta: 'Stratégie de valorisation pour biens familiaux et appartements de standing.',
+        market_summary: "Chêne-Bougeries est la commune la plus active de la Rive Gauche avec 180 actes annuels. Équilibre parfait entre parcs de maîtres, quartiers de villas et PPE de standing.",
+        slides: [
+          { slide_number: 1, title: 'Baromètre Immobilier Chêne-Bougeries • Q1 2026', body: 'Analyse du secteur le plus dynamique de la Rive Gauche avec 180 transactions annuelles.', badge: 'Secteur Phare' },
+          { slide_number: 2, title: 'Prix Médian au m² & Villas', body: 'Appartements PPE : CHF 16\'400 / m²\nVillas : CHF 3\'600\'000\nTaux communal : 32.0 cts • 180 transactions/an', badge: 'Données de Référence' },
+          { slide_number: 3, title: 'Forte Densité d\'Acheteurs Solvables', body: 'Grâce à la proximité immédiate du centre et des écoles internationales, la demande qualifiée reste constante.', badge: 'Dynamisme Vendeur' },
+          { slide_number: 4, title: 'Impact du Seuil Casatax', body: 'Pour les appartements proches du plafond Casatax, un réglage fin du prix permet d\'attirer les acheteurs bénéficiant de l\'allègement.', badge: 'Stratégie Prix' },
+          { slide_number: 5, title: 'L\'Accompagnement D&V', body: 'Une estimation granulaire pièce par pièce pour valoriser les atouts spécifiques de votre copropriété ou parcelle.', badge: 'Désormière & Vanhalst' }
+        ]
+      },
+      'Veyrier': {
+        commune: 'Veyrier',
+        quarter: 'Q1 2026',
+        tagline: 'Résidentiel Familial & Salève',
+        ocstat: {
+          ppe_median_sqm: 14100,
+          villa_median_chf: 2800000,
+          centimes_additionnels: 38.0,
+          transactions_annuelles_est: 140
+        },
+        expert: 'Sandra Bleeckx Vanhalst',
+        expert_role: 'Spécialiste Villas, Familles & Transmission Patrimoniale',
+        expert_cta: 'Accompagnement dédié aux familles résidentes et gestion des démarches de transmission.',
+        market_summary: "Veyrier séduit par sa convivialité villageoise et son cadre naturel au pied du Salève. Marché très fluide avec 140 transactions annuelles et un grand intérêt des acquéreurs de villas jumelles et individuelles.",
+        slides: [
+          { slide_number: 1, title: 'Baromètre Immobilier Veyrier • Q1 2026', body: 'Données officielles OCSTAT et registre des actes notariés à Veyrier.', badge: 'Marché Familial' },
+          { slide_number: 2, title: 'Prix Médian au m² & Villas', body: 'Appartements PPE : CHF 14\'100 / m²\nVillas : CHF 2\'800\'000\nTaux communal : 38.0 cts • 140 transactions/an', badge: 'Données de Référence' },
+          { slide_number: 3, title: 'Forte Liquidité du Segment Familial', body: 'Les villas de 5 à 7 pièces correctement estimées se vendent en moyenne en moins de 45 jours.', badge: 'Délai Moyen' },
+          { slide_number: 4, title: 'Levier Casatax 2026', body: 'Les appartements sous CHF 1\'394\'928 bénéficient à plein de la réduction de droits notariés de CHF 20\'924.', badge: 'Atout Vente' },
+          { slide_number: 5, title: 'Estimation Personnalisée D&V', body: 'Sandra Bleeckx Vanhalst vous apporte l\'expertise indispensable pour défendre le meilleur prix net vendeur.', badge: 'Désormière & Vanhalst' }
+        ]
+      }
+    };
+
+    // Render OCSTAT Baromètre & 5-Slide Carousel Locally & Synchronously
+    function renderQuartierGuideLocally(commune) {
+      const data = COMMUNE_INTELLIGENCE[commune] || COMMUNE_INTELLIGENCE['Troinex'];
+      const elTitle = document.getElementById('guide-header-title');
+      if (elTitle) {
+        const span = elTitle.querySelector('span');
+        if (span) span.innerText = `Baromètre de Marché : ${data.commune} (${data.quarter})`;
+      }
+      const elPpe = document.getElementById('q-ppe-sqm');
+      if (elPpe) elPpe.innerText = `CHF ${data.ocstat.ppe_median_sqm.toLocaleString('fr-CH')} / m²`;
+      const elVilla = document.getElementById('q-villa-chf');
+      if (elVilla) elVilla.innerText = fmtCHF(data.ocstat.villa_median_chf);
+      const elTax = document.getElementById('q-tax-tx');
+      if (elTax) elTax.innerText = `${data.ocstat.centimes_additionnels} cts • ${data.ocstat.transactions_annuelles_est} tx/an`;
+
+      const container = document.getElementById('carousel-slides');
+      if (container) {
+        container.innerHTML = data.slides.map(s => `
+          <div class="carousel-slide-card">
+            <div class="slide-badge">${s.badge}</div>
+            <div class="slide-title">${s.title}</div>
+            <div class="slide-body">${s.body.replace(/\n/g, '<br>')}</div>
+            <div class="slide-footer">
+              <span>Slide ${s.slide_number}/5</span>
+              <span style="color:var(--dv-light-teal)">D&V Rive Gauche</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Called on any change of the Commune dropdown
+    function onCommuneChange(commune) {
+      if (!commune) commune = 'Troinex';
+      // 1. Instant zero-latency local rendering of Baromètre & Carousel
+      renderQuartierGuideLocally(commune);
+
+      // 2. Instant recalculation of fiscal simulation & hook texts tailored to this commune
+      runSimulation();
+
+      // 3. Keep Tab 2 commune select in sync
+      const funnelSelect = document.getElementById('funnel-commune-select');
+      if (funnelSelect && funnelSelect.value !== commune) {
+        funnelSelect.value = commune;
+        loadFunnelContent(commune);
+      }
+
+      // 4. Background sync with backend if online
+      loadQuartierGuide(commune);
+    }
+
+    // Geneva LIPP Art. 82 & Casatax 2026 Synchronous Local Engine (Instant 60 FPS slider calculation)
+    function computeFiscalLocally(sellPrice, acqPrice, years, reno, commune) {
+      sellPrice = Math.max(0, Number(sellPrice) || 0);
+      acqPrice = Math.max(0, Number(acqPrice) || 0);
+      years = Math.max(0, Number(years) || 0);
+      reno = Math.max(0, Number(reno) || 0);
+      if (!commune) {
+        commune = document.getElementById('select-commune')?.value || 'Troinex';
+      }
+      const cData = COMMUNE_INTELLIGENCE[commune] || COMMUNE_INTELLIGENCE['Troinex'];
+
+      const initialCosts = Math.round(acqPrice * 0.032); // 3.2% frais d'acquisition notariés
+      const saleCommission = Math.round(sellPrice * 0.03); // 3% honoraires de courtage
+      const grossGain = Math.max(0, sellPrice - acqPrice);
+      const totalDeductions = reno + initialCosts + saleCommission;
+      const taxableGain = Math.max(0, grossGain - totalDeductions);
+
+      const brackets = [
+        { max: 2, rate: 50, label: "< 2 ans (spéculatif)" },
+        { max: 3, rate: 40, label: "2 à 3 ans" },
+        { max: 4, rate: 30, label: "3 à 4 ans" },
+        { max: 5, rate: 20, label: "4 à 5 ans" },
+        { max: 10, rate: 15, label: "5 à 10 ans" },
+        { max: 25, rate: 10, label: "10 à 25 ans" },
+        { max: 999, rate: 2, label: "≥ 25 ans (taux plancher 2% dès 2025)" },
+      ];
+
+      let currentRate = 50;
+      let currentLabel = "< 2 ans";
+      let nextYears = null;
+      let nextRate = null;
+
+      for (let i = 0; i < brackets.length; i++) {
+        if (years < brackets[i].max) {
+          currentRate = brackets[i].rate;
+          currentLabel = brackets[i].label;
+          if (i + 1 < brackets.length) {
+            nextYears = brackets[i].max;
+            nextRate = brackets[i + 1].rate;
+          }
+          break;
+        }
+      }
+
+      const cantonalTax = Math.round(taxableGain * (currentRate / 100));
+      let taxSavingIfWaiting = 0;
+      if (nextRate !== null && nextRate < currentRate) {
+        const prospectiveTax = Math.round(taxableGain * (nextRate / 100));
+        taxSavingIfWaiting = Math.max(0, cantonalTax - prospectiveTax);
+      }
+
+      const casataxCeiling = 1394928;
+      const casataxRebate = 20924;
+      const isCasataxEligible = sellPrice > 0 && sellPrice <= casataxCeiling;
+      const diffCeiling = sellPrice - casataxCeiling;
+
+      let casataxAdvice = "";
+      const isUltraPrestige = commune.includes('Cologny') || commune.includes('Vandoeuvres') || sellPrice >= 4500000;
+
+      if (isCasataxEligible) {
+        casataxAdvice = `Votre bien est sous le plafond Casatax 2026 (${fmtCHF(casataxCeiling)}). Vos acquéreurs bénéficieront d'un abattement fiscal immédiat de ${fmtCHF(casataxRebate)} et 50% sur la cédule hypothécaire, maximisant votre bassin d'acheteurs finançables.`;
+      } else if (diffCeiling <= 80000) {
+        casataxAdvice = `Votre prix dépasse le plafond Casatax de seulement ${fmtCHF(Math.round(diffCeiling))}. Une négociation stratégique juste sous ${fmtCHF(casataxCeiling)} ferait économiser ${fmtCHF(casataxRebate)} à l'acheteur, déclenchant des offres fermes sans délai.`;
+      } else if (isUltraPrestige) {
+        casataxAdvice = `Marché haut de gamme à ${commune} (médiane villa ${fmtCHF(cData.ocstat.villa_median_chf)}, bien au-delà du plafond Casatax de ${fmtCHF(casataxCeiling)}). La stratégie doit cibler des acquéreurs patrimoniaux à fort apport personnel et investisseurs en fonds propres.`;
+      } else {
+        casataxAdvice = `Bien positionné au-delà du seuil Casatax (marché intermédiaire ou haut de gamme). L'argumentaire doit cibler des acquéreurs à fort apport personnel ou investisseurs patrimoniaux.`;
+      }
+
+      const netProceeds = sellPrice - cantonalTax - saleCommission;
+      const netPct = sellPrice > 0 ? Number(((netProceeds / sellPrice) * 100).toFixed(1)) : 0;
+
+      let inboundTitle = "";
+      let hookSentence = "";
+      let actionableCta = "";
+      let personaRec = "";
+
+      if (isUltraPrestige) {
+        personaRec = "Adrien Désormière";
+        if (years >= 25) {
+          inboundTitle = `Taux Plancher IBGI de 2% à ${commune} (Loi 13414 dès 2025)`;
+          hookSentence = `Détention ≥ 25 ans : votre gain sur cette propriété de ${commune} bénéficie du taux cantonal plancher de 2% (art. 84 LIPP).`;
+          actionableCta = "Consulter Adrien Désormière pour sécuriser une valorisation patrimoniale confidentielle et orchestrer une diffusion off-market.";
+        } else if (taxSavingIfWaiting > 15000 && nextYears) {
+          inboundTitle = `Optimisation Fiscale ${commune} : Économisez ${fmtCHF(taxSavingIfWaiting)} en ajustant le calendrier`;
+          hookSentence = `En signant l'acte authentique après le cap des ${nextYears} ans de détention, votre taux d'impôt chute de ${currentRate}% à ${nextRate}%.`;
+          actionableCta = "Consulter Adrien Désormière pour synchroniser le calendrier d'arbitrage et le transfert de propriété à l'optimum fiscal.";
+        } else {
+          inboundTitle = `Valorisation d'Exception & Arbitrage Foncier à ${commune}`;
+          hookSentence = `Sur un prix net estimé à ${fmtCHF(sellPrice)}, votre produit net en mains s'élève à ${fmtCHF(netProceeds)} (${netPct}%).`;
+          actionableCta = "Contacter Adrien Désormière pour une analyse de faisabilité foncière et mobiliser le réseau d'acquéreurs off-market qualifiés.";
+        }
+      } else {
+        personaRec = "Sandra Bleeckx Vanhalst";
+        if (years >= 25) {
+          inboundTitle = `Taux Plancher IBGI de 2% à ${commune} (Loi 13414 dès 2025)`;
+          hookSentence = `Félicitations : vous avez franchi le cap des 25 ans de détention sur ${commune}. Votre gain de ${fmtCHF(taxableGain)} bénéficie du taux plancher de 2%.`;
+          actionableCta = "Consulter Sandra Bleeckx Vanhalst pour sécuriser une estimation confidentielle et préparer un arbitrage patrimonial familial.";
+        } else if (taxSavingIfWaiting > 15000 && nextYears) {
+          inboundTitle = `Optimisation Fiscale ${commune} : Économisez ${fmtCHF(taxSavingIfWaiting)} en ajustant le calendrier`;
+          hookSentence = `En signant l'acte authentique après le cap des ${nextYears} ans de détention, votre taux d'impôt chute de ${currentRate}% à ${nextRate}%.`;
+          actionableCta = "Consulter Sandra Bleeckx Vanhalst pour caler la promesse de vente et le transfert de propriété à la date fiscale optimale.";
+        } else {
+          inboundTitle = `Valorisation & Arbitrage Foncier à ${commune}`;
+          hookSentence = `Sur un prix net estimé à ${fmtCHF(sellPrice)}, votre produit net en mains s'élève à ${fmtCHF(netProceeds)} (${netPct}%).`;
+          actionableCta = `Consulter Sandra Bleeckx Vanhalst pour une estimation vénale rigoureuse basée sur les actes récents de ${commune}.`;
+        }
+      }
+
+      return {
+        selling_price_chf: sellPrice,
+        acquisition_price_chf: acqPrice,
+        years_held: years,
+        commune: commune,
+        gross_capital_gain_chf: grossGain,
+        total_deductions_chf: totalDeductions,
+        taxable_capital_gain_chf: taxableGain,
+        applicable_tax_rate_pct: currentRate,
+        bracket_label: currentLabel,
+        next_bracket_years: nextYears,
+        tax_saving_if_waiting_chf: taxSavingIfWaiting,
+        cantonal_capital_gain_tax_chf: cantonalTax,
+        estimated_net_seller_proceeds_chf: netProceeds,
+        net_percentage_of_sale: netPct,
+        casatax: {
+          is_eligible: isCasataxEligible,
+          ceiling_2026_chf: casataxCeiling,
+          buyer_max_rebate_chf: casataxRebate,
+          difference_to_ceiling_chf: diffCeiling,
+          market_sweet_spot_advice: casataxAdvice,
+        },
+        inbound_angles: {
+          title: inboundTitle,
+          hook_sentence: hookSentence,
+          actionable_cta: actionableCta,
+          persona_recommendation: personaRec,
+        }
+      };
+    }
+
+    function runSimulation() {
+      const sellPrice = parseFloat(document.getElementById('input-sell-price').value);
+      const acqPrice = parseFloat(document.getElementById('input-acq-price').value);
+      const years = parseInt(document.getElementById('input-years').value);
+      const reno = parseFloat(document.getElementById('input-reno').value);
+      const commune = document.getElementById('select-commune')?.value || 'Troinex';
+
+      document.getElementById('lbl-sell-price').innerText = fmtCHF(sellPrice);
+      document.getElementById('lbl-acq-price').innerText = fmtCHF(acqPrice);
+      document.getElementById('lbl-years').innerText = years + (years > 1 ? ' ans' : ' an');
+      document.getElementById('lbl-reno').innerText = fmtCHF(reno);
+
+      // 1. Instant 60 FPS Synchronous Local Execution (Zero-Latency Slider Movement)
+      const localSim = computeFiscalLocally(sellPrice, acqPrice, years, reno, commune);
+      currentSimResult = localSim;
+      updateSimulationUI(localSim);
+
+      // 2. Background sync with REST API if online
+      fetch(`/api/marketing/fiscal-simulation?sell_price=${sellPrice}&acq_price=${acqPrice}&years=${years}&reno=${reno}&commune=${encodeURIComponent(commune)}`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (data && data.simulation) {
+            currentSimResult = data.simulation;
+            updateSimulationUI(data.simulation);
+          }
+        })
+        .catch(() => {
+          // Local simulation is already seamlessly rendered
+        });
+    }
+
+    function updateSimulationUI(sim) {
+      if (!sim) return;
+      const elGross = document.getElementById('res-gross-gain');
+      const elDed = document.getElementById('res-deductions');
+      const elRate = document.getElementById('res-tax-rate');
+      const elBracket = document.getElementById('res-bracket-label');
+      const elTax = document.getElementById('res-tax-due');
+      const elNext = document.getElementById('res-next-bracket');
+      const elNet = document.getElementById('res-net-proceeds');
+      const elPct = document.getElementById('res-net-pct');
+
+      if (elGross) elGross.innerText = fmtCHF(sim.gross_capital_gain_chf);
+      if (elDed) elDed.innerText = `Déductions : ${fmtCHF(sim.total_deductions_chf)}`;
+      if (elRate) elRate.innerText = `${sim.applicable_tax_rate_pct}%`;
+      if (elBracket) elBracket.innerText = sim.bracket_label;
+      if (elTax) elTax.innerText = fmtCHF(sim.cantonal_capital_gain_tax_chf);
+      
+      if (elNext) {
+        if (sim.tax_saving_if_waiting_chf > 0 && sim.next_bracket_years) {
+          elNext.innerText = `Économie : ${fmtCHF(sim.tax_saving_if_waiting_chf)} à ${sim.next_bracket_years} ans`;
+        } else {
+          elNext.innerText = `Taux stabilisé pour cette tranche`;
+        }
+      }
+
+      if (elNet) elNet.innerText = fmtCHF(sim.estimated_net_seller_proceeds_chf);
+      if (elPct) elPct.innerText = `${sim.net_percentage_of_sale}% du prix de vente`;
+
+      // Inbound banner
+      const elHookTitle = document.getElementById('res-hook-title');
+      const elHookBody = document.getElementById('res-hook-body');
+      const elBrokerRec = document.getElementById('res-broker-rec');
+      if (elHookTitle && sim.inbound_angles) elHookTitle.innerText = sim.inbound_angles.title;
+      if (elHookBody && sim.inbound_angles && sim.casatax) {
+        elHookBody.innerText = `${sim.inbound_angles.hook_sentence} ${sim.casatax.market_sweet_spot_advice}`;
+      }
+      if (elBrokerRec && sim.inbound_angles) {
+        elBrokerRec.innerText = `Expert Référent : ${sim.inbound_angles.persona_recommendation}`;
+      }
+
+      // Casatax badge
+      const badge = document.getElementById('res-casatax-badge');
+      const text = document.getElementById('res-casatax-text');
+      if (badge && text && sim.casatax) {
+        if (sim.casatax.is_eligible) {
+          badge.className = 'badge-casatax eligible';
+          text.innerText = `Sous plafond Casatax 2026 (Max -${fmtCHF(sim.casatax.buyer_max_rebate_chf)} pour l'acquéreur)`;
+        } else {
+          badge.className = 'badge-casatax ineligible';
+          text.innerText = `Au-delà du plafond Casatax 2026 (Marché haut de gamme / Rive Gauche)`;
+        }
+      }
+    }
+
+    // Benchmark Sub-tabs Switcher (Social Surveillance vs Macro Benchmark & Stale Mandates)
+    function switchBenchmarkSubTab(subTabName) {
+      const btnSocial = document.getElementById('btn-subtab-social');
+      const btnMacro = document.getElementById('btn-subtab-macro');
+      const pnlSocial = document.getElementById('panel-subtab-social');
+      const pnlMacro = document.getElementById('panel-subtab-macro');
+
+      if (subTabName === 'macro') {
+        if (btnSocial) btnSocial.classList.remove('active');
+        if (btnMacro) btnMacro.classList.add('active');
+        if (pnlSocial) pnlSocial.style.display = 'none';
+        if (pnlMacro) pnlMacro.style.display = 'block';
+      } else {
+        if (btnSocial) btnSocial.classList.add('active');
+        if (btnMacro) btnMacro.classList.remove('active');
+        if (pnlSocial) pnlSocial.style.display = 'block';
+        if (pnlMacro) pnlMacro.style.display = 'none';
+      }
+    }
+
+    // Load Quartier Guide & Carousel from REST API
+    async function loadQuartierGuide(commune) {
+      try {
+        const res = await fetch(`/api/marketing/quartier-guide?commune=${encodeURIComponent(commune)}`);
+        if (res.ok) {
+          const data = await res.json();
+          renderGuideUI(data.guide);
+        }
+      } catch (err) {
+        console.error('Error fetching guide:', err);
+      }
+    }
+
+    function renderGuideUI(guide) {
+      if (!guide) return;
+      const elTitle = document.getElementById('guide-header-title');
+      if (elTitle) {
+        const span = elTitle.querySelector('span');
+        if (span) span.innerText = `Baromètre de Marché : ${guide.commune} (${guide.quarter})`;
+      }
+      const elPpe = document.getElementById('q-ppe-sqm');
+      if (elPpe) elPpe.innerText = `CHF ${guide.ocstat.ppe_median_sqm.toLocaleString('fr-CH')} / m²`;
+      const elVilla = document.getElementById('q-villa-chf');
+      if (elVilla) elVilla.innerText = fmtCHF(guide.ocstat.villa_median_chf);
+      const elTax = document.getElementById('q-tax-tx');
+      if (elTax) elTax.innerText = `${guide.ocstat.centimes_additionnels} cts • ${guide.ocstat.transactions_annuelles_est} tx/an`;
+
+      const container = document.getElementById('carousel-slides');
+      if (container && guide.social_carousel_slides) {
+        container.innerHTML = guide.social_carousel_slides.map(s => `
+          <div class="carousel-slide-card">
+            <div class="slide-badge">${s.badge}</div>
+            <div class="slide-title">${s.title}</div>
+            <div class="slide-body">${s.body.replace(/\n/g, '<br>')}</div>
+            <div class="slide-footer">
+              <span>Slide ${s.slide_number}/5</span>
+              <span style="color:var(--dv-light-teal)">D&V Rive Gauche</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Dynamic Social Media Surveillance & Search/Filter Engine (96 Agencies)
+    let allSurveillanceAgencies = [];
+    let activeChannelFilter = 'all';
+    let activeSearchQuery = '';
+
+    async function loadSocialSurveillance() {
+      try {
+        const res = await fetch('/api/marketing/social-surveillance');
+        if (res.ok) {
+          const data = await res.json();
+          renderSocialSurveillanceUI(data);
+        }
+      } catch (err) {
+        console.error('Error loading social surveillance:', err);
+      }
+    }
+
+    function renderSocialSurveillanceUI(data) {
+      if (data.summary) {
+        const elTotal = document.getElementById('social-total-agencies');
+        const elLi = document.getElementById('social-pct-linkedin');
+        const elIg = document.getElementById('social-pct-instagram');
+        const elFlaw = document.getElementById('social-dominant-flaw');
+        const elOpp = document.getElementById('social-dv-opportunity');
+        if (elTotal) elTotal.innerText = data.summary.total_monitored_agencies;
+        if (elLi) elLi.innerText = data.summary.pct_active_linkedin + '%';
+        if (elIg) elIg.innerText = data.summary.pct_active_instagram + '%';
+        if (elFlaw) elFlaw.innerText = data.summary.dominant_competitor_flaw;
+        if (elOpp) elOpp.innerText = data.summary.strategic_dv_opportunity;
+      }
+      if (data.surveillance && Array.isArray(data.surveillance) && data.surveillance.length > 0) {
+        allSurveillanceAgencies = data.surveillance;
+      } else if (window.INITIAL_SURVEILLANCE_DATA && window.INITIAL_SURVEILLANCE_DATA.surveillance) {
+        allSurveillanceAgencies = window.INITIAL_SURVEILLANCE_DATA.surveillance;
+      }
+      applyAgencyFiltersAndRender();
+    }
+
+    function filterAgencyChannel(channel, btn) {
+      activeChannelFilter = channel;
+      const chips = document.querySelectorAll('#agency-filter-chips .stage-chip');
+      chips.forEach(c => c.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const matchingBtn = document.querySelector(`#agency-filter-chips button[data-channel="${channel}"]`);
+        if (matchingBtn) matchingBtn.classList.add('active');
+      }
+      applyAgencyFiltersAndRender();
+    }
+
+    function onAgencySearch(val) {
+      activeSearchQuery = (val || '').trim().toLowerCase();
+      applyAgencyFiltersAndRender();
+    }
+
+    function applyAgencyFiltersAndRender() {
+      const tbody = document.getElementById('social-surveillance-table-body');
+      if (!tbody) return;
+
+      // Fallback to window.INITIAL_SURVEILLANCE_DATA if array is empty
+      if ((!allSurveillanceAgencies || allSurveillanceAgencies.length === 0) && window.INITIAL_SURVEILLANCE_DATA && window.INITIAL_SURVEILLANCE_DATA.surveillance) {
+        allSurveillanceAgencies = window.INITIAL_SURVEILLANCE_DATA.surveillance;
+      }
+
+      let filtered = allSurveillanceAgencies;
+
+      // Filter by Channel / Segment
+      if (activeChannelFilter === 'LinkedIn') {
+        filtered = filtered.filter(a => {
+          const chans = (a.channels_active || []).map(c => String(c).toLowerCase());
+          return chans.includes('linkedin') || (a.social_links && !!a.social_links.linkedin);
+        });
+      } else if (activeChannelFilter === 'Instagram') {
+        filtered = filtered.filter(a => {
+          const chans = (a.channels_active || []).map(c => String(c).toLowerCase());
+          return chans.includes('instagram') || (a.social_links && !!a.social_links.instagram);
+        });
+      } else if (activeChannelFilter === 'Rive Gauche') {
+        const riveGaucheTokens = [
+          'cologny', 'vandoeuvres', 'vandœuvres', 'collonge', 'bellerive', 'troinex', 
+          'veyrier', 'rive gauche', 'chêne', 'chene', 'hermance', 'anières', 'anieres', 
+          'choulex', 'corsier', 'meinier', 'puplinge', 'jussy', 'conches', 'florissant', 
+          'champel', 'eaux-vives', 'lac'
+        ];
+        filtered = filtered.filter(a => {
+          const str = `${a.headquarters_commune || ''} ${a.primary_territory || ''} ${a.dv_counter_angle || ''}`.toLowerCase();
+          return riveGaucheTokens.some(t => str.includes(t));
+        });
+      } else if (activeChannelFilter === 'Prestige') {
+        filtered = filtered.filter(a => {
+          const isHighPrice = (a.median_price_chf && a.median_price_chf >= 3000000);
+          const isHighVolume = (a.sold_volume_chf_m && a.sold_volume_chf_m >= 110);
+          const isPrestigeName = (a.agency_name && (a.agency_name.toLowerCase().includes('prestige') || a.agency_name.toLowerCase().includes('luxury') || a.agency_name.toLowerCase().includes('sotheby') || a.agency_name.toLowerCase().includes('christie') || a.agency_name.toLowerCase().includes('barnes')));
+          return isHighPrice || isHighVolume || isPrestigeName;
+        });
+      }
+
+      // Filter by Search Query
+      if (activeSearchQuery) {
+        filtered = filtered.filter(a => {
+          const hay = `${a.agency_name || ''} ${a.headquarters_commune || ''} ${a.primary_territory || ''} ${a.sample_title || ''} ${a.dv_counter_angle || ''} ${(a.channels_active || []).join(' ')}`.toLowerCase();
+          return hay.includes(activeSearchQuery);
+        });
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:28px; color:var(--dv-text-muted); font-size:13px;">Aucune régie ne correspond à votre filtre ("${activeSearchQuery || activeChannelFilter}"). <br><button class="btn-outline" style="margin-top:10px; font-size:11px;" onclick="filterAgencyChannel('all', document.querySelector('#agency-filter-chips .stage-chip'))">Réinitialiser les Filtres (96 Agences)</button></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => {
+        const chansHtml = (s.channels_active || []).map(c => {
+          let cls = 'web';
+          const clow = String(c).toLowerCase();
+          if (clow.includes('linkedin')) cls = 'linkedin';
+          else if (clow.includes('instagram')) cls = 'instagram';
+          else if (clow.includes('youtube')) cls = 'youtube';
+          else if (clow.includes('tiktok')) cls = 'tiktok';
+          
+          let link = '#';
+          if (clow.includes('linkedin') && s.social_links?.linkedin) link = s.social_links.linkedin;
+          else if (clow.includes('instagram') && s.social_links?.instagram) link = s.social_links.instagram;
+          else if (clow.includes('youtube') && s.social_links?.youtube) link = s.social_links.youtube;
+          else if (s.website) link = s.website;
+
+          const isRealLink = link && link !== '#';
+          return `<a href="${isRealLink ? link : 'javascript:void(0)'}" target="${isRealLink ? '_blank' : '_self'}" class="badge-chan ${cls}" style="text-decoration:none;">${c}</a>`;
+        }).join(' ');
+
+        const volText = s.sold_volume_chf_m > 0 ? `CHF ${s.sold_volume_chf_m.toFixed(1)}M` : 'Confidentiel';
+        const dealText = s.sold_24m_count > 0 ? `${s.sold_24m_count} ventes` : '';
+        const medText = s.median_price_chf > 0 ? `méd. ${(s.median_price_chf / 1000000).toFixed(2)}M` : '';
+
+        return `
+          <tr>
+            <td>
+              <div style="font-weight:700; color:var(--dv-deep-green); font-size:13px;">${s.agency_name}</div>
+              <div style="font-size:10px; color:var(--dv-text-muted);">Rang #${s.rank} &bull; Score: ${s.cytria_score}/100 &bull; ${s.headquarters_commune || 'Genève'}</div>
+            </td>
+            <td>
+              <div style="font-weight:700; color:var(--dv-deep-green); font-size:13px;">${volText}</div>
+              <div style="font-size:10px; color:var(--dv-text-muted);">${dealText} ${medText ? `(${medText})` : ''}</div>
+            </td>
+            <td><div style="display:flex; gap:4px; flex-wrap:wrap;">${chansHtml}</div></td>
+            <td style="font-size:12px; font-weight:600; color:var(--dv-text-main);">${s.sample_title}</td>
+            <td style="font-size:11px; color:var(--dv-text-muted);">${s.latest_activity_date}</td>
+            <td style="font-size:11px; color:var(--dv-teal); font-weight:600; background:rgba(0,147,157,0.04); padding:10px; border-radius:4px; border-left:3px solid var(--dv-teal); line-height:1.4;">${s.dv_counter_angle}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Load Competitor Radar
+    async function loadCompetitorData() {
+      try {
+        const res = await fetch('/api/marketing/competitor-radar');
+        if (res.ok) {
+          const data = await res.json();
+          renderCompetitorUI(data.competitors, data.stale_opportunities);
+        }
+      } catch (err) {
+        console.error('Error loading competitors:', err);
+      }
+    }
+
+    function renderCompetitorUI(competitors, stale) {
+      const tbody = document.getElementById('competitor-table-body');
+      tbody.innerHTML = competitors.map(c => `
+        <tr>
+          <td style="font-weight:700; color:var(--dv-deep-green);">${c.agency_name}</td>
+          <td style="font-size:11px; color:var(--dv-text-muted);">${c.type}</td>
+          <td style="font-weight:700;">${c.active_listings_count}</td>
+          <td>${c.avg_days_on_market} jours</td>
+          <td><span class="tag-status ${c.pct_stale_over_90d > 45 ? 'hot' : 'opp'}">${c.pct_stale_over_90d}%</span></td>
+          <td>${c.pct_price_reduced}%</td>
+          <td style="font-size:11px; color:#991B1B;">${c.content_strategy.identified_weakness}</td>
+          <td style="font-size:11px; color:var(--dv-teal); font-weight:600;">${c.content_strategy.counter_attack_opportunity}</td>
+        </tr>
+      `).join('');
+
+      const cards = document.getElementById('stale-opportunities-cards');
+      cards.innerHTML = stale.map(s => `
+        <div class="dv-card" style="border-left: 4px solid var(--dv-teal);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; font-weight:700; color:var(--dv-deep-green);">${s.commune}</h4>
+            <span class="tag-status hot">${s.stale_listings_over_120d} mandats bloqués</span>
+          </div>
+          <p style="font-size:12px; font-weight:600; color:var(--dv-text-main); margin:8px 0;">${s.headline_trigger}</p>
+          <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; color:var(--dv-text-muted); margin-top:8px;">
+            <strong style="color:var(--dv-teal);">Campagne Éditoriale D&V Recommandée :</strong><br>
+            ${s.suggested_dv_editorial_campaign}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Load Telemetry Metrics
+    async function loadTelemetry() {
+      try {
+        const res = await fetch('/api/marketing/telemetry-metrics');
+        if (res.ok) {
+          const data = await res.json();
+          renderTelemetryUI(data.telemetry);
+        }
+      } catch (err) {
+        console.error('Error loading telemetry:', err);
+      }
+    }
+
+    function renderTelemetryUI(t) {
+      document.getElementById('tele-impressions').innerText = t.summary.total_impressions.toLocaleString('fr-CH');
+      document.getElementById('tele-clicks').innerText = t.summary.organic_clicks.toLocaleString('fr-CH');
+      document.getElementById('tele-ctr').innerText = `CTR Moyen : ${t.summary.avg_ctr_pct}%`;
+      document.getElementById('tele-leads').innerText = t.summary.seller_leads_captured;
+      document.getElementById('tele-mandates').innerText = t.summary.mandates_won_attributed;
+
+      // Funnel
+      const funnelContainer = document.getElementById('funnel-steps-container');
+      const maxCount = t.funnel[0].count;
+      funnelContainer.innerHTML = t.funnel.map(f => {
+        const pct = ((f.count / maxCount) * 100).toFixed(1);
+        return `
+          <div class="funnel-step">
+            <div>
+              <div style="font-weight:700; font-size:13px; color:var(--dv-deep-green);">${f.step_name}</div>
+              <div style="font-size:11px; color:var(--dv-text-muted);">${f.description}</div>
+            </div>
+            <div class="funnel-bar-wrapper">
+              <div class="funnel-bar-fill" style="width:${pct}%;"></div>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-weight:800; font-size:14px; color:var(--dv-deep-green);">${f.count}</span>
+              <span style="font-size:11px; color:var(--dv-text-muted); display:block;">(${f.conversion_from_prev_pct}%)</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Keywords
+      const tbody = document.getElementById('keywords-table-body');
+      tbody.innerHTML = t.gsc_keywords.map(k => {
+        let tagClass = 'safe';
+        if (k.opportunity_status.includes('Top 3')) tagClass = 'safe';
+        else if (k.opportunity_status.includes('Page 1')) tagClass = 'opp';
+        else tagClass = 'hot';
+
+        return `
+          <tr>
+            <td style="font-weight:700; color:var(--dv-text-main);">${k.query}</td>
+            <td><span class="tag-status" style="background:#E0F2FE; color:#0369A1;">${k.intent}</span></td>
+            <td>${k.impressions.toLocaleString('fr-CH')}</td>
+            <td style="font-weight:700;">${k.clicks}</td>
+            <td>${k.ctr_pct}%</td>
+            <td style="font-weight:700; color:var(--dv-teal);">#${k.avg_position}</td>
+            <td><span class="tag-status ${tagClass}">${k.opportunity_status}</span></td>
+            <td style="font-size:11px; color:var(--dv-deep-green);">${k.recommended_action}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Load Profile Preview
+    async function loadProfile() {
+      try {
+        const res = await fetch('/api/marketing/agency-profile?agency=desormiere_vanhalst');
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('profile-json-preview').innerText = JSON.stringify(data.profile, null, 2);
+        }
+      } catch (err) {
+        console.error('Error loading profile:', err);
+      }
+    }
+
+    function copyInboundPitch() {
+      if (!currentSimResult) return;
+      const text = `ARGUMENTAIRE VENDEUR CONFIDENTIEL (Désormière & Vanhalst)\n\n` +
+                   `Prix estimé : ${fmtCHF(currentSimResult.selling_price_chf)}\n` +
+                   `Produit net vendeur en mains : ${fmtCHF(currentSimResult.estimated_net_seller_proceeds_chf)} (${currentSimResult.net_percentage_of_sale}%)\n` +
+                   `Taux d'impôt cantonal LIPP art. 82 : ${currentSimResult.applicable_tax_rate_pct}% (${currentSimResult.bracket_label})\n` +
+                   `Analyse Casatax 2026 : ${currentSimResult.casatax.market_sweet_spot_advice}\n\n` +
+                   `Conseil d'arbitrage : ${currentSimResult.inbound_angles.hook_sentence}\n` +
+                   `Expert référent recommandé : ${currentSimResult.inbound_angles.persona_recommendation}`;
+      navigator.clipboard.writeText(text);
+      alert('Argumentaire copié dans le presse-papier !');
+    }
+
+    function copyCarouselText() {
+      const commune = document.getElementById('select-commune').value;
+      const text = `📊 BAROMÈTRE IMMOBILIER ${commune.toUpperCase()} • Q1 2026\n\n` +
+                   `Ce que révèlent les statistiques officielles OCSTAT et les actes notariés du Registre Foncier à Genève :\n\n` +
+                   `1️⃣ Valeur médiane enregistrée : ${document.getElementById('q-ppe-sqm').innerText} pour la PPE.\n` +
+                   `2️⃣ Prix médian des villas : ${document.getElementById('q-villa-chf').innerText}.\n` +
+                   `3️⃣ Attention à la surévaluation : sur la Rive Gauche, 4 mandats sur 10 affichés plus de 90 jours subissent une baisse de prix de 5 à 8%.\n\n` +
+                   `💡 Propriétaires : avant de signer un mandat, simulez votre impôt sur le gain immobilier et l'impact Casatax 2026 sur vos acheteurs.\n\n` +
+                   `👉 Échange confidentiel avec Sandra Bleeckx Vanhalst ou Adrien Désormière : desormiere-vanhalst.ch`;
+      navigator.clipboard.writeText(text);
+      alert('Texte du post LinkedIn copié dans le presse-papier !');
+    }
+
+    // Funnel & Onboarding Logic
+    let currentFunnelData = null;
+    let activeFunnelStage = "ALL";
+    let currentFullGuide = null;
+
+    function toggleIcpTile(id) {
+      const tile = document.getElementById(`tile-icp-${id}`);
+      const chk = document.getElementById(`check-icp-${id}`);
+      if (chk.checked) tile.classList.add('active');
+      else tile.classList.remove('active');
+    }
+
+    function saveICPPreferences() {
+      const commune = document.getElementById('funnel-commune-select').value;
+      loadFunnelContent(commune);
+      alert('Profils ICP calibrés avec succès ! Les suggestions de contenu ont été recalculées à partir des données réelles de ' + commune + '.');
+    }
+
+    async function loadFunnelContent(commune = "Troinex") {
+      try {
+        const res = await fetch(`/api/marketing/funnel-suggestions?commune=${encodeURIComponent(commune)}`);
+        if (res.ok) {
+          const data = await res.json();
+          currentFunnelData = data;
+          renderFunnelSuggestions();
+        }
+      } catch (err) {
+        console.error('Error loading funnel suggestions:', err);
+      }
+    }
+
+    function filterFunnelStage(stage) {
+      activeFunnelStage = stage;
+      document.querySelectorAll('.stage-chips .stage-chip').forEach(c => c.classList.remove('active'));
+      const activeChip = document.getElementById(`chip-${stage}`);
+      if (activeChip) activeChip.classList.add('active');
+
+      if (currentFunnelData && currentFunnelData.suggestions) {
+        renderFunnelSuggestions();
+      } else {
+        // Filter pre-rendered cards
+        document.querySelectorAll('#funnel-suggestions-grid .funnel-card-item').forEach(card => {
+          const cardStage = card.getAttribute('data-stage');
+          if (stage === 'ALL' || cardStage === stage) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    function renderFunnelSuggestions() {
+      if (!currentFunnelData || !currentFunnelData.suggestions) return;
+      const grid = document.getElementById('funnel-suggestions-grid');
+      let items = currentFunnelData.suggestions;
+      if (activeFunnelStage !== "ALL") {
+        items = items.filter(s => s.stage === activeFunnelStage);
+      }
+
+      const noticeBanner = `
+        <div style="grid-column: 1 / -1; background: rgba(0, 147, 157, 0.08); border: 1px solid var(--dv-teal); border-radius: 6px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+          <span style="font-size: 16px;">💡</span>
+          <span style="font-size: 12px; color: var(--dv-deep-green); font-weight: 600;">
+            Note : Exemples contextuels pour l'expérience utilisateur ancrés dans les données réelles Cytria (FAO, OCSTAT, LIPP) — en attente de synchronisation avec l'agent autonome de génération de contenu.
+          </span>
+        </div>
+      `;
+
+      grid.innerHTML = noticeBanner + items.map(s => {
+        let stageBadgeColor = s.stage === 'TOFU' ? '#0369A1' : (s.stage === 'MOFU' ? '#00939D' : '#991B1B');
+        let stageBg = s.stage === 'TOFU' ? '#E0F2FE' : (s.stage === 'MOFU' ? '#CCFBF1' : '#FEE2E2');
+
+        return `
+          <div class="dv-card funnel-card-item" data-stage="${s.stage}" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:10px; font-weight:800; background:${stageBg}; color:${stageBadgeColor}; padding:3px 8px; border-radius:10px;">${s.stage_label}</span>
+                <span style="font-size:10px; font-weight:700; color:var(--dv-text-muted);">${s.suggested_format}</span>
+              </div>
+              <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:18px; font-weight:700; color:var(--dv-deep-green); line-height:1.2; margin-bottom:6px;">${s.title}</h4>
+              <p style="font-size:12px; color:var(--dv-text-main); margin-bottom:12px;">${s.subtitle}</p>
+              
+              <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:10px; border-radius:6px; font-size:11px; margin-bottom:12px;">
+                <div style="color:var(--dv-teal); font-weight:700; margin-bottom:2px;">Donnée Réelle Cytria Connectée :</div>
+                <div style="color:var(--dv-text-main);">${s.data_anchor}</div>
+              </div>
+
+              <div style="font-size:11px; color:var(--dv-text-muted); margin-bottom:8px;">
+                <strong>Cible ICP :</strong> ${s.icp_target}<br>
+                <strong>Persona D&amp;V :</strong> ${s.target_persona}
+              </div>
+            </div>
+
+            <div style="border-top:1px solid #EDF2F7; padding-top:12px; margin-top:8px;">
+              <button class="btn-action" style="width:100%; justify-content:center; font-size:12px;" onclick="openFullGuide('${s.id}', '${currentFunnelData.commune}')">
+                <svg class="icon" width="14" height="14" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>${s.suggested_format === 'Guide PDF Long-Form' ? 'Consulter &amp; Télécharger le Guide' : 'Consulter le Format'}</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function openFullGuide(guideId, commune) {
+      try {
+        const res = await fetch(`/api/marketing/full-guide?id=${encodeURIComponent(guideId)}&commune=${encodeURIComponent(commune)}`);
+        if (res.ok) {
+          const data = await res.json();
+          currentFullGuide = data.guide;
+          renderFullGuideModal(data.guide);
+          document.getElementById('modal-guide').style.display = 'flex';
+        }
+      } catch (err) {
+        console.error('Error fetching full guide:', err);
+      }
+    }
+
+    function renderFullGuideModal(g) {
+      document.getElementById('modal-guide-title').innerText = g.title;
+      document.getElementById('modal-guide-badge').innerText = `${g.stage} • COMMUNE DE ${g.commune.toUpperCase()}`;
+
+      const compsRows = g.recent_fao_transactions.map(t => `
+        <tr>
+          <td style="font-weight:700;">${t.address}</td>
+          <td>${t.date}</td>
+          <td style="font-weight:700; color:var(--dv-teal);">${t.price_chf}</td>
+          <td>${t.surface_m2}</td>
+          <td style="font-weight:600;">${t.price_sqm}</td>
+        </tr>
+      `).join('');
+
+      const chaptersHtml = g.chapters.map(ch => `
+        <div class="guide-chapter">
+          <h4>${ch.title}</h4>
+          <p style="font-size:13px; line-height:1.6; color:#334155;">${ch.content}</p>
+          ${ch.highlight_box ? `<div class="guide-highlight">${ch.highlight_box}</div>` : ''}
+        </div>
+      `).join('');
+
+      const pitfallsHtml = g.common_pitfalls.map(p => `
+        <li style="margin-bottom:6px; font-size:13px; color:#991B1B;">${p}</li>
+      `).join('');
+
+      const metricsHtml = g.key_metrics.map(m => `
+        <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px; border-radius:6px; text-align:center;">
+          <div style="font-size:10px; font-weight:700; color:var(--dv-text-muted); text-transform:uppercase;">${m.label}</div>
+          <div style="font-size:18px; font-weight:800; color:var(--dv-deep-green); margin:3px 0;">${m.value}</div>
+          <div style="font-size:9px; color:var(--dv-teal); font-weight:600;">${m.source}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('modal-guide-content').innerHTML = `
+        <div style="margin-bottom:20px;">
+          <p style="font-size:14px; font-weight:600; color:var(--dv-text-muted); line-height:1.4;">${g.subtitle}</p>
+          <div style="display:flex; align-items:center; gap:12px; margin-top:12px; padding:10px 14px; background:#F8FAFC; border-radius:6px; border-left:3px solid var(--dv-teal);">
+            <div style="font-weight:700; font-size:12px; color:var(--dv-deep-green);">${g.author.name}</div>
+            <div style="font-size:11px; color:var(--dv-text-muted);">&bull; ${g.author.role}</div>
+          </div>
+        </div>
+
+        <div class="grid-3col" style="margin-bottom:24px;">
+          ${metricsHtml}
+        </div>
+
+        <div style="background:#F8FAFC; padding:16px 20px; border-radius:8px; border:1px solid var(--dv-border); margin-bottom:24px;">
+          <div style="font-weight:800; font-size:12px; color:var(--dv-deep-green); text-transform:uppercase; margin-bottom:6px;">Synthèse Stratégique</div>
+          <p style="font-size:13px; line-height:1.5; color:var(--dv-text-main);">${g.executive_summary}</p>
+        </div>
+
+        ${chaptersHtml}
+
+        <div style="margin-bottom:24px;">
+          <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; color:#991B1B; margin-bottom:8px;">Les 3 Pièges Majeurs à Éviter</h4>
+          <ul style="padding-left:20px;">
+            ${pitfallsHtml}
+          </ul>
+        </div>
+
+        <div style="margin-bottom:24px;">
+          <h4 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:20px; color:var(--dv-deep-green); margin-bottom:8px;">Actes Notariés Récents Enregistrés à ${g.commune} (Registre Foncier FAO)</h4>
+          <table class="dv-table">
+            <thead>
+              <tr><th>Adresse</th><th>Date Inscription</th><th>Prix Notarié</th><th>Surface</th><th>Prix / m²</th></tr>
+            </thead>
+            <tbody>
+              ${compsRows}
+            </tbody>
+          </table>
+        </div>
+
+        <div style="background:linear-gradient(135deg, var(--dv-deep-green), #002D30); color:#FFFFFF; border-radius:8px; padding:22px; text-align:center;">
+          <h3 style="font-family:'Cormorant Garamond', Georgia, serif; font-size:22px; color:#FFFFFF; margin-bottom:6px;">${g.final_call_to_action.headline}</h3>
+          <p style="font-size:12px; color:rgba(255,255,255,0.8); margin-bottom:14px;">Contact direct : ${g.final_call_to_action.contact_email}</p>
+          <button class="btn-action" style="background:#FFFFFF; color:var(--dv-deep-green);" onclick="alert('Demande d\\'entretien transmise à ' + currentFullGuide.author.name)">
+            ${g.final_call_to_action.button_text}
+          </button>
+        </div>
+      `;
+    }
+
+    function closeGuideModal() {
+      document.getElementById('modal-guide').style.display = 'none';
+    }
+
+    function copyGuideMarkdown() {
+      if (!currentFullGuide) return;
+      const g = currentFullGuide;
+      let md = `# ${g.title}\n\n`;
+      md += `*${g.subtitle}*\n\n`;
+      md += `**Auteur :** ${g.author.name} (${g.author.role})\n\n`;
+      md += `## Synthèse Stratégique\n${g.executive_summary}\n\n`;
+      g.chapters.forEach(ch => {
+        md += `### ${ch.title}\n${ch.content}\n\n`;
+        if (ch.highlight_box) md += `> **Conseil D&V :** ${ch.highlight_box}\n\n`;
+      });
+      md += `### Actes Notariés Récents à ${g.commune} (FAO)\n`;
+      g.recent_fao_transactions.forEach(t => {
+        md += `- ${t.address} (${t.date}) : ${t.price_chf} pour ${t.surface_m2} (${t.price_sqm})\n`;
+      });
+      md += `\n---\n*Désormière & Vanhalst • Contact : ${g.final_call_to_action.contact_email}*`;
+      navigator.clipboard.writeText(md);
+      alert('Guide complet copié au format Markdown ! Prêt pour publication CMS ou article de blog.');
+    }
+
+    function loadWhiteLabelDemo() {
+      document.documentElement.style.setProperty('--dv-teal', '#2563EB');
+      document.documentElement.style.setProperty('--dv-deep-green', '#1E3A8A');
+      document.documentElement.style.setProperty('--dv-light-teal', '#60A5FA');
+      alert('Thème White-Label appliqué instantanément ! Notez comment toute l\'interface s\'adapte sans toucher au moteur.');
+    }
+
+    // Startup Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Immediately render surveillance data if available from bundle (guarantees instant zero-latency filtering)
+      if (window.INITIAL_SURVEILLANCE_DATA) {
+        renderSocialSurveillanceUI(window.INITIAL_SURVEILLANCE_DATA);
+      }
+      runSimulation();
+      loadQuartierGuide('Troinex');
+      loadFunnelContent('Troinex');
+      loadSocialSurveillance();
+      loadCompetitorData();
+      loadTelemetry();
+      loadProfile();
+    });
+  </script>
+</body>
+</html>

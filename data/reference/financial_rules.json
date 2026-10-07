@@ -32,7 +32,7 @@
     "legal_basis": "Loi sur les droits d'enregistrement (LDE)"
   },
   "impot_gains_immobiliers": {
-    "legal_basis": "Loi sur l'imposition des personnes physiques (LIPP - art. 82)",
+    "legal_basis": "IBGI - Impôt sur les bénéfices et gains immobiliers (LIPP art. 80-87 / LCP art. 84)",
     "brackets": [
       {
         "years_held_max": 2,
@@ -66,8 +66,8 @@
       },
       {
         "years_held_max": 999,
-        "rate_pct": 0,
-        "label": "> 25 ans (exonération totale)"
+        "rate_pct": 2,
+        "label": "≥ 25 ans (taux plancher 2% dès 2025)"
       }
     ]
   },

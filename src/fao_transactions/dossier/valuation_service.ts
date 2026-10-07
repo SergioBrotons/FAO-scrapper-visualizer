@@ -458,6 +458,7 @@ export class ValuationService {
           <tr><td style="font-weight: 600;">Parcelle n°</td><td><strong>${t.parcel_number || e.parcel_no_official || "N/D"}</strong></td></tr>
           <tr><td style="font-weight: 600;">Identifiant EGRID</td><td><code style="font-family: monospace;">${e.egrid || "CH_GE_" + t.commune + "_" + t.parcel_number}</code></td></tr>
           <tr><td style="font-weight: 600;">Typologie d'acte</td><td>${t.transaction_type || "Vente"} · ${t.property_type || t.nature || "Résidentiel"}</td></tr>
+          <tr><td style="font-weight: 600;">Bassin & Piscine (SITG)</td><td>${e.has_pool === 1 ? `<span class="badge badge-green" style="font-size:10px;">🏊 OUI · ${e.pool_surface_m2 || 0} m² (${e.pool_count || 1} bassin${(e.pool_count || 1) > 1 ? 's' : ''})</span>` : '<span style="color:var(--ink-500);">Aucun bassin officiel répertorié</span>'}</td></tr>
         </table>
         <table class="data-table">
           <tr><td style="width: 40%; font-weight: 600;">Surface officielle</td><td><strong>${surfaceStr}</strong></td></tr>

@@ -2301,6 +2301,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <button type="button" class="subtool-btn" id="mktSqmPriceLayerBtn" onclick="toggleSqmPriceLayer()">
             Calque Prix / m²
           </button>
+          <button type="button" class="subtool-btn" id="mktPoolFilterBtn" onclick="togglePoolFilter()">
+            🏊 Avec Piscine <span class="subtool-badge" style="background:rgba(0,147,157,0.3); color:#17DAE8;">__POOLS_COUNT__</span>
+          </button>
         </div>
 
         <!-- 2. SOURCING Subtoolbar -->
@@ -3273,6 +3276,25 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       applyFilters();
     }
 
+    let isPoolFilterActive = false;
+    function togglePoolFilter() {
+      isPoolFilterActive = !isPoolFilterActive;
+      const btn = document.getElementById('mktPoolFilterBtn');
+      if (btn) {
+        btn.classList.toggle('active', isPoolFilterActive);
+        if (isPoolFilterActive) {
+          btn.style.background = 'rgba(0, 147, 157, 0.35)';
+          btn.style.borderColor = '#17DAE8';
+          btn.style.color = '#17DAE8';
+        } else {
+          btn.style.background = '';
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }
+      }
+      applyFilters();
+    }
+
     function getMarkerColor(r) {
       if (appMode === 'MANDATES') {
         if (r.mandate_score >= 85) return '#EF4444'; // Ultra Hot Lead (Red)
@@ -3363,12 +3385,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         const color = getMarkerColor(r);
         const radius = (r.price_chf && r.price_chf > 5000000) ? 8 : ((r.mandate_score >= 85 || r.permit_number) ? 7.5 : 6);
 
+        const strokeColor = (r.has_pool && isPoolFilterActive) ? '#17DAE8' : (r.has_pool ? '#00939D' : '#F7F4EC');
+        const strokeWidth = r.has_pool ? 2.2 : 1.2;
+
         const marker = L.circleMarker([r.lat, r.lon], {
           radius: radius,
           fillColor: color,
-          color: '#F7F4EC',
-          weight: 1.2,
-          opacity: 0.9,
+          color: strokeColor,
+          weight: strokeWidth,
+          opacity: 0.95,
           fillOpacity: 0.85
         });
 
@@ -3846,6 +3871,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             </span>
           </div>` : ''}
 
+          ${r.has_pool ? `
+          <div class="detail-row" style="background: rgba(0, 147, 157, 0.12); padding: 8px 10px; border-left: 3px solid #00939D; margin: 6px 0;">
+            <span class="row-label" style="color: #17DAE8; font-weight: 700;">🏊 Piscine & Bassin Cadastré</span>
+            <span class="row-value" style="color: #FFFFFF; font-weight: 700;">
+              ${r.pool_surface_m2 ? r.pool_surface_m2 + ' m² de plan d&apos;eau' : 'Enregistrée SITG'}
+              ${r.pool_count > 1 ? ' (' + r.pool_count + ' bassins)' : ''}
+              <span class="badge-tag" style="margin-left:6px; font-size:9px; background:rgba(0,147,157,0.25); color:#17DAE8; border-color:#00939D;">Cadastre Officiel SITG</span>
+            </span>
+          </div>` : ''}
+
           ${r.building_destination ? `
           <div class="detail-row">
             <span class="row-label">Destination bâtiment</span>
@@ -4197,6 +4232,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         if (onlyDev && !r.zone_dev_name) return false;
         if (onlyPlq && !r.plq_number) return false;
         if (onlyPermit && !r.permit_number) return false;
+        if (isPoolFilterActive && !r.has_pool) return false;
 
         // Advanced construction period filter
         if (selBuild !== 'ALL') {
@@ -7756,6 +7792,11 @@ def build_interactive_map(
                     e.apartments_count,
                     e.heating_system,
                     e.surface_official_m2,
+                    e.has_pool,
+                    e.pool_count,
+                    e.pool_surface_m2,
+                    e.pool_status,
+                    e.pool_details_json,
                     round(e.centroid_wgs84_lon, 5) as lon,
                     round(e.centroid_wgs84_lat, 5) as lat,
                     round(e.centroid_lv95_e, 0) as lv95_e,
@@ -7855,12 +7896,17 @@ def build_interactive_map(
         # Server-side Swiss nLPD natural person masking before serialization
         r["seller"] = mask_party_py(r.get("seller"))
         r["buyer"] = mask_party_py(r.get("buyer"))
+        r["has_pool"] = 1 if r.get("has_pool") == 1 else 0
+        r["pool_count"] = r.get("pool_count") or 0
+        r["pool_surface_m2"] = r.get("pool_surface_m2") or 0.0
 
         rows.append(r)
 
+    pools_count = sum(1 for r in rows if r.get("has_pool") == 1)
     console.print(f"Loaded [bold]{len(rows)}[/bold] geocoded transactions.")
     console.print(f"Detected [bold green]{mandates_count:,}[/bold green] seller mandate leads ([bold yellow]{hot_mandates_count:,}[/bold yellow] hot leads).")
     console.print(f"Detected [bold cyan]{dev_opportunities_count:,}[/bold cyan] development & densification opportunities.")
+    console.print(f"Detected [bold blue]{pools_count:,}[/bold blue] properties with official swimming pools (SITG CAD_PISCINE).")
 
     # Distinct communes and zones for filters
     communes = sorted(list({r["commune"] for r in rows if r["commune"]}))
@@ -7914,6 +7960,7 @@ def build_interactive_map(
         .replace("__MANDATES_COUNT__", f"{mandates_count:,}")
         .replace("__HOT_MANDATES_COUNT__", f"{hot_mandates_count:,}")
         .replace("__DEV_COUNT__", f"{dev_opportunities_count:,}")
+        .replace("__POOLS_COUNT__", f"{pools_count:,}")
         .replace("__AGENCIES_COUNT__", f"{len(league_data['agencies']):,}")
     )
 

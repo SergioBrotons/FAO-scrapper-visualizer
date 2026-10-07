@@ -1,0 +1,9 @@
+.venv/
+data/state/
+data/browser_profile/
+data/cache/
+*.sqlite
+*.db
+tests/
+scratch/
+Prompts/tests/

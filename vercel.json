@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/dv", "destination": "/public/dv/index.html" },
+    { "source": "/dv/", "destination": "/public/dv/index.html" },
+    { "source": "/dv/marketing", "destination": "/public/dv/marketing/index.html" },
+    { "source": "/dv/marketing/", "destination": "/public/dv/marketing/index.html" },
+    { "source": "/dv/(.*)", "destination": "/public/dv/$1" }
+  ]
+}

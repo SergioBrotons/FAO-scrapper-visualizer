@@ -193,14 +193,14 @@ describe("Désormière & Vanhalst Real Estate Intelligence Service", () => {
     expect(html.includes("Activer mes acheteurs")).toBe(true);
 
     // Valuation Studio & Saut-du-Loup Banner
-    expect(html.includes("studioAddressInput")).toBe(true);
+    expect(html.includes("wizAddress") || html.includes("studioAddressInput")).toBe(true);
     expect(html.includes("calculateDynamicValuation")).toBe(true);
     expect(html.includes("updateAdjustment")).toBe(true);
     expect(html.includes("sautDuLoupBanner")).toBe(true);
     expect(html.includes("loadSautDuLoupCase")).toBe(true);
 
-    // PPTX Generator Studio
-    expect(html.includes("btnExportPptx")).toBe(true);
+    // PPTX Generator Studio (6-Step Wizard)
+    expect(html.includes("btnWizExportPptx") || html.includes("btnExportPptx")).toBe(true);
     expect(html.includes("exportPresentationPptx")).toBe(true);
     expect(html.includes("handleImageUpload")).toBe(true);
     expect(html.includes("fileCover")).toBe(true);
