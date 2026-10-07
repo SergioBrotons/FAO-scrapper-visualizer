@@ -119,7 +119,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       padding: 0 14px;
       gap: 12px;
       border-bottom: 1px solid var(--panel-border);
-      overflow-x: auto;
+      overflow: hidden; overflow-x: clip;
       scrollbar-width: none;
     }
     .top-bar-tier-1::-webkit-scrollbar { display: none; }
@@ -133,7 +133,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       padding: 0 14px;
       gap: 12px;
       background: rgba(8, 13, 17, 0.45);
-      overflow-x: auto;
+      overflow: hidden; overflow-x: clip;
       scrollbar-width: none;
     }
     .top-bar-tier-2::-webkit-scrollbar { display: none; }
@@ -2599,6 +2599,102 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       padding-top: 14px;
     }
 
+  
+    /* Enhanced Mobile Layout & Sticky Controls */
+    .sidebar-mobile-header {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: var(--color-ink-950);
+      border-bottom: 1px solid var(--panel-border-gold);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      margin: -20px -16px 14px -16px;
+    }
+    .sidebar-mobile-title {
+      font-family: var(--font-brand);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-brand-300);
+    }
+    .sidebar-mobile-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-mobile-reset-btn {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-300);
+      font-size: 10px;
+      font-family: var(--font-mono);
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+    .sidebar-mobile-close-btn {
+      background: var(--color-ink-800);
+      border: 1px solid var(--panel-border);
+      color: #FFFFFF;
+      width: 28px;
+      height: 28px;
+      font-size: 18px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .sidebar-mobile-footer {
+      display: none;
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-ink-950);
+      border-top: 1px solid var(--panel-border-gold);
+      padding: 12px 14px;
+      margin: 16px -16px -20px -16px;
+      z-index: 100;
+    }
+    .sidebar-mobile-apply-btn {
+      width: 100%;
+      background: var(--color-brand-500);
+      border: 1px solid var(--color-brand-400);
+      color: var(--color-ink-950);
+      font-family: var(--font-brand);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 11px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(201, 162, 77, 0.35);
+    }
+    .sidebar-mobile-badge {
+      background: var(--color-ink-950);
+      color: var(--color-paper);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 6px;
+    }
+    .mobile-backdrop.visible {
+      display: block !important;
+      opacity: 1 !important;
+    }
+    @media (max-width: 820px) {
+      .sidebar-mobile-header { display: flex !important; }
+      .sidebar-mobile-footer { display: block !important; }
+      .mobile-bottom-bar { display: flex !important; }
+    }
+  
   </style>
 </head>
 <body>
@@ -2700,9 +2796,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       <!-- Global Header Utilities -->
       <div class="top-bar-utilities">
-        <a href="/dv/" class="subtool-btn utility-btn" style="text-decoration:none; display:inline-flex; align-items:center;" title="Portail Partenaire Désormière &amp; Vanhalst">Portail D&amp;V</a>
-        <a href="/dv/?view=value" class="subtool-btn utility-btn" style="text-decoration:none; display:inline-flex; align-items:center;" title="Studio d'Estimation Immobilière Rive Gauche">Studio D&amp;V</a>
-        <a href="/dv/marketing/" class="subtool-btn utility-btn" style="text-decoration:none; display:inline-flex; align-items:center;" title="Moteur d'Acquisition Vendeurs &amp; Marketing">Marketing D&amp;V</a>
+        
         <button type="button" class="subtool-btn utility-btn" id="btnVaultToggle" onclick="toggleVaultState()" title="Conformité nLPD (Protection des données) : Cliquez pour déverrouiller le Mode Interne Souverain" style="display:inline-flex; align-items:center; gap:6px; transition:all 0.2s ease;">
           <span id="vaultToggleLabel">nLPD Conforme</span>
         </button>
@@ -2738,22 +2832,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <span class="status-indicator-dot cadastre" style="margin-right:4px;"></span>Plan Cadastre SITG <span class="subtool-badge" id="cadastreActiveBadge" style="background:rgba(0,147,157,0.25); color:#17DAE8;">OFF</span>
           </button>
           <span class="subtool-divider"></span>
-          <button type="button" class="subtool-btn mkt-typo-btn active" id="mktFilterAll" onclick="setMarketQuickFilter('ALL')">
-            Tous les actes <span class="subtool-badge" title="__TOTAL_ROWS__ actes cartographiés sur __TOTAL_DB_ROWS__ au Registre Foncier">__TOTAL_ROWS__ <span style="font-weight:400; opacity:0.65; font-size:10px;">/ __TOTAL_DB_ROWS__</span></span>
-          </button>
-          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterApartments" onclick="setMarketQuickFilter('PPE')">
-            Appartements PPE <span class="subtool-badge">__PPE_COUNT__</span>
-          </button>
-          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterHouses" onclick="setMarketQuickFilter('VILLA')">
-            Villas & Maisons <span class="subtool-badge">__VILLA_COUNT__</span>
-          </button>
-          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterBuildings" onclick="setMarketQuickFilter('IMMEUBLE')">
-            Immeubles de rapport <span class="subtool-badge">__IMMEUBLE_COUNT__</span>
-          </button>
-          <button type="button" class="subtool-btn mkt-typo-btn" id="mktFilterLand" onclick="setMarketQuickFilter('TERRAIN')">
-            Terrains & Parcelles <span class="subtool-badge">__TERRAIN_COUNT__</span>
-          </button>
-          <span class="subtool-divider"></span>
+          
           <button type="button" class="subtool-btn active" id="mktRiveAll" onclick="setRiveFilter('ALL')">
             Toute la République
           </button>
@@ -2823,6 +2902,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
   <!-- Sidebar Filter Panel -->
   <aside class="sidebar">
+
+    <!-- Sticky Mobile Header -->
+    <div class="sidebar-mobile-header">
+      <div class="sidebar-mobile-title">Filtres de Recherche</div>
+      <div class="sidebar-mobile-actions">
+        <button type="button" class="sidebar-mobile-reset-btn" onclick="resetAllFilters()">Effacer</button>
+        <button type="button" class="sidebar-mobile-close-btn" onclick="toggleMobileSidebar(false)" aria-label="Fermer les filtres">&times;</button>
+      </div>
+    </div>
+  
     <div class="sidebar-header-banner" id="sidebarBanner">
       <div class="sidebar-header-title" id="sidebarBannerTitle">Marché Immobilier Complet</div>
       <div class="sidebar-header-sub" id="sidebarBannerSub">Filtrez les mutations du Registre Foncier et LDTR</div>
@@ -3041,6 +3130,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="legend" id="mapLegend">
       <!-- Dynamic legend populated by active mode -->
     </div>
+  
+    <!-- Sticky Mobile Footer CTA -->
+    <div class="sidebar-mobile-footer">
+      <button type="button" class="sidebar-mobile-apply-btn" onclick="toggleMobileSidebar(false)">
+        <span>Afficher les résultats</span>
+        <span id="mobileSidebarResultCount" class="sidebar-mobile-badge">8'548</span>
+      </button>
+    </div>
+  
   </aside>
 
   <!-- Detail Drawer -->
@@ -4344,7 +4442,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       detailContent.innerHTML = `
         ${onSaleBanner}
         <div class="detail-badges">
-          <span class="badge-tag">${r.market_status === 'ON_SALE' ? 'En Vente sur le Marché' : (r.transaction_type || (r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier'))}</span>
+          <span class="badge-tag" style="${r.market_status === 'ON_SALE' ? 'background:rgba(245,158,11,0.2); color:#fbbf24; border-color:#f59e0b; font-weight:700;' : 'background:rgba(16,185,129,0.2); color:#10b981; border-color:#10b981; font-weight:700;'}">
+            ${r.market_status === 'ON_SALE' ? 'Mandat Actif en Commercialisation' : 'Acte Notarié Transigé (FAO)'}
+          </span>
           ${r.typology_label ? `<span class="badge-tag" style="background:#172554; color:#93c5fd; border-color:#1e40af;">${r.typology_label}</span>` : ''}
           ${r.mandate_score >= 70 ? `<span class="badge-tag mandate-hot">Lead Mandat (${r.mandate_score}/100)</span>` : ''}
           ${r.dev_score >= 25 ? `<span class="badge-tag dev-opp">Potentiel Foncier</span>` : ''}
@@ -4371,87 +4471,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             SITG 5cm Aérien &rarr;
           </a>` : ''}
         </div>
-
-        <!-- Mandate Radar Box (If active or mandate lead) -->
-        ${r.mandate_score > 0 ? `
-        <div class="radar-box mandate">
-          <div class="radar-box-title">
-            <span>Indicateur Typologique de Mutation (Succession / Indivision)</span>
-            <span style="font-family:var(--font-mono); font-size:12px;">Score : ${r.mandate_score}/100</span>
-          </div>
-          <div class="score-meter">
-            <div class="score-meter-fill" style="width: ${r.mandate_score}%;"></div>
-          </div>
-          <ul class="signal-list">
-            ${(r.mandate_reasons || []).map(s => `<li>${s}</li>`).join('')}
-          </ul>
-          <div style="font-size:10px; color:#fca5a5; margin-top:2px;">
-            <strong>Acquéreur / Hoirs :</strong> ${buyerDisplay.html}
-          </div>
-        </div>` : ''}
-
-        <!-- Developer Opportunity Radar Box -->
-        ${r.dev_score >= 20 ? `
-        <div class="radar-box developer">
-          <div class="radar-box-title">
-            <span>Simulation Indicative de Densification (Sous réserve de faisabilité légale & PLQ)</span>
-            <span style="font-family:var(--font-mono); font-size:12px;">Score : ${r.dev_score}/100</span>
-          </div>
-          <ul class="signal-list">
-            ${(r.dev_reasons || []).map(s => `<li>${s}</li>`).join('')}
-          </ul>
-          ${r.est_apartments > 0 ? `
-          <div style="background:rgba(16,185,129,0.15); padding:6px 10px; border:1px solid #10b981; font-size:11px; color:#6ee7b7; font-weight:700;">
-            Potentiel estimé : ~${r.est_apartments} appartements neufs (~${Math.round(r.est_apartments * 85)} m² SBP)
-          </div>` : ''}
-        </div>` : ''}
-
-        <!-- Urban Planning & Development Intelligence -->
-        ${(r.plq_number || r.zone_dev_name || r.permit_number || r.grand_projet_name) ? `
-        <div class="intel-section">
-          <div class="intel-title">
-            <span>Urbanisme & Projets Futurs</span>
-            <span style="color:var(--color-sand-300); font-size:9px;">SITG OPEN DATA</span>
-          </div>
-
-          ${r.plq_number ? `
-          <div class="detail-row">
-            <span class="row-label">Plan Localisé de Quartier (PLQ)</span>
-            <span class="row-value">
-              PLQ N° <strong>${r.plq_number}</strong> (${r.plq_name || 'Geneve'}) — ${r.plq_status || 'En vigueur'}
-              ${r.plq_plan_url ? `<br><a href="${r.plq_plan_url}" target="_blank" class="intel-link">Télécharger le Plan PLQ (PDF) &rarr;</a>` : ''}
-              ${r.plq_reglement_url ? ` &bull; <a href="${r.plq_reglement_url}" target="_blank" class="intel-link">Règlement (PDF) &rarr;</a>` : ''}
-            </span>
-          </div>` : ''}
-
-          ${r.zone_dev_name ? `
-          <div class="detail-row">
-            <span class="row-label">Zone de Développement (LDTR/LGZD)</span>
-            <span class="row-value">
-              ${r.zone_dev_name} ${r.zone_dev_restriction ? `— <em>${r.zone_dev_restriction}</em>` : ''}
-              ${r.zone_dev_url ? `<br><a href="${r.zone_dev_url}" target="_blank" class="intel-link">Plan de zone légale (PDF) &rarr;</a>` : ''}
-            </span>
-          </div>` : ''}
-
-          ${r.permit_number ? `
-          <div class="detail-row">
-            <span class="row-label">Permis de Construire / Projet</span>
-            <span class="row-value">
-              <strong>${r.permit_number}</strong>: ${r.permit_type || 'Projet'} (${r.permit_destination || 'Bâtiment'})
-              ${r.permit_floors ? ` &bull; ${r.permit_floors} étages` : ''}
-              ${r.permit_sad_url ? `<br><a href="${r.permit_sad_url}" target="_blank" class="intel-link">Consulter Dossier SAD Cantonal &rarr;</a>` : ''}
-            </span>
-          </div>` : ''}
-
-          ${r.grand_projet_name ? `
-          <div class="detail-row">
-            <span class="row-label">Périmètre Grand Projet Cantonal</span>
-            <span class="row-value">
-              ${r.grand_projet_name} (${r.grand_projet_type || 'PDCn'})
-              ${r.grand_projet_url ? `<br><a href="${r.grand_projet_url}" target="_blank" class="intel-link">Fiche Grand Projet (PDF) &rarr;</a>` : ''}
-            </span>
-          </div>` : ''}
-        </div>` : ''}
 
         <div class="detail-grid">
           <div class="detail-row">
@@ -4493,31 +4512,53 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             </span>
           </div>` : ''}
 
-          ${r.building_destination ? `
+          ${r.market_status === 'ON_SALE' ? `
           <div class="detail-row">
-            <span class="row-label">Destination bâtiment</span>
-            <span class="row-value">
-              ${r.building_destination} ${r.building_floors ? '(' + r.building_floors + ' étages)' : ''}
-              ${r.typology_class === 'PPE' ? '<div style="color:var(--color-sand-400); font-size:10px; margin-top:2px;">(Bâtiment d&apos;assise du lot PPE)</div>' : ''}
-            </span>
-          </div>` : ''}
-
+            <span class="row-label">Propriétaire / Mandant</span>
+            <span class="row-value">${sellerDisplay.html}</span>
+          </div>
+          <div class="detail-row">
+            <span class="row-label">Statut Commercial</span>
+            <span class="row-value" style="color:#fbbf24; font-weight:600;">Disponible à l'achat (En cours de commercialisation)</span>
+          </div>
+          <div class="detail-row">
+            <span class="row-label">Mise sur le marché</span>
+            <span class="row-value mono">${r.notice_date || 'En cours'} (Diffusion Mandat)</span>
+          </div>
+          <!-- Official Gateways Box for On-Sale -->
+          <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); padding: 10px 12px; margin-top: 10px; font-size: 11px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color: #fbbf24; font-size: 11px; text-transform:uppercase; letter-spacing:0.04em;">
+                Données Foncières & SITG
+              </strong>
+              <span class="badge-tag" style="background: rgba(245,158,11,0.2); color: #fbbf24; border-color: #f59e0b; font-size: 9px;">
+                Mandat Agence Actif
+              </span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              ${r.sitg_map_url ? `
+              <a href="${r.sitg_map_url}" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 4px; font-weight:600;">
+                <span>Fiche Parcelle & Droits Réels SITG (ge.ch/sitg &rarr;)</span>
+              </a>` : ''}
+              <div style="color: var(--color-sand-300); font-size: 10px; margin-top: 2px; line-height:1.4;">
+                *Bien actuellement proposé à la vente par ${r.agency_name || 'l\'agence mandataire'}. Transaction non encore transcrite au Registre Foncier.
+              </div>
+            </div>
+          </div>
+          ` : `
           <div class="detail-row">
             <span class="row-label">Acquéreur (Acheteur / Hoirs)</span>
             <span class="row-value">${buyerDisplay.html}</span>
           </div>
-
           <div class="detail-row">
             <span class="row-label">Aliénateur (Vendeur / De Cujus)</span>
             <span class="row-value">${sellerDisplay.html}</span>
           </div>
-
           <div class="detail-row">
             <span class="row-label">Date publication FAO</span>
             <span class="row-value mono">${r.notice_date || 'N/A'}</span>
           </div>
-
-          <!-- Official State Portals Deep-Links -->
+          <!-- Official Gateways Box for Sold RF Deeds -->
           <div style="background: rgba(0, 51, 153, 0.08); border: 1px solid rgba(96, 165, 250, 0.25); padding: 10px 12px; margin-top: 10px; font-size: 11px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
               <strong style="color: #60a5fa; font-size: 11px; text-transform:uppercase; letter-spacing:0.04em;">
@@ -4529,25 +4570,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             </div>
             <div style="display:flex; flex-direction:column; gap:5px;">
               <a href="https://fao.ge.ch/recherche?rubrique=133&date_debut=${encodeURIComponent(r.notice_date || '')}&texte=${encodeURIComponent(r.parcel_number || r.commune || '')}" target="_blank" rel="noopener" style="color: var(--color-brand-400); text-decoration: none; display: flex; align-items: center; gap: 4px; font-weight:600;">
-                <span> Consulter l'avis officiel au Registre Foncier (fao.ge.ch &rarr;)</span>
+                <span>Consulter l'avis officiel au Registre Foncier (fao.ge.ch &rarr;)</span>
               </a>
               ${r.sitg_map_url ? `
               <a href="${r.sitg_map_url}" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 4px;">
-                <span>️ Fiche Parcelle & Droits Réels SITG (ge.ch/sitg &rarr;)</span>
+                <span>Fiche Parcelle & Droits Réels SITG (ge.ch/sitg &rarr;)</span>
               </a>` : ''}
               <div style="color: var(--color-sand-400); font-size: 10px; margin-top: 2px; line-height:1.35;">
                 *En mode public conforme, les noms des particuliers sont masqués. La consultation authentique s'effectue directement sur le portail officiel de l'État de Genève.
               </div>
             </div>
           </div>
-
-          <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--panel-border);">
-            <button type="button" class="action-btn" id="btnDrawerCmaAction" style="width: 100%; padding: 8px 12px; background: rgba(201, 162, 77, 0.12); border: 1px solid rgba(201, 162, 77, 0.4); color: var(--color-brand-300); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer;">
-              Évaluer ce micro-quartier & Comparables (CMA) &rarr;
-            </button>
-          </div>
-        </div>
-      `;
+          `}
+        </div>`;
 
       // Attach clean click listeners
       const btnStreet = document.getElementById('btnStreetViewAction');
@@ -6180,7 +6215,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
 
         <!-- Comparative Metrics Table -->
-        <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); overflow-x: auto;">
+        <div style="background: var(--color-ink-950); border: 1px solid var(--panel-border); overflow: hidden; overflow-x: clip;">
           <table class="duel-kpi-table">
             <thead>
               <tr>
@@ -8186,7 +8221,93 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
     initCytriaGate();
   }
 
+
+
+  /* --- MOBILE CONTROLLER FUNCTIONS --- */
+  function toggleMobileSidebar(forceState) {
+    const sidebar = document.querySelector('.sidebar');
+    const backdrop = document.getElementById('mobileSidebarBackdrop');
+    if (!sidebar) return;
+    const shouldOpen = forceState !== undefined ? forceState : !sidebar.classList.contains('mobile-open');
+    sidebar.classList.toggle('mobile-open', shouldOpen);
+    if (backdrop) {
+      backdrop.classList.toggle('visible', shouldOpen);
+      backdrop.style.display = shouldOpen ? 'block' : 'none';
+    }
+    const mobBtn = document.getElementById('btnMobFilters');
+    if (mobBtn) mobBtn.classList.toggle('active', shouldOpen);
+  }
+
+  function cycleMarketStatusMobile() {
+    const order = ['SOLD', 'ON_SALE', 'CADASTRE'];
+    const nextIdx = (order.indexOf(currentMarketStatus) + 1) % order.length;
+    setMarketStatusFilter(order[nextIdx]);
+    const dot = document.getElementById('mobStatusDot');
+    const label = document.getElementById('mobStatusLabel');
+    if (dot && label) {
+      dot.className = 'status-indicator-dot ' + (order[nextIdx] === 'SOLD' ? 'sold' : order[nextIdx] === 'ON_SALE' ? 'on-sale' : 'cadastre');
+      label.textContent = order[nextIdx] === 'SOLD' ? 'Vendus' : order[nextIdx] === 'ON_SALE' ? 'En Vente' : 'Cadastre';
+    }
+  }
+
+  function resetAllFilters() {
+    if (typeof currentMarketStatus !== 'undefined') setMarketStatusFilter('SOLD');
+    if (typeof currentRiveFilter !== 'undefined') setRiveFilter('ALL');
+    if (typeof isPoolFilterActive !== 'undefined' && isPoolFilterActive) togglePoolFilter();
+    if (typeof isSqmPriceLayerActive !== 'undefined' && isSqmPriceLayerActive) toggleSqmPriceLayer();
+    const sInp = document.getElementById('searchInput');
+    if (sInp) sInp.value = '';
+    const cSel = document.getElementById('communeSelect');
+    if (cSel) cSel.value = 'ALL';
+    const zSel = document.getElementById('zoneSelect');
+    if (zSel) zSel.value = 'ALL';
+    const rSel = document.getElementById('roomsSelect');
+    if (rSel) rSel.value = 'ALL';
+    const bSel = document.getElementById('buildingSelect');
+    if (bSel) bSel.value = 'ALL';
+    const sfSel = document.getElementById('surfaceSelect');
+    if (sfSel) sfSel.value = 'ALL';
+    ['onlyPlqCheckbox', 'onlyDevCheckbox', 'onlyPermitCheckbox', 'onlyPricedCheckbox'].forEach(id => {
+      const cb = document.getElementById(id);
+      if (cb) cb.checked = false;
+    });
+    document.querySelectorAll('.pill-btn').forEach(btn => {
+      const isDefault = btn.dataset.nature === 'ALL' || btn.dataset.price === 'ALL' || btn.dataset.typology === 'ALL';
+      btn.classList.toggle('active', isDefault);
+    });
+    if (typeof applyFilters === 'function') applyFilters();
+  }
+
 </script>
+
+  <!-- Internal D&V Integration References (Hidden from public navigation) -->
+  <div id="internalDvShortcuts" style="display:none;" aria-hidden="true">
+    <a href="/dv/">Portail D&amp;V</a>
+    <a href="/dv/?view=value">Studio D&amp;V</a>
+    <a href="/dv/marketing/">Marketing D&amp;V</a>
+  </div>
+
+
+  <!-- Floating Mobile Navigation Bar -->
+  <div class="mobile-bottom-bar" id="mobileBottomBar">
+    <button type="button" class="mobile-bottom-btn active" id="btnMobMap" onclick="toggleMobileSidebar(false); if (typeof closeDetail === 'function') closeDetail();">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      <span>Carte</span>
+    </button>
+    <button type="button" class="mobile-bottom-btn" id="btnMobFilters" onclick="toggleMobileSidebar(true)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      <span>Filtres</span>
+    </button>
+    <button type="button" class="mobile-bottom-btn" id="btnMobMarketToggle" onclick="cycleMarketStatusMobile()">
+      <span class="status-indicator-dot sold" id="mobStatusDot"></span>
+      <span id="mobStatusLabel">Vendus</span>
+    </button>
+    <button type="button" class="mobile-bottom-btn" id="btnMobReset" onclick="resetAllFilters()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      <span>Reset</span>
+    </button>
+  </div>
+
 </body>
 </html>
 """
