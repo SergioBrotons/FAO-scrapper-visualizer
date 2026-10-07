@@ -379,6 +379,80 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .stat-value.purple { color: #c084fc; }
     .stat-value.red { color: #f87171; }
 
+
+    /* Master Tri-State Market Status Segmented Control (Zero Emojis, Swiss Grid) */
+    .market-status-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      background: var(--color-ink-950);
+      border: 1px solid var(--panel-border);
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .status-segment-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--color-sand-300);
+      font-family: var(--font-brand);
+      padding: 7px 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .status-segment-btn:hover {
+      background: var(--color-ink-900);
+      color: var(--color-paper);
+    }
+
+    .status-segment-btn.active {
+      background: rgba(201, 162, 77, 0.16);
+      border-color: var(--color-brand-400);
+      color: var(--color-brand-300);
+      box-shadow: inset 0 -2px 0 var(--color-brand-400);
+    }
+
+    .status-indicator-dot {
+      width: 7px;
+      height: 7px;
+      display: inline-block;
+    }
+
+    .status-indicator-dot.sold {
+      background: #10B981;
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+    }
+
+    .status-indicator-dot.on-sale {
+      background: #F59E0B;
+      box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
+    }
+
+    .status-indicator-dot.cadastre {
+      background: #00939D;
+      box-shadow: 0 0 6px rgba(0, 147, 157, 0.6);
+    }
+
+    .status-segment-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .status-segment-count {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      opacity: 0.85;
+    }
+
     /* Left Sidebar Filter Panel */
     .sidebar {
       position: absolute;
@@ -2477,6 +2551,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <div class="tier-2-subtoolbar-area">
         <!-- 1. MARKET Subtoolbar -->
         <div class="product-subtoolbar" id="subtoolbarMarket">
+
+          <button type="button" class="subtool-btn active" id="mktStatusPillSold" onclick="setMarketStatusFilter('SOLD')" title="Actes notariés passés au Registre Foncier">
+            <span class="status-indicator-dot sold" style="margin-right:4px;"></span>Vendus <span class="subtool-badge" id="topBadgeSold">8'548</span>
+          </button>
+          <button type="button" class="subtool-btn" id="mktStatusPillOnSale" onclick="setMarketStatusFilter('ON_SALE')" title="Mandats actifs en cours de commercialisation">
+            <span class="status-indicator-dot on-sale" style="margin-right:4px;"></span>En Vente <span class="subtool-badge" style="background:rgba(245,158,11,0.25); color:#fbbf24;" id="topBadgeOnSale">574</span>
+          </button>
+          <button type="button" class="subtool-btn" id="mktStatusPillCadastre" onclick="toggleCadastreLayer()" title="Activer / Désactiver la surcouche du Plan Cadastral Officiel SITG">
+            <span class="status-indicator-dot cadastre" style="margin-right:4px;"></span>Plan Cadastre SITG <span class="subtool-badge" id="cadastreActiveBadge" style="background:rgba(0,147,157,0.25); color:#17DAE8;">OFF</span>
+          </button>
+          <span class="subtool-divider"></span>
           <button type="button" class="subtool-btn mkt-typo-btn active" id="mktFilterAll" onclick="setMarketQuickFilter('ALL')">
             Tous les actes <span class="subtool-badge" title="__TOTAL_ROWS__ actes cartographiés sur __TOTAL_DB_ROWS__ au Registre Foncier">__TOTAL_ROWS__ <span style="font-weight:400; opacity:0.65; font-size:10px;">/ __TOTAL_DB_ROWS__</span></span>
           </button>
@@ -2565,6 +2650,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="sidebar-header-banner" id="sidebarBanner">
       <div class="sidebar-header-title" id="sidebarBannerTitle">Marché Immobilier Complet</div>
       <div class="sidebar-header-sub" id="sidebarBannerSub">Filtrez les mutations du Registre Foncier et LDTR</div>
+    </div>
+
+
+    <!-- Master Tri-State Filter: Vendus / En Vente / Cadastre SITG -->
+    <div class="market-status-selector" id="marketStatusSelector">
+      <button type="button" class="status-segment-btn active" id="btnStatusSold" data-status="SOLD" onclick="setMarketStatusFilter('SOLD')" title="Actes notariés réels et mutations enregistrées au Registre Foncier (FAO)">
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span class="status-indicator-dot sold"></span>
+          <span class="status-segment-title">Vendus</span>
+        </div>
+        <span class="status-segment-count" id="countStatusSold">8'548</span>
+      </button>
+      <button type="button" class="status-segment-btn" id="btnStatusOnSale" data-status="ON_SALE" onclick="setMarketStatusFilter('ON_SALE')" title="Mandats en cours de commercialisation et annonces actives du marché">
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span class="status-indicator-dot on-sale"></span>
+          <span class="status-segment-title">En Vente</span>
+        </div>
+        <span class="status-segment-count" id="countStatusOnSale">574</span>
+      </button>
+      <button type="button" class="status-segment-btn" id="btnStatusCadastre" data-status="CADASTRE" onclick="setMarketStatusFilter('CADASTRE')" title="Foncier & Plan cadastral officiel de Genève (SITG / Swisstopo)">
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span class="status-indicator-dot cadastre"></span>
+          <span class="status-segment-title">Cadastre</span>
+        </div>
+        <span class="status-segment-count" id="countStatusCadastre">SITG</span>
+      </button>
     </div>
 
     <div class="search-box">
@@ -3306,6 +3417,75 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     let appMode = 'MARKET'; // 'MARKET' | 'MANDATES' | 'DEVELOPMENT'
 
+
+    // Cadastral Layer & Tri-State Market Status Logic (Sold / On Sale / Cadastre)
+    let isCadastreLayerActive = false;
+    let currentMarketStatus = 'ALL'; // 'ALL' | 'SOLD' | 'ON_SALE' | 'CADASTRE'
+
+    const cadastreLayer = L.tileLayer('https://wmts.geo.admin.ch/1.0.0/ch.kantone.cadastralwebmap-farbe/default/current/3857/{z}/{x}/{y}.png', {
+      maxZoom: 20,
+      minZoom: 13,
+      opacity: 0.82,
+      attribution: '&copy; Swisstopo &bull; SITG Mensuration Officielle (Cadastre Foncier Genève)'
+    });
+
+    function toggleCadastreLayer(forceState) {
+      if (typeof forceState === 'boolean') {
+        isCadastreLayerActive = forceState;
+      } else {
+        isCadastreLayerActive = !isCadastreLayerActive;
+      }
+
+      if (isCadastreLayerActive) {
+        if (!map.hasLayer(cadastreLayer)) {
+          map.addLayer(cadastreLayer);
+          cadastreLayer.bringToFront();
+        }
+        if (map.getZoom() < 15) {
+          map.setZoom(16);
+        }
+      } else {
+        if (map.hasLayer(cadastreLayer)) {
+          map.removeLayer(cadastreLayer);
+        }
+      }
+      updateCadastreUI();
+    }
+
+    function updateCadastreUI() {
+      const badge = document.getElementById('cadastreActiveBadge');
+      const topBtn = document.getElementById('mktStatusPillCadastre');
+      if (badge) {
+        badge.textContent = isCadastreLayerActive ? 'ACTIF' : 'OFF';
+        badge.style.background = isCadastreLayerActive ? 'rgba(16, 185, 129, 0.25)' : 'rgba(0, 147, 157, 0.25)';
+        badge.style.color = isCadastreLayerActive ? '#4ade80' : '#17DAE8';
+      }
+      if (topBtn) {
+        topBtn.classList.toggle('active', isCadastreLayerActive);
+      }
+    }
+
+    function setMarketStatusFilter(status) {
+      currentMarketStatus = status;
+
+      // Update Segmented Control Buttons
+      document.querySelectorAll('.status-segment-btn').forEach(b => b.classList.remove('active'));
+      const activeSeg = document.querySelector(`.status-segment-btn[data-status="${status}"]`);
+      if (activeSeg) activeSeg.classList.add('active');
+
+      // Update Topbar Pills
+      const pSold = document.getElementById('mktStatusPillSold');
+      const pOnSale = document.getElementById('mktStatusPillOnSale');
+      if (pSold) pSold.classList.toggle('active', status === 'SOLD' || status === 'ALL');
+      if (pOnSale) pOnSale.classList.toggle('active', status === 'ON_SALE');
+
+      if (status === 'CADASTRE') {
+        toggleCadastreLayer(true);
+      }
+
+      applyFilters();
+    }
+
     // Universal accent-insensitive string normalizer
     function normStr(str) {
       return (str || '')
@@ -3392,7 +3572,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         "OpenStreetMap": osmStandard
       };
 
-      L.control.layers(baseMaps, null, { position: 'topright' }).addTo(m);
+      const overlayMaps = {
+        "Plan Cadastral SITG (Foncier Officiel)": cadastreLayer
+      };
+      L.control.layers(baseMaps, overlayMaps, { position: 'topright' }).addTo(m);
       return m;
     }
 
@@ -3501,6 +3684,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }
 
     function getMarkerColor(r) {
+      if (r.market_status === 'ON_SALE') {
+        const delay = r.publishing_delay_days || 30;
+        if (delay >= 75) return '#EF4444'; // Mandat en souffrance (> 75j)
+        if (delay >= 45) return '#F59E0B'; // Mandat actif régulier
+        return '#38BDF8'; // Mandat récent (< 45j)
+      }
+      if (currentMarketStatus === 'CADASTRE') {
+        if (r.plq_number || r.zone_dev_name) return '#8A4F7D'; // PLQ / Zone Dev
+        if (r.permit_number) return '#10B981'; // Permis APA
+        if (r.has_pool) return '#00939D'; // Piscine cadastrée
+        if (r.zone_code === '5') return '#A46D13'; // Zone 5
+        return '#C9A24D'; // Parcelle foncière
+      }
       if (appMode === 'MANDATES') {
         if (r.mandate_score >= 85) return '#EF4444'; // Ultra Hot Lead (Red)
         if (r.mandate_score >= 70) return '#F59E0B'; // Hot Lead (Amber)
@@ -3531,6 +3727,25 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function updateLegend() {
       const leg = document.getElementById('mapLegend');
+      if (currentMarketStatus === 'ON_SALE') {
+        leg.innerHTML = `
+          <div class="filter-section-title">Légende Mandats en Vente</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#38BDF8;"></div> Mandat Récent (&lt; 45 jours sur le marché)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#F59E0B;"></div> Mandat Établi (45 à 75 jours)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#EF4444;"></div> Mandat en Souffrance (&gt; 75 jours / Opportunité reprise)</div>
+        `;
+        return;
+      }
+      if (currentMarketStatus === 'CADASTRE') {
+        leg.innerHTML = `
+          <div class="filter-section-title">Légende Foncier & Cadastre SITG</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#8A4F7D;"></div> Parcelle sous PLQ ou Zone de Développement</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#10B981;"></div> Parcelle avec Permis APA / Bâtiment Projeté</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#A46D13;"></div> Foncier Zone 5 (&gt; 1'000 m² Potentiel Art. 59)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#00939D;"></div> Parcelle avec Piscine Cadastrée SITG</div>
+        `;
+        return;
+      }
       if (appMode === 'MANDATES') {
         leg.innerHTML = `
           <div class="filter-section-title">Légende Scanner Mandats</div>
@@ -3920,9 +4135,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const buyerDisplay = formatPartyDisplay(r.buyer, 'BUYER');
       const sellerDisplay = formatPartyDisplay(r.seller, 'SELLER');
 
-      detailPriceDisplay.innerHTML = r.price_chf 
-        ? 'CHF ' + Math.round(r.price_chf).toLocaleString('fr-CH') 
-        : '<span style="color:#A8A29A; font-size:15px; font-weight:500;">Prix non publié (Mutation RF)</span>';
+      if (r.market_status === 'ON_SALE') {
+        detailPriceDisplay.innerHTML = 'CHF ' + Math.round(r.price_chf || 0).toLocaleString('fr-CH') + '<div style="font-size:10px; color:#fbbf24; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;">Prix Catalogue Demandé (En Vente)</div>';
+      } else {
+        detailPriceDisplay.innerHTML = r.price_chf 
+          ? 'CHF ' + Math.round(r.price_chf).toLocaleString('fr-CH') 
+          : '<span style="color:#A8A29A; font-size:15px; font-weight:500;">Prix non publié (Mutation RF)</span>';
+      }
 
       const sitgLink = (r.lv95_e && r.lv95_n) 
         ? (r.sitg_aerial_url || `https://map.sitg.ge.ch/?center=${r.lv95_e},${r.lv95_n}&scale=1000&mapresources=CADASTRE,ORTHOPHOTO_2023`)
@@ -3935,9 +4154,21 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const isStreetAvailable = hasStreetViewCoverage(r);
       const displayTitle = r.address || (r.commune + ' (Parcelle ' + (r.parcel_number || 'N/A') + ')');
 
+      const onSaleBanner = r.market_status === 'ON_SALE' ? `
+        <div style="background: rgba(245, 158, 11, 0.12); border-left: 3px solid #f59e0b; padding: 10px 12px; margin-bottom: 12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <span style="font-size:10px; font-weight:800; color:#fbbf24; text-transform:uppercase; letter-spacing:0.05em;">Mandat Agence Actif</span>
+            <span style="font-family:var(--font-mono); font-size:10px; color:var(--color-sand-200);">${r.publishing_delay_days || 30}j sur le marché</span>
+          </div>
+          <div style="color:#ffffff; font-weight:700; font-size:12px;">${r.agency_name || 'Agence non spécifiée'}${r.agent_name ? ' &bull; ' + r.agent_name : ''}</div>
+          ${(r.publishing_delay_days || 0) >= 75 ? '<div style="color:#fca5a5; font-size:11px; margin-top:4px;"><strong>Mandat en souffrance :</strong> Bien stagnant au-delà du cycle moyen genevois. Opportunité de valorisation de reprise.</div>' : ''}
+        </div>
+      ` : '';
+
       detailContent.innerHTML = `
+        ${onSaleBanner}
         <div class="detail-badges">
-          <span class="badge-tag">${r.transaction_type || (r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier')}</span>
+          <span class="badge-tag">${r.market_status === 'ON_SALE' ? 'En Vente sur le Marché' : (r.transaction_type || (r.source_category === 'LDTR_Appartement' ? 'Vente Appartement (LDTR)' : 'Registre Foncier'))}</span>
           ${r.typology_label ? `<span class="badge-tag" style="background:#172554; color:#93c5fd; border-color:#1e40af;">${r.typology_label}</span>` : ''}
           ${r.mandate_score >= 70 ? `<span class="badge-tag mandate-hot">Lead Mandat (${r.mandate_score}/100)</span>` : ''}
           ${r.dev_score >= 25 ? `<span class="badge-tag dev-opp">Potentiel Foncier</span>` : ''}
@@ -4335,6 +4566,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       [cardPlq, cardDev, cardPermit, cardPriced, cardHoiriesOnly].forEach(c => { if (c) c.classList.remove('checked'); });
 
+      currentMarketStatus = 'ALL';
+      document.querySelectorAll('.status-segment-btn').forEach(b => b.classList.remove('active'));
+      const defStatusSeg = document.getElementById('btnStatusSold');
+      if (defStatusSeg) defStatusSeg.classList.add('active');
+      const pSold = document.getElementById('mktStatusPillSold');
+      const pOnSale = document.getElementById('mktStatusPillOnSale');
+      if (pSold) pSold.classList.add('active');
+      if (pOnSale) pOnSale.classList.remove('active');
+      toggleCadastreLayer(false);
+
       currentNature = 'ALL';
       document.querySelectorAll('.pill-btn[data-nature]').forEach(b => b.classList.remove('active'));
       const defNature = document.querySelector('.pill-btn[data-nature="ALL"]');
@@ -4387,6 +4628,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (activeMktBtn) activeMktBtn.classList.add('active');
 
       const filtered = DATA.filter(r => {
+        // Master Tri-State Market Status Filter
+        if (currentMarketStatus === 'SOLD') {
+          if (r.market_status === 'ON_SALE') return false;
+        } else if (currentMarketStatus === 'ON_SALE') {
+          if (r.market_status !== 'ON_SALE') return false;
+        } else if (currentMarketStatus === 'CADASTRE') {
+          if (!r.parcel_number && !r.egrid && !r.surface_terrain_m2 && !r.plq_number) return false;
+        }
+
         // App Mode Global Pre-Filters
         if (appMode === 'MANDATES') {
           if (!r.mandate_score || r.mandate_score <= 0) return false;
@@ -8078,6 +8328,8 @@ def build_interactive_map(
                 r["sqm_price"] = None
         else:
             r["sqm_price"] = r.get("sqm_price")
+
+        r["market_status"] = "SOLD"
 
         # Mandate lead scoring
         m_score, m_reasons, is_hoirie = compute_mandate_score(r)
