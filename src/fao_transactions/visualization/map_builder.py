@@ -616,6 +616,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       margin-top: auto;
     }
 
+@media (max-width: 820px) {
+  .reset-btn {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
     .reset-btn:hover {
       background: var(--color-ink-800);
       color: var(--color-paper);
@@ -2446,6 +2454,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
       <!-- Global Header Utilities -->
       <div class="top-bar-utilities">
+        <a href="/dv/" class="subtool-btn utility-btn" style="text-decoration:none; display:inline-flex; align-items:center;" title="Portail Partenaire Désormière &amp; Vanhalst">Portail D&amp;V</a>
+        <a href="/dv/?view=value" class="subtool-btn utility-btn" style="text-decoration:none; display:inline-flex; align-items:center;" title="Studio d'Estimation Immobilière Rive Gauche">Studio D&amp;V</a>
+        <a href="/dv/marketing/" class="subtool-btn utility-btn" style="text-decoration:none; display:inline-flex; align-items:center;" title="Moteur d'Acquisition Vendeurs &amp; Marketing">Marketing D&amp;V</a>
         <button type="button" class="subtool-btn utility-btn" id="btnVaultToggle" onclick="toggleVaultState()" title="Conformité nLPD (Protection des données) : Cliquez pour déverrouiller le Mode Interne Souverain" style="display:inline-flex; align-items:center; gap:6px; transition:all 0.2s ease;">
           <span id="vaultToggleLabel">nLPD Conforme</span>
         </button>
