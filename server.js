@@ -1557,7 +1557,7 @@ function startServer() {
   while (port < maxPort) {
     try {
       const server = Bun.serve({
-        hostname: "0.0.0.0",
+        hostname: "127.0.0.1",
         port,
         fetch: handleFetch,
       });

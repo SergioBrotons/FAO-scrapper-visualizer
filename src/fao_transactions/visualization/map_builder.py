@@ -2185,10 +2185,204 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .term-line.success { color: #4ade80; }
     .term-line.warning { color: #fbbf24; }
     .term-line.error { color: #f87171; }
+
+    /* =========================================================================
+       RESPONSIVE ARCHITECTURE & MOBILE EXCELLENCE (CYTRIA SUITE)
+       ========================================================================= */
+    .mobile-only { display: none !important; }
+    .desktop-only { display: flex !important; }
+
+    .mobile-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 7, 10, 0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 1900;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .mobile-backdrop.active {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-bottom-bar {
+      display: none;
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1800;
+      background: rgba(9, 14, 20, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border-gold);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+      padding: 6px 10px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mobile-bottom-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-ink-900);
+      border: 1px solid var(--panel-border);
+      color: var(--color-paper);
+      font-family: var(--font-brand);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .mobile-bottom-btn.active, .mobile-bottom-btn.primary {
+      background: rgba(201, 162, 77, 0.2);
+      border-color: var(--color-brand-500);
+      color: var(--color-brand-300);
+    }
+
+    .sidebar-mobile-close {
+      display: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--color-ink-800);
+      border: 1px solid var(--panel-border);
+      color: var(--color-paper);
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      z-index: 10;
+    }
+
+    /* Tablet & Desktop Layout (<= 1024px) */
+    @media (max-width: 1024px) {
+      .top-bar-stats-strip { display: none !important; }
+      .detail-drawer { width: 380px; }
+      .sidebar { width: 320px; }
+    }
+
+    /* Mobile Phones & Small Tablets (<= 820px) */
+    @media (max-width: 820px) {
+      .mobile-only { display: flex !important; }
+      .desktop-only { display: none !important; }
+
+      .top-bar {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+      }
+      .top-bar-tier-1 {
+        height: 46px;
+        padding: 0 10px;
+        gap: 8px;
+      }
+      .top-bar-tier-2 {
+        height: 38px;
+        padding: 0 8px;
+      }
+      .brand-meta { display: none; }
+      .brand-divider { display: none; }
+      .cytria-logo-svg { height: 18px; }
+
+      .product-tab {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      .utility-btn {
+        padding: 3px 6px !important;
+        font-size: 9px !important;
+      }
+
+      /* Off-canvas Mobile Sidebar */
+      .sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 86vw !important;
+        max-width: 380px !important;
+        z-index: 2000 !important;
+        transform: translateX(-105%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        background: rgba(9, 14, 20, 0.98) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        padding: 20px 16px !important;
+        box-shadow: 15px 0 50px rgba(0, 0, 0, 0.9) !important;
+      }
+      .sidebar.mobile-open {
+        transform: translateX(0) !important;
+      }
+      .sidebar-mobile-close {
+        display: flex !important;
+      }
+
+      /* Bottom-sheet Detail Drawer */
+      .detail-drawer {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: auto !important;
+        width: 100% !important;
+        max-height: 84vh !important;
+        border-radius: 16px 16px 0 0 !important;
+        z-index: 2010 !important;
+        border: 1px solid var(--panel-border-gold) !important;
+        border-bottom: none !important;
+        background: rgba(9, 14, 20, 0.98) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        padding: 16px !important;
+        box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.95) !important;
+        transform: translateY(105%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .detail-drawer.visible {
+        transform: translateY(0) !important;
+        display: flex !important;
+      }
+
+      /* Bottom Floating Action Bar */
+      .mobile-bottom-bar {
+        display: flex !important;
+      }
+
+      /* Modal Popups on Mobile */
+      .modal-window {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        height: 90vh !important;
+        max-height: 90vh !important;
+      }
+      .modal-header {
+        padding: 10px 14px !important;
+      }
+      .duel-kpi-table th, .duel-kpi-table td {
+        padding: 6px 8px !important;
+        font-size: 10.5px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
 
+  <div id="mobileSidebarBackdrop" class="mobile-backdrop" onclick="toggleMobileSidebar(false)"></div>
   <!-- Map Container -->
   <div id="map"></div>
 
@@ -2256,7 +2450,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <span id="vaultToggleLabel">nLPD Conforme</span>
         </button>
         <button type="button" class="subtool-btn utility-btn" id="hudOpenCmaBtn" onclick="openCmaModal()">
-          Simulateur CMA ↗
+          Simulateur CMA &rarr;
         </button>
         <button type="button" class="subtool-btn utility-btn" id="hudGuideBtn" onclick="openMethodologyModal()">
           Guide Métier & Playbooks
@@ -2302,7 +2496,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             Calque Prix / m²
           </button>
           <button type="button" class="subtool-btn" id="mktPoolFilterBtn" onclick="togglePoolFilter()">
-            🏊 Avec Piscine <span class="subtool-badge" style="background:rgba(0,147,157,0.3); color:#17DAE8;">__POOLS_COUNT__</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;display:inline-block;margin-right:4px;"><path d="M2 12c1.5 1.5 3 2 4.5 2s3-.5 4.5-2 3-2 4.5-2 3 .5 4.5 2M2 18c1.5 1.5 3 2 4.5 2s3-.5 4.5-2 3-2 4.5-2 3 .5 4.5 2"/></svg>Avec Piscine <span class="subtool-badge" style="background:rgba(0,147,157,0.3); color:#17DAE8;">__POOLS_COUNT__</span>
           </button>
         </div>
 
@@ -2446,7 +2640,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       </div>
       <div style="margin-top: 8px;">
         <button type="button" class="view-map-btn" style="width:100%; padding: 7px; text-align:center;" onclick="openLeagueModal()">
-          Consulter l'Analyse Concurrentielle & Parts de Marché ↗
+          Consulter l'Analyse Concurrentielle & Parts de Marché &rarr;
         </button>
       </div>
     </div>
@@ -2577,7 +2771,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
         <div class="modal-header-actions">
           <a href="#" id="modalExtLink" target="_blank" rel="noopener" class="modal-ext-link">
-            Ouvrir dans Google Maps ↗
+            Ouvrir dans Google Maps &rarr;
           </a>
           <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
         </div>
@@ -3040,7 +3234,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
               <a href="https://fao.ge.ch/recherche?rubrique=133" target="_blank" class="action-btn sitg" style="padding:10px 18px; font-size:12px; font-weight:700; text-decoration:none; background:#1e3a8a; border:1px solid #60a5fa; color:#93c5fd; display:flex; align-items:center; gap:6px;">
-                 Ouvrir FAO Genève ↗
+                 Ouvrir FAO Genève &rarr;
               </a>
               <button type="button" class="action-btn" onclick="confirmCaptchaSolved()" style="padding:10px 18px; font-size:12px; background:#C9A24D; color:#080D11; font-weight:800; border:1px solid #C9A24D; cursor:pointer;">
                 ✓ J'ai validé le Captcha (Continuer)
@@ -3756,7 +3950,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </div>`}
           ${sitgLink ? `
           <a href="${sitgLink}" target="_blank" rel="noopener" class="action-btn sitg" title="Ouvrir l'orthophoto officielle SITG 5cm">
-            SITG 5cm Aérien ↗
+            SITG 5cm Aérien &rarr;
           </a>` : ''}
         </div>
 
@@ -3807,8 +4001,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <span class="row-label">Plan Localisé de Quartier (PLQ)</span>
             <span class="row-value">
               PLQ N° <strong>${r.plq_number}</strong> (${r.plq_name || 'Geneve'}) — ${r.plq_status || 'En vigueur'}
-              ${r.plq_plan_url ? `<br><a href="${r.plq_plan_url}" target="_blank" class="intel-link">Télécharger le Plan PLQ (PDF) ↗</a>` : ''}
-              ${r.plq_reglement_url ? ` &bull; <a href="${r.plq_reglement_url}" target="_blank" class="intel-link">Règlement (PDF) ↗</a>` : ''}
+              ${r.plq_plan_url ? `<br><a href="${r.plq_plan_url}" target="_blank" class="intel-link">Télécharger le Plan PLQ (PDF) &rarr;</a>` : ''}
+              ${r.plq_reglement_url ? ` &bull; <a href="${r.plq_reglement_url}" target="_blank" class="intel-link">Règlement (PDF) &rarr;</a>` : ''}
             </span>
           </div>` : ''}
 
@@ -3817,7 +4011,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <span class="row-label">Zone de Développement (LDTR/LGZD)</span>
             <span class="row-value">
               ${r.zone_dev_name} ${r.zone_dev_restriction ? `— <em>${r.zone_dev_restriction}</em>` : ''}
-              ${r.zone_dev_url ? `<br><a href="${r.zone_dev_url}" target="_blank" class="intel-link">Plan de zone légale (PDF) ↗</a>` : ''}
+              ${r.zone_dev_url ? `<br><a href="${r.zone_dev_url}" target="_blank" class="intel-link">Plan de zone légale (PDF) &rarr;</a>` : ''}
             </span>
           </div>` : ''}
 
@@ -3827,7 +4021,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <span class="row-value">
               <strong>${r.permit_number}</strong>: ${r.permit_type || 'Projet'} (${r.permit_destination || 'Bâtiment'})
               ${r.permit_floors ? ` &bull; ${r.permit_floors} étages` : ''}
-              ${r.permit_sad_url ? `<br><a href="${r.permit_sad_url}" target="_blank" class="intel-link">Consulter Dossier SAD Cantonal ↗</a>` : ''}
+              ${r.permit_sad_url ? `<br><a href="${r.permit_sad_url}" target="_blank" class="intel-link">Consulter Dossier SAD Cantonal &rarr;</a>` : ''}
             </span>
           </div>` : ''}
 
@@ -3836,7 +4030,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <span class="row-label">Périmètre Grand Projet Cantonal</span>
             <span class="row-value">
               ${r.grand_projet_name} (${r.grand_projet_type || 'PDCn'})
-              ${r.grand_projet_url ? `<br><a href="${r.grand_projet_url}" target="_blank" class="intel-link">Fiche Grand Projet (PDF) ↗</a>` : ''}
+              ${r.grand_projet_url ? `<br><a href="${r.grand_projet_url}" target="_blank" class="intel-link">Fiche Grand Projet (PDF) &rarr;</a>` : ''}
             </span>
           </div>` : ''}
         </div>` : ''}
@@ -3873,7 +4067,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
           ${r.has_pool ? `
           <div class="detail-row" style="background: rgba(0, 147, 157, 0.12); padding: 8px 10px; border-left: 3px solid #00939D; margin: 6px 0;">
-            <span class="row-label" style="color: #17DAE8; font-weight: 700;">🏊 Piscine & Bassin Cadastré</span>
+            <span class="row-label" style="color: #17DAE8; font-weight: 700;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;display:inline-block;margin-right:4px;"><path d="M2 12c1.5 1.5 3 2 4.5 2s3-.5 4.5-2 3-2 4.5-2 3 .5 4.5 2M2 18c1.5 1.5 3 2 4.5 2s3-.5 4.5-2 3-2 4.5-2 3 .5 4.5 2"/></svg>Piscine & Bassin Cadastré</span>
             <span class="row-value" style="color: #FFFFFF; font-weight: 700;">
               ${r.pool_surface_m2 ? r.pool_surface_m2 + ' m² de plan d&apos;eau' : 'Enregistrée SITG'}
               ${r.pool_count > 1 ? ' (' + r.pool_count + ' bassins)' : ''}
@@ -3917,11 +4111,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             </div>
             <div style="display:flex; flex-direction:column; gap:5px;">
               <a href="https://fao.ge.ch/recherche?rubrique=133&date_debut=${encodeURIComponent(r.notice_date || '')}&texte=${encodeURIComponent(r.parcel_number || r.commune || '')}" target="_blank" rel="noopener" style="color: var(--color-brand-400); text-decoration: none; display: flex; align-items: center; gap: 4px; font-weight:600;">
-                <span> Consulter l'avis officiel au Registre Foncier (fao.ge.ch ↗)</span>
+                <span> Consulter l'avis officiel au Registre Foncier (fao.ge.ch &rarr;)</span>
               </a>
               ${r.sitg_map_url ? `
               <a href="${r.sitg_map_url}" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 4px;">
-                <span>️ Fiche Parcelle & Droits Réels SITG (ge.ch/sitg ↗)</span>
+                <span>️ Fiche Parcelle & Droits Réels SITG (ge.ch/sitg &rarr;)</span>
               </a>` : ''}
               <div style="color: var(--color-sand-400); font-size: 10px; margin-top: 2px; line-height:1.35;">
                 *En mode public conforme, les noms des particuliers sont masqués. La consultation authentique s'effectue directement sur le portail officiel de l'État de Genève.
@@ -3931,7 +4125,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
           <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--panel-border);">
             <button type="button" class="action-btn" id="btnDrawerCmaAction" style="width: 100%; padding: 8px 12px; background: rgba(201, 162, 77, 0.12); border: 1px solid rgba(201, 162, 77, 0.4); color: var(--color-brand-300); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer;">
-              Évaluer ce micro-quartier & Comparables (CMA) ↗
+              Évaluer ce micro-quartier & Comparables (CMA) &rarr;
             </button>
           </div>
         </div>
@@ -3995,20 +4189,20 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         document.getElementById('tabPano').classList.add('active');
         modalIframe.src = `https://maps.google.com/maps?q=&layer=c&cbll=${currentModalLat},${currentModalLon}&cbp=11,0,0,0,0&output=svembed`;
         modalExtLink.href = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${currentModalLat},${currentModalLon}`;
-        modalExtLink.textContent = 'Ouvrir Street View 360° ↗';
+        modalExtLink.textContent = 'Ouvrir Street View 360° &rarr;';
         modalHintText.innerHTML = 'Google Street View 360° • Vue panoramique au sol (Utilisez les onglets ci-dessus si la voie est privée ou agricole)';
       } else if (mode === 'sat') {
         document.getElementById('tabSat').classList.add('active');
         modalIframe.src = `https://maps.google.com/maps?q=${currentModalLat},${currentModalLon}&t=k&z=19&output=embed`;
         modalExtLink.href = `https://www.google.com/maps/@${currentModalLat},${currentModalLon},19z/data=!3m1!1e3`;
-        modalExtLink.textContent = 'Ouvrir Satellite dans Google Maps ↗';
+        modalExtLink.textContent = 'Ouvrir Satellite dans Google Maps &rarr;';
         modalHintText.innerHTML = 'Google Satellite HD • Imagerie aérienne haute résolution (Zoom 19 &bull; Couverture 100% Genève)';
       } else if (mode === 'sitg') {
         document.getElementById('tabSitg').classList.add('active');
         const sitgUrl = `https://map.sitg.ge.ch/?center=${currentModalLv95E || '2500000'},${currentModalLv95N || '1118000'}&scale=1000&mapresources=CADASTRE,ORTHOPHOTO_2023`;
         modalIframe.src = sitgUrl;
         modalExtLink.href = sitgUrl;
-        modalExtLink.textContent = 'Ouvrir dans le Géoportail SITG ↗';
+        modalExtLink.textContent = 'Ouvrir dans le Géoportail SITG &rarr;';
         modalHintText.innerHTML = 'Cadastre SITG Genève • Orthophoto officielle 5cm & Registre Foncier Cantonal (LV95)';
       }
     }
@@ -4444,9 +4638,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 <span style="color:var(--color-sand-300); font-size:11px;">${a.address}</span>
                 ${a.legal_address ? `<div style="color:var(--color-sand-400); font-size:10px; margin-top:2px;">Siège RC: ${a.legal_address}</div>` : ''}
                 <div style="display:flex; gap: 8px; margin-top: 4px; align-items: center;">
-                  ${a.website ? `<a href="${a.website}" target="_blank" style="color:var(--color-brand-400); text-decoration:none; font-size:10px;">Site Web ↗</a>` : ''}
-                  ${a.linkedin_url ? `<a href="${a.linkedin_url}" target="_blank" style="color:#0a66c2; text-decoration:none; font-size:10px; font-weight:700;">LinkedIn ↗</a>` : ''}
-                  ${a.instagram_url ? `<a href="${a.instagram_url}" target="_blank" style="color:#e1306c; text-decoration:none; font-size:10px; font-weight:700;">Instagram ↗</a>` : ''}
+                  ${a.website ? `<a href="${a.website}" target="_blank" style="color:var(--color-brand-400); text-decoration:none; font-size:10px;">Site Web &rarr;</a>` : ''}
+                  ${a.linkedin_url ? `<a href="${a.linkedin_url}" target="_blank" style="color:#0a66c2; text-decoration:none; font-size:10px; font-weight:700;">LinkedIn &rarr;</a>` : ''}
+                  ${a.instagram_url ? `<a href="${a.instagram_url}" target="_blank" style="color:#e1306c; text-decoration:none; font-size:10px; font-weight:700;">Instagram &rarr;</a>` : ''}
                 </div>
               </td>
               <td><span class="score-badge">${a.cytria_score} / 100</span></td>
@@ -5160,12 +5354,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
         <!-- Official Social & Web Profiles -->
         <div class="social-buttons-grid">
-          ${agency.website ? `<a href="${agency.website}" target="_blank" rel="noopener" class="social-btn website">Site Web Officiel ↗</a>` : ''}
-          ${agency.linkedin_url ? `<a href="${agency.linkedin_url}" target="_blank" rel="noopener" class="social-btn linkedin">LinkedIn Entreprise ↗</a>` : ''}
-          ${agency.instagram_url ? `<a href="${agency.instagram_url}" target="_blank" rel="noopener" class="social-btn instagram">Instagram ↗</a>` : ''}
-          ${agency.youtube_url ? `<a href="${agency.youtube_url}" target="_blank" rel="noopener" class="social-btn youtube">YouTube ↗</a>` : ''}
-          ${agency.tiktok_url ? `<a href="${agency.tiktok_url}" target="_blank" rel="noopener" class="social-btn tiktok">TikTok ↗</a>` : ''}
-          ${agency.facebook_url ? `<a href="${agency.facebook_url}" target="_blank" rel="noopener" class="social-btn facebook">Facebook ↗</a>` : ''}
+          ${agency.website ? `<a href="${agency.website}" target="_blank" rel="noopener" class="social-btn website">Site Web Officiel &rarr;</a>` : ''}
+          ${agency.linkedin_url ? `<a href="${agency.linkedin_url}" target="_blank" rel="noopener" class="social-btn linkedin">LinkedIn Entreprise &rarr;</a>` : ''}
+          ${agency.instagram_url ? `<a href="${agency.instagram_url}" target="_blank" rel="noopener" class="social-btn instagram">Instagram &rarr;</a>` : ''}
+          ${agency.youtube_url ? `<a href="${agency.youtube_url}" target="_blank" rel="noopener" class="social-btn youtube">YouTube &rarr;</a>` : ''}
+          ${agency.tiktok_url ? `<a href="${agency.tiktok_url}" target="_blank" rel="noopener" class="social-btn tiktok">TikTok &rarr;</a>` : ''}
+          ${agency.facebook_url ? `<a href="${agency.facebook_url}" target="_blank" rel="noopener" class="social-btn facebook">Facebook &rarr;</a>` : ''}
           ${agency.phone ? `<a href="tel:${agency.phone}" class="social-btn contact">Tél. ${agency.phone}</a>` : ''}
         </div>
 
@@ -5982,22 +6176,22 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         const links = item.social_links || {};
         let linksHtml = '<div style="display:flex; gap:4px; flex-wrap:wrap;">';
         if (item.website) {
-          linksHtml += `<a href="${item.website}" target="_blank" rel="noopener" class="social-btn website" style="padding:2px 5px; font-size:9px;">Web ↗</a>`;
+          linksHtml += `<a href="${item.website}" target="_blank" rel="noopener" class="social-btn website" style="padding:2px 5px; font-size:9px;">Web &rarr;</a>`;
         }
         if (links.instagram) {
-          linksHtml += `<a href="${links.instagram}" target="_blank" rel="noopener" class="social-btn instagram" style="padding:2px 5px; font-size:9px;">Instagram ↗</a>`;
+          linksHtml += `<a href="${links.instagram}" target="_blank" rel="noopener" class="social-btn instagram" style="padding:2px 5px; font-size:9px;">Instagram &rarr;</a>`;
         }
         if (links.linkedin) {
-          linksHtml += `<a href="${links.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin" style="padding:2px 5px; font-size:9px;">LinkedIn ↗</a>`;
+          linksHtml += `<a href="${links.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin" style="padding:2px 5px; font-size:9px;">LinkedIn &rarr;</a>`;
         }
         if (links.youtube) {
-          linksHtml += `<a href="${links.youtube}" target="_blank" rel="noopener" class="social-btn youtube" style="padding:2px 5px; font-size:9px;">YouTube ↗</a>`;
+          linksHtml += `<a href="${links.youtube}" target="_blank" rel="noopener" class="social-btn youtube" style="padding:2px 5px; font-size:9px;">YouTube &rarr;</a>`;
         }
         if (links.tiktok) {
-          linksHtml += `<a href="${links.tiktok}" target="_blank" rel="noopener" class="social-btn tiktok" style="padding:2px 5px; font-size:9px;">TikTok ↗</a>`;
+          linksHtml += `<a href="${links.tiktok}" target="_blank" rel="noopener" class="social-btn tiktok" style="padding:2px 5px; font-size:9px;">TikTok &rarr;</a>`;
         }
         if (links.facebook) {
-          linksHtml += `<a href="${links.facebook}" target="_blank" rel="noopener" class="social-btn facebook" style="padding:2px 5px; font-size:9px;">FB ↗</a>`;
+          linksHtml += `<a href="${links.facebook}" target="_blank" rel="noopener" class="social-btn facebook" style="padding:2px 5px; font-size:9px;">FB &rarr;</a>`;
         }
         linksHtml += '</div>';
 
@@ -6691,7 +6885,7 @@ Restant à votre entière écoute, nous vous prions d'agréer nos salutations le
               if (txt.includes('https://fao.ge.ch/recherche?rubrique=133')) {
                 div.innerHTML = txt.replace(
                   'https://fao.ge.ch/recherche?rubrique=133',
-                  '<a href="https://fao.ge.ch/recherche?rubrique=133" target="_blank" style="color:#60a5fa; text-decoration:underline; font-weight:700;">https://fao.ge.ch/recherche?rubrique=133 ↗</a>'
+                  '<a href="https://fao.ge.ch/recherche?rubrique=133" target="_blank" style="color:#60a5fa; text-decoration:underline; font-weight:700;">https://fao.ge.ch/recherche?rubrique=133 &rarr;</a>'
                 );
               } else {
                 div.textContent = txt;
