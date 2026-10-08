@@ -84,25 +84,48 @@ describe("Geolocation & Address Integrity Across Datasets", () => {
     }
   });
 
-  it("Ville de Genève properties with explicit postal codes are correctly classified by Rive", async () => {
+  it("Ville de Genève properties are authoritatively classified by physical position across the Rhône & Rade", async () => {
     const html = await Bun.file("index.html").text();
     const dataMatch = html.match(/const DATA = (\[[\s\S]*?\]);/);
     const data = JSON.parse(dataMatch![1]);
 
+    function getRhoneDividerLat(lon: number): number {
+      if (lon <= 6.1100) return 46.1985;
+      if (lon <= 6.1180) return 46.1985 + (46.2010 - 46.1985) * ((lon - 6.1100) / (6.1180 - 6.1100));
+      if (lon <= 6.1265) return 46.2010 + (46.2025 - 46.2010) * ((lon - 6.1180) / (6.1265 - 6.1180));
+      if (lon <= 6.1345) return 46.2025 + (46.2038 - 46.2025) * ((lon - 6.1265) / (6.1345 - 6.1265));
+      if (lon <= 6.1395) return 46.2038 + (46.2045 - 46.2038) * ((lon - 6.1345) / (6.1395 - 6.1345));
+      if (lon <= 6.1435) return 46.2045 + (46.2052 - 46.2045) * ((lon - 6.1395) / (6.1435 - 6.1395));
+      if (lon <= 6.1475) return 46.2052 + (46.2065 - 46.2052) * ((lon - 6.1435) / (6.1475 - 6.1435));
+      return 46.2065 + (46.2300 - 46.2065) * ((lon - 6.1475) / (6.1650 - 6.1475));
+    }
+
     const genevaProps = data.filter((r: any) => (r.commune || "").toLowerCase() === "genève");
+    expect(genevaProps.length).toBeGreaterThan(1500);
 
     for (const r of genevaProps) {
-      const addr = r.address || "";
-      if (/\b(1201|1202|1203|1209)\b/.test(addr)) {
-        expect(r.rive).toBe("DROITE");
-      }
-      if (/\b(1204|1205|1206|1207|1208|1227)\b/.test(addr)) {
-        expect(r.rive).toBe("GAUCHE");
+      if (r.lat && r.lon) {
+        const riverLat = getRhoneDividerLat(r.lon);
+        if (r.lat >= riverLat) {
+          expect(r.rive).toBe("DROITE");
+        } else {
+          expect(r.rive).toBe("GAUCHE");
+        }
       }
     }
+
+    // Zero Rive Droite properties in Champel/Malagnou/Florissant (lat < 46.20, lon > 6.15)
+    const southEastInDroite = data.filter((r: any) => r.rive === "DROITE" && r.lat < 46.20 && r.lon > 6.15);
+    expect(southEastInDroite.length).toBe(0);
+
+    // Zero Vandœuvres or Cologny properties in Rive Droite
+    const vandoeuvresInDroite = data.filter((r: any) => (r.commune || "").toLowerCase().includes("vandoeuvres") && r.rive === "DROITE");
+    expect(vandoeuvresInDroite.length).toBe(0);
+    const colognyInDroite = data.filter((r: any) => (r.commune || "").toLowerCase().includes("cologny") && r.rive === "DROITE");
+    expect(colognyInDroite.length).toBe(0);
   });
 
-  it("Rive Gauche and Rive Droite polygons in index.html have clean separation and proper bounds", async () => {
+  it("Rive Gauche and Rive Droite polygons in index.html seamlessly divide the lake and eliminate overlaps", async () => {
     const html = await Bun.file("index.html").text();
     const rgMatch = html.match(/const RIVE_GAUCHE_COORDS = (\[[\s\S]*?\]);/);
     const rdMatch = html.match(/const RIVE_DROITE_COORDS = (\[[\s\S]*?\]);/);
@@ -116,6 +139,10 @@ describe("Geolocation & Address Integrity Across Datasets", () => {
     // Rive Droite polygon must NOT contain points on Rive Gauche inland/coast like Hermance/Jussy (lon > 6.25, lat < 46.31)
     const rdAtGaucheLand = rdCoords.filter(([lat, lon]) => lon > 6.25 && lat < 46.31);
     expect(rdAtGaucheLand.length).toBe(0);
+
+    // Rive Gauche polygon must include the eastern lake border (must reach northern lake divider around 46.38)
+    const rgLakeCoverage = rgCoords.filter(([lat]) => lat >= 46.37);
+    expect(rgLakeCoverage.length).toBeGreaterThan(0);
 
     // Both polygons must close (start equals end)
     expect(rgCoords[0][0]).toBe(rgCoords[rgCoords.length - 1][0]);
