@@ -2825,9 +2825,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <button type="button" class="subtool-btn active" id="mktStatusPillSold" onclick="setMarketStatusFilter('SOLD')" title="Actes notariés passés au Registre Foncier">
             <span class="status-indicator-dot sold" style="margin-right:4px;"></span>Vendus <span class="subtool-badge" id="topBadgeSold">8'548</span>
           </button>
-          <button type="button" class="subtool-btn" id="mktStatusPillOnSale" onclick="setMarketStatusFilter('ON_SALE')" title="Mandats actifs en cours de commercialisation">
-            <span class="status-indicator-dot on-sale" style="margin-right:4px;"></span>En Vente <span class="subtool-badge" style="background:rgba(245,158,11,0.25); color:#fbbf24;" id="topBadgeOnSale">574</span>
-          </button>
+          <!-- En Vente temporarily removed upon user request -->
           <button type="button" class="subtool-btn" id="mktStatusPillCadastre" onclick="toggleCadastreLayer()" title="Activer / Désactiver la surcouche du Plan Cadastral Officiel SITG">
             <span class="status-indicator-dot cadastre" style="margin-right:4px;"></span>Plan Cadastre SITG <span class="subtool-badge" id="cadastreActiveBadge" style="background:rgba(0,147,157,0.25); color:#17DAE8;">OFF</span>
           </button>
@@ -2927,13 +2925,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
         <span class="status-segment-count" id="countStatusSold">8'548</span>
       </button>
-      <button type="button" class="status-segment-btn" id="btnStatusOnSale" data-status="ON_SALE" onclick="setMarketStatusFilter('ON_SALE')" title="Mandats en cours de commercialisation et annonces actives du marché">
-        <div style="display:flex; align-items:center; gap:5px;">
-          <span class="status-indicator-dot on-sale"></span>
-          <span class="status-segment-title">En Vente</span>
-        </div>
-        <span class="status-segment-count" id="countStatusOnSale">574</span>
-      </button>
+      <!-- btnStatusOnSale temporarily removed upon user request -->
       <button type="button" class="status-segment-btn" id="btnStatusCadastre" data-status="CADASTRE" onclick="setMarketStatusFilter('CADASTRE')" title="Foncier & Plan cadastral officiel de Genève (SITG / Swisstopo)">
         <div style="display:flex; align-items:center; gap:5px;">
           <span class="status-indicator-dot cadastre"></span>

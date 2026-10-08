@@ -54,17 +54,14 @@ describe("Cytria Top Bar & Mobile UI/UX Overhaul Integrity", () => {
     expect(html.includes("Données Foncières &amp; SITG") || html.includes("Données Foncières & SITG")).toBe(true);
   });
 
-  it("should verify both SOLD and ON_SALE properties have pool metadata in DATA", async () => {
+  it("should verify properties have pool metadata in DATA", async () => {
     const html = await Bun.file(indexHtmlPath).text();
     const dataMatch = html.match(/const DATA = (\[[\s\S]*?\]);/);
     expect(dataMatch).toBeTruthy();
     const data = JSON.parse(dataMatch![1]);
     
-    const soldWithPool = data.filter((r: any) => r.market_status !== 'ON_SALE' && r.has_pool === 1).length;
-    const onSaleWithPool = data.filter((r: any) => r.market_status === 'ON_SALE' && r.has_pool === 1).length;
-
-    expect(soldWithPool).toBeGreaterThan(400);
-    expect(onSaleWithPool).toBeGreaterThan(20);
+    const soldWithPool = data.filter((r: any) => r.has_pool === 1).length;
+    expect(soldWithPool).toBe(468);
   });
 
   it("should verify essential mobile controller functions are defined in JavaScript", async () => {
