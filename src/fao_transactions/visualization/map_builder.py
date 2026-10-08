@@ -4639,11 +4639,26 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     let currentModalLv95N = null;
     let currentModalTitle = '';
 
+    function wgs84ToLv95(lat, lon) {
+      if (!lat || !lon) return { E: 2500000, N: 1118000 };
+      const phi = (lat * 3600 - 169028.66) / 10000;
+      const lambda = (lon * 3600 - 26782.5) / 10000;
+      const E = 2600072.37 + 211455.93 * lambda - 10938.51 * lambda * phi - 0.36 * lambda * phi * phi - 44.54 * Math.pow(lambda, 3);
+      const N = 1200147.07 + 308807.95 * phi + 3745.25 * lambda * lambda + 76.63 * phi * phi - 194.56 * lambda * lambda * phi + 119.79 * Math.pow(phi, 3);
+      return { E: Math.round(E), N: Math.round(N) };
+    }
+
     function openStreetViewModal(lat, lon, title, extUrl, lv95_e, lv95_n, defaultMode = 'pano') {
       currentModalLat = lat;
       currentModalLon = lon;
-      currentModalLv95E = lv95_e;
-      currentModalLv95N = lv95_n;
+      if (!lv95_e || !lv95_n) {
+        const lv = wgs84ToLv95(lat, lon);
+        currentModalLv95E = lv.E;
+        currentModalLv95N = lv.N;
+      } else {
+        currentModalLv95E = lv95_e;
+        currentModalLv95N = lv95_n;
+      }
       currentModalTitle = title || 'Inspection Visuelle';
 
       modalTitle.textContent = currentModalTitle;
@@ -4657,23 +4672,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       
       if (mode === 'pano') {
         document.getElementById('tabPano').classList.add('active');
-        modalIframe.src = `https://maps.google.com/maps?q=&layer=c&cbll=${currentModalLat},${currentModalLon}&cbp=11,0,0,0,0&output=svembed`;
-        modalExtLink.href = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${currentModalLat},${currentModalLon}`;
+        modalIframe.src = 'https://maps.google.com/maps?q=&layer=c&cbll=' + currentModalLat + ',' + currentModalLon + '&cbp=11,0,0,0,0&output=svembed';
+        modalExtLink.href = 'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + currentModalLat + ',' + currentModalLon;
         modalExtLink.textContent = 'Ouvrir Street View 360° &rarr;';
-        modalHintText.innerHTML = 'Google Street View 360° • Vue panoramique au sol (Utilisez les onglets ci-dessus si la voie est privée ou agricole)';
+        modalHintText.innerHTML = 'Google Street View 360° • Vue panoramique au sol • Coordonnées WGS84: ' + currentModalLat.toFixed(5) + ', ' + currentModalLon.toFixed(5);
       } else if (mode === 'sat') {
         document.getElementById('tabSat').classList.add('active');
-        modalIframe.src = `https://maps.google.com/maps?q=${currentModalLat},${currentModalLon}&t=k&z=19&output=embed`;
-        modalExtLink.href = `https://www.google.com/maps/@${currentModalLat},${currentModalLon},19z/data=!3m1!1e3`;
+        modalIframe.src = 'https://maps.google.com/maps?q=' + currentModalLat + ',' + currentModalLon + '&t=k&z=19&output=embed';
+        modalExtLink.href = 'https://www.google.com/maps/@' + currentModalLat + ',' + currentModalLon + ',19z/data=!3m1!1e3';
         modalExtLink.textContent = 'Ouvrir Satellite dans Google Maps &rarr;';
-        modalHintText.innerHTML = 'Google Satellite HD • Imagerie aérienne haute résolution (Zoom 19 &bull; Couverture 100% Genève)';
+        modalHintText.innerHTML = 'Google Satellite HD • Imagerie aérienne (Zoom 19) • WGS84: ' + currentModalLat.toFixed(5) + ', ' + currentModalLon.toFixed(5);
       } else if (mode === 'sitg') {
         document.getElementById('tabSitg').classList.add('active');
-        const sitgUrl = `https://map.sitg.ge.ch/?center=${currentModalLv95E || '2500000'},${currentModalLv95N || '1118000'}&scale=1000&mapresources=CADASTRE,ORTHOPHOTO_2023`;
-        modalIframe.src = sitgUrl;
+        const embedUrl = 'https://map.geo.admin.ch/embed.html?lang=fr&topic=ech&bgLayer=ch.swisstopo.swissimage&layers=ch.kantone.cadastralwebmap-farbe&layers_opacity=0.75&E=' + currentModalLv95E + '&N=' + currentModalLv95N + '&zoom=11&crosshair=marker';
+        const sitgUrl = 'https://map.sitg.ge.ch/?center=' + currentModalLv95E + ',' + currentModalLv95N + '&scale=1000&mapresources=CADASTRE,ORTHOPHOTO_2023';
+        modalIframe.src = embedUrl;
         modalExtLink.href = sitgUrl;
         modalExtLink.textContent = 'Ouvrir dans le Géoportail SITG &rarr;';
-        modalHintText.innerHTML = 'Cadastre SITG Genève • Orthophoto officielle 5cm & Registre Foncier Cantonal (LV95)';
+        modalHintText.innerHTML = 'Cadastre SITG / Swisstopo • Orthophoto & Registre Foncier (LV95: ' + currentModalLv95E + ', ' + currentModalLv95N + ')';
       }
     }
 
