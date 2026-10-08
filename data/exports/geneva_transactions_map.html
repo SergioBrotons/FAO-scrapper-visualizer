@@ -370,6 +370,68 @@
       left: 14px;
       bottom: 18px;
       width: 360px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+
+    .sidebar.collapsed {
+      transform: translateX(calc(-100% - 30px)) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .sidebar-floating-toggle {
+      position: absolute;
+      top: 108px;
+      left: 14px;
+      z-index: 990;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(9, 14, 20, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--color-brand-400);
+      border-radius: 6px;
+      color: var(--color-brand-300);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-floating-toggle:hover {
+      background: var(--color-ink-800);
+      color: #fff;
+      border-color: var(--color-brand-300);
+      transform: translateY(-1px);
+    }
+
+    body.sidebar-is-collapsed .sidebar-floating-toggle,
+    .sidebar.collapsed ~ .sidebar-floating-toggle {
+      display: flex !important;
+    }
+
+    .sidebar-collapse-btn {
+      background: transparent;
+      border: none;
+      color: var(--color-sand-400);
+      cursor: pointer;
+      padding: 3px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .sidebar-collapse-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+    }
       background: var(--panel-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -2345,9 +2407,21 @@
   </header>
 
   <!-- Sidebar Filter Panel -->
-  <aside class="sidebar">
+  <!-- Floating Sidebar Toggle Button (Visible when sidebar is closed or on responsive screens) -->
+  <button type="button" id="sidebarToggleFloatingBtn" class="sidebar-floating-toggle" onclick="toggleSidebar(true)" title="Afficher les filtres de recherche (Raccourci: F)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+    <span>Filtres</span>
+  </button>
+
+  <!-- Sidebar Filter Panel -->
+  <aside class="sidebar" id="mainSidebar">
     <div class="sidebar-header-banner" id="sidebarBanner">
-      <div class="sidebar-header-title" id="sidebarBannerTitle">Marché Immobilier Complet</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+        <div class="sidebar-header-title" id="sidebarBannerTitle">Marché Immobilier Complet</div>
+        <button type="button" class="sidebar-collapse-btn" onclick="toggleSidebar(false)" title="Masquer les filtres (Libérer la carte)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+      </div>
       <div class="sidebar-header-sub" id="sidebarBannerSub">Filtrez les mutations du Registre Foncier et LDTR</div>
     </div>
 
