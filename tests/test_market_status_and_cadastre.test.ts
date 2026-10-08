@@ -49,4 +49,24 @@ describe("Cytria Tri-State Market Status & Cadastre Filter Integration", () => {
     expect(py.includes('action-btn live-ad')).toBe(true);
     expect(py.includes("Annonce en Direct")).toBe(true);
   });
+
+  it("should verify Parc Foncier Piscines SITG (5'173 bassins) layer is present and functional", () => {
+    const html = readFileSync(indexPath, "utf-8");
+    expect(html.includes('id="sitgAllPoolsLayerBtn"')).toBe(true);
+    expect(html.includes("function toggleSitgAllPoolsLayer")).toBe(true);
+    expect(html.includes("SITG_ALL_POOLS")).toBe(true);
+
+    const poolsMatch = html.match(/const SITG_ALL_POOLS = (\[[\s\S]*?\]);/);
+    expect(poolsMatch).toBeTruthy();
+    const pools = JSON.parse(poolsMatch![1]);
+    expect(pools.length).toBe(5173);
+
+    // Verify sample pool point integrity [id, lat, lon, surf, perim, com]
+    const p1 = pools[0];
+    expect(p1[0]).toBe(1); // objectid
+    expect(p1[1]).toBeGreaterThan(46.1); // lat
+    expect(p1[2]).toBeGreaterThan(5.9); // lon
+    expect(p1[3]).toBeGreaterThan(0); // surface_m2
+    expect(typeof p1[5]).toBe("string"); // commune
+  });
 });
