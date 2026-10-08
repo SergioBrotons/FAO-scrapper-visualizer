@@ -3869,22 +3869,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     let currentRiveFilter = 'ALL';
     let isSqmPriceLayerActive = false;
 
-    const RIVE_GAUCHE_COORDS = [
-      [46.2045, 6.1432], [46.2080, 6.1550], [46.2150, 6.1750], [46.2350, 6.1950],
-      [46.2600, 6.2200], [46.2850, 6.2500], [46.3000, 6.2900], [46.3050, 6.2950],
-      [46.2800, 6.3200], [46.2500, 6.3100], [46.2200, 6.2800], [46.1800, 6.2400],
-      [46.1500, 6.2300], [46.1300, 6.1900], [46.1200, 6.1400], [46.1350, 6.0800],
-      [46.1500, 6.0400], [46.1700, 5.9800], [46.1900, 5.9600], [46.2000, 6.0000],
-      [46.2040, 6.0800], [46.2045, 6.1432]
-    ];
-
-    const RIVE_DROITE_COORDS = [
-      [46.2045, 6.1432], [46.2080, 6.1550], [46.2150, 6.1750], [46.2350, 6.1950],
-      [46.2600, 6.2200], [46.2850, 6.2500], [46.3000, 6.2900], [46.3600, 6.2500],
-      [46.3800, 6.2200], [46.3700, 6.1500], [46.3000, 6.0500], [46.2600, 6.0000],
-      [46.2400, 5.9600], [46.2100, 5.9500], [46.2000, 6.0000], [46.2040, 6.0800],
-      [46.2045, 6.1432]
-    ];
+    const RIVE_GAUCHE_COORDS = [[46.2055,6.1465],[46.212,6.16],[46.225,6.175],[46.245,6.195],[46.27,6.215],[46.295,6.235],[46.315,6.255],[46.305,6.26],[46.3,6.28],[46.275,6.285],[46.25,6.32],[46.215,6.3],[46.195,6.255],[46.185,6.225],[46.155,6.195],[46.14,6.17],[46.13,6.14],[46.13,6.07],[46.13,6.015],[46.12,5.95],[46.14,5.945],[46.15,5.962],[46.165,5.985],[46.185,6.018],[46.195,6.04],[46.2015,6.075],[46.199,6.111],[46.2025,6.1245],[46.204,6.1385],[46.2046,6.142],[46.2055,6.1465]];
+    const RIVE_DROITE_COORDS = [[46.2055,6.1465],[46.2046,6.142],[46.204,6.1385],[46.2025,6.1245],[46.199,6.111],[46.2015,6.075],[46.195,6.04],[46.185,6.018],[46.165,5.985],[46.15,5.962],[46.155,5.945],[46.185,5.955],[46.215,5.965],[46.235,6.005],[46.245,6.045],[46.26,6.08],[46.285,6.1],[46.295,6.12],[46.32,6.12],[46.325,6.155],[46.355,6.175],[46.375,6.21],[46.345,6.22],[46.315,6.255],[46.295,6.235],[46.27,6.215],[46.245,6.195],[46.225,6.175],[46.212,6.16],[46.2055,6.1465]];
 
     function setRiveFilter(rive) {
       currentRiveFilter = rive;
@@ -3904,7 +3890,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           weight: 1.8,
           dashArray: '5, 5'
         }).addTo(riveLayerGroup);
-        map.flyTo([46.20, 6.19], 13);
+        map.flyTo([46.205, 6.185], 12);
       } else if (rive === 'DROITE') {
         L.polygon(RIVE_DROITE_COORDS, {
           color: '#C9A24D',
@@ -3913,9 +3899,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           weight: 1.8,
           dashArray: '5, 5'
         }).addTo(riveLayerGroup);
-        map.flyTo([46.24, 6.10], 13);
+        map.flyTo([46.240, 6.085], 12);
       } else {
-        map.flyTo([46.2043907, 6.1431977], 12);
+        map.flyTo([46.215, 6.135], 11.5);
       }
       applyFilters();
     }
@@ -4436,6 +4422,27 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           </div>
           <div style="color:#ffffff; font-weight:700; font-size:12px;">${r.agency_name || 'Agence non spécifiée'}${r.agent_name ? ' &bull; ' + r.agent_name : ''}</div>
           ${(r.publishing_delay_days || 0) >= 75 ? '<div style="color:#fca5a5; font-size:11px; margin-top:4px;"><strong>Mandat en souffrance :</strong> Bien stagnant au-delà du cycle moyen genevois. Opportunité de valorisation de reprise.</div>' : ''}
+          
+          <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(245, 158, 11, 0.25); display: flex; flex-direction: column; gap: 5px;">
+            <div style="font-size: 10px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 4px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              Vérification de l'annonce en direct :
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              ${r.listing_url ? `
+              <a href="${r.listing_url}" target="_blank" rel="noopener" class="action-btn sitg" style="padding: 4px 8px; font-size: 10.5px; font-weight: 700; background: rgba(245, 158, 11, 0.22); color: #fbbf24; border-color: #f59e0b; text-decoration: none;" title="Ouvrir le site ou l'annonce de l'agence mandataire">
+                Site Agence (${r.agency_name ? r.agency_name.split(' ')[0] : 'Mandataire'}) &rarr;
+              </a>` : ''}
+              ${r.portal_url ? `
+              <a href="${r.portal_url}" target="_blank" rel="noopener" class="action-btn sitg" style="padding: 4px 8px; font-size: 10.5px; font-weight: 600; background: rgba(14, 165, 233, 0.18); color: #38bdf8; border-color: #0ea5e9; text-decoration: none;" title="Vérifier sur ImmoScout24">
+                ImmoScout24 (${r.commune || 'Genève'}) &rarr;
+              </a>` : ''}
+              ${r.verify_url ? `
+              <a href="${r.verify_url}" target="_blank" rel="noopener" class="action-btn sitg" style="padding: 4px 8px; font-size: 10.5px; font-weight: 600; background: rgba(16, 185, 129, 0.18); color: #34d399; border-color: #10b981; text-decoration: none;" title="Vérifier les concordances officielles de cette annonce sur les moteurs et portails">
+                Vérifier le Mandat (Recherche Google) &rarr;
+              </a>` : ''}
+            </div>
+          </div>
         </div>
       ` : '';
 
@@ -4454,8 +4461,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           ${r.permit_number ? `<span class="badge-tag permit">${r.permit_number}</span>` : ''}
         </div>
 
-        <!-- Action Toolbar (Street View Modal, Satellite Fallback & SITG) -->
+        <!-- Action Toolbar (Street View Modal, Satellite Fallback, SITG & Live Ad Link) -->
         <div class="action-toolbar">
+          ${r.market_status === 'ON_SALE' && r.listing_url ? `
+          <a href="${r.listing_url}" target="_blank" rel="noopener" class="action-btn live-ad" style="background: rgba(245, 158, 11, 0.22); border: 1px solid #f59e0b; color: #fbbf24; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;" title="Consulter l'annonce en direct sur le site de l'agence mandataire">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            Annonce en Direct &rarr;
+          </a>` : ''}
           ${isStreetAvailable ? `
           <button type="button" id="btnStreetViewAction" class="action-btn streetview" title="Ouvrir la vue 360° Street View au sol">
             Street View 360° 
@@ -4466,6 +4478,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <div class="action-btn streetview disabled" title="Street View indisponible pour cette parcelle (terrain agricole, forêt, cour intérieure ou voie privée)">
             Street View N/A (Sans voirie) ✕
           </div>`}
+          ${sitgLink ? `
+          <a href="${sitgLink}" target="_blank" rel="noopener" class="action-btn sitg" title="Ouvrir l'orthophoto officielle SITG 5cm">
+            SITG 5cm Aérien &rarr;
+          </a>` : ''}
+        </div>`}
           ${sitgLink ? `
           <a href="${sitgLink}" target="_blank" rel="noopener" class="action-btn sitg" title="Ouvrir l'orthophoto officielle SITG 5cm">
             SITG 5cm Aérien &rarr;
@@ -8586,26 +8603,58 @@ RIVE_DROITE_COMMUNES = {
 def classify_rive(r: Dict[str, Any]) -> str:
     import unicodedata
     raw_c = str(r.get("commune") or "")
+    # Normalize ligatures and diacritics
+    raw_c = raw_c.replace("œ", "oe").replace("Œ", "oe").replace("æ", "ae").replace("Æ", "ae")
     comm = unicodedata.normalize('NFD', raw_c).encode('ascii', 'ignore').decode('utf-8').lower()
     comm = re.sub(r'[^a-z0-9]', '', comm)
     addr = str(r.get("address") or "")
     lat = r.get("lat")
-    
-    if any(c in comm for c in [re.sub(r'[^a-z0-9]', '', x) for x in RIVE_GAUCHE_COMMUNES]):
-        return "GAUCHE"
-    if any(c in comm for c in [re.sub(r'[^a-z0-9]', '', x) for x in RIVE_DROITE_COMMUNES]):
-        return "DROITE"
-    if "geneve" in comm:
-        if re.search(r"1201|1202|1203|1209", addr):
-            return "DROITE"
-        if re.search(r"1204|1205|1206|1207|1208|1227", addr):
-            return "GAUCHE"
-        if lat is not None:
-            return "DROITE" if float(lat) > 46.206 else "GAUCHE"
-    if lat is not None:
-        return "DROITE" if float(lat) > 46.208 else "GAUCHE"
-    return "GAUCHE"
+    lon = r.get("lon")
 
+    # Cadastral sections and outer communes
+    if any(c in comm for c in [
+        'cologny', 'vandoeuvres', 'collongebellerive', 'corsier', 'anieres', 'hermance',
+        'choulex', 'meinier', 'gy', 'jussy', 'presinge', 'puplinge', 'thonex', 'chenebourg',
+        'chenebougeries', 'veyrier', 'carouge', 'troinex', 'bardonnex', 'planlesouates',
+        'lancy', 'onex', 'confignon', 'bernex', 'perlycertoux', 'soral', 'laconnex',
+        'avusy', 'avully', 'chancy', 'cartigny', 'airelaville',
+        'geneveeauxvives', 'genevecite', 'geneveplainpalais'
+    ]):
+        return "GAUCHE"
+
+    if any(c in comm for c in [
+        'pregnychambesy', 'chambesy', 'legrandsaconnex', 'grandsaconnex', 'vernier',
+        'meyrin', 'bellevue', 'genthod', 'versoix', 'collexbossy', 'celigny', 'satigny',
+        'russin', 'dardagny', 'genevepetitsaconnex'
+    ]):
+        return "DROITE"
+
+    # Ville de Genève by postal code
+    if "geneve" in comm:
+        if re.search(r"\b(1201|1202|1203|1209)\b", addr):
+            return "DROITE"
+        if re.search(r"\b(1204|1205|1206|1207|1208|1227)\b", addr):
+            return "GAUCHE"
+
+    # Geographic ray casting check via verified boundary
+    if lat is not None and lon is not None:
+        try:
+            flat, flon = float(lat), float(lon)
+            rg_poly = [[46.2055,6.1465],[46.212,6.16],[46.225,6.175],[46.245,6.195],[46.27,6.215],[46.295,6.235],[46.315,6.255],[46.305,6.26],[46.3,6.28],[46.275,6.285],[46.25,6.32],[46.215,6.3],[46.195,6.255],[46.185,6.225],[46.155,6.195],[46.14,6.17],[46.13,6.14],[46.13,6.07],[46.13,6.015],[46.12,5.95],[46.14,5.945],[46.15,5.962],[46.165,5.985],[46.185,6.018],[46.195,6.04],[46.2015,6.075],[46.199,6.111],[46.2025,6.1245],[46.204,6.1385],[46.2046,6.142],[46.2055,6.1465]]
+            # Point in polygon ray-casting
+            inside = False
+            for i in range(len(rg_poly)):
+                j = len(rg_poly) - 1 if i == 0 else i - 1
+                xi, yi = rg_poly[i][1], rg_poly[i][0]
+                xj, yj = rg_poly[j][1], rg_poly[j][0]
+                intersect = ((yi > flat) != (yj > flat)) and (flon < (xj - xi) * (flat - yi) / (yj - yi) + xi)
+                if intersect:
+                    inside = not inside
+            return "GAUCHE" if inside else "DROITE"
+        except (ValueError, TypeError):
+            pass
+
+    return "GAUCHE"
 
 def build_interactive_map(
     db_path: Optional[str] = None,

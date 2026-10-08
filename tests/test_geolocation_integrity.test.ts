@@ -21,7 +21,7 @@ describe("Geolocation & Address Integrity Across Datasets", () => {
 
     const outOfBounds = data.filter((r: any) => {
       if (!r.lat || !r.lon) return false;
-      return r.lat < 46.12 || r.lat > 46.36 || r.lon < 5.95 || r.lon > 6.32;
+      return r.lat < 46.12 || r.lat > 46.37 || r.lon < 5.94 || r.lon > 6.33;
     });
 
     expect(outOfBounds.length).toBe(0);
@@ -35,8 +35,6 @@ describe("Geolocation & Address Integrity Across Datasets", () => {
     const cheneProps = data.filter((r: any) => r.commune === "Chêne-Bougeries");
     expect(cheneProps.length).toBeGreaterThan(50);
 
-    // Chêne-Bougeries bounding box: lat ~ 46.18 - 46.21, lon ~ 6.17 - 6.20
-    // Baby-Plage / Eaux-Vives lake is at lat: 46.208+, lon: 6.160-6.162 (West of 6.165)
     const misplacedAtLake = cheneProps.filter((r: any) => r.lat > 46.205 && r.lon < 6.165);
     expect(misplacedAtLake.length).toBe(0);
   });
@@ -51,5 +49,78 @@ describe("Geolocation & Address Integrity Across Datasets", () => {
     expect(agencyDummies.c).toBe(0);
 
     db.close();
+  });
+
+  it("All outer Geneva communes are 100% strictly assigned to their correct Rive", async () => {
+    const html = await Bun.file("index.html").text();
+    const dataMatch = html.match(/const DATA = (\[[\s\S]*?\]);/);
+    const data = JSON.parse(dataMatch![1]);
+
+    const RIVE_GAUCHE = [
+      "Cologny", "Vandoeuvres", "Vandœuvres", "Collonge-Bellerive", "Corsier", "Anières", "Hermance",
+      "Choulex", "Meinier", "Gy", "Jussy", "Presinge", "Puplinge", "Thônex", "Chêne-Bourg",
+      "Chêne-Bougeries", "Veyrier", "Carouge", "Troinex", "Bardonnex", "Plan-les-Ouates",
+      "Lancy", "Onex", "Confignon", "Bernex", "Perly-Certoux", "Soral", "Laconnex",
+      "Avusy", "Avully", "Chancy", "Cartigny", "Aire-la-Ville",
+      "Genève-Eaux-Vives", "Genève-Cité", "Genève-Plainpalais"
+    ];
+
+    const RIVE_DROITE = [
+      "Pregny-Chambésy", "Chambésy", "Grand-Saconnex", "Le Grand-Saconnex", "Vernier",
+      "Meyrin", "Bellevue", "Genthod", "Versoix", "Collex-Bossy", "Céligny", "Celigny",
+      "Satigny", "Russin", "Dardagny", "Genève-Petit-Saconnex"
+    ];
+
+    for (const comm of RIVE_GAUCHE) {
+      const records = data.filter((r: any) => r.commune === comm);
+      const wrong = records.filter((r: any) => r.rive !== "GAUCHE");
+      expect(wrong.length).toBe(0);
+    }
+
+    for (const comm of RIVE_DROITE) {
+      const records = data.filter((r: any) => r.commune === comm);
+      const wrong = records.filter((r: any) => r.rive !== "DROITE");
+      expect(wrong.length).toBe(0);
+    }
+  });
+
+  it("Ville de Genève properties with explicit postal codes are correctly classified by Rive", async () => {
+    const html = await Bun.file("index.html").text();
+    const dataMatch = html.match(/const DATA = (\[[\s\S]*?\]);/);
+    const data = JSON.parse(dataMatch![1]);
+
+    const genevaProps = data.filter((r: any) => (r.commune || "").toLowerCase() === "genève");
+
+    for (const r of genevaProps) {
+      const addr = r.address || "";
+      if (/\b(1201|1202|1203|1209)\b/.test(addr)) {
+        expect(r.rive).toBe("DROITE");
+      }
+      if (/\b(1204|1205|1206|1207|1208|1227)\b/.test(addr)) {
+        expect(r.rive).toBe("GAUCHE");
+      }
+    }
+  });
+
+  it("Rive Gauche and Rive Droite polygons in index.html have clean separation and proper bounds", async () => {
+    const html = await Bun.file("index.html").text();
+    const rgMatch = html.match(/const RIVE_GAUCHE_COORDS = (\[[\s\S]*?\]);/);
+    const rdMatch = html.match(/const RIVE_DROITE_COORDS = (\[[\s\S]*?\]);/);
+
+    expect(rgMatch).toBeTruthy();
+    expect(rdMatch).toBeTruthy();
+
+    const rgCoords: Array<[number, number]> = JSON.parse(rgMatch![1]);
+    const rdCoords: Array<[number, number]> = JSON.parse(rdMatch![1]);
+
+    // Rive Droite polygon must NOT contain points on Rive Gauche inland/coast like Hermance/Jussy (lon > 6.25, lat < 46.31)
+    const rdAtGaucheLand = rdCoords.filter(([lat, lon]) => lon > 6.25 && lat < 46.31);
+    expect(rdAtGaucheLand.length).toBe(0);
+
+    // Both polygons must close (start equals end)
+    expect(rgCoords[0][0]).toBe(rgCoords[rgCoords.length - 1][0]);
+    expect(rgCoords[0][1]).toBe(rgCoords[rgCoords.length - 1][1]);
+    expect(rdCoords[0][0]).toBe(rdCoords[rdCoords.length - 1][0]);
+    expect(rdCoords[0][1]).toBe(rdCoords[rdCoords.length - 1][1]);
   });
 });

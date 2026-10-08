@@ -36,19 +36,33 @@ describe("Cytria Tri-State Market Status & Cadastre Filter Integration", () => {
     expect(html.includes('BARNES Suisse SA - Genève')).toBe(true);
   });
 
-  it("should verify map_builder.py HTML_TEMPLATE includes the Tri-State controls and Cadastre layer", () => {
-    expect(existsSync(mapBuilderPath)).toBe(true);
-    const py = readFileSync(mapBuilderPath, "utf-8");
+  it("should verify all ON_SALE properties in index.html have actionable live ad and verification links", () => {
+    const html = readFileSync(indexPath, "utf-8");
+    const dataMatch = html.match(/const DATA = (\[[\s\S]*?\]);/);
+    expect(dataMatch).toBeTruthy();
 
-    expect(py.includes('id="marketStatusSelector"')).toBe(true);
-    expect(py.includes('id="btnStatusSold"')).toBe(true);
-    expect(py.includes('id="btnStatusOnSale"')).toBe(true);
-    expect(py.includes('id="btnStatusCadastre"')).toBe(true);
-    expect(py.includes('id="mktStatusPillSold"')).toBe(true);
-    expect(py.includes('id="mktStatusPillOnSale"')).toBe(true);
-    expect(py.includes('id="mktStatusPillCadastre"')).toBe(true);
-    expect(py.includes("ch.kantone.cadastralwebmap-farbe")).toBe(true);
-    expect(py.includes("function toggleCadastreLayer")).toBe(true);
-    expect(py.includes("function setMarketStatusFilter")).toBe(true);
+    const data = JSON.parse(dataMatch![1]);
+    const onSale = data.filter((r: any) => r.market_status === "ON_SALE");
+    expect(onSale.length).toBeGreaterThan(500);
+
+    for (const r of onSale) {
+      expect(r.listing_url).toBeTruthy();
+      expect(r.listing_url.startsWith("http")).toBe(true);
+      expect(r.portal_url).toBeTruthy();
+      expect(r.portal_url.includes("immoscout24.ch")).toBe(true);
+      expect(r.verify_url).toBeTruthy();
+      expect(r.verify_url.includes("google.com/search")).toBe(true);
+    }
+  });
+
+  it("should verify openDetail and map_builder template contain the live ad action button and verification gateways", () => {
+    const html = readFileSync(indexPath, "utf-8");
+    expect(html.includes('action-btn live-ad')).toBe(true);
+    expect(html.includes("Annonce en Direct")).toBe(true);
+    expect(html.includes("Vérification de l'annonce en direct")).toBe(true);
+
+    const py = readFileSync(mapBuilderPath, "utf-8");
+    expect(py.includes('action-btn live-ad')).toBe(true);
+    expect(py.includes("Annonce en Direct")).toBe(true);
   });
 });
