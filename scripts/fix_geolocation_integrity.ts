@@ -9,7 +9,7 @@ const COMMUNE_STREETS: Record<string, Array<{ street: string, lat: number, lon: 
     { street: "Chemin de Grange-Canal", lat: 46.2015, lon: 6.1795 },
     { street: "Route de Malagnou", lat: 46.1945, lon: 6.1812 },
     { street: "Chemin de la Seymaz", lat: 46.1970, lon: 6.1915 },
-    { street: "Chemin de Conches", lat: 46.1865, lon: 6.1735 },
+    { street: "Chemin de Conches", lat: 46.1798, lon: 6.1729 },
     { street: "Chemin de la Montagne", lat: 46.2005, lon: 6.1855 },
     { street: "Chemin des Voirons", lat: 46.2013, lon: 6.1861 },
     { street: "Route de Villette", lat: 46.1825, lon: 6.1837 }

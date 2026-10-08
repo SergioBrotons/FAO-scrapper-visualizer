@@ -1011,7 +1011,7 @@ COMMUNE_STREETS = {
         ("Chemin du Vallon", 46.1985, 6.1890),
         ("Chemin de Grange-Canal", 46.2015, 6.1795),
         ("Route de Malagnou", 46.1945, 6.1812),
-        ("Chemin de Conches", 46.1865, 6.1735),
+        ("Chemin de Conches", 46.1798, 6.1729),
     ],
     "Cologny": [
         ("Rampe de Cologny", 46.2165, 6.1755),

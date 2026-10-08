@@ -123,4 +123,21 @@ describe("Geolocation & Address Integrity Across Datasets", () => {
     expect(rdCoords[0][0]).toBe(rdCoords[rdCoords.length - 1][0]);
     expect(rdCoords[0][1]).toBe(rdCoords[rdCoords.length - 1][1]);
   });
+
+  it("Chemin de Conches properties strictly match the real street axis (not displaced onto Tornalettes)", async () => {
+    const html = await Bun.file("index.html").text();
+    const dataMatch = html.match(/const DATA = (\[[\s\S]*?\]);/);
+    const data = JSON.parse(dataMatch![1]);
+
+    const conchesProps = data.filter((r: any) => r.address && r.address.includes("Chemin de Conches"));
+    expect(conchesProps.length).toBeGreaterThanOrEqual(3);
+
+    for (const r of conchesProps) {
+      // True Chemin de Conches is south of 46.184. Chemin des Tornalettes is around 46.1862+.
+      expect(r.lat).toBeLessThan(46.1845);
+      expect(r.lat).toBeGreaterThan(46.1750);
+      expect(r.lon).toBeGreaterThan(6.1700);
+      expect(r.lon).toBeLessThan(6.1780);
+    }
+  });
 });
