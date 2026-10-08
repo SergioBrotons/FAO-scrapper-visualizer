@@ -4633,11 +4633,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <a href="${sitgLink}" target="_blank" rel="noopener" class="action-btn sitg" title="Ouvrir l'orthophoto officielle SITG 5cm">
             SITG 5cm Aérien &rarr;
           </a>` : ''}
-        </div>`}
-          ${sitgLink ? `
-          <a href="${sitgLink}" target="_blank" rel="noopener" class="action-btn sitg" title="Ouvrir l'orthophoto officielle SITG 5cm">
-            SITG 5cm Aérien &rarr;
-          </a>` : ''}
         </div>
 
         <div class="detail-grid">
