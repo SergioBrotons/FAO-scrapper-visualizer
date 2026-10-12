@@ -453,6 +453,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       opacity: 0.85;
     }
 
+    
+    /* Filter Panel Toggle UI/UX Button */
+    .filter-panel-toggle-btn {
+      border-color: rgba(201, 162, 77, 0.45) !important;
+      background: rgba(201, 162, 77, 0.1) !important;
+      color: var(--color-brand-300) !important;
+      font-weight: 700 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer;
+    }
+    .filter-panel-toggle-btn:hover {
+      background: rgba(201, 162, 77, 0.22) !important;
+      border-color: var(--color-brand-300) !important;
+      color: #fff !important;
+      transform: translateY(-1px);
+    }
+    .filter-panel-toggle-btn.active {
+      background: rgba(201, 162, 77, 0.25) !important;
+      border-color: var(--color-brand-400) !important;
+      color: #fff !important;
+      box-shadow: 0 0 10px rgba(201, 162, 77, 0.25) !important;
+    }
+
     /* Left Sidebar Filter Panel */
     .sidebar {
       position: absolute;
@@ -2881,6 +2907,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <!-- Tier 2: Contextual Module Subtoolbar (Left) + Live KPI HUD (Right) -->
     <div class="top-bar-tier-2">
       <div class="tier-2-subtoolbar-area">
+        <!-- Global Filter Panel Show/Hide UI/UX Optimization Option -->
+        <button type="button" class="subtool-btn filter-panel-toggle-btn active" id="btnFilterToggle" onclick="toggleSidebar()" title="Afficher ou masquer les filtres (Raccourci: F)" aria-expanded="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          <span id="filterToggleLabel">Filtres</span>
+          <span class="subtool-badge" id="filterToggleStatusBadge" style="background:rgba(201,162,77,0.25); color:var(--color-brand-300);">ON</span>
+        </button>
+        <span class="subtool-divider"></span>
         <!-- 1. MARKET Subtoolbar -->
         <div class="product-subtoolbar" id="subtoolbarMarket">
 
@@ -8402,38 +8435,59 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
 
 
 
-  /* --- MOBILE CONTROLLER FUNCTIONS --- */
+    /* --- RESPONSIVE & MOBILE FILTER PANEL CONTROLLER --- */
   function toggleSidebar(forceState) {
     const sidebar = document.querySelector('.sidebar');
     const floatingBtn = document.getElementById('sidebarToggleFloatingBtn');
+    const topFilterBtn = document.getElementById('btnFilterToggle');
+    const filterBadge = document.getElementById('filterToggleStatusBadge');
     const backdrop = document.getElementById('mobileSidebarBackdrop');
+    const mobBtn = document.getElementById('btnMobFilters');
     if (!sidebar) return;
 
-    const isMobile = window.innerWidth <= 960;
+    const isMobile = window.innerWidth <= 820;
     let isNowOpen;
 
     if (isMobile) {
       isNowOpen = forceState !== undefined ? forceState : !sidebar.classList.contains('mobile-open');
       sidebar.classList.toggle('mobile-open', isNowOpen);
       sidebar.classList.remove('collapsed');
+      document.body.classList.toggle('sidebar-is-collapsed', !isNowOpen);
       if (backdrop) {
         backdrop.classList.toggle('visible', isNowOpen);
         backdrop.style.display = isNowOpen ? 'block' : 'none';
       }
     } else {
-      const isCollapsed = sidebar.classList.contains('collapsed');
-      isNowOpen = forceState !== undefined ? forceState : isCollapsed;
+      const isCurrentlyCollapsed = sidebar.classList.contains('collapsed');
+      isNowOpen = forceState !== undefined ? forceState : isCurrentlyCollapsed;
       sidebar.classList.toggle('collapsed', !isNowOpen);
       sidebar.classList.remove('mobile-open');
       document.body.classList.toggle('sidebar-is-collapsed', !isNowOpen);
+      if (backdrop) {
+        backdrop.classList.remove('visible');
+        backdrop.style.display = 'none';
+      }
     }
 
     if (floatingBtn) {
-      floatingBtn.style.display = (!isNowOpen || isMobile) ? 'flex' : 'none';
+      floatingBtn.style.display = !isNowOpen ? 'flex' : 'none';
     }
 
-    const mobBtn = document.getElementById('btnMobFilters');
-    if (mobBtn) mobBtn.classList.toggle('active', isNowOpen);
+    if (topFilterBtn) {
+      topFilterBtn.classList.toggle('active', isNowOpen);
+      topFilterBtn.setAttribute('aria-expanded', isNowOpen ? 'true' : 'false');
+      topFilterBtn.title = isNowOpen ? 'Masquer les filtres (Raccourci: F)' : 'Afficher les filtres (Raccourci: F)';
+    }
+
+    if (filterBadge) {
+      filterBadge.textContent = isNowOpen ? 'ON' : 'OFF';
+      filterBadge.style.background = isNowOpen ? 'rgba(201, 162, 77, 0.25)' : 'rgba(255, 255, 255, 0.1)';
+      filterBadge.style.color = isNowOpen ? 'var(--color-brand-300)' : 'var(--color-sand-400)';
+    }
+
+    if (mobBtn) {
+      mobBtn.classList.toggle('active', isNowOpen);
+    }
 
     setTimeout(() => {
       if (typeof map !== 'undefined' && map && map.invalidateSize) {
@@ -8444,6 +8498,52 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
 
   function toggleMobileSidebar(forceState) {
     toggleSidebar(forceState);
+  }
+
+  // Keyboard shortcut: F toggles sidebar, Escape closes off-canvas on mobile
+  if (!window._filterKeyShortcutBound) {
+    window._filterKeyShortcutBound = true;
+    document.addEventListener('keydown', (e) => {
+      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
+      if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleSidebar();
+      } else if (e.key === 'Escape') {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar && sidebar.classList.contains('mobile-open')) {
+          toggleSidebar(false);
+        }
+      }
+    });
+  }
+
+  // Auto layout sync on initial boot
+  if (typeof window !== 'undefined') {
+    const initSidebarLayout = () => {
+      const isMobile = window.innerWidth <= 820;
+      const floatingBtn = document.getElementById('sidebarToggleFloatingBtn');
+      const topFilterBtn = document.getElementById('btnFilterToggle');
+      const filterBadge = document.getElementById('filterToggleStatusBadge');
+      if (isMobile) {
+        document.body.classList.add('sidebar-is-collapsed');
+        if (floatingBtn) floatingBtn.style.display = 'flex';
+        if (topFilterBtn) {
+          topFilterBtn.classList.remove('active');
+          topFilterBtn.setAttribute('aria-expanded', 'false');
+        }
+        if (filterBadge) {
+          filterBadge.textContent = 'OFF';
+          filterBadge.style.background = 'rgba(255, 255, 255, 0.1)';
+          filterBadge.style.color = 'var(--color-sand-400)';
+        }
+      }
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSidebarLayout);
+    } else {
+      initSidebarLayout();
+    }
   }
 
   function cycleMarketStatusMobile() {
