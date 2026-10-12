@@ -472,6 +472,17 @@
       left: 14px;
       bottom: 18px;
       width: 360px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      z-index: 1000;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-elevation);
+      overflow-y: auto;
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
     }
 
@@ -533,18 +544,6 @@
     .sidebar-collapse-btn:hover {
       color: #fff;
       background: rgba(255, 255, 255, 0.12);
-    }
-      background: var(--panel-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--panel-border);
-      z-index: 1000;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      box-shadow: var(--shadow-elevation);
-      overflow-y: auto;
     }
 
     .sidebar-header-banner {
@@ -2894,7 +2893,7 @@
     <div class="top-bar-tier-2">
       <div class="tier-2-subtoolbar-area">
         <!-- Global Filter Panel Show/Hide UI/UX Optimization Option -->
-        <button type="button" class="subtool-btn filter-panel-toggle-btn active" id="btnFilterToggle" onclick="toggleSidebar()" title="Afficher ou masquer les filtres (Raccourci: F)" aria-expanded="true">
+        <button type="button" class="subtool-btn filter-panel-toggle-btn active" id="btnFilterToggle" onclick="toggleSidebar()" title="Afficher ou masquer les filtres (Raccourci: Shift+F)" aria-expanded="true">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
           <span id="filterToggleLabel">Filtres</span>
           <span class="subtool-badge" id="filterToggleStatusBadge" style="background:rgba(201,162,77,0.25); color:var(--color-brand-300);">ON</span>
@@ -2986,7 +2985,7 @@
 
   <!-- Sidebar Filter Panel -->
   <!-- Floating Sidebar Toggle Button (Visible when sidebar is closed or on responsive screens) -->
-  <button type="button" id="sidebarToggleFloatingBtn" class="sidebar-floating-toggle" onclick="toggleSidebar(true)" title="Afficher les filtres de recherche (Raccourci: F)">
+  <button type="button" id="sidebarToggleFloatingBtn" class="sidebar-floating-toggle" onclick="toggleSidebar(true)" title="Afficher les filtres de recherche (Raccourci: Shift+F)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
     <span>Filtres</span>
   </button>
@@ -8462,7 +8461,7 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
     if (topFilterBtn) {
       topFilterBtn.classList.toggle('active', isNowOpen);
       topFilterBtn.setAttribute('aria-expanded', isNowOpen ? 'true' : 'false');
-      topFilterBtn.title = isNowOpen ? 'Masquer les filtres (Raccourci: F)' : 'Afficher les filtres (Raccourci: F)';
+      topFilterBtn.title = isNowOpen ? 'Masquer les filtres (Raccourci: Shift+F)' : 'Afficher les filtres (Raccourci: Shift+F)';
     }
 
     if (filterBadge) {
@@ -8486,13 +8485,15 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
     toggleSidebar(forceState);
   }
 
-  // Keyboard shortcut: F toggles sidebar, Escape closes off-canvas on mobile
+  // Keyboard shortcut: Shift+F toggles sidebar, Escape closes off-canvas on mobile. Never hijack browser native Ctrl+F / Cmd+F find.
   if (!window._filterKeyShortcutBound) {
     window._filterKeyShortcutBound = true;
     document.addEventListener('keydown', (e) => {
+      // Never intercept browser native find (Ctrl+F, Cmd+F) or other browser modifier shortcuts
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
       const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
-      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
-      if (e.key === 'f' || e.key === 'F') {
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || (document.activeElement && document.activeElement.isContentEditable)) return;
+      if (e.shiftKey && (e.key === 'F' || e.key === 'f')) {
         e.preventDefault();
         toggleSidebar();
       } else if (e.key === 'Escape') {
@@ -8511,17 +8512,38 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
       const floatingBtn = document.getElementById('sidebarToggleFloatingBtn');
       const topFilterBtn = document.getElementById('btnFilterToggle');
       const filterBadge = document.getElementById('filterToggleStatusBadge');
+      const sidebar = document.querySelector('.sidebar');
       if (isMobile) {
         document.body.classList.add('sidebar-is-collapsed');
+        if (sidebar) {
+          sidebar.classList.remove('mobile-open');
+        }
         if (floatingBtn) floatingBtn.style.display = 'flex';
         if (topFilterBtn) {
           topFilterBtn.classList.remove('active');
           topFilterBtn.setAttribute('aria-expanded', 'false');
+          topFilterBtn.title = 'Afficher les filtres (Raccourci: Shift+F)';
         }
         if (filterBadge) {
           filterBadge.textContent = 'OFF';
           filterBadge.style.background = 'rgba(255, 255, 255, 0.1)';
           filterBadge.style.color = 'var(--color-sand-400)';
+        }
+      } else {
+        document.body.classList.remove('sidebar-is-collapsed');
+        if (sidebar) {
+          sidebar.classList.remove('collapsed');
+        }
+        if (floatingBtn) floatingBtn.style.display = 'none';
+        if (topFilterBtn) {
+          topFilterBtn.classList.add('active');
+          topFilterBtn.setAttribute('aria-expanded', 'true');
+          topFilterBtn.title = 'Masquer les filtres (Raccourci: Shift+F)';
+        }
+        if (filterBadge) {
+          filterBadge.textContent = 'ON';
+          filterBadge.style.background = 'rgba(201, 162, 77, 0.25)';
+          filterBadge.style.color = 'var(--color-brand-300)';
         }
       }
     };
@@ -8530,6 +8552,7 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
     } else {
       initSidebarLayout();
     }
+  }
   }
 
   function cycleMarketStatusMobile() {
