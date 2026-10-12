@@ -113,4 +113,17 @@ describe("Cytria Top Bar & Mobile UI/UX Overhaul Integrity", () => {
     expect(html.includes("e.ctrlKey || e.metaKey || e.altKey")).toBe(true);
     expect(html.includes("e.shiftKey && (e.key === 'F' || e.key === 'f')")).toBe(true);
   });
+
+  it("should verify inline script has valid JavaScript syntax with zero parser errors", async () => {
+    const html = await Bun.file(indexHtmlPath).text();
+    const scriptMatch = html.match(/<script(?![^>]*src=)[^>]*>([\s\S]*?)<\/script>/i);
+    expect(scriptMatch).toBeTruthy();
+    let parseError = null;
+    try {
+      new Function(scriptMatch![1]);
+    } catch (e: any) {
+      parseError = e.message;
+    }
+    expect(parseError).toBeNull();
+  });
 });

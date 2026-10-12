@@ -8567,7 +8567,6 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
       initSidebarLayout();
     }
   }
-  }
 
   function cycleMarketStatusMobile() {
     const order = ['SOLD', 'ON_SALE', 'CADASTRE'];
