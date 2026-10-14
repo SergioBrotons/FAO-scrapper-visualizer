@@ -3952,10 +3952,10 @@
     </div>
 
     <div class="copilot-chips" id="copilotChips">
-      <button class="copilot-chip" onclick="askCopilot('Quels sont les comparables récents de villas à Cologny ?')">📍 Comparables Cologny</button>
-      <button class="copilot-chip" onclick="askCopilot('Prix médian et volume à Vandoeuvres en 2025-2026')">📊 Médiane Vandoeuvres</button>
-      <button class="copilot-chip" onclick="askCopilot('Qui sont les voisins de la parcelle 1677 à Cologny ?')">🎯 Voisins Parcelle 1677</button>
-      <button class="copilot-chip" onclick="askCopilot('Simulation Casatax pour un bien à 1'400'000 CHF avec 6 ans de détention')">💰 Casatax & LCPur</button>
+      <button class="copilot-chip" onclick="askCopilot('Quels sont les comparables récents de villas à Cologny ?')">Comparables Cologny</button>
+      <button class="copilot-chip" onclick="askCopilot('Prix médian et volume à Vandoeuvres en 2025-2026')">Médiane Vandœuvres</button>
+      <button class="copilot-chip" onclick="askCopilot('Qui sont les voisins de la parcelle 1677 à Cologny ?')">Voisins Parcelle 1677</button>
+      <button class="copilot-chip" onclick="askCopilot('Simulation Casatax pour un bien à 1'400'000 CHF avec 6 ans de détention')">Casatax &amp; LCPur</button>
     </div>
 
     <div class="copilot-messages" id="copilotMessages">
@@ -8943,22 +8943,95 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
 
   function formatMarkdownSimple(text) {
     if (!text) return '';
-    var lines = text.split(String.fromCharCode(10));
+
+    // Strip all emojis for institutional Swiss minimalism
+    var cleaned = text
+      .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1FA70}-\u{1FAFF}\u{200D}\u{FE0F}]/gu, '')
+      .replace(/[📊🔑📌🗺️⚖️🇨🇭🏛️📈🏡💰🔍🏢📍🎯]/gu, '');
+
+    var lines = cleaned.split(String.fromCharCode(10));
     var out = [];
+    var inTable = false;
+    var tableRows = [];
+
+    function flushTable() {
+      if (!tableRows.length) return;
+      var html = '<div style="overflow-x:auto; margin:10px 0;"><table style="width:100%; border-collapse:collapse; font-size:11.5px; border:1px solid rgba(201,162,77,0.25); background:rgba(15,23,42,0.45); border-radius:4px;">';
+      for (var r = 0; r < tableRows.length; r++) {
+        var cells = tableRows[r];
+        if (cells.every(function(c) { return /^:?-+:?$/.test(c.trim()); })) continue;
+        var isHeader = (r === 0);
+        html += '<tr style="border-bottom:1px solid rgba(255,255,255,0.06);' + (isHeader ? ' background:rgba(201,162,77,0.12);' : '') + '">';
+        for (var c = 0; c < cells.length; c++) {
+          var cellContent = formatInline(cells[c].trim());
+          var tag = isHeader ? 'th' : 'td';
+          var style = isHeader 
+            ? 'padding:6px 10px; font-weight:700; color:#C9A24D; text-align:left; letter-spacing:0.03em;' 
+            : 'padding:6px 10px; color:#E2E8F0; text-align:left;';
+          html += '<' + tag + ' style="' + style + '">' + cellContent + '</' + tag + '>';
+        }
+        html += '</tr>';
+      }
+      html += '</table></div>';
+      out.push(html);
+      tableRows = [];
+      inTable = false;
+    }
+
+    function formatInline(str) {
+      if (!str) return '';
+      return str
+        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFFFFF; font-weight:700;">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em style="color:#94A3B8;">$1</em>')
+        .replace(/`([^`]+)`/g, '<code style="background:rgba(255,255,255,0.1); padding:1px 5px; border-radius:3px; font-family:monospace; font-size:11px; color:#C9A24D;">$1</code>');
+    }
+
     for (var i = 0; i < lines.length; i++) {
-      var l = lines[i];
-      if (l.indexOf('### ') === 0) {
-        out.push('<div style="font-weight:800; font-size:13px; color:#C9A24D; margin:8px 0 4px 0;">' + l.substring(4) + '</div>');
-      } else if (l.indexOf('- ') === 0) {
-        out.push('<div style="margin-left:8px; display:flex; gap:6px; margin-bottom:2px;"><span style="color:#C9A24D;">•</span><span>' + l.substring(2) + '</span></div>');
-      } else if (l.indexOf('> ') === 0) {
-        out.push('<div style="border-left:2px solid #C9A24D; padding-left:8px; color:#94a3b8; font-style:italic; margin:4px 0;">' + l.substring(2) + '</div>');
-      } else if (!l.trim()) {
+      var raw = lines[i].trim();
+
+      if (raw.indexOf('|') === 0 && raw.lastIndexOf('|') === raw.length - 1) {
+        inTable = true;
+        var rawCells = raw.split('|');
+        var cells = rawCells.slice(1, rawCells.length - 1);
+        tableRows.push(cells);
+        continue;
+      } else if (inTable) {
+        flushTable();
+      }
+
+      if (!raw) {
         out.push('<div style="height:6px;"></div>');
+        continue;
+      }
+
+      if (raw === '---' || raw === '***' || raw === '___') {
+        out.push('<hr style="border:none; border-top:1px solid rgba(201,162,77,0.25); margin:12px 0;" />');
+        continue;
+      }
+
+      if (raw.indexOf('### ') === 0) {
+        out.push('<div style="font-weight:700; font-size:12.5px; color:#C9A24D; margin:10px 0 4px 0; text-transform:uppercase; letter-spacing:0.04em;">' + formatInline(raw.substring(4)) + '</div>');
+      } else if (raw.indexOf('## ') === 0) {
+        out.push('<div style="font-weight:800; font-size:13.5px; color:#FFFFFF; margin:14px 0 6px 0; border-bottom:1px solid rgba(201,162,77,0.25); padding-bottom:4px; letter-spacing:0.02em;">' + formatInline(raw.substring(3)) + '</div>');
+      } else if (raw.indexOf('# ') === 0) {
+        out.push('<div style="font-weight:800; font-size:15px; color:#C9A24D; margin:16px 0 8px 0;">' + formatInline(raw.substring(2)) + '</div>');
+      } else if (raw.indexOf('> ') === 0) {
+        out.push('<div style="border-left:3px solid #C9A24D; background:rgba(201,162,77,0.06); padding:6px 10px; color:#CBD5E1; font-style:italic; margin:6px 0; font-size:11.5px; border-radius:0 4px 4px 0;">' + formatInline(raw.substring(2)) + '</div>');
+      } else if (/^\d+\.\s+/.test(raw)) {
+        var numMatch = raw.match(/^(\d+)\.\s+(.*)/);
+        out.push('<div style="margin:8px 0 3px 0; display:flex; align-items:baseline; gap:6px;"><span style="color:#C9A24D; font-weight:700; font-size:11px; background:rgba(201,162,77,0.15); padding:1px 6px; border-radius:3px; border:1px solid rgba(201,162,77,0.3);">' + numMatch[1] + '</span><span style="color:#FFFFFF; font-weight:600;">' + formatInline(numMatch[2]) + '</span></div>');
+      } else if (raw.indexOf('- ') === 0 || raw.indexOf('• ') === 0 || raw === '•') {
+        var itemText = raw === '•' ? '' : (raw.indexOf('- ') === 0 ? raw.substring(2) : raw.substring(2));
+        if (itemText.trim()) {
+          out.push('<div style="margin-left:12px; display:flex; gap:6px; margin-bottom:3px; line-height:1.45;"><span style="color:#C9A24D; flex-shrink:0;">•</span><span>' + formatInline(itemText) + '</span></div>');
+        }
       } else {
-        out.push('<div>' + l + '</div>');
+        out.push('<div style="margin-bottom:4px; line-height:1.5;">' + formatInline(raw) + '</div>');
       }
     }
+
+    if (inTable) flushTable();
+
     return out.join('');
   }
 

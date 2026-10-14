@@ -327,6 +327,13 @@ Si aucune action carte n'est requise, n'inclus pas ce bloc.
         cleaned = text.replace(regex, "").trim();
       } catch (e) {}
     }
+
+    // Strict zero-emoji sanitization
+    cleaned = cleaned
+      .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1FA70}-\u{1FAFF}\u{200D}\u{FE0F}]/gu, "")
+      .replace(/[📊🔑📌🗺️⚖️🇨🇭🏛️📈🏡💰🔍🏢]/gu, "")
+      .trim();
+
     return { cleanedText: cleaned, actions };
   }
 
@@ -360,7 +367,7 @@ Si aucune action carte n'est requise, n'inclus pas ce bloc.
         }
       }
 
-      reply = `### 📊 Synthèse Notariée FAO — ${formattedCommune}\n\n`;
+      reply = `### Synthèse Notariée FAO — ${formattedCommune}\n\n`;
       reply += `D'après les actes authentiques transcrits au Registre Foncier pour **${formattedCommune}** :\n\n`;
       reply += `- **Nombre total d'actes analysés** : ${stats.total_actes_analyses}\n`;
       reply += `- **Prix médian officiel** : CHF ${stats.prix_median_chf ? Number(stats.prix_median_chf).toLocaleString('fr-CH') : 'N/D'}\n`;

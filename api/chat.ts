@@ -39,6 +39,7 @@ export default async function handler(req: any, res: any) {
     const systemPrompt = `
 Tu es CYTRIA COPILOT, l'intelligence foncière et notariée de Genève (FAO × SITG).
 Mode actif : ${activeSuite} (Marché / Sourcing / Agency BI).
+RÈGLE ABSOLUE : INTERDICTION TOTALE D'UTILISER LE MOINDRE EMOJI. Ton ton est exclusivement notarié, fiduciaire, sobre et minimaliste suisse.
 ${rulesText}
 
 Tu réponds de façon synthétique, rigoureuse et élégante en respectant scrupuleusement la typographie suisse (CHF 1'450'000, 1'200 m²).
@@ -47,7 +48,7 @@ Si des parcelles ou adresses genevoises précises sont identifiées, tu peux inc
 
     if (!apiKey || apiKey.includes("votre_cle_api")) {
       return res.status(200).json({
-        reply: "### 🇨🇭 Cytria Copilot (Vercel Node)\n\nLe copilote est prêt. Veuillez configurer la variable d'environnement `MINIMAX_API_KEY` dans vos **Vercel Project Settings > Environment Variables** pour activer le modèle MiniMax M3.",
+        reply: "### Cytria Copilot (Vercel Node)\n\nLe copilote est prêt. Veuillez configurer la variable d'environnement `MINIMAX_API_KEY` dans vos **Vercel Project Settings > Environment Variables** pour activer le modèle MiniMax M3.",
         map_actions: [],
         model_used: "MiniMax-M3 (Attente Clé API Vercel)",
         tools_called: []
@@ -111,6 +112,12 @@ Si des parcelles ou adresses genevoises précises sont identifiées, tu peux inc
         replyText = replyText.replace(regex, "").trim();
       } catch (e) {}
     }
+
+    // Strip all emojis for institutional Swiss minimalism
+    replyText = replyText
+      .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1FA70}-\u{1FAFF}\u{200D}\u{FE0F}]/gu, "")
+      .replace(/[📊🔑📌🗺️⚖️🇨🇭🏛️📈🏡💰🔍🏢]/gu, "")
+      .trim();
 
     return res.status(200).json({
       reply: replyText,
