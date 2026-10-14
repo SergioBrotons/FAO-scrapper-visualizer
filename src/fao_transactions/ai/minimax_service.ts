@@ -30,10 +30,7 @@ export class MiniMaxCopilotService {
 
   constructor() {
     this.toolsService = new CopilotToolsService();
-    this.apiKey = process.env.MINIMAX_API_KEY || "";
-    // Compatible Anthropic endpoint or standard MiniMax endpoint
-    this.baseUrl = process.env.MINIMAX_BASE_URL || "https://api.minimax.io/anthropic";
-    this.model = process.env.MINIMAX_MODEL || "MiniMax-M3";
+    this.loadEnv();
 
     // Load Swiss French rules
     const rulesPath = join(process.cwd(), "Prompts", "swiss_french_real_estate_rules.md");
@@ -63,12 +60,36 @@ Si aucune action carte n'est requise, n'inclus pas ce bloc.
 `.trim();
   }
 
+  public loadEnv(): void {
+    try {
+      const envPath = join(process.cwd(), ".env");
+      if (existsSync(envPath)) {
+        const lines = readFileSync(envPath, "utf-8").split("\n");
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || trimmed.startsWith("#")) continue;
+          const eqIdx = trimmed.indexOf("=");
+          if (eqIdx > 0) {
+            const key = trimmed.substring(0, eqIdx).trim();
+            const val = trimmed.substring(eqIdx + 1).trim().replace(/^["']|["']$/g, "");
+            process.env[key] = val;
+          }
+        }
+      }
+    } catch (e) {}
+
+    this.apiKey = process.env.MINIMAX_API_KEY || "";
+    this.baseUrl = process.env.MINIMAX_BASE_URL || "https://api.minimax.io/anthropic";
+    this.model = process.env.MINIMAX_MODEL || "MiniMax-M3";
+  }
+
   // Generate a chat reply with automatic tool execution loop
   public async generateChatReply(
     userMessages: ChatMessage[],
     activeSuite: "MARKET" | "SOURCING" | "AGENCY_BI" = "MARKET",
     mapContext?: { center?: [number, number]; zoom?: number; selectedCommune?: string }
   ): Promise<ChatResponse> {
+    this.loadEnv();
     const toolsCalled: string[] = [];
     const mapActions: MapAction[] = [];
 
@@ -96,7 +117,8 @@ Si aucune action carte n'est requise, n'inclus pas ce bloc.
         ...userMessages
       ];
 
-      const endpoint = this.baseUrl.includes("/anthropic")
+      const isAnthropic = this.baseUrl.includes("/anthropic");
+      const endpoint = isAnthropic
         ? `${this.baseUrl.replace(/\/+$/, "")}/v1/messages`
         : `${this.baseUrl.replace(/\/+$/, "")}/text/chatcompletion_v2`;
 
@@ -105,41 +127,81 @@ Si aucune action carte n'est requise, n'inclus pas ce bloc.
 
       // If the LLM requested a tool execution
       if (res.tool_calls && res.tool_calls.length > 0) {
-        for (const call of res.tool_calls) {
-          const fnName = call.function?.name || call.name;
-          const fnArgs = typeof call.function?.arguments === "string"
-            ? JSON.parse(call.function.arguments)
-            : (call.function?.arguments || call.parameters || {});
+        if (isAnthropic) {
+          messages.push({
+            role: "assistant",
+            content: res.rawContent
+          });
 
-          toolsCalled.push(fnName);
-          const toolResult = this.toolsService.executeTool(fnName, fnArgs);
+          const toolResultsContent: any[] = [];
+          for (const call of res.tool_calls) {
+            const fnName = call.name;
+            const fnArgs = call.parameters || {};
+            toolsCalled.push(fnName);
+            const toolResult = this.toolsService.executeTool(fnName, fnArgs);
 
-          // Auto-generate map actions if coordinates exist in toolResult
-          if (toolResult.comparables && toolResult.comparables.length > 0) {
-            const firstWithCoords = toolResult.comparables.find((c: any) => c.coordonnees);
-            if (firstWithCoords) {
+            // Auto-generate map actions if coordinates exist in toolResult
+            if (toolResult.comparables && toolResult.comparables.length > 0) {
+              const firstWithCoords = toolResult.comparables.find((c: any) => c.coordonnees);
+              if (firstWithCoords) {
+                mapActions.push({
+                  type: "FLY_TO",
+                  payload: { lat: firstWithCoords.coordonnees.lat, lon: firstWithCoords.coordonnees.lon, zoom: 16 }
+                });
+              }
+            } else if (toolResult.parcelle_cible && toolResult.parcelle_cible.coordonnees) {
               mapActions.push({
                 type: "FLY_TO",
-                payload: { lat: firstWithCoords.coordonnees.lat, lon: firstWithCoords.coordonnees.lon, zoom: 16 }
+                payload: { ...toolResult.parcelle_cible.coordonnees, zoom: 17 }
               });
             }
-          } else if (toolResult.parcelle_cible && toolResult.parcelle_cible.coordonnees) {
-            mapActions.push({
-              type: "FLY_TO",
-              payload: { ...toolResult.parcelle_cible.coordonnees, zoom: 17 }
+
+            toolResultsContent.push({
+              type: "tool_result",
+              tool_use_id: call.id,
+              content: JSON.stringify(toolResult)
             });
           }
 
-          // Append tool execution to messages and call LLM again for final synthesized answer
           messages.push({
-            role: "assistant",
-            content: `Appel de l'outil ${fnName} avec ${JSON.stringify(fnArgs)}`
+            role: "user",
+            content: toolResultsContent
           });
-          messages.push({
-            role: "tool",
-            name: fnName,
-            content: JSON.stringify(toolResult)
-          });
+        } else {
+          for (const call of res.tool_calls) {
+            const fnName = call.function?.name || call.name;
+            const fnArgs = typeof call.function?.arguments === "string"
+              ? JSON.parse(call.function.arguments)
+              : (call.function?.arguments || call.parameters || {});
+
+            toolsCalled.push(fnName);
+            const toolResult = this.toolsService.executeTool(fnName, fnArgs);
+
+            if (toolResult.comparables && toolResult.comparables.length > 0) {
+              const firstWithCoords = toolResult.comparables.find((c: any) => c.coordonnees);
+              if (firstWithCoords) {
+                mapActions.push({
+                  type: "FLY_TO",
+                  payload: { lat: firstWithCoords.coordonnees.lat, lon: firstWithCoords.coordonnees.lon, zoom: 16 }
+                });
+              }
+            } else if (toolResult.parcelle_cible && toolResult.parcelle_cible.coordonnees) {
+              mapActions.push({
+                type: "FLY_TO",
+                payload: { ...toolResult.parcelle_cible.coordonnees, zoom: 17 }
+              });
+            }
+
+            messages.push({
+              role: "assistant",
+              content: `Appel de l'outil ${fnName} avec ${JSON.stringify(fnArgs)}`
+            });
+            messages.push({
+              role: "tool",
+              name: fnName,
+              content: JSON.stringify(toolResult)
+            });
+          }
         }
 
         // Final synthesis call
@@ -234,7 +296,9 @@ Si aucune action carte n'est requise, n'inclus pas ce bloc.
       const toolBlocks = data.content?.filter((c: any) => c.type === "tool_use");
       return {
         content: textBlock?.text || "",
+        rawContent: data.content,
         tool_calls: toolBlocks?.map((tb: any) => ({
+          id: tb.id,
           name: tb.name,
           parameters: tb.input
         }))

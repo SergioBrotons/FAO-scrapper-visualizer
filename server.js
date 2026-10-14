@@ -10,6 +10,24 @@ import { FiscalSimulationService } from "./src/content_marketing/fiscal_simulati
 import { CompetitorBenchmarkService } from "./src/content_marketing/competitor_benchmark_service.ts";
 import { TelemetryService } from "./src/content_marketing/telemetry_service.ts";
 import { GuideGeneratorService } from "./src/content_marketing/guide_generator_service.ts";
+// Load local .env into process.env if present
+try {
+  const envPath = join(process.cwd(), ".env");
+  if (existsSync(envPath)) {
+    const lines = readFileSync(envPath, "utf-8").split("\n");
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eqIdx = trimmed.indexOf("=");
+      if (eqIdx > 0) {
+        const key = trimmed.substring(0, eqIdx).trim();
+        const val = trimmed.substring(eqIdx + 1).trim().replace(/^["']|["']$/g, "");
+        process.env[key] = val;
+      }
+    }
+  }
+} catch (e) {}
+
 import { FunnelContentService } from "./src/content_marketing/funnel_content_service.ts";
 import { MiniMaxCopilotService } from "./src/fao_transactions/ai/minimax_service.ts";
 
