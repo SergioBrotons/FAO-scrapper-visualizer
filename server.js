@@ -11,6 +11,7 @@ import { CompetitorBenchmarkService } from "./src/content_marketing/competitor_b
 import { TelemetryService } from "./src/content_marketing/telemetry_service.ts";
 import { GuideGeneratorService } from "./src/content_marketing/guide_generator_service.ts";
 import { FunnelContentService } from "./src/content_marketing/funnel_content_service.ts";
+import { MiniMaxCopilotService } from "./src/fao_transactions/ai/minimax_service.ts";
 
 const agencyConfigService = new AgencyConfigService();
 const fiscalSimService = new FiscalSimulationService();
@@ -18,6 +19,7 @@ const competitorBenchmarkService = new CompetitorBenchmarkService();
 const telemetryService = new TelemetryService();
 const guideGeneratorService = new GuideGeneratorService();
 const funnelContentService = new FunnelContentService();
+const copilotService = new MiniMaxCopilotService();
 
 function getRequestedPort() {
   const args = process.argv.slice(2);
@@ -363,6 +365,32 @@ async function handleFetch(req) {
       },
       { headers: { "Access-Control-Allow-Origin": "*" } }
     );
+  }
+
+  // MiniMax Copilot AI conversational route
+  if (pathname === "/api/chat" || pathname === "/api/chat/") {
+    if (req.method === "POST") {
+      try {
+        const body = await req.json();
+        const messages = body.messages || [];
+        const activeSuite = body.active_suite || "MARKET";
+        const mapContext = body.map_context || {};
+
+        const replyData = await copilotService.generateChatReply(messages, activeSuite, mapContext);
+        return Response.json(replyData, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json"
+          }
+        });
+      } catch (err) {
+        return Response.json(
+          { error: err.message || "Erreur interne Copilot AI" },
+          { status: 500, headers: { "Access-Control-Allow-Origin": "*" } }
+        );
+      }
+    }
+    return new Response("Method Not Allowed", { status: 405 });
   }
 
   // Real-time synchronization scan triggers & progress

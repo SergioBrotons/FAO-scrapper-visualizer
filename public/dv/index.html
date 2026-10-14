@@ -4460,6 +4460,14 @@
   }
 
   function initCytriaGate() {
+    // 0. Bypass restriction in localhost mode
+    try {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '') {
+        unlockCytriaApp();
+        return;
+      }
+    } catch (e) {}
+
     // 1. Check query params & URL hash
     try {
       var params = new URLSearchParams(window.location.search);

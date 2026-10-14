@@ -1149,6 +1149,168 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       to { opacity: 1; transform: scale(1); }
     }
 
+    /* Cytria AI Copilot Drawer (MiniMax M3) */
+    .copilot-drawer {
+      position: fixed;
+      top: 104px;
+      right: 14px;
+      width: 440px;
+      max-width: calc(100vw - 28px);
+      height: calc(100vh - 120px);
+      background: rgba(11, 17, 23, 0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--panel-border-gold);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 20px rgba(201, 162, 77, 0.15);
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(115%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+    .copilot-drawer.active {
+      transform: translateX(0);
+    }
+    .copilot-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8, 13, 17, 0.7);
+    }
+    .copilot-avatar {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #A77F22 0%, #C9A24D 100%);
+      color: #080D11;
+      font-weight: 900;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px rgba(201, 162, 77, 0.4);
+    }
+    .copilot-icon-btn {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-300);
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.15s ease;
+    }
+    .copilot-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: var(--color-brand-400);
+    }
+    .copilot-chips {
+      padding: 10px 14px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(8, 13, 17, 0.3);
+    }
+    .copilot-chips::-webkit-scrollbar { display: none; }
+    .copilot-chip {
+      background: rgba(201, 162, 77, 0.08);
+      border: 1px solid rgba(201, 162, 77, 0.25);
+      color: var(--color-sand-200);
+      font-size: 10px;
+      padding: 4px 9px;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.15s ease;
+    }
+    .copilot-chip:hover {
+      background: rgba(201, 162, 77, 0.2);
+      border-color: var(--color-brand-400);
+      color: #fff;
+    }
+    .copilot-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+    .copilot-bubble {
+      padding: 12px 14px;
+      max-width: 92%;
+      word-break: break-word;
+    }
+    .copilot-bubble.user {
+      align-self: flex-end;
+      background: rgba(201, 162, 77, 0.18);
+      border: 1px solid rgba(201, 162, 77, 0.4);
+      color: var(--color-paper);
+    }
+    .copilot-bubble.bot {
+      align-self: flex-start;
+      background: rgba(16, 24, 32, 0.85);
+      border: 1px solid var(--panel-border);
+      color: var(--color-sand-100);
+    }
+    .copilot-bubble.bot .bubble-header {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--color-brand-400);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+    .copilot-input-area {
+      padding: 12px 14px;
+      border-top: 1px solid var(--panel-border);
+      display: flex;
+      gap: 8px;
+      background: rgba(8, 13, 17, 0.8);
+    }
+    .copilot-input-area input {
+      flex: 1;
+      background: var(--color-ink-950);
+      border: 1px solid var(--panel-border);
+      color: var(--color-paper);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .copilot-input-area input:focus {
+      border-color: var(--color-brand-400);
+      box-shadow: 0 0 10px rgba(201, 162, 77, 0.2);
+    }
+    .copilot-input-area button {
+      background: var(--color-brand-500);
+      border: 1px solid var(--color-brand-400);
+      color: var(--color-ink-950);
+      padding: 0 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .copilot-input-area button:hover {
+      background: var(--color-brand-400);
+      color: #000;
+    }
+
+
     .modal-window {
       width: 100%;
       max-width: 1080px;
@@ -2891,6 +3053,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <button type="button" class="subtool-btn utility-btn" id="btnLockApp" onclick="lockCytriaApp()" title="Verrouiller la session" style="display:inline-flex; align-items:center; gap:5px; border-color:rgba(201,162,77,0.35);">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="0" ry="0"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Verrouiller
         </button>
+                <button type="button" class="subtool-btn utility-btn" id="btnCopilotToggle" onclick="toggleCopilotDrawer()" title="Ouvrir le Copilote IA (MiniMax M3)" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, rgba(201,162,77,0.28) 0%, rgba(201,162,77,0.1) 100%) !important; border-color:var(--color-brand-400) !important; color:#fff !important; font-weight:700 !important; box-shadow:0 0 10px rgba(201,162,77,0.2);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Copilote IA</span>
+          <span class="subtool-badge" style="background:#C9A24D; color:#080D11; font-weight:800; font-size:8px;">M3</span>
+        </button>
         <button type="button" class="subtool-btn utility-btn" id="hudOpenCmaBtn" onclick="openCmaModal()">
           Simulateur CMA &rarr;
         </button>
@@ -3783,6 +3950,45 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 
+  
+  <!-- Cytria AI Copilot Drawer (MiniMax M3) -->
+  <div id="copilotDrawer" class="copilot-drawer">
+    <div class="copilot-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="copilot-avatar">M3</div>
+        <div>
+          <div style="font-weight:700; font-size:12px; letter-spacing:0.04em; text-transform:uppercase;">CYTRIA COPILOT</div>
+          <div id="copilotPersonaBadge" style="font-size:9px; color:var(--color-brand-400); font-family:var(--font-mono);">MODE MARCHÉ (FAO × SITG)</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <button class="copilot-icon-btn" onclick="clearCopilotHistory()" title="Effacer l'historique">↺</button>
+        <button class="copilot-icon-btn" onclick="toggleCopilotDrawer()" title="Fermer">✕</button>
+      </div>
+    </div>
+
+    <div class="copilot-chips" id="copilotChips">
+      <button class="copilot-chip" onclick="askCopilot('Quels sont les comparables récents de villas à Cologny ?')">📍 Comparables Cologny</button>
+      <button class="copilot-chip" onclick="askCopilot('Prix médian et volume à Vandoeuvres en 2025-2026')">📊 Médiane Vandoeuvres</button>
+      <button class="copilot-chip" onclick="askCopilot('Qui sont les voisins de la parcelle 1677 à Cologny ?')">🎯 Voisins Parcelle 1677</button>
+      <button class="copilot-chip" onclick="askCopilot('Simulation Casatax pour un bien à 1\'400\'000 CHF avec 6 ans de détention')">💰 Casatax & LCPur</button>
+    </div>
+
+    <div class="copilot-messages" id="copilotMessages">
+      <div class="copilot-bubble bot">
+        <div class="bubble-header">CYTRIA COPILOT • MINIMAX M3</div>
+        <div class="bubble-content">Bonjour. Je suis votre copilote foncier pour le Canton de Genève. Posez-moi une question sur une transaction, une parcelle, un secteur ou une simulation fiscale. Mes réponses pilotent directement la carte.</div>
+      </div>
+    </div>
+
+    <div class="copilot-input-area">
+      <input type="text" id="copilotInput" placeholder="Posez une question foncière ou notariée..." onkeydown="if(event.key==='Enter') sendCopilotMessage()" />
+      <button id="copilotSendBtn" onclick="sendCopilotMessage()" title="Envoyer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
   <!-- Leaflet & MarkerCluster JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -3992,14 +4198,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         '</div>' +
         '<div style="font-size:13px; font-weight:700; color:#f8fafc; margin-bottom:6px;">Piscine Cadastrée &bull; ' + com + '</div>' +
         '<div style="font-size:11px; color:#94a3b8; line-height:1.5; margin-bottom:10px; background:rgba(0,229,255,0.06); padding:6px 8px; border-radius:4px; border:1px solid rgba(0,229,255,0.15);">' +
-          '<div>&bull; Plan d\'eau : <strong style="color:#38bdf8;">' + surf + ' m²</strong></div>' +
+          '<div>&bull; Plan d’eau : <strong style="color:#38bdf8;">' + surf + ' m²</strong></div>' +
           '<div>&bull; Périmètre : <strong style="color:#e2e8f0;">' + perim + ' m</strong></div>' +
           '<div>&bull; Réf. Registre : <strong style="color:#cbd5e1;">SITG CAD_PISCINE #' + id + '</strong></div>' +
         '</div>' +
         '<div style="display:flex; gap:6px;">' +
-          '<button type="button" onclick="openStreetViewModal(' + lat + ', ' + lon + ', \'Piscine SITG #' + id + ' - ' + com + '\', null, null, null, \'sat\')" style="flex:1; padding:5px 6px; font-size:10px; background:#0284c7; color:#fff; border:none; border-radius:3px; cursor:pointer; font-weight:700;">Satellite HD</button>' +
-          '<button type="button" onclick="openStreetViewModal(' + lat + ', ' + lon + ', \'Piscine SITG #' + id + ' - ' + com + '\', null, null, null, \'sitg\')" style="flex:1; padding:5px 6px; font-size:10px; background:#0f766e; color:#fff; border:none; border-radius:3px; cursor:pointer; font-weight:700;">Cadastre SITG</button>' +
-          '<button type="button" onclick="openStreetViewModal(' + lat + ', ' + lon + ', \'Piscine SITG #' + id + ' - ' + com + '\', null, null, null, \'pano\')" style="flex:1; padding:5px 6px; font-size:10px; background:#334155; color:#fff; border:none; border-radius:3px; cursor:pointer; font-weight:700;">360°</button>' +
+          '<button type="button" onclick="openStreetViewModal(' + lat + ', ' + lon + ', &quot;Piscine SITG #' + id + ' - ' + com + '&quot;, null, null, null, &quot;sat&quot;)" style="flex:1; padding:5px 6px; font-size:10px; background:#0284c7; color:#fff; border:none; border-radius:3px; cursor:pointer; font-weight:700;">Satellite HD</button>' +
+          '<button type="button" onclick="openStreetViewModal(' + lat + ', ' + lon + ', &quot;Piscine SITG #' + id + ' - ' + com + '&quot;, null, null, null, &quot;sitg&quot;)" style="flex:1; padding:5px 6px; font-size:10px; background:#0f766e; color:#fff; border:none; border-radius:3px; cursor:pointer; font-weight:700;">Cadastre SITG</button>' +
+          '<button type="button" onclick="openStreetViewModal(' + lat + ', ' + lon + ', &quot;Piscine SITG #' + id + ' - ' + com + '&quot;, null, null, null, &quot;pano&quot;)" style="flex:1; padding:5px 6px; font-size:10px; background:#334155; color:#fff; border:none; border-radius:3px; cursor:pointer; font-weight:700;">360°</button>' +
         '</div>' +
       '</div>';
       
@@ -4014,8 +4220,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       
       if (btn) btn.classList.toggle('active', isSitgAllPoolsActive);
       if (badge) {
-        badge.textContent = isSitgAllPoolsActive ? 'ACTIF (5\x27173)' : '5\x27173';
-        badge.style.background = isSitgAllPoolsActive ? 'rgba(0,229,255,0.45)' : 'rgba(0,229,255,0.2)';
+      badge.textContent = isSitgAllPoolsActive ? "ACTIF (5'173)" : "5'173";
+      badge.textContent = isSitgAllPoolsActive ? "ACTIF (5'173)" : "5'173";
       }
 
       if (isSitgAllPoolsActive) {
@@ -4736,7 +4942,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 <span>Fiche Parcelle & Droits Réels SITG (ge.ch/sitg &rarr;)</span>
               </a>` : ''}
               <div style="color: var(--color-sand-300); font-size: 10px; margin-top: 2px; line-height:1.4;">
-                *Bien actuellement proposé à la vente par ${r.agency_name || 'l\'agence mandataire'}. Transaction non encore transcrite au Registre Foncier.
+                *Bien actuellement proposé à la vente par ${r.agency_name || "l'agence mandataire"}. Transaction non encore transcrite au Registre Foncier.
               </div>
             </div>
           </div>
@@ -8388,6 +8594,14 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
   }
 
   function initCytriaGate() {
+    // 0. Bypass restriction in localhost mode
+    try {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '') {
+        unlockCytriaApp();
+        return;
+      }
+    } catch (e) {}
+
     // 1. Check query params & URL hash
     try {
       var params = new URLSearchParams(window.location.search);
@@ -8607,6 +8821,163 @@ Source officielle : Feuille d'Avis Officielle (FAO) & Registre Foncier de Genèv
     });
     if (typeof applyFilters === 'function') applyFilters();
   }
+
+  // ==========================================
+  // CYTRIA AI COPILOT CONTROLLER (MINIMAX M3)
+  // ==========================================
+  let copilotConversation = [];
+
+  function toggleCopilotDrawer() {
+    const drawer = document.getElementById('copilotDrawer');
+    if (!drawer) return;
+    const isActive = drawer.classList.toggle('active');
+    const toggleBtn = document.getElementById('btnCopilotToggle');
+    if (toggleBtn) {
+      toggleBtn.classList.toggle('active', isActive);
+    }
+    if (isActive) {
+      updateCopilotPersonaBadge();
+      const input = document.getElementById('copilotInput');
+      if (input) setTimeout(() => input.focus(), 250);
+    }
+  }
+
+  function updateCopilotPersonaBadge() {
+    const badge = document.getElementById('copilotPersonaBadge');
+    if (!badge) return;
+    const suite = typeof currentProductSuite !== 'undefined' ? currentProductSuite : 'MARKET';
+    if (suite === 'MARKET') badge.textContent = 'MODE MARCHÉ & PRIX (FAO × SITG)';
+    else if (suite === 'SOURCING') badge.textContent = 'MODE SOURCING & PROSPECTION';
+    else if (suite === 'AGENCY_BI') badge.textContent = 'MODE BENCHMARK 96 AGENCES';
+  }
+
+  function clearCopilotHistory() {
+    copilotConversation = [];
+    const container = document.getElementById('copilotMessages');
+    if (container) {
+      container.innerHTML = `
+        <div class="copilot-bubble bot">
+          <div class="bubble-header">CYTRIA COPILOT • MINIMAX M3</div>
+          <div class="bubble-content">Historique réinitialisé. En quoi puis-je vous éclairer sur le foncier genevois ?</div>
+        </div>
+      `;
+    }
+  }
+
+  function askCopilot(question) {
+    const drawer = document.getElementById('copilotDrawer');
+    if (drawer && !drawer.classList.contains('active')) {
+      toggleCopilotDrawer();
+    }
+    const input = document.getElementById('copilotInput');
+    if (input) {
+      input.value = question;
+      sendCopilotMessage();
+    }
+  }
+
+  async function sendCopilotMessage() {
+    const input = document.getElementById('copilotInput');
+    const sendBtn = document.getElementById('copilotSendBtn');
+    const container = document.getElementById('copilotMessages');
+    if (!input || !container) return;
+
+    const userText = input.value.trim();
+    if (!userText) return;
+
+    input.value = '';
+    input.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
+
+    // Append user bubble
+    const userDiv = document.createElement('div');
+    userDiv.className = 'copilot-bubble user';
+    userDiv.textContent = userText;
+    container.appendChild(userDiv);
+
+    // Append loading bot bubble
+    const botDiv = document.createElement('div');
+    botDiv.className = 'copilot-bubble bot';
+    botDiv.innerHTML = `
+      <div class="bubble-header">CYTRIA COPILOT • RECHERCHE...</div>
+      <div class="bubble-content"><span class="scan-live-dot" style="display:inline-block; margin-right:6px;"></span> Interrogation de la base FAO et calcul en cours...</div>
+    `;
+    container.appendChild(botDiv);
+    container.scrollTop = container.scrollHeight;
+
+    copilotConversation.push({ role: 'user', content: userText });
+
+    try {
+      const activeSuite = typeof currentProductSuite !== 'undefined' ? currentProductSuite : 'MARKET';
+      const mapCenter = (typeof map !== 'undefined' && map.getCenter) ? [map.getCenter().lat, map.getCenter().lng] : [46.2044, 6.1432];
+      const mapZoom = (typeof map !== 'undefined' && map.getZoom) ? map.getZoom() : 12;
+
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: copilotConversation,
+          active_suite: activeSuite,
+          map_context: { center: mapCenter, zoom: mapZoom }
+        })
+      });
+
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+
+      botDiv.innerHTML = `
+        <div class="bubble-header">${data.model_used || 'CYTRIA COPILOT • MINIMAX M3'}</div>
+        <div class="bubble-content">${formatMarkdownSimple(data.reply)}</div>
+      `;
+
+      copilotConversation.push({ role: 'assistant', content: data.reply });
+
+      // Execute map actions if returned
+      if (data.map_actions && Array.isArray(data.map_actions)) {
+        for (const action of data.map_actions) {
+          if (action.type === 'FLY_TO' && action.payload && typeof map !== 'undefined') {
+            map.flyTo([action.payload.lat, action.payload.lon], action.payload.zoom || 16, {
+              animate: true,
+              duration: 1.5
+            });
+          }
+        }
+      }
+
+    } catch (err) {
+      botDiv.innerHTML = `
+        <div class="bubble-header" style="color:#ef4444;">ERREUR COPILOTE</div>
+        <div class="bubble-content" style="color:#fca5a5;">Impossible de contacter le copilote (${err.message}). Vérifiez que le serveur local est actif.</div>
+      `;
+    } finally {
+      input.disabled = false;
+      if (sendBtn) sendBtn.disabled = false;
+      input.focus();
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+
+  function formatMarkdownSimple(text) {
+    if (!text) return '';
+    var lines = text.split(String.fromCharCode(10));
+    var out = [];
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i];
+      if (l.indexOf('### ') === 0) {
+        out.push('<div style="font-weight:800; font-size:13px; color:#C9A24D; margin:8px 0 4px 0;">' + l.substring(4) + '</div>');
+      } else if (l.indexOf('- ') === 0) {
+        out.push('<div style="margin-left:8px; display:flex; gap:6px; margin-bottom:2px;"><span style="color:#C9A24D;">•</span><span>' + l.substring(2) + '</span></div>');
+      } else if (l.indexOf('> ') === 0) {
+        out.push('<div style="border-left:2px solid #C9A24D; padding-left:8px; color:#94a3b8; font-style:italic; margin:4px 0;">' + l.substring(2) + '</div>');
+      } else if (!l.trim()) {
+        out.push('<div style="height:6px;"></div>');
+      } else {
+        out.push('<div>' + l + '</div>');
+      }
+    }
+    return out.join('');
+  }
+
 
 </script>
 
@@ -9012,21 +9383,21 @@ def build_interactive_map(
                     t.price_chf,
                     t.case_number,
                     e.egrid,
-                    e.egid,
+                    NULL as egid,
                     e.zone_code,
                     e.zone_name,
                     e.building_destination,
                     e.building_period,
                     e.building_year,
                     e.building_floors,
-                    e.apartments_count,
-                    e.heating_system,
+                    NULL as apartments_count,
+                    NULL as heating_system,
                     e.surface_official_m2,
-                    e.has_pool,
-                    e.pool_count,
-                    e.pool_surface_m2,
-                    e.pool_status,
-                    e.pool_details_json,
+                    0 as has_pool,
+                    0 as pool_count,
+                    0 as pool_surface_m2,
+                    NULL as pool_status,
+                    NULL as pool_details_json,
                     round(e.centroid_wgs84_lon, 5) as lon,
                     round(e.centroid_wgs84_lat, 5) as lat,
                     round(e.centroid_lv95_e, 0) as lv95_e,
